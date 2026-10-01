@@ -1,4 +1,3 @@
 {
-  "source": { "shop": "your-store.myshopify.com", "role": "production" },
-  "dev": { "shop": "your-dev-store.myshopify.com", "role": "dev" }
+  "store": { "shop": "the-barrier-co.myshopify.com", "role": "production" }
 }

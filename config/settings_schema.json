@@ -70,6 +70,41 @@
     ]
   },
   {
+    "name": "t:names.brand_colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_rating",
+        "label": "t:settings.color_rating",
+        "default": "#FFA83E"
+      },
+      {
+        "type": "color",
+        "id": "color_glass",
+        "label": "t:settings.color_glass",
+        "default": "#E7DACE"
+      },
+      {
+        "type": "color",
+        "id": "color_overlay",
+        "label": "t:settings.color_overlay",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "color_caption",
+        "label": "t:settings.color_caption",
+        "default": "#181717"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_bar",
+        "label": "t:settings.color_accent_bar",
+        "default": "#A38D76"
+      }
+    ]
+  },
+  {
     "name": "t:names.typography",
     "settings": [
       {

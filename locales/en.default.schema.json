@@ -252,6 +252,7 @@
     "media_type_info": "Features are populated from your menu links"
   },
   "names": {
+    "brand_colors": "Brand colors",
     "column": "Column",
     "product_title": "Product title",
     "custom_liquid": "Custom Liquid",
@@ -746,6 +747,11 @@
     "below_media": "Below media"
   },
   "settings": {
+    "color_rating": "Rating stars",
+    "color_glass": "Glass panel tint",
+    "color_overlay": "Media overlay",
+    "color_caption": "Carousel caption",
+    "color_accent_bar": "Decorative bars",
     "accordion": "Accordion",
     "account": "Account",
     "actions_display_style": "Menu style",
