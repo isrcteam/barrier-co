@@ -1,0 +1,14 @@
+# Basic sections kept as the merchant's toolkit, even when no template uses them yet.
+# Project additions go in docs/prune-keep.txt. Lines starting with # are ignored.
+sections/_blocks.liquid
+sections/section.liquid
+sections/custom-liquid.liquid
+sections/hero.liquid
+sections/product-list.liquid
+sections/collection-list.liquid
+sections/media-with-content.liquid
+sections/divider.liquid
+# Skeleton starter basics
+sections/custom-section.liquid
+blocks/group.liquid
+blocks/text.liquid

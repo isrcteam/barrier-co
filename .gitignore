@@ -1,0 +1,5 @@
+tools/shopify/.env
+docs/data/raw/
+docs/data/backups/
+docs/qa/screens/
+__pycache__/

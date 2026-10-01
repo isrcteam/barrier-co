@@ -1,0 +1,4 @@
+{
+  "source": { "shop": "your-store.myshopify.com", "role": "production" },
+  "dev": { "shop": "your-dev-store.myshopify.com", "role": "dev" }
+}

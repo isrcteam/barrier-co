@@ -1,0 +1,8 @@
+# Python packages the project tools need. Install once per machine:
+#   pip install -r tools/requirements.txt
+# The Shopify scripts in tools/shopify use only the standard library.
+Pillow>=10,<12      # tools/assets/build_pack.py, favicons.py; tools/qa/visual_diff.py
+openpyxl>=3.1,<4    # tools/shopify/to_matrixify.py (single .xlsx instead of CSVs)
+markdown>=3.5,<4    # tools/theme/render_architecture.py
+# Optional: SVG favicons without ImageMagick or rsvg-convert
+# cairosvg>=2.7,<3
