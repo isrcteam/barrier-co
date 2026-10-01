@@ -39,7 +39,7 @@
 -%}
 
 {% render 'contrast-override', background_color: s.background_color, section_id: section.id %}
-{% render 'measure-header-heights', only_when_first_section: true %}
+{% if section.index == 1 %}{% render 'measure-header-heights', only_when_first_section: true %}{% endif %}
 
 <div
   class="hero-banner hero-banner--{{ s.width }} hero-banner--{{ s.content_position }} color-custom-{{ section.id }}"

@@ -1,0 +1,39 @@
+[
+  {
+    "handle": "primary-menu",
+    "title": "Primary menu",
+    "items": [
+      { "title": "Shop", "url": "/products/the-30-the-everyday" },
+      { "title": "Science", "url": "/pages/science" },
+      { "title": "About", "url": "/pages/about" }
+    ]
+  },
+  {
+    "handle": "footer-company",
+    "title": "Footer: Company",
+    "items": [
+      { "title": "About", "url": "/pages/about" },
+      { "title": "Ingredients", "url": "/pages/ingredients" },
+      { "title": "Stores", "url": "/pages/stores" }
+    ]
+  },
+  {
+    "handle": "footer-support",
+    "title": "Footer: Support",
+    "items": [
+      { "title": "FAQs", "url": "/pages/faq" },
+      { "title": "Shipping & Returns", "url": "/policies/shipping-policy" },
+      { "title": "Contact us", "url": "/pages/contact" },
+      { "title": "Accessibility", "url": "/pages/accessibility" }
+    ]
+  },
+  {
+    "handle": "footer-community",
+    "title": "Footer: Community",
+    "items": [
+      { "title": "TikTok", "url": "https://www.tiktok.com/" },
+      { "title": "YouTube", "url": "https://www.youtube.com/" },
+      { "title": "Instagram", "url": "https://www.instagram.com/" }
+    ]
+  }
+]

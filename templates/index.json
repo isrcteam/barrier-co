@@ -9,274 +9,591 @@
  */
 {
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "heading": "Body care. Reformatted.",
+        "heading_tag": "h1",
+        "heading_size": "display",
+        "show_bar": true,
+        "text": "<p><strong>Multiple bottles. Multiple steps. Skin that still ends up dry.</strong><br>Meet The Barrier Cloth™ — 3½ teaspoons of body cream, infused into one ultra-soft cloth to cleanse, hydrate and protect your skin.</p>",
+        "show_overlay": true,
+        "spotlight_price_label": "Starts from [price]/mo",
+        "spotlight_button_label": "Shop now",
+        "width": "full",
+        "content_position": "bottom_left",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "same_padding_mobile": true,
+        "image_desktop": "shopify://shop_images/Hero_Banner.jpg",
+        "image_mobile": "shopify://shop_images/banner1_mobile.jpg",
+        "spotlight_product": "the-30-the-everyday"
+      }
+    },
+    "press": {
+      "type": "marquee",
+      "settings": {
+        "background_color": "{{ settings.color_palette.color2 }}",
+        "padding-block-start": 18,
+        "padding-block-end": 18,
+        "gap_between_elements": 30
+      },
       "blocks": {
-        "text_YLPk4p": {
+        "quote_1": {
           "type": "text",
-          "name": "t:names.heading",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "{{ settings.color_palette.background }}",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "text": "<p>“Lorem ipsum dolor sid ed” - FORBES</p>",
+            "type_preset": "custom",
+            "font_size": "1rem"
+          }
         },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
+        "stars_1": {
+          "type": "icon",
           "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "rgba(0, 0, 0, 0)",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+            "icon": "star",
+            "width": 16,
+            "icon_color": "#F9F7ED"
+          }
+        },
+        "quote_2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>“Lorem ipsum dolor sid ed” - FORBES</p>",
+            "type_preset": "custom",
+            "font_size": "1rem"
+          }
+        },
+        "stars_2": {
+          "type": "icon",
+          "settings": {
+            "icon": "star",
+            "width": 16,
+            "icon_color": "#F9F7ED"
+          }
+        },
+        "quote_3": {
+          "type": "text",
+          "settings": {
+            "text": "<p>“Lorem ipsum dolor sid ed” - FORBES</p>",
+            "type_preset": "custom",
+            "font_size": "1rem"
+          }
+        },
+        "stars_3": {
+          "type": "icon",
+          "settings": {
+            "icon": "star",
+            "width": 16,
+            "icon_color": "#F9F7ED"
+          }
         }
       },
       "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
-      ],
-      "name": "t:names.hero",
+        "quote_1",
+        "stars_1",
+        "quote_2",
+        "stars_2",
+        "quote_3",
+        "stars_3"
+      ]
+    },
+    "intro": {
+      "type": "intro-media",
       "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
+        "eyebrow": "The Barrier Cloth",
+        "heading": "Beauty that’s more than skin deep.",
+        "heading_tag": "h2",
+        "text": "<p>Most skincare sits on the surface. The Barrier Cloth works beneath it delivering hyaluronic acid, glycerin, and barrier-strengthening actives directly into the skin. One cloth cleanses, hydrates, and protects in a single step. No bottles. No layering. No 10-step routine. Just full-body skincare.</p>",
+        "media_type": "video",
+        "show_second_tile": false,
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "same_padding_mobile": false,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 0
       }
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "routine": {
+      "type": "image-carousel",
+      "settings": {
+        "heading": "Your whole routine.\nOne cloth.",
+        "heading_tag": "h2",
+        "middle_card": "offset",
+        "show_side_bars": true,
+        "caption_alignment": "center",
+        "caption_size": "type-body-small",
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "same_mobile_padding": true,
+        "background_color": "#F0ECE1"
+      },
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
+        "card_cleanse": {
+          "type": "card",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "button-unstyled",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
+            "card_label": "Cleanse",
+            "caption": "Lifts away sweat, impurities and buildup without stripping the skin."
+          }
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
+        "card_hydrate": {
+          "type": "card",
+          "settings": {
+            "card_label": "Hydrate",
+            "caption": "Replenishes moisture for lasting, comfortable hydration."
+          }
+        },
+        "card_protect": {
+          "type": "card",
+          "settings": {
+            "card_label": "Protect",
+            "caption": "Supports the skin barrier to help lock in moisture and protect against dryness."
+          }
+        }
+      },
+      "block_order": [
+        "card_cleanse",
+        "card_hydrate",
+        "card_protect"
+      ]
+    },
+    "ticker": {
+      "type": "marquee",
+      "settings": {
+        "background_color": "{{ settings.color_palette.foreground }}",
+        "padding-block-start": 11,
+        "padding-block-end": 11,
+        "gap_between_elements": 20
+      },
+      "blocks": {
+        "word_1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Cleanse</p>"
+          }
+        },
+        "word_2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Moisturise</p>"
+          }
+        },
+        "word_3": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Protect</p>"
+          }
+        },
+        "word_4": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Regenerate</p>"
+          }
+        }
+      },
+      "block_order": [
+        "word_1",
+        "word_2",
+        "word_3",
+        "word_4"
+      ]
+    },
+    "featured": {
+      "type": "featured-product-information",
+      "settings": {
+        "product": "the-30-the-everyday",
+        "desktop_media_position": "left",
+        "content_width": "content-center-aligned",
+        "equal_columns": false,
+        "gap": 28,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      },
+      "blocks": {
+        "media-gallery": {
+          "type": "_featured-product-information-carousel",
           "static": true,
           "settings": {
-            "product_card_gap": 4,
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
+            "media_presentation": "carousel",
+            "slideshow_controls_style": "thumbnails",
+            "slideshow_mobile_controls_style": "thumbnails",
+            "thumbnail_position": "left",
+            "thumbnail_width": 72,
+            "thumbnail_radius": 0,
+            "media_radius": 0,
+            "aspect_ratio": "1",
+            "media_fit": "cover",
+            "constrain_to_viewport": false,
+            "extend_media": false,
+            "icons_style": "chevron",
+            "zoom": true,
+            "hide_variants": true
+          }
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "gap": 24,
+            "sticky_details_desktop": false,
+            "details_position": "center",
             "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-block-end": 0
           },
           "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
+            "title": {
+              "type": "text",
               "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
+                "text": "<h1>{{ closest.product.title }}</h1>",
+                "type_preset": "h2"
+              }
             },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
+            "description": {
+              "type": "text",
               "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "paragraph",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
+                "text": "{{ closest.product.description }}",
+                "type_preset": "rte"
+              }
             },
-            "price_JQzVV4": {
+            "price": {
               "type": "price",
-              "name": "t:names.product_price",
               "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "type_preset": "paragraph"
+              }
+            },
+            "buy_buttons": {
+              "type": "buy-buttons",
+              "settings": {},
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "static": true,
+                  "disabled": true,
+                  "settings": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button"
+                  }
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "static": true,
+                  "disabled": true,
+                  "settings": {}
+                }
               },
-              "blocks": {}
+              "block_order": []
+            },
+            "guarantee": {
+              "type": "text",
+              "settings": {
+                "text": "<p>90-day money-back guarantee | Free 2–3 day shipping</p>",
+                "type_preset": "custom",
+                "font_size": "0.625rem",
+                "case": "uppercase",
+                "alignment": "center"
+              }
+            },
+            "details": {
+              "type": "accordion",
+              "settings": {
+                "icon": "plus",
+                "dividers": false,
+                "type_preset": "h5",
+                "border": "none"
+              },
+              "blocks": {
+                "row_1": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "How to use",
+                    "open_by_default": true
+                  },
+                  "blocks": {
+                    "row_1_text": {
+                      "type": "text",
+                      "settings": {
+                        "text": "{{ closest.product.metafields.custom.how_to_use | metafield_tag }}",
+                        "type_preset": "rte"
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "row_1_text"
+                  ]
+                },
+                "row_2": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Claims",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "row_2_text": {
+                      "type": "text",
+                      "settings": {
+                        "text": "{{ closest.product.metafields.custom.claims | metafield_tag }}",
+                        "type_preset": "rte"
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "row_2_text"
+                  ]
+                },
+                "row_3": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Size & pack details",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "row_3_text": {
+                      "type": "text",
+                      "settings": {
+                        "text": "{{ closest.product.metafields.custom.size_and_pack_details | metafield_tag }}",
+                        "type_preset": "rte"
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "row_3_text"
+                  ]
+                },
+                "row_4": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Ingredients",
+                    "open_by_default": false
+                  },
+                  "blocks": {
+                    "row_4_text": {
+                      "type": "text",
+                      "settings": {
+                        "text": "{{ closest.product.metafields.custom.full_ingredient_list | metafield_tag }}",
+                        "type_preset": "rte"
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "row_4_text"
+                  ]
+                }
+              },
+              "block_order": [
+                "row_1",
+                "row_2",
+                "row_3",
+                "row_4"
+              ]
             }
           },
           "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
+            "title",
+            "description",
+            "price",
+            "buy_buttons",
+            "guarantee",
+            "details"
           ]
         }
       },
-      "name": "t:names.featured_collection",
+      "block_order": []
+    },
+    "real_use": {
+      "type": "video-testimonials",
       "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "heading": "Real use. Real routines.",
+        "heading_tag": "h2",
+        "columns_desktop": 5,
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "same_mobile_padding": false,
+        "padding-block-start-mobile": 30,
+        "padding-block-end-mobile": 30,
+        "quote_background_color": "#322C27"
+      },
+      "blocks": {
+        "video_testimonials_quote_1": {
+          "type": "quote",
+          "settings": {
+            "quote": "After just one use, my skin felt fresh, calm, and hydrated. It's simple, gentle, and genuinely feels different from anything I've used before.",
+            "author": "Jordan Miles",
+            "rating": 5
+          }
+        },
+        "video_testimonials_quote_2": {
+          "type": "quote",
+          "settings": {
+            "quote": "After just one use, my skin felt fresh, calm, and hydrated. It's simple, gentle, and genuinely feels different from anything I've used before.",
+            "author": "Jordan Miles",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "video_testimonials_quote_1",
+        "video_testimonials_quote_2"
+      ]
+    },
+    "results": {
+      "type": "clinical-results",
+      "settings": {
+        "heading": "Clinically proven",
+        "heading_tag": "h2",
+        "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>",
+        "button_label": "Our science",
+        "button_link": "/collections/all",
+        "inset": true,
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "same_mobile_padding": false,
+        "padding-block-start-mobile": 0,
+        "padding-block-end-mobile": 0,
+        "image": "shopify://shop_images/Results_Section_1.jpg",
+        "image_mobile": "shopify://shop_images/Results_section_-_mobile.jpg",
+        "results": [
+          "clinical_result.improved-facial-appearance",
+          "clinical_result.reduced-fine-lines",
+          "clinical_result.increased-skin-hydration",
+          "clinical_result.improved-skin-elasticity"
+        ]
+      }
+    },
+    "proof_icons": {
+      "type": "feature-icons",
+      "settings": {
+        "columns": 4
+      },
+      "blocks": {
+        "item_hydration": {
+          "type": "item",
+          "settings": {
+            "caption": "Deep Skin Hydration in 30 Minutes"
+          }
+        },
+        "item_dryness": {
+          "type": "item",
+          "settings": {
+            "caption": "Helps Reduce Dryness"
+          }
+        },
+        "item_smoother": {
+          "type": "item",
+          "settings": {
+            "caption": "Supports Smoother Looking Skin"
+          }
+        },
+        "item_texture": {
+          "type": "item",
+          "settings": {
+            "caption": "Skin Texture Improvement"
+          }
+        }
+      },
+      "block_order": [
+        "item_hydration",
+        "item_dryness",
+        "item_smoother",
+        "item_texture"
+      ]
+    },
+    "banner": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "The Barrier Cloth",
+        "heading": "Your skin barrier doesn't stop at your face.",
+        "heading_tag": "h2",
+        "heading_size": "h1",
+        "show_bar": false,
+        "text": "<p><strong>Neither should your skincare.</strong><br>Years of dermatological research.<br>One revolutionary cloth.</p>",
+        "button_label": "Know more",
+        "button_link": "shopify://collections/all",
+        "show_overlay": false,
+        "width": "inset",
+        "content_position": "center_left",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "same_padding_mobile": false,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "image_desktop": "shopify://shop_images/Hero_Banner1.jpg",
+        "image_mobile": "shopify://shop_images/Mobile_banner.jpg"
+      }
+    },
+    "lifestyle": {
+      "type": "image-carousel",
+      "settings": {
+        "heading": "Body care.\nWherever life happens.",
+        "heading_tag": "h2",
+        "subheading": "Post-workout. In-flight. Beach to dinner. On the go.",
+        "middle_card": "tall",
+        "show_side_bars": true,
+        "caption_alignment": "left",
+        "caption_size": "type-body",
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "same_mobile_padding": false,
+        "padding-block-start-mobile": 30,
+        "padding-block-end-mobile": 30
+      },
+      "blocks": {
+        "card_shell": {
+          "type": "card",
+          "settings": {}
+        },
+        "card_travel": {
+          "type": "card",
+          "settings": {
+            "product": "the-8-made-to-go-where-you-go"
+          }
+        },
+        "card_pack": {
+          "type": "card",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "card_shell",
+        "card_travel",
+        "card_pack"
+      ]
+    },
+    "before_after": {
+      "type": "before-after",
+      "settings": {
+        "heading": "Before / after",
+        "heading_tag": "h2",
+        "text": "<p>Real results from real people. The Barrier Cloth delivers active hydration deeply where it counts, reducing redness and smoothing skin texture in 14 days.</p>",
+        "product_price_label": "Starts from [price]",
+        "product_button_label": "Shop now",
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "same_mobile_padding": false,
+        "padding-block-start-mobile": 30,
+        "padding-block-end-mobile": 30,
+        "product": "the-8-made-to-go-where-you-go",
+        "comparisons": [
+          "before_after.the-30-day-14"
+        ],
+        "card_background_color": "#F0ECE1"
       }
     }
   },
   "order": [
-    "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "hero",
+    "press",
+    "intro",
+    "routine",
+    "ticker",
+    "featured",
+    "real_use",
+    "results",
+    "proof_icons",
+    "banner",
+    "lifestyle",
+    "before_after"
   ]
 }
