@@ -25,9 +25,10 @@
         "padding_top": 0,
         "padding_bottom": 0,
         "same_padding_mobile": true,
-        "image_desktop": "shopify://shop_images/Hero_Banner.jpg",
-        "image_mobile": "shopify://shop_images/banner1_mobile.jpg",
-        "spotlight_product": "the-30-the-everyday"
+        "image_desktop": "shopify://shop_images/home-hero-desktop.jpg",
+        "image_mobile": "shopify://shop_images/home-hero-mobile.jpg",
+        "spotlight_product": "the-30-the-everyday",
+        "play_poster": "shopify://shop_images/intro-video-poster-desktop.jpg"
       }
     },
     "press": {
@@ -110,7 +111,9 @@
         "padding_bottom": 0,
         "same_padding_mobile": false,
         "padding_top_mobile": 30,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 0,
+        "poster": "shopify://shop_images/intro-video-poster-desktop.jpg",
+        "image": "shopify://shop_images/intro-video-poster-desktop.jpg"
       }
     },
     "routine": {
@@ -132,21 +135,24 @@
           "type": "card",
           "settings": {
             "card_label": "Cleanse",
-            "caption": "Lifts away sweat, impurities and buildup without stripping the skin."
+            "caption": "Lifts away sweat, impurities and buildup without stripping the skin.",
+            "image": "shopify://shop_images/routine-cleanse.jpg"
           }
         },
         "card_hydrate": {
           "type": "card",
           "settings": {
             "card_label": "Hydrate",
-            "caption": "Replenishes moisture for lasting, comfortable hydration."
+            "caption": "Replenishes moisture for lasting, comfortable hydration.",
+            "image": "shopify://shop_images/Benefits_3.jpg"
           }
         },
         "card_protect": {
           "type": "card",
           "settings": {
             "card_label": "Protect",
-            "caption": "Supports the skin barrier to help lock in moisture and protect against dryness."
+            "caption": "Supports the skin barrier to help lock in moisture and protect against dryness.",
+            "image": "shopify://shop_images/routine-protect.jpg"
           }
         }
       },
@@ -452,13 +458,13 @@
         "same_mobile_padding": false,
         "padding-block-start-mobile": 0,
         "padding-block-end-mobile": 0,
-        "image": "shopify://shop_images/Results_Section_1.jpg",
-        "image_mobile": "shopify://shop_images/Results_section_-_mobile.jpg",
+        "image": "shopify://shop_images/stats-background-desktop.jpg",
+        "image_mobile": "shopify://shop_images/stats-background-mobile.jpg",
         "results": [
-          "clinical_result.improved-facial-appearance",
-          "clinical_result.reduced-fine-lines",
-          "clinical_result.increased-skin-hydration",
-          "clinical_result.improved-skin-elasticity"
+          "improved-facial-appearance",
+          "reduced-fine-lines",
+          "increased-skin-hydration",
+          "improved-skin-elasticity"
         ]
       }
     },
@@ -471,25 +477,29 @@
         "item_hydration": {
           "type": "item",
           "settings": {
-            "caption": "Deep Skin Hydration in 30 Minutes"
+            "caption": "Deep Skin Hydration in 30 Minutes",
+            "icon": "shopify://shop_images/feature-icon-1.svg"
           }
         },
         "item_dryness": {
           "type": "item",
           "settings": {
-            "caption": "Helps Reduce Dryness"
+            "caption": "Helps Reduce Dryness",
+            "icon": "shopify://shop_images/feature-icon-2.svg"
           }
         },
         "item_smoother": {
           "type": "item",
           "settings": {
-            "caption": "Supports Smoother Looking Skin"
+            "caption": "Supports Smoother Looking Skin",
+            "icon": "shopify://shop_images/feature-icon-3.svg"
           }
         },
         "item_texture": {
           "type": "item",
           "settings": {
-            "caption": "Skin Texture Improvement"
+            "caption": "Skin Texture Improvement",
+            "icon": "shopify://shop_images/feature-icon-4.svg"
           }
         }
       },
@@ -519,8 +529,8 @@
         "same_padding_mobile": false,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0,
-        "image_desktop": "shopify://shop_images/Hero_Banner1.jpg",
-        "image_mobile": "shopify://shop_images/Mobile_banner.jpg"
+        "image_desktop": "shopify://shop_images/inset-banner-desktop.jpg",
+        "image_mobile": "shopify://shop_images/inset-banner-mobile.jpg"
       }
     },
     "lifestyle": {
@@ -542,17 +552,22 @@
       "blocks": {
         "card_shell": {
           "type": "card",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/lifestyle-1.jpg"
+          }
         },
         "card_travel": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/cloth-face-towel.jpg",
             "product": "the-8-made-to-go-where-you-go"
           }
         },
         "card_pack": {
           "type": "card",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/lifestyle-3.jpg"
+          }
         }
       },
       "block_order": [
@@ -576,7 +591,7 @@
         "padding-block-end-mobile": 30,
         "product": "the-8-made-to-go-where-you-go",
         "comparisons": [
-          "before_after.the-30-day-14"
+          "the-30-day-14"
         ],
         "card_background_color": "#F0ECE1"
       }

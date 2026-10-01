@@ -21,29 +21,40 @@
       "blocks": {
         "tile_1": {
           "type": "tile",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/insta-1.jpg"
+          }
         },
         "tile_2": {
           "type": "tile",
           "settings": {
-            "show_icon": true
+            "show_icon": true,
+            "image": "shopify://shop_images/insta-2.jpg"
           }
         },
         "tile_3": {
           "type": "tile",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/insta-3.jpg"
+          }
         },
         "tile_4": {
           "type": "tile",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/insta-4.jpg"
+          }
         },
         "tile_5": {
           "type": "tile",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/insta-5.jpg"
+          }
         },
         "tile_6": {
           "type": "tile",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/insta-6.jpg"
+          }
         }
       },
       "block_order": [
@@ -65,37 +76,43 @@
         "logo_1": {
           "type": "logo",
           "settings": {
-            "alt": "Equinox"
+            "alt": "Equinox",
+            "image": "shopify://shop_images/logo-equinox.png"
           }
         },
         "logo_2": {
           "type": "logo",
           "settings": {
-            "alt": "Delta One"
+            "alt": "Delta One",
+            "image": "shopify://shop_images/logo-delta-one.png"
           }
         },
         "logo_3": {
           "type": "logo",
           "settings": {
-            "alt": "Credo"
+            "alt": "Credo",
+            "image": "shopify://shop_images/logo-credo.png"
           }
         },
         "logo_4": {
           "type": "logo",
           "settings": {
-            "alt": "Equinox"
+            "alt": "Equinox",
+            "image": "shopify://shop_images/logo-equinox.png"
           }
         },
         "logo_5": {
           "type": "logo",
           "settings": {
-            "alt": "Delta One"
+            "alt": "Delta One",
+            "image": "shopify://shop_images/logo-delta-one.png"
           }
         },
         "logo_6": {
           "type": "logo",
           "settings": {
-            "alt": "Credo"
+            "alt": "Credo",
+            "image": "shopify://shop_images/logo-credo.png"
           }
         }
       },

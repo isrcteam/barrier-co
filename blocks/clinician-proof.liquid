@@ -25,16 +25,30 @@
       {%- if block_settings.mark_image != blank -%}
         {{
           block_settings.mark_image
-          | image_url: width: 300
+          | image_url: width: 120
           | image_tag:
-            widths: '150, 300',
-            sizes: '(min-width: 990px) 121px, 110px',
+            widths: '60, 120',
+            sizes: '24px',
             loading: 'lazy',
             class: 'clinician-proof__mark-image',
-            alt: block_settings.mark_text
+            alt: ''
         }}
-      {%- else -%}
+      {%- endif -%}
+      {%- if block_settings.mark_text != blank -%}
         <span class="clinician-proof__mark-text type-h6">{{ block_settings.mark_text | escape }}</span>
+      {%- endif -%}
+      {%- if block_settings.mark_image != blank -%}
+        {{
+          block_settings.mark_image
+          | image_url: width: 120
+          | image_tag:
+            widths: '60, 120',
+            sizes: '24px',
+            loading: 'lazy',
+            class: 'clinician-proof__mark-image clinician-proof__mark-image--mirror',
+            alt: '',
+            aria-hidden: 'true'
+        }}
       {%- endif -%}
     </div>
   {%- endif -%}
@@ -101,6 +115,14 @@
     display: block;
     block-size: var(--space-24);
     inline-size: auto;
+  }
+
+  .clinician-proof__mark {
+    gap: var(--space-4);
+  }
+
+  .clinician-proof__mark-image--mirror {
+    transform: scaleX(-1);
   }
 
   .clinician-proof__mark-text {

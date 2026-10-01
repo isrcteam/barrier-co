@@ -1,0 +1,32 @@
+{
+  "the-30-the-everyday": [
+    {
+      "handle": "the-30-three-month",
+      "fields": {
+        "title": "3 Month Subscription",
+        "selling_plan_name": "",
+        "summary": "One cloth delivers a full dose of clinical-grade hydration.",
+        "timeline": [
+          "1st week delivery: Tear open. Unfold.",
+          "4th week delivery: One cloth delivers a full dose of clinical-grade hydration.",
+          "8th week delivery: No rinsing. No layering."
+        ],
+        "perks": ["Free 8 packs", "Free travel bag gift"],
+        "is_recommended": true,
+        "days_per_delivery": 90
+      }
+    },
+    {
+      "handle": "the-30-one-month",
+      "fields": {
+        "title": "1 Month Subscription",
+        "selling_plan_name": "",
+        "summary": "One cloth delivers a full dose of clinical-grade hydration.",
+        "timeline": [],
+        "perks": [],
+        "is_recommended": false,
+        "days_per_delivery": 30
+      }
+    }
+  ]
+}

@@ -1,79 +1,385 @@
 {
   "metaobjects": [
     {
-      "type": "faq_item", "name": "FAQ item", "display": "question",
+      "type": "faq_item",
+      "name": "FAQ item",
+      "display": "question",
       "fields": [
-        { "key": "question", "name": "Question", "type": "single_line_text_field", "required": true },
-        { "key": "answer", "name": "Answer", "type": "rich_text_field", "required": true }
+        {
+          "key": "question",
+          "name": "Question",
+          "type": "single_line_text_field",
+          "required": true
+        },
+        {
+          "key": "answer",
+          "name": "Answer",
+          "type": "rich_text_field",
+          "required": true
+        }
       ]
     },
     {
-      "type": "testimonial", "name": "Testimonial", "display": "name",
+      "type": "testimonial",
+      "name": "Testimonial",
+      "display": "name",
       "fields": [
-        { "key": "name", "name": "Name", "type": "single_line_text_field", "required": true },
-        { "key": "quote", "name": "Quote", "type": "multi_line_text_field", "required": true },
-        { "key": "role", "name": "Role", "type": "single_line_text_field" },
-        { "key": "avatar", "name": "Avatar", "type": "file_reference", "file_types": ["Image"] },
-        { "key": "rating", "name": "Rating", "type": "rating", "scale": [1, 5] }
+        {
+          "key": "name",
+          "name": "Name",
+          "type": "single_line_text_field",
+          "required": true
+        },
+        {
+          "key": "quote",
+          "name": "Quote",
+          "type": "multi_line_text_field",
+          "required": true
+        },
+        {
+          "key": "role",
+          "name": "Role",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "avatar",
+          "name": "Avatar",
+          "type": "file_reference",
+          "file_types": [
+            "Image"
+          ]
+        },
+        {
+          "key": "rating",
+          "name": "Rating",
+          "type": "rating",
+          "scale": [
+            1,
+            5
+          ]
+        }
       ]
     },
     {
-      "type": "recognition", "name": "Recognition", "display": "title",
+      "type": "recognition",
+      "name": "Recognition",
+      "display": "title",
       "fields": [
-        { "key": "title", "name": "Title", "type": "single_line_text_field", "required": true },
-        { "key": "description", "name": "Description", "type": "multi_line_text_field", "required": true },
-        { "key": "logo", "name": "Logo", "type": "file_reference", "file_types": ["Image"], "required": true }
+        {
+          "key": "title",
+          "name": "Title",
+          "type": "single_line_text_field",
+          "required": true
+        },
+        {
+          "key": "description",
+          "name": "Description",
+          "type": "multi_line_text_field",
+          "required": true
+        },
+        {
+          "key": "logo",
+          "name": "Logo",
+          "type": "file_reference",
+          "file_types": [
+            "Image"
+          ],
+          "required": true
+        }
       ]
     },
     {
-      "type": "clinical_result", "name": "Clinical result", "display": "title",
+      "type": "clinical_result",
+      "name": "Clinical result",
+      "display": "title",
       "fields": [
-        { "key": "title", "name": "Title", "type": "single_line_text_field", "required": true },
-        { "key": "value", "name": "Value", "type": "number_integer", "required": true },
-        { "key": "unit", "name": "Unit", "type": "single_line_text_field" }
+        {
+          "key": "title",
+          "name": "Title",
+          "type": "single_line_text_field",
+          "required": true
+        },
+        {
+          "key": "value",
+          "name": "Value",
+          "type": "number_integer",
+          "required": true
+        },
+        {
+          "key": "unit",
+          "name": "Unit",
+          "type": "single_line_text_field"
+        }
       ]
     },
     {
-      "type": "ingredient", "name": "Ingredient", "display": "name",
+      "type": "ingredient",
+      "name": "Ingredient",
+      "display": "name",
       "fields": [
-        { "key": "name", "name": "Name", "type": "single_line_text_field", "required": true },
-        { "key": "image", "name": "Image", "type": "file_reference", "file_types": ["Image"], "required": true },
-        { "key": "benefits", "name": "Benefits", "type": "list.single_line_text_field" }
+        {
+          "key": "name",
+          "name": "Name",
+          "type": "single_line_text_field",
+          "required": true
+        },
+        {
+          "key": "image",
+          "name": "Image",
+          "type": "file_reference",
+          "file_types": [
+            "Image"
+          ],
+          "required": true
+        },
+        {
+          "key": "benefits",
+          "name": "Benefits",
+          "type": "list.single_line_text_field"
+        }
       ]
     },
     {
-      "type": "ugc_video", "name": "UGC video", "display": "title",
+      "type": "ugc_video",
+      "name": "UGC video",
+      "display": "title",
       "fields": [
-        { "key": "title", "name": "Title", "type": "single_line_text_field", "required": true },
-        { "key": "video", "name": "Video", "type": "file_reference", "file_types": ["Video"], "required": true },
-        { "key": "poster", "name": "Poster", "type": "file_reference", "file_types": ["Image"] }
+        {
+          "key": "title",
+          "name": "Title",
+          "type": "single_line_text_field",
+          "required": true
+        },
+        {
+          "key": "video",
+          "name": "Video",
+          "type": "file_reference",
+          "file_types": [
+            "Video"
+          ],
+          "required": true
+        },
+        {
+          "key": "poster",
+          "name": "Poster",
+          "type": "file_reference",
+          "file_types": [
+            "Image"
+          ]
+        }
       ]
     },
     {
-      "type": "before_after", "name": "Before and after", "display": "title",
+      "type": "before_after",
+      "name": "Before and after",
+      "display": "title",
       "fields": [
-        { "key": "title", "name": "Title", "type": "single_line_text_field", "required": true },
-        { "key": "before_image", "name": "Before image", "type": "file_reference", "file_types": ["Image"], "required": true },
-        { "key": "after_image", "name": "After image", "type": "file_reference", "file_types": ["Image"], "required": true },
-        { "key": "before_label", "name": "Before label", "type": "single_line_text_field" },
-        { "key": "after_label", "name": "After label", "type": "single_line_text_field" },
-        { "key": "testimonial", "name": "Testimonial", "type": "metaobject_reference", "metaobject": "testimonial" }
+        {
+          "key": "title",
+          "name": "Title",
+          "type": "single_line_text_field",
+          "required": true
+        },
+        {
+          "key": "before_image",
+          "name": "Before image",
+          "type": "file_reference",
+          "file_types": [
+            "Image"
+          ],
+          "required": true
+        },
+        {
+          "key": "after_image",
+          "name": "After image",
+          "type": "file_reference",
+          "file_types": [
+            "Image"
+          ],
+          "required": true
+        },
+        {
+          "key": "before_label",
+          "name": "Before label",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "after_label",
+          "name": "After label",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "testimonial",
+          "name": "Testimonial",
+          "type": "metaobject_reference",
+          "metaobject": "testimonial"
+        }
+      ]
+    },
+    {
+      "type": "subscription_plan",
+      "name": "Subscription plan",
+      "display": "title",
+      "fields": [
+        {
+          "key": "title",
+          "name": "Title",
+          "type": "single_line_text_field",
+          "required": true
+        },
+        {
+          "key": "selling_plan_name",
+          "name": "Selling plan name",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "summary",
+          "name": "Summary",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "timeline",
+          "name": "Delivery timeline",
+          "type": "list.single_line_text_field"
+        },
+        {
+          "key": "perks",
+          "name": "Perks",
+          "type": "list.single_line_text_field"
+        },
+        {
+          "key": "is_recommended",
+          "name": "Recommended",
+          "type": "boolean"
+        },
+        {
+          "key": "days_per_delivery",
+          "name": "Days per delivery",
+          "type": "number_integer"
+        }
       ]
     }
   ],
   "metafields": [
-    { "owner": "PRODUCT", "namespace": "custom", "key": "highlights", "name": "Highlights", "type": "list.single_line_text_field", "description": "Ticked selling points under the product description on the PDP. Entered by client." },
-    { "owner": "PRODUCT", "namespace": "custom", "key": "media_badge", "name": "Media badge", "type": "single_line_text_field", "description": "Short label on the main product image, for example Flagship. Entered by client." },
-    { "owner": "PRODUCT", "namespace": "custom", "key": "how_to_use", "name": "How to use", "type": "rich_text_field", "description": "Accordion row on the PDP and featured product. Entered by client." },
-    { "owner": "PRODUCT", "namespace": "custom", "key": "claims", "name": "Claims", "type": "rich_text_field", "description": "Accordion row on the PDP and featured product. Entered by client." },
-    { "owner": "PRODUCT", "namespace": "custom", "key": "size_and_pack_details", "name": "Size and pack details", "type": "rich_text_field", "description": "Accordion row on the PDP and featured product. Entered by client." },
-    { "owner": "PRODUCT", "namespace": "custom", "key": "full_ingredient_list", "name": "Full ingredient list", "type": "rich_text_field", "description": "Full ingredient list in the product accordion. Entered by client." },
-    { "owner": "PRODUCT", "namespace": "custom", "key": "ingredients", "name": "Ingredients", "type": "list.metaobject_reference", "metaobject": "ingredient", "description": "Key ingredients section on the PDP. Entered by client." },
-    { "owner": "PRODUCT", "namespace": "custom", "key": "faq_items", "name": "FAQ items", "type": "list.metaobject_reference", "metaobject": "faq_item", "description": "Most asked questions on the PDP. Entered by client." },
-    { "owner": "PRODUCT", "namespace": "custom", "key": "testimonials", "name": "Testimonials", "type": "list.metaobject_reference", "metaobject": "testimonial", "description": "Expert quotes in the PDP buy box. Entered by client." },
-    { "owner": "PRODUCT", "namespace": "custom", "key": "recognitions", "name": "Recognitions", "type": "list.metaobject_reference", "metaobject": "recognition", "description": "Seals and endorsements in the PDP buy box. Entered by client." },
-    { "owner": "PRODUCT", "namespace": "custom", "key": "clinical_results", "name": "Clinical results", "type": "list.metaobject_reference", "metaobject": "clinical_result", "description": "Clinically proven stats on the PDP. Entered by client." },
-    { "owner": "PRODUCT", "namespace": "custom", "key": "ugc_videos", "name": "UGC videos", "type": "list.metaobject_reference", "metaobject": "ugc_video", "description": "Real use videos on the PDP. Entered by client." },
-    { "owner": "PRODUCT", "namespace": "custom", "key": "before_afters", "name": "Before and afters", "type": "list.metaobject_reference", "metaobject": "before_after", "description": "Before and after comparisons on the PDP. Entered by client." }
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "highlights",
+      "name": "Highlights",
+      "type": "list.single_line_text_field",
+      "description": "Ticked selling points under the product description on the PDP. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "media_badge",
+      "name": "Media badge",
+      "type": "single_line_text_field",
+      "description": "Short label on the main product image, for example Flagship. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "how_to_use",
+      "name": "How to use",
+      "type": "rich_text_field",
+      "description": "Accordion row on the PDP and featured product. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "claims",
+      "name": "Claims",
+      "type": "rich_text_field",
+      "description": "Accordion row on the PDP and featured product. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "size_and_pack_details",
+      "name": "Size and pack details",
+      "type": "rich_text_field",
+      "description": "Accordion row on the PDP and featured product. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "full_ingredient_list",
+      "name": "Full ingredient list",
+      "type": "rich_text_field",
+      "description": "Full ingredient list in the product accordion. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "ingredients",
+      "name": "Ingredients",
+      "type": "list.metaobject_reference",
+      "metaobject": "ingredient",
+      "description": "Key ingredients section on the PDP. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "faq_items",
+      "name": "FAQ items",
+      "type": "list.metaobject_reference",
+      "metaobject": "faq_item",
+      "description": "Most asked questions on the PDP. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "testimonials",
+      "name": "Testimonials",
+      "type": "list.metaobject_reference",
+      "metaobject": "testimonial",
+      "description": "Expert quotes in the PDP buy box. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "recognitions",
+      "name": "Recognitions",
+      "type": "list.metaobject_reference",
+      "metaobject": "recognition",
+      "description": "Seals and endorsements in the PDP buy box. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "clinical_results",
+      "name": "Clinical results",
+      "type": "list.metaobject_reference",
+      "metaobject": "clinical_result",
+      "description": "Clinically proven stats on the PDP. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "ugc_videos",
+      "name": "UGC videos",
+      "type": "list.metaobject_reference",
+      "metaobject": "ugc_video",
+      "description": "Real use videos on the PDP. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "before_afters",
+      "name": "Before and afters",
+      "type": "list.metaobject_reference",
+      "metaobject": "before_after",
+      "description": "Before and after comparisons on the PDP. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "subscription_plans",
+      "name": "Subscription plans",
+      "type": "list.metaobject_reference",
+      "metaobject": "subscription_plan",
+      "description": "Copy for each Recharge plan card in the PDP buy box (summary, delivery timeline, perks, recommended, days for the per-day price). Matched to the Recharge plan by Selling plan name, else by order. Entered by client."
+    }
   ]
 }

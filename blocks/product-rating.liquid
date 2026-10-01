@@ -6,7 +6,7 @@
 {% enddoc %}
 {%- liquid
   assign product = closest.product
-  assign rating = product.metafields.reviews.rating.value.rating | default: 0
+  assign rating = product.metafields.reviews.rating.value.rating | default: 0 | times: 1.0
   assign rating_count = product.metafields.reviews.rating_count.value | default: 0
   assign rating_label = rating | round: 1 | append: ''
 

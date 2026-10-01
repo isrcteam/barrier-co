@@ -88,13 +88,13 @@ Index:
 **Figma file:** Subscription component 978:3703 (WEB 978:3702, MOB 978:3701) · **Animation:** n/a
 **Description & purpose:** radio cards for each selling plan ("3 month subscription", "1 month subscription"), with a "Recommended" tag, description, price, "Save $X vs try once", the per-day price, and the plan description (delivery timeline, perks). A "Try once for $X" link selects one-time purchase.
 **Requirements:**
-- Native `selling_plan_groups`, so it works with any subscription app (D-2).
+- Native `selling_plan_groups` created by Recharge (D-2). Card copy (title, summary, timeline, perks, recommended, days) comes from `product.metafields.custom.subscription_plans`, matched by Recharge plan name or by order.
 - A fieldset of radio inputs named `selling_plan`, inside the product form (`form="{{ product_form_id }}"`).
 - When a plan changes, it dispatches the event Horizon's `product-form`/`product-price` listens to, so the add-to-cart label price updates.
 - Savings are calculated from `selling_plan_allocation.compare_at_price` against `price`. The per-day price is the plan price divided by the plan's day count (from a block setting per plan position, default 90 and 30).
 - With no selling plans it renders nothing, and the product falls back to one-time purchase.
 - States: selected, unselected, focus-visible, disabled when the variant is unavailable.
-**Dynamic data source:** `product.selling_plan_groups`, `variant.selling_plan_allocations`.
+**Dynamic data source:** `product.selling_plan_groups`, `variant.selling_plan_allocations`, `product.metafields.custom.subscription_plans`.
 **Merchant configuration:** heading ("Choose your subscription"), recommended plan position (number 1–3), recommended label, show per-day price, show one-time link, one-time label ("Try once for [price]").
 
 ### recognition-slider

@@ -20,9 +20,10 @@ Content rule: content that belongs to one product sits in a product metafield. C
 | Product | custom.clinical_results | none | list.metaobject_reference → clinical_result | Clinical results | Study percentages. | "Clinically proven" stats on PDP | Client | New |
 | Product | custom.ugc_videos | none | list.metaobject_reference → ugc_video | UGC videos | Customer videos. | PDP "Real use. Real routines." | Client | New |
 | Product | custom.before_afters | none | list.metaobject_reference → before_after | Before and afters | Result comparisons. | PDP before/after | Client | New |
+| Product | custom.subscription_plans | none, Recharge has no card copy | list.metaobject_reference → subscription_plan | Subscription plans | Copy for each Recharge plan card, matched by plan name or order. | PDP purchase options | Client | New (2026-10-01) |
 | Product | reviews.rating, reviews.rating_count | Standard (reviews) | rating, number_integer | Product rating, Rating count | Written by Judge.me when "Sync to Shopify" is on. | PDP stars, product cards, JSON-LD | Judge.me | Enabled by the app, not created by us |
 
-The subscription plan copy (delivery timeline, "Free 8 packs | Free travel bag gift") comes from each selling plan's name and description, not from a metafield, so it stays correct per plan.
+Subscriptions run on **Recharge** (Jeet, 2026-10-01), which creates native Shopify selling plans for prices, savings and checkout. The card copy does not come from Recharge: it comes from `custom.subscription_plans`. Each entry is matched to a Recharge plan by its "Selling plan name", or by order when that field is empty. If a product has no entries, the block falls back to the plan's description.
 
 ## Metaobjects
 Every type: storefront access on, "Publishable" on so placeholder entries import as Draft and never render.
@@ -76,6 +77,18 @@ Display name field: title
 | video | file_reference (video) | yes | Video card | Client |
 | poster | file_reference (image) | no | Video poster, before playing | Client |
 
+### subscription_plan (Subscription plan)
+Display name field: title
+| Field key | Field type | Required | Renders in | Entered by |
+| --- | --- | --- | --- | --- |
+| title | single_line_text_field | yes | Card heading, for example "3 Month Subscription" (overrides the Recharge plan name) | Client |
+| selling_plan_name | single_line_text_field | no | Not shown. The exact Recharge plan name this entry belongs to; empty means match by order | Client |
+| summary | single_line_text_field | no | Line under the heading | Client |
+| timeline | list.single_line_text_field | no | Delivery timeline bullets | Client |
+| perks | list.single_line_text_field | no | Perks line, joined with " \| " | Client |
+| is_recommended | boolean | no | "Recommended" tag and default selection | Client |
+| days_per_delivery | number_integer | no | Divisor for the per-day price | Client |
+
 ### before_after (Before and after)
 Display name field: title
 | Field key | Field type | Required | Renders in | Entered by |
@@ -104,6 +117,6 @@ Not built yet: there are no products in the store, and the Figma copy is placeho
 | # | Decision | Options | Who decides | Status |
 | --- | --- | --- | --- | --- |
 | D-1 | Create the two products ("The 30. The Everyday.", "The 8.") so the PDP can be built and QA'd | Create, leave unpublished; publish to Online Store; build without products | Jeet | 2026-10-01 Jeet: create them unpublished, Jeet publishes |
-| D-2 | Subscription app for selling plans | Shopify Subscriptions (free, native); Recharge; Skio; other | Client | Open: theme builds on native selling plans, which every app uses |
+| D-2 | Subscription app for selling plans | Shopify Subscriptions; Recharge; Skio; other | Client | 2026-10-01 Jeet: Recharge. Card copy from custom.subscription_plans |
 | D-3 | Reviews and Q&A | Judge.me (already installed) styled to the design; another app | Client | Assumed Judge.me |
 | D-4 | Instagram feed source | App (for example Instafeed); manual image blocks | Client | Assumed manual image blocks with links |

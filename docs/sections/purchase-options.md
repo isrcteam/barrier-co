@@ -41,3 +41,14 @@ From docs/architecture.md (purchase-options). Figma: Subscription component 978:
 1. Set up subscriptions in your subscription app; each plan's name is the card title.
 2. In each plan's description, write the summary, then a blank line, then one delivery step per line, then a blank line, then the perks line.
 3. In the theme editor, add "Purchase options" above "Buy buttons". Set the heading, which plan is recommended and its label, the savings and per-day labels, the days each plan covers, the add to cart price label and the one-time label.
+
+
+### Reasoning, 2026-10-01: card copy from metafields (Recharge)
+- **What:** plan card copy (title, summary, delivery timeline, perks, recommended tag, per-day divisor) now reads from `product.metafields.custom.subscription_plans`, a list of `subscription_plan` metaobjects.
+- **Why:** the client uses Recharge. Recharge supplies the selling plans and prices but not this copy, and Jeet asked for it to come from metafields.
+- **Matching:** each entry matches a plan by "Selling plan name" (case-insensitive). With that field empty, it matches by position. An entry that names a different plan never matches by position.
+- **Alternatives rejected:**
+  - Parsing the selling plan description: Recharge controls that text, and it isn't editable per card.
+  - Block settings: they'd be per template, not per product.
+- **Impact:** with no entries, the old description parsing still applies.
+- **Approver:** Jeet (direct instruction).

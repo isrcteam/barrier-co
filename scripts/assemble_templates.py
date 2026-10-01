@@ -7,7 +7,7 @@ Run once to create the JSON for the first push; after that the theme editor owns
 and `shopify theme pull --only templates/*.json ...` brings changes back.
   python3 scripts/assemble_templates.py
 """
-import json, os, re
+import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 P = lambda *a: os.path.join(ROOT, *a)
@@ -20,6 +20,14 @@ HEADER = "/*\n * ------------------------------------------------------------\n 
 FLAGSHIP = "the-30-the-everyday"
 TRAVEL = "the-8-made-to-go-where-you-go"
 PALETTE = lambda key: "{{ settings.color_palette.%s }}" % key
+
+
+SEED = json.load(open(P("docs", "data", "seed-result.json")))
+
+
+def mo(mtype, handle):
+    assert f"{mtype}/{handle}" in SEED["metaobjects"], f"unknown metaobject {mtype}/{handle}"
+    return handle
 
 
 def img(slot, variant="desktop", fallback=None):
@@ -72,9 +80,34 @@ def normalise_blocks(blocks, prefix):
     return out, order
 
 
+LOCALE = None
+
+
+def translate(value):
+    global LOCALE
+    if isinstance(value, str) and value.startswith("t:"):
+        if LOCALE is None:
+            LOCALE = load_jsonc_full(P("locales", "en.default.schema.json"))
+        node = LOCALE
+        for part in value[2:].split("."):
+            node = node.get(part) if isinstance(node, dict) else None
+        return node if isinstance(node, str) else value
+    if isinstance(value, dict):
+        return {k: translate(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [translate(v) for v in value]
+    return value
+
+
+def load_jsonc_full(path):
+    sys.path.insert(0, P("scripts"))
+    from merge_locale_fragments import strip_jsonc
+    return json.loads(strip_jsonc(open(path, encoding="utf-8").read()))
+
+
 def from_preset(name, preset_index=0, settings=None, prefix=None):
     sch = schema("sections", name)
-    preset = sch["presets"][preset_index]
+    preset = translate(sch["presets"][preset_index])
     blocks, order = normalise_blocks(preset.get("blocks"), prefix or name.replace("-", "_"))
     if isinstance(preset.get("blocks"), dict) and preset.get("block_order"):
         order = preset["block_order"]
@@ -130,7 +163,7 @@ def home():
     sections["results"] = from_preset("clinical-results", 0, {
         "image": img("stats_background", "desktop", "Results_Section_1.jpg"),
         "image_mobile": img("stats_background", "mobile", "Results_section_-_mobile.jpg"),
-        "results": [f"clinical_result.{h}" for h in ["improved-facial-appearance", "reduced-fine-lines", "increased-skin-hydration", "improved-skin-elasticity"]],
+        "results": [mo("clinical_result", h) for h in ["improved-facial-appearance", "reduced-fine-lines", "increased-skin-hydration", "improved-skin-elasticity"]],
     })
     sections["proof_icons"] = from_preset("feature-icons", 0)
     set_block_images(sections["proof_icons"], "icon", [f"feature_icon_{i}" for i in range(1, 5)])
@@ -145,7 +178,7 @@ def home():
         sections["lifestyle"]["blocks"][mid]["settings"]["product"] = TRAVEL
     sections["before_after"] = from_preset("before-after", 0, {
         "product": TRAVEL,
-        "comparisons": ["before_after.the-30-day-14"],
+        "comparisons": [mo("before_after", "the-30-day-14")],
         "card_background_color": TOKENS["linen"],
     })
     return {"sections": sections, "order": list(sections)}
@@ -223,7 +256,7 @@ def product():
         del main["blocks"][k]
 
     sections = {"breadcrumb_bar": {"type": "section", "settings": {"padding-block-start": 8, "padding-block-end": 8},
-                                   "blocks": {"breadcrumbs": {"type": "breadcrumbs", "settings": {}}}, "block_order": ["breadcrumbs"]},
+                                   "blocks": {"breadcrumbs": {"type": "breadcrumbs", "settings": {"show_collection": False}}}, "block_order": ["breadcrumbs"]},
                 "main": main}
     sections["hotspots"] = from_preset("benefit-hotspots", 0, {"panel_color": TOKENS["linen"], "panel_text_color": TOKENS["sepia"],
                                                                "product_image": img("pdp_hotspot_cloth"), "photo": img("pdp_benefit_photo")})
@@ -235,8 +268,9 @@ def product():
     sections["film"] = from_preset("video-banner", 0, {"poster_desktop": img("video_banner_poster"), "poster_mobile": img("video_banner_poster", "mobile")})
     sections["before_after"] = from_preset("before-after", 0, {"use_product_data": True, "card_background_color": TOKENS["linen"]})
     sections["reviews"] = {"type": "section", "settings": {"padding-block-start": 80, "padding-block-end": 80},
-                           "blocks": {"reviews_heading": {"type": "text", "settings": {"text": "<h2>Reviews</h2>", "type_preset": "h1"}}},
-                           "block_order": ["reviews_heading"]}
+                           "blocks": {"reviews_heading": {"type": "text", "settings": {"text": "<h2>Reviews</h2>", "type_preset": "h1"}},
+                                      "judgeme_reviews": {"type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8", "settings": {}}},
+                           "block_order": ["reviews_heading", "judgeme_reviews"]}
     sections["faq"] = from_preset("faq-panel", 0, {"use_product_data": True, "divider_color": TOKENS["fossil"],
                                                   "image": img("faq_background"), "image_mobile": img("faq_background", "mobile")})
     tpl["sections"] = sections
@@ -273,7 +307,10 @@ def footer_group():
     sections["social"] = from_preset("social-gallery", 0, {"background_color": TOKENS["linen"], "profile_link": "https://www.instagram.com/"})
     set_block_images(sections["social"], "image", [f"insta_{i}" for i in range(1, 7)])
     sections["logos"] = from_preset("logo-list", 0)
-    set_block_images(sections["logos"], "image", ["logo_equinox", "logo_delta_one", "logo_credo"])
+    set_block_images(sections["logos"], "image", ["logo_equinox", "logo_delta_one", "logo_credo"] * 2)
+    names = ["Equinox", "Delta One", "Credo"] * 2
+    for key, name in zip(sections["logos"].get("block_order", []), names):
+        sections["logos"]["blocks"][key]["settings"]["alt"] = name
     footer = g["sections"]["footer"]
     footer["settings"].update({"background_color": PALETTE("foreground"), "section_width": "page-width", "gap": 56,
                                "padding-block-start": 56, "padding-block-end": 0})

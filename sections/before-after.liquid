@@ -6,7 +6,10 @@
     assign comparisons = product.metafields.custom.before_afters.value
   endif
 
-  assign comparison_count = comparisons.size | default: 0
+  assign comparison_count = 0
+  for counted_item in comparisons
+    assign comparison_count = comparison_count | plus: 1
+  endfor
   if comparison_count == 0 and request.design_mode
     assign comparison_count = 1
   endif
@@ -71,10 +74,15 @@
     {%- if comparison_count > 0 -%}
       <div class="before-after__slider">
         {%- capture slides -%}
-          {%- for i in (1..comparison_count) -%}
+          {%- liquid
+            assign loop_source = comparisons
+            if comparisons == blank
+              assign loop_source = '1' | split: ','
+            endif
+          -%}
+          {%- for entry in loop_source -%}
             {%- liquid
               assign index0 = forloop.index0
-              assign entry = comparisons[index0]
               assign before_image = entry.before_image.value
               assign after_image = entry.after_image.value
               assign before_label = entry.before_label.value | default: before_default
@@ -121,7 +129,7 @@
                 </div>
 
                 {%- if testimonial != blank -%}
-                  {%- assign rating = testimonial.rating.value.rating -%}
+                  {%- assign rating = testimonial.rating.value.rating | default: 0 | times: 1.0 -%}
                   {%- assign avatar = testimonial.avatar.value -%}
                   <figure class="before-after__quote color-custom-{{ card_scope }}">
                     <blockquote class="before-after__quote-text type-body">

@@ -139,7 +139,7 @@ Link to seo.md. Redirect count, canonical and noindex rules, JSON-LD types. New 
 | T-29 | Copy (Content): Placeholder or typo. Value £ and $ mixed; "reformated"; "1Month"; "12,00 Reviews" | Client | The store currency is USD, so prices come from Shopify; typos fixed in schema defaults | Assumed |
 | T-30 | Hero image overlay (PDP): Two options. Value OP1 seal chip vs OP2 "Save 25%" + NEA card | Jeet | Build OP2 (it matches the main PDP frame) with the badge from `custom.media_badge`; the seal chip stays an option | Open |
 | D-1 | Products to build against | Jeet | Created by Claude, unpublished; Jeet publishes (2026-10-01) | Answered |
-| D-2 | Subscription app for selling plans | Client | purchase-options builds on native selling plans; untestable until an app is installed | Open |
+| D-2 | Subscription app for selling plans | Client | Recharge (Jeet, 2026-10-01). Prices from Recharge selling plans, card copy from custom.subscription_plans metaobjects. Recharge plan names still to be entered in each entry's Selling plan name | Answered |
 | D-3 | Reviews and Q&A app | Client | Judge.me (installed) styled to the design | Assumed |
 | D-4 | Instagram feed source | Client | Manual image tiles with links | Assumed |
 | D-5 | "The 8" price and "Starts from" figures ($27.99/mo, $24.99/mo, $68.99) disagree across frames | Client | Prices come from Shopify and the selling plans; design figures treated as placeholders | Open |

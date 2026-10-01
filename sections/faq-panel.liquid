@@ -15,7 +15,11 @@
   assign from_product = false
   if settings_ref.use_product_data and product != blank
     assign product_items = product.metafields.custom.faq_items.value
-    if product_items.size > 0
+    assign product_items_count = 0
+    for counted_item in product_items
+      assign product_items_count = product_items_count | plus: 1
+    endfor
+    if product_items_count > 0
       assign items = product_items
       assign from_product = true
     endif
@@ -24,8 +28,12 @@
     assign items = settings_ref.faq_items
   endif
 
+  assign items_count = 0
+  for counted_item in items
+    assign items_count = items_count | plus: 1
+  endfor
   assign show_placeholders = false
-  if items == blank or items.size == 0
+  if items_count == 0
     if request.design_mode
       assign show_placeholders = true
     endif
@@ -40,7 +48,7 @@
   assign heading_tag = settings_ref.heading_tag | default: 'h2'
 -%}
 
-{%- if items.size > 0 or show_placeholders -%}
+{%- if items_count > 0 or show_placeholders -%}
   {% render 'contrast-override',
     background_color: section.settings.background_color,
     section_id: section.id
@@ -56,16 +64,16 @@
           {%- if image_mobile != image and image != blank -%}
             <source
               media="(min-width: 990px)"
-              srcset="{{ image | image_url: width: 1100 }} 1100w, {{ image | image_url: width: 1500 }} 1500w, {{ image | image_url: width: 1920 }} 1920w, {{ image | image_url: width: 2880 }} 2880w"
+              srcset="{{ image | image_url: width: 1100 }} 1100w, {{ image | image_url: width: 1500 }} 1500w, {{ image | image_url: width: 1920 }} 1920w, {{ image | image_url: width: 2880 }} 2880w, {{ image | image_url: width: 3840 }} 3840w"
               sizes="100vw"
             >
           {%- endif -%}
           {%- assign base_image = image_mobile | default: image -%}
           {{
             base_image
-            | image_url: width: 2880
+            | image_url: width: 3840
             | image_tag:
-              widths: '390, 750, 1100, 1500, 1920, 2880',
+              widths: '390, 750, 1100, 1500, 1920, 2880, 3840',
               sizes: '100vw',
               loading: 'lazy',
               alt: '',

@@ -15,12 +15,20 @@
   if settings_ref.use_product_data and product != blank
     assign items = product.metafields.custom.ingredients.value
   endif
-  if items == blank or items.size == 0
+  assign items_count = 0
+  for counted_item in items
+    assign items_count = items_count | plus: 1
+  endfor
+  if items_count == 0
     assign items = settings_ref.ingredients
+    assign items_count = 0
+    for counted_item in items
+      assign items_count = items_count | plus: 1
+    endfor
   endif
 
   assign show_placeholders = false
-  if items == blank or items.size == 0
+  if items_count == 0
     if request.design_mode
       assign show_placeholders = true
     endif
@@ -31,7 +39,7 @@
   assign image_sizes = '(min-width: 990px) 272px, 112px'
 -%}
 
-{%- if items.size > 0 or show_placeholders -%}
+{%- if items_count > 0 or show_placeholders -%}
   {% render 'contrast-override',
     background_color: section.settings.background_color,
     section_id: section.id

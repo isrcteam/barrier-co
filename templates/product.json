@@ -18,7 +18,9 @@
       "blocks": {
         "breadcrumbs": {
           "type": "breadcrumbs",
-          "settings": {}
+          "settings": {
+            "show_collection": false
+          }
         }
       },
       "block_order": [
@@ -110,10 +112,10 @@
               "type": "clinician-proof",
               "settings": {
                 "background_color": "#F0ECE1",
-                "mark_image": null,
-                "avatar_1": null,
-                "avatar_2": null,
-                "avatar_3": null
+                "mark_image": "shopify://shop_images/clinician-mark.svg",
+                "avatar_1": "shopify://shop_images/clinician-avatar-1.jpg",
+                "avatar_2": "shopify://shop_images/clinician-avatar-2.jpg",
+                "avatar_3": "shopify://shop_images/clinician-avatar-3.jpg"
               }
             },
             "purchase": {
@@ -170,7 +172,7 @@
               "type": "promo-card",
               "settings": {
                 "background_color": "#FFFFFF",
-                "image": null
+                "image": "shopify://shop_images/promo-card-image.jpg"
               }
             },
             "quotes": {
@@ -285,17 +287,19 @@
     "hotspots": {
       "type": "benefit-hotspots",
       "settings": {
-        "heading": "t:text_defaults.benefit_hotspots_heading",
+        "heading": "Your whole routine. One cloth",
         "padding_same_mobile": false,
         "panel_color": "#F0ECE1",
-        "panel_text_color": "#695A43"
+        "panel_text_color": "#695A43",
+        "product_image": "shopify://shop_images/pdp-hotspot-cloth.jpg",
+        "photo": "shopify://shop_images/pdp-benefit-photo.jpg"
       },
       "blocks": {
         "benefit_hotspots_callout_1": {
           "type": "callout",
           "settings": {
-            "label": "t:text_defaults.callout_cleanse_label",
-            "text": "t:text_defaults.callout_cleanse_text",
+            "label": "Cleanse",
+            "text": "Lifts away impurities, sweat, and buildup without stripping — as effective as soap and water.",
             "x_position": 47,
             "y_position": 20,
             "line_length": 15
@@ -304,8 +308,8 @@
         "benefit_hotspots_callout_2": {
           "type": "callout",
           "settings": {
-            "label": "t:text_defaults.callout_hydrate_label",
-            "text": "t:text_defaults.callout_hydrate_text",
+            "label": "Hydrate",
+            "text": "3½ teaspoons of clinical-grade cream delivers deep moisture that lasts up to 72 hours.",
             "x_position": 39,
             "y_position": 40,
             "line_length": 35
@@ -314,8 +318,8 @@
         "benefit_hotspots_callout_3": {
           "type": "callout",
           "settings": {
-            "label": "t:text_defaults.callout_protect_label",
-            "text": "t:text_defaults.callout_protect_text",
+            "label": "Protect",
+            "text": "Mineral oil and dimethicone form an occlusive shield, locking in hydration and defending against environmental stress.",
             "x_position": 39,
             "y_position": 80,
             "line_length": 32
@@ -324,8 +328,8 @@
         "benefit_hotspots_message_4": {
           "type": "message",
           "settings": {
-            "heading": "t:text_defaults.benefit_message_heading",
-            "text": "t:text_defaults.benefit_message_text"
+            "heading": "One cloth. Three key benefits.",
+            "text": "Cleanses, hydrates, and protects skin with minimal friction for softer, calmer, healthier skin."
           }
         }
       },
@@ -388,14 +392,14 @@
         "padding-block-start-mobile": 0,
         "padding-block-end-mobile": 0,
         "use_product_data": true,
-        "image": "shopify://shop_images/Results_Section_1.jpg",
-        "image_mobile": "shopify://shop_images/Results_section_-_mobile.jpg"
+        "image": "shopify://shop_images/stats-background-desktop.jpg",
+        "image_mobile": "shopify://shop_images/stats-background-mobile.jpg"
       }
     },
     "ingredients": {
       "type": "ingredient-list",
       "settings": {
-        "heading": "t:text_defaults.ingredient_list_heading",
+        "heading": "Key ingredients",
         "use_product_data": true,
         "padding_same_mobile": false,
         "divider_color": "#BBAE9A"
@@ -412,7 +416,9 @@
         "padding_bottom": 0,
         "same_padding_mobile": false,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 0,
+        "poster_desktop": "shopify://shop_images/video-banner-poster-desktop.jpg",
+        "poster_mobile": "shopify://shop_images/video-banner-poster-mobile.jpg"
       }
     },
     "before_after": {
@@ -445,20 +451,27 @@
             "text": "<h2>Reviews</h2>",
             "type_preset": "h1"
           }
+        },
+        "judgeme_reviews": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
         }
       },
       "block_order": [
-        "reviews_heading"
+        "reviews_heading",
+        "judgeme_reviews"
       ]
     },
     "faq": {
       "type": "faq-panel",
       "settings": {
-        "heading": "t:text_defaults.faq_panel_heading",
-        "button_label": "t:text_defaults.faq_panel_button",
+        "heading": "Most asked questions",
+        "button_label": "Read more FAQ",
         "open_first": true,
         "use_product_data": true,
-        "divider_color": "#BBAE9A"
+        "divider_color": "#BBAE9A",
+        "image": "shopify://shop_images/faq-background.jpg",
+        "image_mobile": "shopify://shop_images/faq-background.jpg"
       }
     }
   },

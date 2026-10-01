@@ -6,7 +6,10 @@
     assign videos = product.metafields.custom.ugc_videos.value
   endif
 
-  assign video_count = videos.size | default: 0
+  assign video_count = 0
+  for counted_item in videos
+    assign video_count = video_count | plus: 1
+  endfor
   assign show_placeholders = false
   if video_count == 0 and request.design_mode
     assign show_placeholders = true
@@ -87,7 +90,7 @@
                 if testimonial != blank
                   assign quote_name = testimonial.name.value
                   assign quote_text = testimonial.quote.value
-                  assign quote_rating = testimonial.rating.value.rating
+                  assign quote_rating = testimonial.rating.value.rating | default: 0 | times: 1.0
                 else
                   assign quote_name = quote_block.settings.author
                   assign quote_text = quote_block.settings.quote

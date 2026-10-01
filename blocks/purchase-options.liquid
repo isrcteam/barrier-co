@@ -1,5 +1,5 @@
 {% doc %}
-  Subscription and one-time purchase choice for the product form, built on the product's native selling plans.
+  Subscription and one-time purchase choice for the product form, built on the product's native selling plans (Recharge creates them). Card copy comes from the product's custom.subscription_plans metaobjects, matched by plan name or position.
   Renders nothing when the product has no selling plans.
 
   @example
@@ -11,6 +11,13 @@
   assign variant = product.selected_or_first_available_variant
   assign form_id = 'BuyButtons-ProductForm-' | append: section.id
   assign allocations = variant.selling_plan_allocations
+  assign plan_entries = product.metafields.custom.subscription_plans.value
+  assign plan_entries_have_recommended = false
+  for entry in plan_entries
+    if entry.is_recommended.value == true
+      assign plan_entries_have_recommended = true
+    endif
+  endfor
 
   assign show_one_time = block_settings.show_one_time
   if product.requires_selling_plan
@@ -68,8 +75,27 @@
                 assign initial_button_label = button_label
               endif
 
+              assign plan_content = nil
+              assign plan_index = forloop.index0
+              assign plan_name_key = plan.name | downcase | strip
+              for entry in plan_entries
+                assign entry_key = entry.selling_plan_name.value | downcase | strip
+                if entry_key != blank and entry_key == plan_name_key
+                  assign plan_content = entry
+                  break
+                endif
+              endfor
+              if plan_content == nil and plan_entries.size > plan_index
+                assign plan_content = plan_entries[plan_index]
+                if plan_content.selling_plan_name.value != blank
+                  assign plan_content = nil
+                endif
+              endif
+
               assign is_recommended = false
-              if forloop.index == block_settings.recommended_position and block_settings.recommended_label != blank
+              if plan_content != nil and plan_content.is_recommended.value == true and block_settings.recommended_label != blank
+                assign is_recommended = true
+              elsif plan_entries_have_recommended == false and forloop.index == block_settings.recommended_position and block_settings.recommended_label != blank
                 assign is_recommended = true
               endif
 
@@ -86,13 +112,31 @@
                 else
                   assign plan_days = block_settings.days_3
               endcase
+              if plan_content.days_per_delivery.value > 0
+                assign plan_days = plan_content.days_per_delivery.value
+              endif
+
+              assign plan_label = plan.name
+              if plan_content.title.value != blank
+                assign plan_label = plan_content.title.value
+              endif
 
               assign summary = ''
               assign timeline = ''
               assign perks = ''
+              if plan_content != nil
+                assign summary = plan_content.summary.value | escape
+                for step in plan_content.timeline.value
+                  assign safe_step = step | escape
+                  assign timeline = timeline | append: '<li class="purchase-options__step">' | append: safe_step | append: '</li>'
+                endfor
+                assign perks = plan_content.perks.value | join: ' | ' | escape
+                assign description_lines = '' | split: ','
+              else
+                assign description_lines = plan.description | split: newline
+              endif
               assign part = 1
               assign part_has_text = false
-              assign description_lines = plan.description | split: newline
               for line in description_lines
                 assign text = line | strip
                 if text == blank
@@ -135,7 +179,7 @@
                     disabled
                   {% endif %}
                 >
-                <label for="{{ input_id }}" class="purchase-options__name type-h5">{{ plan.name | escape }}</label>
+                <label for="{{ input_id }}" class="purchase-options__name type-h5">{{ plan_label | escape }}</label>
               </div>
               {%- if is_recommended -%}
                 <span class="purchase-options__tag type-micro">{{ block_settings.recommended_label | escape }}</span>

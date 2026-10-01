@@ -1,0 +1,292 @@
+{
+  "home_hero": {
+    "desktop": "home-hero-desktop.jpg",
+    "mobile": "home-hero-mobile.jpg",
+    "alt": "Woman smoothing a cream-soaked cloth over her bare shoulder",
+    "source": "figma 965:1254 / 965:3083",
+    "width": 1402,
+    "height": 725,
+    "mobile_width": 626,
+    "mobile_height": 1122
+  },
+  "home_intro_video_poster": {
+    "desktop": "intro-video-poster-desktop.jpg",
+    "mobile": "intro-video-poster-mobile.jpg",
+    "alt": "Hand squeezing a soaked white cloth, droplets falling against a warm brown backdrop",
+    "source": "figma 965:1329 / 965:3147",
+    "width": 1659,
+    "height": 794,
+    "mobile_width": 993,
+    "mobile_height": 840
+  },
+  "routine_cleanse": {
+    "desktop": "routine-cleanse.jpg",
+    "mobile": null,
+    "alt": "Man pressing a small cloth to his cheek while looking in the mirror",
+    "source": "figma 965:1339",
+    "width": 728,
+    "height": 1092
+  },
+  "routine_hydrate": {
+    "desktop": "Benefits_3.jpg",
+    "mobile": null,
+    "alt": "Man seen from behind with water running down his back, one hand on his head",
+    "source": "existing",
+    "width": 1500,
+    "height": 1861
+  },
+  "routine_protect": {
+    "desktop": "routine-protect.jpg",
+    "mobile": null,
+    "alt": "Woman in a white vest pressing a towel to her face against a dark background",
+    "source": "figma 965:1339",
+    "width": 1254,
+    "height": 1254
+  },
+  "stats_background": {
+    "desktop": "stats-background-desktop.jpg",
+    "mobile": "stats-background-mobile.jpg",
+    "alt": "Close-up of warm brown skin across the neck, collarbone and shoulder",
+    "source": "figma 978:4052 / 978:4051",
+    "width": 736,
+    "height": 359,
+    "mobile_width": 636,
+    "mobile_height": 1104
+  },
+  "feature_icon_1": {
+    "desktop": "feature-icon-1.svg",
+    "mobile": null,
+    "alt": "100% proven: deep skin hydration in 30 minutes",
+    "source": "figma 965:1502",
+    "width": 99,
+    "height": 103
+  },
+  "feature_icon_2": {
+    "desktop": "feature-icon-2.svg",
+    "mobile": null,
+    "alt": "100% proven: helps reduce dryness",
+    "source": "figma 965:1502",
+    "width": 99,
+    "height": 103
+  },
+  "feature_icon_3": {
+    "desktop": "feature-icon-3.svg",
+    "mobile": null,
+    "alt": "100% proven: supports smoother-looking skin",
+    "source": "figma 965:1502",
+    "width": 99,
+    "height": 103
+  },
+  "feature_icon_4": {
+    "desktop": "feature-icon-4.svg",
+    "mobile": null,
+    "alt": "100% proven: improves skin texture",
+    "source": "figma 965:1502",
+    "width": 99,
+    "height": 103
+  },
+  "inset_banner": {
+    "desktop": "inset-banner-desktop.jpg",
+    "mobile": "inset-banner-mobile.jpg",
+    "alt": "Bare legs crossed on a white stool, one hand resting on a knee",
+    "source": "figma 965:1579 / 965:3294",
+    "width": 1659,
+    "height": 790,
+    "mobile_width": 574,
+    "mobile_height": 941
+  },
+  "lifestyle_1": {
+    "desktop": "lifestyle-1.jpg",
+    "mobile": null,
+    "alt": "Two seashells, one open, resting on pale coral in soft light",
+    "source": "figma 965:1587",
+    "width": 1505,
+    "height": 1045
+  },
+  "lifestyle_2": {
+    "desktop": "cloth-face-towel.jpg",
+    "mobile": null,
+    "alt": "Woman pressing a soft pink towel to her face with both hands",
+    "source": "existing",
+    "width": 1478,
+    "height": 1064
+  },
+  "lifestyle_3": {
+    "desktop": "lifestyle-3.jpg",
+    "mobile": null,
+    "alt": "The Barrier Cloth pack on its box, set on sandstone blocks",
+    "source": "figma 965:1587",
+    "width": 1102,
+    "height": 1427
+  },
+  "insta_1": {
+    "desktop": "insta-1.jpg",
+    "mobile": null,
+    "alt": "Woman lying on the sand in a crochet top, eyes closed in the sun",
+    "source": "figma 978:4340",
+    "width": 1024,
+    "height": 1536
+  },
+  "insta_2": {
+    "desktop": "insta-2.jpg",
+    "mobile": null,
+    "alt": "Portrait of a shirtless man with dark curly hair",
+    "source": "figma 978:4340",
+    "width": 1122,
+    "height": 1402
+  },
+  "insta_3": {
+    "desktop": "insta-3.jpg",
+    "mobile": null,
+    "alt": "Black-and-white photo of a woman drying her face with a white towel",
+    "source": "figma 978:4340",
+    "width": 1326,
+    "height": 1187
+  },
+  "insta_4": {
+    "desktop": "insta-4.jpg",
+    "mobile": null,
+    "alt": "Man seen from behind with his arm wrapped over his head",
+    "source": "figma 978:4340",
+    "width": 1335,
+    "height": 1178
+  },
+  "insta_5": {
+    "desktop": "insta-5.jpg",
+    "mobile": null,
+    "alt": "Black-and-white portrait of a woman in a white vest",
+    "source": "figma 978:4340",
+    "width": 1122,
+    "height": 1402
+  },
+  "insta_6": {
+    "desktop": "insta-6.jpg",
+    "mobile": null,
+    "alt": "Bare shoulders and wet hair against a clear blue sky",
+    "source": "figma 978:4340",
+    "width": 1326,
+    "height": 1187
+  },
+  "logo_equinox": {
+    "desktop": "logo-equinox.png",
+    "mobile": null,
+    "alt": "Equinox logo",
+    "source": "figma 965:1669",
+    "width": 1200,
+    "height": 159
+  },
+  "logo_delta_one": {
+    "desktop": "logo-delta-one.png",
+    "mobile": null,
+    "alt": "Delta One logo",
+    "source": "figma 965:1670",
+    "width": 828,
+    "height": 148
+  },
+  "logo_credo": {
+    "desktop": "logo-credo.png",
+    "mobile": null,
+    "alt": "Credo logo",
+    "source": "figma 965:1671",
+    "width": 187,
+    "height": 65
+  },
+  "brand_logo_light": {
+    "desktop": "brand-logo-light.png",
+    "mobile": null,
+    "alt": "The Barrier Co. logo",
+    "source": "figma 977:650",
+    "width": 1200,
+    "height": 106
+  },
+  "brand_logo_dark": {
+    "desktop": "brand-logo-dark.png",
+    "mobile": null,
+    "alt": "The Barrier Co. logo",
+    "source": "figma 977:630",
+    "width": 1200,
+    "height": 106
+  },
+  "pdp_hotspot_cloth": {
+    "desktop": "pdp-hotspot-cloth.jpg",
+    "mobile": null,
+    "alt": "A single Barrier Cloth curling over on a cream background",
+    "source": "figma 965:2198",
+    "width": 1672,
+    "height": 941
+  },
+  "pdp_benefit_photo": {
+    "desktop": "pdp-benefit-photo.jpg",
+    "mobile": null,
+    "alt": "Woman lying face down on the sand, hair tied up, bare back in the sun",
+    "source": "figma 965:2198",
+    "width": 1672,
+    "height": 941
+  },
+  "video_banner_poster": {
+    "desktop": "video-banner-poster-desktop.jpg",
+    "mobile": "video-banner-poster-mobile.jpg",
+    "alt": "Close-up of golden bubbles on an amber liquid",
+    "source": "figma 965:2346 / 965:3766",
+    "width": 1672,
+    "height": 941,
+    "mobile_width": 940,
+    "mobile_height": 941
+  },
+  "faq_background": {
+    "desktop": "faq-background.jpg",
+    "mobile": null,
+    "alt": "Bare feet stepping across sand beneath flowing cream fabric",
+    "source": "figma 978:4243",
+    "width": 1672,
+    "height": 941
+  },
+  "clinician_mark": {
+    "desktop": "clinician-mark.svg",
+    "mobile": null,
+    "alt": "Clinicians' Choice laurel",
+    "source": "figma 965:2075",
+    "width": 11,
+    "height": 21
+  },
+  "clinician_avatar_1": {
+    "desktop": "clinician-avatar-1.jpg",
+    "mobile": null,
+    "alt": "Grey-haired clinician in glasses and a white coat, arms crossed",
+    "source": "figma 965:2075",
+    "width": 480,
+    "height": 480
+  },
+  "clinician_avatar_2": {
+    "desktop": "clinician-avatar-2.jpg",
+    "mobile": null,
+    "alt": "Smiling clinician with short silver hair in a camel turtleneck",
+    "source": "figma 965:2075",
+    "width": 480,
+    "height": 481
+  },
+  "clinician_avatar_3": {
+    "desktop": "clinician-avatar-3.jpg",
+    "mobile": null,
+    "alt": "Clinician with a dark bob and glasses in a white coat, looking to one side",
+    "source": "figma 965:2075",
+    "width": 480,
+    "height": 480
+  },
+  "promo_card_image": {
+    "desktop": "promo-card-image.jpg",
+    "mobile": null,
+    "alt": "Freckled woman laughing with her eyes closed in the sun",
+    "source": "figma 965:2157",
+    "width": 1440,
+    "height": 1800
+  },
+  "recognition_seal": {
+    "desktop": "Seal-logo-CMYK_Rev_2.jpg",
+    "mobile": null,
+    "alt": "National Eczema Association Seal of Acceptance",
+    "source": "existing",
+    "width": 339,
+    "height": 459
+  }
+}

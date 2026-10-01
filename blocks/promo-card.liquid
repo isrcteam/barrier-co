@@ -31,7 +31,7 @@
     {%- endif -%}
   </div>
   {%- if block_settings.button_label != blank and block_settings.button_link != blank -%}
-    <a class="promo-card__button button type-label" href="{{ block_settings.button_link }}">
+    <a class="promo-card__button button button--small type-label" href="{{ block_settings.button_link }}">
       {{- block_settings.button_label | escape -}}
     </a>
   {%- endif -%}

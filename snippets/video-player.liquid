@@ -37,7 +37,7 @@
       video_class: 'video-player__media'
     %}
   {%- elsif poster_image != blank -%}
-    {{ poster_image | image_url: width: 2880 | image_tag: loading: image_loading, class: 'video-player__poster', widths: '390, 750, 1100, 1500, 1920, 2880' }}
+    {{ poster_image | image_url: width: 3840 | image_tag: loading: image_loading, class: 'video-player__poster', widths: '390, 750, 1100, 1500, 1920, 2880, 3840' }}
   {%- else -%}
     {{ 'hero-apparel-3' | placeholder_svg_tag: 'video-player__poster video-player__placeholder' }}
   {%- endif -%}
