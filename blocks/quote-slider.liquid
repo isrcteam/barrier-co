@@ -1,0 +1,218 @@
+{% doc %}
+  Slider of expert quotes from the product's Testimonials metafield: quote mark, quote, round avatar, name and role, with dots. Hidden when the metafield is empty.
+
+  @example
+  {% content_for 'block', type: 'quote-slider', id: 'quote-slider' %}
+{% enddoc %}
+{%- assign testimonials = closest.product.metafields.custom.testimonials.value -%}
+{%- if testimonials.size > 0 -%}
+  {%- liquid
+    assign slide_count = testimonials.size
+    assign heading_id = 'QuoteHeading-' | append: block.id
+  -%}
+  {%- capture slides -%}
+    {%- for testimonial in testimonials -%}
+      {%- capture children -%}
+        <figure class="quote-slider__card">
+          <blockquote class="quote-slider__quote type-body">
+            <span class="quote-slider__mark" aria-hidden="true">"</span>
+            {{- testimonial.quote.value | escape | newline_to_br -}}
+          </blockquote>
+          <figcaption class="quote-slider__author">
+            {%- if testimonial.avatar.value != blank -%}
+              {{
+                testimonial.avatar.value
+                | image_url: width: 120
+                | image_tag:
+                  widths: '40, 80, 120',
+                  sizes: '40px',
+                  loading: 'lazy',
+                  class: 'quote-slider__avatar',
+                  alt: ''
+              }}
+            {%- endif -%}
+            <span class="quote-slider__person">
+              <span class="quote-slider__name type-h5">{{ testimonial.name.value | escape }}</span>
+              {%- if testimonial.role.value != blank -%}
+                <span class="quote-slider__role type-caption">{{ testimonial.role.value | escape }}</span>
+              {%- endif -%}
+            </span>
+          </figcaption>
+        </figure>
+      {%- endcapture -%}
+      {% render 'slideshow-slide', index: forloop.index0, children: children, class: 'quote-slider__slide' %}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- capture controls -%}
+    {%- if slide_count > 1 -%}
+      {% render 'slideshow-controls', style: 'dots', item_count: slide_count %}
+    {%- endif -%}
+  {%- endcapture -%}
+  {% render 'contrast-override', background_color: block.settings.background_color, section_id: block.id %}
+  <div
+    class="quote-slider color-custom-{{ block.id }}"
+    {% if block.settings.heading != blank %}
+      role="region"
+      aria-labelledby="{{ heading_id }}"
+    {% endif %}
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.heading != blank -%}
+      <{{ block.settings.heading_tag }} id="{{ heading_id }}" class="quote-slider__heading type-micro">
+        {{- block.settings.heading | escape -}}
+      </{{ block.settings.heading_tag }}>
+    {%- endif -%}
+    {% render 'slideshow',
+      class: 'quote-slider__slideshow',
+      slides: slides,
+      slide_count: slide_count,
+      controls: controls,
+      show_arrows: false,
+      infinite: false
+    %}
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .quote-slider {
+    display: grid;
+    gap: var(--space-12);
+    color: var(--color-foreground);
+  }
+
+  .quote-slider__heading {
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .quote-slider__slideshow {
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  .quote-slider__card {
+    display: grid;
+    align-content: space-between;
+    gap: var(--space-20);
+    block-size: 100%;
+    margin: 0;
+    padding: var(--space-12);
+    background: var(--color-background);
+  }
+
+  .quote-slider__quote {
+    margin: 0;
+  }
+
+  .quote-slider__mark {
+    margin-inline-end: var(--space-2);
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-extrabold);
+    font-size: var(--type-h2-size);
+    line-height: var(--type-h2-line);
+    color: var(--color-accent-bar);
+    vertical-align: top;
+  }
+
+  .quote-slider__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .quote-slider__avatar {
+    flex-shrink: 0;
+    inline-size: var(--space-40);
+    block-size: var(--space-40);
+    object-fit: cover;
+    object-position: bottom;
+    border-radius: var(--radius-full);
+  }
+
+  .quote-slider__person {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .quote-slider__name {
+    text-transform: uppercase;
+  }
+
+  .quote-slider slideshow-controls {
+    justify-content: flex-start;
+    min-block-size: 0;
+  }
+
+  .quote-slider .slideshow-controls__dots {
+    gap: var(--space-6);
+    margin-inline: 0;
+    padding: 0;
+    border-radius: var(--radius-none);
+  }
+
+  .quote-slider .slideshow-controls__dots button {
+    inline-size: var(--space-12);
+    block-size: var(--space-24);
+    margin: 0 calc(-1 * var(--space-6) / 2);
+  }
+
+  .quote-slider .slideshow-controls__dots button:focus-visible {
+    outline: var(--border-hairline) solid var(--color-foreground);
+    box-shadow: var(--effect-focus-ring);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.quote_slider",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Read the clinical trial"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:settings.heading_tag",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
+      ],
+      "default": "p"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "info": "t:info.quote_card_background",
+      "alpha": false
+    },
+    {
+      "type": "paragraph",
+      "content": "t:content.quote_slider_source"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.quote_slider"
+    }
+  ]
+}
+{% endschema %}

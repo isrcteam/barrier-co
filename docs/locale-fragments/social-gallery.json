@@ -1,0 +1,17 @@
+{
+  "names": {
+    "social_gallery": "Social gallery",
+    "tile": "Tile"
+  },
+  "settings": {
+    "heading_tag": "Heading tag",
+    "profile_link": "Profile link",
+    "show_instagram_icon": "Show Instagram icon",
+    "same_at_mobile": "Same at mobile",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom"
+  },
+  "info": {
+    "tile_link": "Leave blank to use the profile link"
+  }
+}

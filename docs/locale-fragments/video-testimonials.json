@@ -1,0 +1,27 @@
+{
+  "names": {
+    "video_testimonials": "Video testimonials",
+    "quote_card": "Quote card"
+  },
+  "content": {
+    "videos": "Videos"
+  },
+  "settings": {
+    "heading_tag": "Heading tag",
+    "use_product_data": "Use product data",
+    "ugc_videos": "UGC videos",
+    "cards_per_row_desktop": "Cards per row on desktop",
+    "quote_card_background": "Quote card background",
+    "same_at_mobile": "Same at mobile",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom",
+    "testimonial": "Testimonial",
+    "quote": "Quote",
+    "name": "Name",
+    "rating": "Rating"
+  },
+  "info": {
+    "use_product_ugc_videos": "On product pages, shows the product's UGC videos metafield. Falls back to the list below when the product has none.",
+    "testimonial_overrides_text": "When a testimonial is chosen, its quote, name and rating are used instead of the fields below."
+  }
+}

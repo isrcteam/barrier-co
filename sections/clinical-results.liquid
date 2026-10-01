@@ -1,0 +1,506 @@
+{%- liquid
+  assign results = section.settings.results
+  if section.settings.use_product_data and product != blank and product.metafields.custom.clinical_results != blank
+    assign results = product.metafields.custom.clinical_results.value
+  endif
+
+  assign image = section.settings.image
+  assign image_mobile = section.settings.image
+  if section.settings.same_mobile_image == false and section.settings.image_mobile != blank
+    assign image_mobile = section.settings.image_mobile
+  endif
+
+  assign image_loading = 'lazy'
+  assign image_priority = 'auto'
+  if section.index == 1
+    assign image_loading = 'eager'
+    assign image_priority = 'high'
+  endif
+
+  assign padding_top = section.settings['padding-block-start']
+  assign padding_bottom = section.settings['padding-block-end']
+  assign padding_top_mobile = section.settings['padding-block-start-mobile']
+  assign padding_bottom_mobile = section.settings['padding-block-end-mobile']
+  if section.settings.same_mobile_padding
+    assign padding_top_mobile = padding_top
+    assign padding_bottom_mobile = padding_bottom
+  endif
+-%}
+
+{% render 'contrast-override', background_color: section.settings.background_color, section_id: section.id %}
+
+<div
+  class="clinical-results color-custom-{{ section.id }}{% if section.settings.inset %} clinical-results--inset{% endif %}"
+  style="
+    --section-padding-top: {{ padding_top | divided_by: 16.0 }}rem;
+    --section-padding-bottom: {{ padding_bottom | divided_by: 16.0 }}rem;
+    --section-padding-top-mobile: {{ padding_top_mobile | divided_by: 16.0 }}rem;
+    --section-padding-bottom-mobile: {{ padding_bottom_mobile | divided_by: 16.0 }}rem;
+  "
+>
+  <div class="clinical-results__panel">
+    <div class="clinical-results__media">
+      {%- if image != blank -%}
+        <picture>
+          {%- if image_mobile != image -%}
+            <source
+              media="(min-width: 990px)"
+              srcset="{{ image | image_url: width: 1440 }} 1440w, {{ image | image_url: width: 1920 }} 1920w, {{ image | image_url: width: 2880 }} 2880w"
+              sizes="100vw"
+            >
+          {%- endif -%}
+          {{
+            image_mobile
+            | image_url: width: 1500
+            | image_tag:
+              widths: '390, 750, 1100, 1500',
+              sizes: '100vw',
+              loading: image_loading,
+              fetchpriority: image_priority,
+              class: 'clinical-results__image',
+              alt: image_mobile.alt
+          }}
+        </picture>
+      {%- else -%}
+        {{ 'detailed-apparel-1' | placeholder_svg_tag: 'clinical-results__image clinical-results__placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="clinical-results__content">
+      <div class="clinical-results__intro">
+        {%- if section.settings.heading != blank -%}
+          <{{ section.settings.heading_tag }} class="clinical-results__heading type-h1">
+            {{- section.settings.heading | escape -}}
+          </{{ section.settings.heading_tag }}>
+        {%- endif -%}
+        <div class="clinical-results__copy">
+          {%- if section.settings.text != blank -%}
+            <div class="clinical-results__text type-body">{{ section.settings.text }}</div>
+          {%- endif -%}
+          {%- if section.settings.button_label != blank -%}
+            <a
+              class="clinical-results__button button type-button"
+              {% if section.settings.button_link != blank %}
+                href="{{ section.settings.button_link }}"
+              {% else %}
+                role="link" aria-disabled="true"
+              {% endif %}
+            >
+              {{- section.settings.button_label | escape -}}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- if results.size > 0 -%}
+        <ul class="clinical-results__grid" role="list">
+          {%- for result in results limit: 4 -%}
+            {%- assign unit = result.unit.value | default: '%' -%}
+            <li class="clinical-results__stat">
+              <p class="clinical-results__figure">
+                <span class="type-stat">{{ result.value.value }}</span>
+                {%- if unit != blank -%}
+                  <span class="clinical-results__unit type-stat-unit">{{ unit | escape }}</span>
+                {%- endif -%}
+              </p>
+              {%- if result.title != blank -%}
+                <p class="clinical-results__caption type-body">{{ result.title.value | escape }}</p>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- elsif request.design_mode -%}
+        <ul class="clinical-results__grid" role="list">
+          {%- for i in (1..4) -%}
+            <li class="clinical-results__stat">
+              <p class="clinical-results__figure">
+                <span class="type-stat">98</span>
+                <span class="clinical-results__unit type-stat-unit">%</span>
+              </p>
+              <p class="clinical-results__caption type-body">{{ 'placeholders.clinical_result' | t }}</p>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .clinical-results {
+    padding-block: var(--section-padding-top-mobile) var(--section-padding-bottom-mobile);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .clinical-results__panel {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    max-width: var(--layout-page-width);
+    margin-inline: auto;
+    padding: var(--space-60) var(--layout-gutter);
+    color: var(--color-white);
+  }
+
+  .clinical-results__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .clinical-results__media picture,
+  .clinical-results__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .clinical-results__placeholder {
+    background: var(--color-foreground);
+  }
+
+  .clinical-results__content {
+    display: grid;
+    gap: var(--space-20);
+  }
+
+  .clinical-results__intro {
+    display: grid;
+    gap: var(--space-16);
+    align-content: center;
+  }
+
+  .clinical-results__heading {
+    margin: 0;
+    text-transform: uppercase;
+    color: var(--color-white);
+  }
+
+  .clinical-results__copy {
+    display: grid;
+    gap: var(--space-24);
+    justify-items: start;
+  }
+
+  .clinical-results__text {
+    font-size: var(--type-body-large-size);
+  }
+
+  .clinical-results__text > * {
+    margin: 0;
+  }
+
+  .clinical-results__button {
+    --color-primary-button-background: var(--color-white);
+    --color-primary-button-hover-background: var(--color-white);
+    --color-primary-button-border: var(--color-white);
+    --color-primary-button-hover-border: var(--color-white);
+    --color-primary-button-text: var(--color-foreground);
+    --color-primary-button-hover-text: var(--color-foreground);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: calc(var(--space-112) * 2 + var(--space-30));
+    min-height: var(--layout-button-medium);
+    padding: var(--space-14) var(--space-20);
+    border-radius: var(--radius-none);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity var(--duration-fast) var(--easing-standard);
+  }
+
+  .clinical-results__button:hover {
+    opacity: var(--opacity-brand-hover);
+  }
+
+  .clinical-results__button:active {
+    opacity: var(--opacity-brand-pressed);
+  }
+
+  .clinical-results__button:focus-visible {
+    outline: var(--border-hairline) solid var(--color-white);
+    box-shadow: var(--effect-focus-ring);
+  }
+
+  .clinical-results__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .clinical-results__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-16);
+    padding: var(--space-40) var(--space-12);
+    text-align: center;
+    background: color-mix(in srgb, var(--color-glass) calc(var(--opacity-brand-glass) * 100%), transparent);
+    backdrop-filter: blur(var(--layout-blur-glass));
+    -webkit-backdrop-filter: blur(var(--layout-blur-glass));
+    border-color: color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-glass-border) * 100%), transparent);
+    border-style: solid;
+    border-width: 0;
+  }
+
+  .clinical-results__stat:nth-child(odd) {
+    border-inline-end-width: var(--border-hairline);
+  }
+
+  .clinical-results__stat:nth-child(n + 3) {
+    border-block-start-width: var(--border-hairline);
+  }
+
+  .clinical-results__figure {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .clinical-results__unit {
+    line-height: 1;
+  }
+
+  .clinical-results__caption {
+    margin: 0;
+  }
+
+  @media screen and (min-width: 990px) {
+    .clinical-results {
+      padding-block: var(--section-padding-top) var(--section-padding-bottom);
+    }
+
+    .clinical-results--inset {
+      padding-inline: var(--layout-gutter);
+    }
+
+    .clinical-results--inset .clinical-results__panel {
+      max-width: var(--layout-content-width);
+    }
+
+    .clinical-results__panel {
+      padding: var(--space-60) var(--space-30);
+    }
+
+    .clinical-results__content {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
+      align-items: stretch;
+      gap: var(--space-30);
+    }
+
+    .clinical-results__intro {
+      gap: var(--space-30);
+    }
+
+    .clinical-results__copy {
+      gap: var(--space-40);
+    }
+
+    .clinical-results__text {
+      font-size: var(--type-body-size);
+    }
+
+    .clinical-results__grid {
+      grid-auto-rows: 1fr;
+    }
+
+    .clinical-results__stat {
+      justify-content: center;
+      padding: var(--space-60);
+    }
+
+    .clinical-results__caption {
+      font-size: var(--type-body-large-size);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .clinical-results__button {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.clinical_results",
+  "tag": "section",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "checkbox",
+      "id": "same_mobile_image",
+      "label": "t:settings.same_at_mobile",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.mobile_image",
+      "visible_if": "{{ section.settings.same_mobile_image == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "inset",
+      "label": "t:settings.inset_width",
+      "info": "t:info.inset_width",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.text"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Clinically proven"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:settings.heading_tag",
+      "options": [
+        { "value": "h1", "label": "t:options.h1" },
+        { "value": "h2", "label": "t:options.h2" },
+        { "value": "h3", "label": "t:options.h3" },
+        { "value": "h4", "label": "t:options.h4" },
+        { "value": "p", "label": "t:options.paragraph" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings.button_label",
+      "default": "Our science"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:settings.link"
+    },
+    {
+      "type": "header",
+      "content": "t:content.results"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_product_data",
+      "label": "t:settings.use_product_data",
+      "info": "t:info.use_product_clinical_results",
+      "default": false
+    },
+    {
+      "type": "metaobject_list",
+      "id": "results",
+      "label": "t:settings.clinical_results",
+      "metaobject_type": "clinical_result",
+      "info": "t:info.clinical_results_limit"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "same_mobile_padding",
+      "label": "t:settings.same_at_mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.clinical_results",
+      "category": "t:categories.storytelling",
+      "settings": {
+        "heading": "Clinically proven",
+        "heading_tag": "h2",
+        "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>",
+        "button_label": "Our science",
+        "button_link": "/collections/all",
+        "inset": true,
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "same_mobile_padding": false,
+        "padding-block-start-mobile": 0,
+        "padding-block-end-mobile": 0
+      }
+    }
+  ]
+}
+{% endschema %}

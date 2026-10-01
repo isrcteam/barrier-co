@@ -103,7 +103,7 @@ Not built yet: there are no products in the store, and the Figma copy is placeho
 ## Open decisions
 | # | Decision | Options | Who decides | Status |
 | --- | --- | --- | --- | --- |
-| D-1 | Create the two products ("The 30. The Everyday.", "The 8.") so the PDP can be built and QA'd | Create as Draft (not visible, PDP can't be previewed); or publish to Online Store (live site would expose /products/…); or a separate dev store | Jeet | Open: delegated authority forbids publishing |
+| D-1 | Create the two products ("The 30. The Everyday.", "The 8.") so the PDP can be built and QA'd | Create, leave unpublished; publish to Online Store; build without products | Jeet | 2026-10-01 Jeet: create them unpublished, Jeet publishes |
 | D-2 | Subscription app for selling plans | Shopify Subscriptions (free, native); Recharge; Skio; other | Client | Open: theme builds on native selling plans, which every app uses |
 | D-3 | Reviews and Q&A | Judge.me (already installed) styled to the design; another app | Client | Assumed Judge.me |
 | D-4 | Instagram feed source | App (for example Instafeed); manual image blocks | Client | Assumed manual image blocks with links |

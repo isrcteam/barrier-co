@@ -1,0 +1,15 @@
+{
+  "names": {
+    "clinician_proof": "Clinician proof"
+  },
+  "settings": {
+    "mark_image": "Mark image",
+    "mark_text": "Mark text",
+    "avatar_1": "Avatar 1",
+    "avatar_2": "Avatar 2",
+    "avatar_3": "Avatar 3"
+  },
+  "info": {
+    "mark_text": "Used as the image's alt text, and shown instead when there's no image"
+  }
+}

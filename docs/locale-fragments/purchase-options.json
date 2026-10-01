@@ -1,0 +1,30 @@
+{
+  "names": {
+    "purchase_options": "Purchase options"
+  },
+  "content": {
+    "recommended_plan": "Recommended plan",
+    "prices": "Prices",
+    "one_time_purchase": "One-time purchase",
+    "purchase_options_plan_copy": "Plans come from the product's selling plans. In each plan's description, the first paragraph is the summary, the second (one line per step) is the delivery timeline, and the third is the perks line. Separate paragraphs with a blank line. Hidden when the product has no selling plans."
+  },
+  "settings": {
+    "recommended_position": "Recommended plan position",
+    "recommended_label": "Recommended label",
+    "savings_label": "Savings label",
+    "show_per_day": "Show price per day",
+    "per_day_label": "Price per day label",
+    "days_plan_1": "Days covered by plan 1",
+    "days_plan_2": "Days covered by plan 2",
+    "days_plan_3": "Days covered by plan 3",
+    "button_price_label": "Add to cart price label",
+    "show_one_time": "Show one-time purchase",
+    "one_time_label": "One-time purchase label"
+  },
+  "info": {
+    "recommended_label": "Leave blank to hide the tag",
+    "savings_label": "Use [amount] for the saving. Shown only when the plan has a discount.",
+    "purchase_price_placeholder": "Use [price] for the price",
+    "button_price_label": "Added after the add to cart text. Use [price] for the selected price. Leave blank to hide."
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "names": {
+    "image_carousel": "Image carousel",
+    "image_carousel_routine": "Image carousel: Routine",
+    "image_carousel_lifestyle": "Image carousel: Lifestyle"
+  },
+  "content": {
+    "product_overlay": "Product overlay"
+  },
+  "settings": {
+    "caption": "Caption",
+    "price_label": "Price label",
+    "button_label": "Button label",
+    "heading_tag": "Heading tag",
+    "subheading": "Subheading",
+    "middle_card": "Middle card",
+    "show_side_bars": "Show side bars",
+    "caption_alignment": "Caption alignment",
+    "caption_size": "Caption size",
+    "same_at_mobile": "Same at mobile",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom"
+  },
+  "info": {
+    "price_label": "[price] is replaced by the lowest price, including subscription prices",
+    "middle_card": "Applies on desktop to every second card in each group of three",
+    "caption_alignment": "Desktop only. Captions are centered on mobile"
+  },
+  "options": {
+    "even": "Even",
+    "offset": "Offset",
+    "tall": "Tall"
+  }
+}

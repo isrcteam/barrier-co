@@ -1,0 +1,33 @@
+{
+  "names": {
+    "hero_banner": "Hero banner",
+    "inset_banner": "Inset banner"
+  },
+  "content": {
+    "play_video": "Play video",
+    "product_spotlight": "Product spotlight"
+  },
+  "settings": {
+    "desktop_image": "Desktop image",
+    "same_at_mobile": "Same at mobile",
+    "mobile_image": "Mobile image",
+    "background_video": "Background video",
+    "eyebrow": "Eyebrow",
+    "heading_tag": "Heading tag",
+    "heading_size": "Heading size",
+    "show_bar": "Show vertical bar",
+    "button_label": "Button label",
+    "price_label": "Price label",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom"
+  },
+  "options": {
+    "inset": "Inset",
+    "center_left": "Center left",
+    "display": "Display"
+  },
+  "info": {
+    "background_video": "Plays muted on a loop behind the content. The image shows while it loads and for shoppers who prefer reduced motion",
+    "price_label": "[price] is replaced with the lowest subscription price, or the product price"
+  }
+}

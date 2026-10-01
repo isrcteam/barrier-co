@@ -1,0 +1,134 @@
+{% doc %}
+  Small product card used over media and beside content: image, title, a "starts from" price line and a button.
+
+  @param {object} product - The product to show
+  @param {string} [style] - 'card' (image above text), 'row' (image beside text) or 'glass' (translucent overlay), defaults to card
+  @param {string} [button_label] - Button text, defaults to the product link label
+  @param {string} [price_label] - Price line with [price] where the price goes, for example "Starts from [price]/mo"
+  @param {string} [heading_tag] - Tag for the title, defaults to p
+  @param {string} [image_sizes] - sizes attribute for the image
+
+  @example
+  {% render 'product-spotlight', product: section.settings.product, style: 'card', button_label: 'Shop now', price_label: 'Starts from [price]/mo' %}
+{% enddoc %}
+{%- liquid
+  assign card_style = style | default: 'card'
+  assign title_tag = heading_tag | default: 'p'
+  assign sizes_attr = image_sizes | default: '(min-width: 990px) 140px, 120px'
+
+  assign lowest_price = product.price_min
+  for allocation in product.selected_or_first_available_variant.selling_plan_allocations
+    if allocation.price < lowest_price
+      assign lowest_price = allocation.price
+    endif
+  endfor
+-%}
+{%- if product != blank -%}
+  {%- capture formatted_price -%}{{ lowest_price | money }}{%- endcapture -%}
+  {%- if price_label != blank -%}
+    {%- assign price_text = price_label | replace: '[price]', formatted_price -%}
+  {%- else -%}
+    {%- assign price_text = formatted_price -%}
+  {%- endif -%}
+  <div class="product-spotlight product-spotlight--{{ card_style }}">
+    {%- if product.featured_image != blank -%}
+      <a href="{{ product.url }}" class="product-spotlight__media" tabindex="-1" aria-hidden="true">
+        {{
+          product.featured_image
+          | image_url: width: 600
+          | image_tag: widths: '150, 300, 450, 600', sizes: sizes_attr, loading: 'lazy', class: 'product-spotlight__image', alt: product.featured_image.alt
+        }}
+      </a>
+    {%- endif -%}
+    <div class="product-spotlight__body">
+      <{{ title_tag }} class="product-spotlight__title type-title-bold">{{ product.title | escape }}</{{ title_tag }}>
+      <p class="product-spotlight__price type-caption">{{ price_text }}</p>
+      <a href="{{ product.url }}" class="product-spotlight__button button button--small">
+        {{- button_label | default: product.title | escape -}}
+      </a>
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-spotlight {
+    display: grid;
+    gap: var(--space-8);
+    padding: var(--space-6);
+    color: var(--color-foreground);
+    background: var(--color-background);
+  }
+
+  .product-spotlight--card {
+    width: min(100%, calc(var(--space-80) * 2 + var(--space-24)));
+    grid-template-columns: 1fr;
+  }
+
+  .product-spotlight--row,
+  .product-spotlight--glass {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: var(--space-12);
+    padding: var(--space-10);
+  }
+
+  .product-spotlight--glass {
+    background: color-mix(in srgb, var(--color-glass) calc(var(--opacity-brand-glass) * 100%), transparent);
+    backdrop-filter: blur(var(--layout-blur-card));
+    color: var(--color-white);
+  }
+
+  .product-spotlight__media {
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--color-white);
+  }
+
+  .product-spotlight--row .product-spotlight__media,
+  .product-spotlight--glass .product-spotlight__media {
+    width: var(--space-86);
+  }
+
+  .product-spotlight__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-spotlight__body {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .product-spotlight__title {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: var(--type-h5-size);
+  }
+
+  .product-spotlight__price {
+    margin: 0 0 var(--space-8);
+  }
+
+  .product-spotlight__button {
+    justify-self: stretch;
+  }
+
+  .product-spotlight--row .product-spotlight__button,
+  .product-spotlight--glass .product-spotlight__button {
+    justify-self: start;
+  }
+
+  @media screen and (min-width: 990px) {
+    .product-spotlight--row .product-spotlight__media {
+      width: var(--space-86);
+    }
+
+    .product-spotlight--row .product-spotlight__title {
+      font-size: var(--type-h2-size);
+    }
+  }
+{% endstylesheet %}

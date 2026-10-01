@@ -1,0 +1,23 @@
+{
+  "names": {
+    "video_banner": "Video banner"
+  },
+  "content": {
+    "video": "Video"
+  },
+  "settings": {
+    "desktop_poster": "Desktop cover image",
+    "mobile_poster": "Mobile cover image",
+    "same_at_mobile": "Same at mobile",
+    "height_ratio": "Height",
+    "height_ratio_mobile": "Mobile height",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom"
+  },
+  "options": {
+    "inset": "Inset"
+  },
+  "info": {
+    "height_ratio": "Height as a percentage of the width"
+  }
+}

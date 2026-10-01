@@ -1,0 +1,24 @@
+{
+  "names": {
+    "clinical_results": "Clinical results"
+  },
+  "content": {
+    "results": "Results"
+  },
+  "settings": {
+    "mobile_image": "Mobile image",
+    "same_at_mobile": "Same at mobile",
+    "inset_width": "Inset width",
+    "heading_tag": "Heading tag",
+    "button_label": "Button label",
+    "use_product_data": "Use product data",
+    "clinical_results": "Clinical results",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom"
+  },
+  "info": {
+    "inset_width": "On desktop, keeps the image inside the page margins. Mobile is always full width.",
+    "use_product_clinical_results": "On product pages, shows the product's clinical results metafield. Falls back to the list below when the product has none.",
+    "clinical_results_limit": "The first four results are shown."
+  }
+}

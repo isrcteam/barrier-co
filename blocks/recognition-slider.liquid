@@ -1,0 +1,180 @@
+{% doc %}
+  Slider of recognitions (seal logo and text) from the product's Recognitions metafield, with dots. Hidden when the metafield is empty.
+
+  @example
+  {% content_for 'block', type: 'recognition-slider', id: 'recognition-slider' %}
+{% enddoc %}
+{%- assign recognitions = closest.product.metafields.custom.recognitions.value -%}
+{%- if recognitions.size > 0 -%}
+  {%- liquid
+    assign slide_count = recognitions.size
+    assign heading_id = 'RecognitionHeading-' | append: block.id
+  -%}
+  {%- capture slides -%}
+    {%- for recognition in recognitions -%}
+      {%- capture children -%}
+        <div class="recognition-slider__card">
+          {%- if recognition.logo.value != blank -%}
+            {{
+              recognition.logo.value
+              | image_url: width: 180
+              | image_tag:
+                widths: '60, 120, 180',
+                sizes: '45px',
+                loading: 'lazy',
+                class: 'recognition-slider__logo',
+                alt: recognition.title.value
+            }}
+          {%- endif -%}
+          <p class="recognition-slider__text type-caption">
+            <span class="recognition-slider__title">{{ recognition.title.value | escape }}</span>
+            {{ recognition.description.value | escape }}
+          </p>
+        </div>
+      {%- endcapture -%}
+      {% render 'slideshow-slide', index: forloop.index0, children: children, class: 'recognition-slider__slide' %}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- capture controls -%}
+    {%- if slide_count > 1 -%}
+      {% render 'slideshow-controls', style: 'dots', item_count: slide_count %}
+    {%- endif -%}
+  {%- endcapture -%}
+  <div
+    class="recognition-slider"
+    {% if block.settings.heading != blank %}
+      role="region"
+      aria-labelledby="{{ heading_id }}"
+    {% endif %}
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.heading != blank -%}
+      <{{ block.settings.heading_tag }} id="{{ heading_id }}" class="recognition-slider__heading type-micro">
+        {{- block.settings.heading | escape -}}
+      </{{ block.settings.heading_tag }}>
+    {%- endif -%}
+    {% render 'slideshow',
+      class: 'recognition-slider__slideshow',
+      slides: slides,
+      slide_count: slide_count,
+      controls: controls,
+      show_arrows: false,
+      infinite: false
+    %}
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .recognition-slider {
+    display: grid;
+    gap: var(--space-12);
+    color: var(--color-foreground);
+  }
+
+  .recognition-slider__heading {
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .recognition-slider__slideshow {
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  .recognition-slider__card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    block-size: 100%;
+    padding: var(--space-8) var(--space-12);
+    border: var(--border-hairline) solid var(--color-divider);
+  }
+
+  .recognition-slider__logo {
+    flex-shrink: 0;
+    inline-size: var(--space-30);
+    block-size: auto;
+    object-fit: contain;
+  }
+
+  .recognition-slider__text {
+    margin: 0;
+  }
+
+  .recognition-slider__title {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+  }
+
+  .recognition-slider slideshow-controls {
+    justify-content: flex-start;
+    min-block-size: 0;
+  }
+
+  .recognition-slider .slideshow-controls__dots {
+    gap: var(--space-6);
+    margin-inline: 0;
+    padding: 0;
+    border-radius: var(--radius-none);
+  }
+
+  .recognition-slider .slideshow-controls__dots button {
+    inline-size: var(--space-12);
+    block-size: var(--space-24);
+    margin: 0 calc(-1 * var(--space-6) / 2);
+  }
+
+  .recognition-slider .slideshow-controls__dots button:focus-visible {
+    outline: var(--border-hairline) solid var(--color-foreground);
+    box-shadow: var(--effect-focus-ring);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.recognition_slider",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Recognition by"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:settings.heading_tag",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
+      ],
+      "default": "p"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:content.recognition_slider_source"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.recognition_slider"
+    }
+  ]
+}
+{% endschema %}

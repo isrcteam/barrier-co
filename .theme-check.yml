@@ -1,0 +1,4 @@
+ignore:
+  - docs/**
+  - tools/**
+  - scripts/**

@@ -1,0 +1,12 @@
+{
+  "names": {
+    "product_rating": "Product rating"
+  },
+  "settings": {
+    "link_anchor": "Link to"
+  },
+  "info": {
+    "rating_label": "Use [count] for the number of reviews and [rating] for the average rating. Hidden when the product has no reviews.",
+    "link_anchor": "An anchor on the page, for example #reviews. Leave blank for no link."
+  }
+}

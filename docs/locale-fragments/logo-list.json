@@ -1,0 +1,16 @@
+{
+  "names": {
+    "logo_list": "Logo list"
+  },
+  "settings": {
+    "alt_text": "Alt text",
+    "logo_list_height": "Logo height",
+    "scroll_on_mobile": "Scroll on mobile",
+    "same_at_mobile": "Same at mobile",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom"
+  },
+  "info": {
+    "logo_alt_text": "Name of the brand, read by screen readers. Leave blank to use the image alt text"
+  }
+}

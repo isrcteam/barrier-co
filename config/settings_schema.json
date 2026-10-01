@@ -101,6 +101,18 @@
         "id": "color_accent_bar",
         "label": "t:settings.color_accent_bar",
         "default": "#A38D76"
+      },
+      {
+        "type": "color",
+        "id": "color_divider",
+        "label": "t:settings.color_divider",
+        "default": "#BBAE9A"
+      },
+      {
+        "type": "color",
+        "id": "color_on_media",
+        "label": "t:settings.color_on_media",
+        "default": "#F9F7ED"
       }
     ]
   },

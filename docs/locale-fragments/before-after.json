@@ -1,0 +1,25 @@
+{
+  "names": {
+    "before_after": "Before and after"
+  },
+  "content": {
+    "product": "Product",
+    "comparisons": "Comparisons"
+  },
+  "settings": {
+    "heading_tag": "Heading tag",
+    "price_label": "Price label",
+    "button_label": "Button label",
+    "use_product_data": "Use product data",
+    "comparisons": "Comparisons",
+    "card_background_color": "Card background",
+    "same_at_mobile": "Same at mobile",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom"
+  },
+  "info": {
+    "product_card_fallback": "Leave blank on product pages to show the current product.",
+    "price_placeholder": "[price] is replaced with the lowest price, including subscription prices.",
+    "use_product_before_afters": "On product pages, shows the product's before and afters metafield. Falls back to the list below when the product has none."
+  }
+}

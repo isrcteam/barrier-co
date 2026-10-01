@@ -1,0 +1,13 @@
+{
+  "names": {
+    "intro_media": "Intro with media"
+  },
+  "settings": {
+    "eyebrow": "Eyebrow",
+    "heading_tag": "Heading tag",
+    "show_second_tile": "Show second tile",
+    "same_at_mobile": "Same at mobile",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom"
+  }
+}

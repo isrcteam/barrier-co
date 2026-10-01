@@ -1,0 +1,190 @@
+{% doc %}
+  Small call-out card with an image, heading, text and a small button. A row on desktop; the button drops below on mobile.
+
+  @example
+  {% content_for 'block', type: 'promo-card', id: 'promo-card' %}
+{% enddoc %}
+{%- assign block_settings = block.settings -%}
+{% render 'contrast-override', background_color: block_settings.background_color, section_id: block.id %}
+<div class="promo-card color-custom-{{ block.id }}" {{ block.shopify_attributes }}>
+  {%- if block_settings.image != blank -%}
+    <div class="promo-card__media">
+      {{
+        block_settings.image
+        | image_url: width: 280
+        | image_tag:
+          widths: '70, 140, 210, 280',
+          sizes: '70px',
+          loading: 'lazy',
+          class: 'promo-card__image'
+      }}
+    </div>
+  {%- endif -%}
+  <div class="promo-card__body">
+    {%- if block_settings.heading != blank -%}
+      <{{ block_settings.heading_tag }} class="promo-card__heading type-h6">
+        {{- block_settings.heading -}}
+      </{{ block_settings.heading_tag }}>
+    {%- endif -%}
+    {%- if block_settings.text != blank -%}
+      <p class="promo-card__text type-caption">{{ block_settings.text }}</p>
+    {%- endif -%}
+  </div>
+  {%- if block_settings.button_label != blank and block_settings.button_link != blank -%}
+    <a class="promo-card__button button type-label" href="{{ block_settings.button_link }}">
+      {{- block_settings.button_label | escape -}}
+    </a>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .promo-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'media body'
+      'button button';
+    align-items: center;
+    gap: var(--space-12);
+    padding: var(--space-12);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .promo-card__media {
+    grid-area: media;
+    inline-size: calc(var(--space-60) + var(--space-10));
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+
+  .promo-card__image {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .promo-card__body {
+    grid-area: body;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .promo-card__body:only-child {
+    grid-column: 1 / -1;
+  }
+
+  .promo-card__heading,
+  .promo-card__text {
+    margin: 0;
+  }
+
+  .promo-card__heading {
+    text-transform: uppercase;
+  }
+
+  .promo-card__button {
+    grid-area: button;
+    justify-self: start;
+    min-block-size: var(--layout-button-small);
+    padding-inline: var(--space-20);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .promo-card__button:focus-visible {
+    outline: var(--border-hairline) solid var(--color-foreground);
+    outline-offset: var(--space-2);
+    box-shadow: var(--effect-focus-ring);
+  }
+
+  @media screen and (min-width: 990px) {
+    .promo-card {
+      grid-template-columns: auto 1fr auto;
+      grid-template-areas: 'media body button';
+      column-gap: var(--space-16);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.promo_card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Confused about which item suits your needs?"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:settings.heading_tag",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "One cloth delivers a full dose of clinical-grade hydration in under 30 seconds."
+    },
+    {
+      "type": "header",
+      "content": "t:content.button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings.label",
+      "default": "Take the test"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:settings.link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.promo_card"
+    }
+  ]
+}
+{% endschema %}

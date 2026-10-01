@@ -1,0 +1,8 @@
+{
+  "names": {
+    "product_highlights": "Product highlights"
+  },
+  "content": {
+    "product_highlights_source": "Shows the product's Highlights metafield (custom.highlights). Hidden when it's empty."
+  }
+}

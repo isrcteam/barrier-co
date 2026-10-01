@@ -1,0 +1,84 @@
+{% doc %}
+  Star rating and review count for the product, linking to the reviews on the page. Hidden when the product has no reviews.
+
+  @example
+  {% content_for 'block', type: 'product-rating', id: 'product-rating' %}
+{% enddoc %}
+{%- liquid
+  assign product = closest.product
+  assign rating = product.metafields.reviews.rating.value.rating | default: 0
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+  assign rating_label = rating | round: 1 | append: ''
+
+  assign label = block.settings.label | replace: '[count]', rating_count | replace: '[rating]', rating_label
+-%}
+{%- if rating_count > 0 -%}
+  {%- capture rating_content -%}
+    {% render 'star-rating', rating: rating, size: 'medium' %}
+    {%- if label != blank -%}
+      <span class="product-rating__label type-micro">{{ label | escape }}</span>
+    {%- endif -%}
+  {%- endcapture -%}
+  {%- if block.settings.link_anchor != blank -%}
+    <a class="product-rating" href="{{ block.settings.link_anchor | escape }}" {{ block.shopify_attributes }}>
+      {{- rating_content -}}
+    </a>
+  {%- else -%}
+    <div class="product-rating" {{ block.shopify_attributes }}>
+      {{- rating_content -}}
+    </div>
+  {%- endif -%}
+{%- endif -%}
+
+{% stylesheet %}
+  .product-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    color: var(--color-foreground);
+    text-decoration: none;
+  }
+
+  .product-rating__label {
+    text-transform: uppercase;
+  }
+
+  a.product-rating:hover .product-rating__label {
+    text-decoration: underline;
+    text-underline-offset: var(--space-2);
+  }
+
+  a.product-rating:focus-visible {
+    outline: var(--border-hairline) solid var(--color-foreground);
+    outline-offset: var(--space-2);
+    box-shadow: var(--effect-focus-ring);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.product_rating",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.label",
+      "info": "t:info.rating_label",
+      "default": "[count] reviews"
+    },
+    {
+      "type": "text",
+      "id": "link_anchor",
+      "label": "t:settings.link_anchor",
+      "info": "t:info.link_anchor",
+      "default": "#reviews"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_rating"
+    }
+  ]
+}
+{% endschema %}

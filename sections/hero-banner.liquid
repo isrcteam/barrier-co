@@ -1,0 +1,786 @@
+{%- liquid
+  assign s = section.settings
+  assign image_desktop = s.image_desktop
+  assign image_mobile = s.image_mobile
+  assign has_mobile_art = false
+  if s.same_image_mobile == false and image_mobile != blank and image_desktop != blank
+    assign has_mobile_art = true
+  endif
+  assign fallback_image = image_desktop | default: image_mobile
+
+  assign image_loading = 'lazy'
+  assign image_priority = 'auto'
+  if section.index == 1
+    assign image_loading = 'eager'
+    assign image_priority = 'high'
+  endif
+
+  assign widths = '390,750,1100,1500,1920,2560,2880' | split: ','
+
+  assign padding_top_mobile = s.padding_top
+  assign padding_bottom_mobile = s.padding_bottom
+  if s.same_padding_mobile == false
+    assign padding_top_mobile = s.padding_top_mobile
+    assign padding_bottom_mobile = s.padding_bottom_mobile
+  endif
+
+  assign heading_tag = s.heading_tag | default: 'h2'
+
+  assign play_poster = s.play_poster | default: s.play_video.preview_image | default: fallback_image
+  assign show_play = false
+  if s.play_video != blank
+    assign show_play = true
+  elsif s.play_video_url != blank and play_poster != blank
+    assign show_play = true
+  endif
+
+  assign play_label = 'accessibility.play_video' | t
+  assign dialog_label = s.play_video.alt | default: s.heading | default: play_label
+-%}
+
+{% render 'contrast-override', background_color: s.background_color, section_id: section.id %}
+{% render 'measure-header-heights', only_when_first_section: true %}
+
+<div
+  class="hero-banner hero-banner--{{ s.width }} hero-banner--{{ s.content_position }} color-custom-{{ section.id }}"
+  style="--hero-banner-pt: {{ s.padding_top | divided_by: 16.0 }}rem; --hero-banner-pb: {{ s.padding_bottom | divided_by: 16.0 }}rem; --hero-banner-pt-mobile: {{ padding_top_mobile | divided_by: 16.0 }}rem; --hero-banner-pb-mobile: {{ padding_bottom_mobile | divided_by: 16.0 }}rem;"
+>
+  <div class="hero-banner__frame">
+    <div class="hero-banner__media">
+      {%- if fallback_image != blank -%}
+        <picture>
+          {%- if has_mobile_art -%}
+            {%- capture desktop_srcset -%}
+              {%- for width in widths -%}
+                {%- assign width_value = width | plus: 0 -%}
+                {%- if width_value <= image_desktop.width or forloop.first -%}
+                  {%- unless forloop.first %}, {% endunless -%}
+                  {{- image_desktop | image_url: width: width_value }} {{ width_value }}w
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endcapture -%}
+            <source
+              media="(min-width: 990px)"
+              srcset="{{ desktop_srcset }}"
+              sizes="100vw"
+              width="{{ image_desktop.width }}"
+              height="{{ image_desktop.height }}"
+            >
+          {%- endif -%}
+          {%- liquid
+            if has_mobile_art
+              assign base_image = image_mobile
+            else
+              assign base_image = fallback_image
+            endif
+          -%}
+          {{
+            base_image
+            | image_url: width: 2880
+            | image_tag:
+              widths: '390, 750, 1100, 1500, 1920, 2560, 2880',
+              sizes: '100vw',
+              loading: image_loading,
+              fetchpriority: image_priority,
+              class: 'hero-banner__image',
+              alt: base_image.alt
+          }}
+        </picture>
+      {%- else -%}
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero-banner__image hero-banner__placeholder' }}
+      {%- endif -%}
+
+      {%- if s.video != blank -%}
+        {{
+          s.video
+          | video_tag:
+            autoplay: true,
+            loop: true,
+            muted: true,
+            controls: false,
+            playsinline: true,
+            preload: 'metadata',
+            image_size: '1920x',
+            class: 'hero-banner__video'
+        }}
+      {%- endif -%}
+
+      {%- if s.show_overlay -%}
+        <span class="hero-banner__overlay" aria-hidden="true"></span>
+      {%- endif -%}
+    </div>
+
+    <div class="hero-banner__inner">
+      {%- if show_play -%}
+        <dialog-component class="hero-banner__play">
+          <button
+            type="button"
+            class="hero-banner__play-button"
+            on:click="/showDialog"
+            aria-haspopup="dialog"
+            aria-label="{{ play_label }}"
+          >
+            {{- 'icon-play.svg' | inline_asset_content -}}
+          </button>
+          <dialog
+            ref="dialog"
+            class="dialog-modal hero-banner__dialog"
+            scroll-lock
+            aria-label="{{ dialog_label | strip_html | escape }}"
+          >
+            <div class="hero-banner__dialog-media">
+              {% render 'video-player',
+                video: s.play_video,
+                video_url: s.play_video_url,
+                poster: play_poster,
+                play_size: 'large'
+              %}
+            </div>
+            <button
+              type="button"
+              class="button-unstyled hero-banner__dialog-close"
+              on:click="/closeDialog"
+              aria-label="{{ 'accessibility.close_dialog' | t }}"
+            >
+              {{- 'icon-close.svg' | inline_asset_content -}}
+            </button>
+          </dialog>
+        </dialog-component>
+      {%- endif -%}
+
+      <div class="hero-banner__content">
+        <div class="hero-banner__copy">
+          {%- if s.show_bar -%}
+            <span class="hero-banner__bar" aria-hidden="true"></span>
+          {%- endif -%}
+          <div class="hero-banner__text">
+            {%- if s.eyebrow != blank or s.heading != blank -%}
+              <div class="hero-banner__titles">
+                {%- if s.eyebrow != blank -%}
+                  <p class="hero-banner__eyebrow type-eyebrow">{{ s.eyebrow | escape }}</p>
+                {%- endif -%}
+                {%- if s.heading != blank -%}
+                  <{{ heading_tag }} class="hero-banner__heading type-{{ s.heading_size }}">
+                    {{- s.heading | escape -}}
+                  </{{ heading_tag }}>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+            {%- if s.text != blank -%}
+              <div class="hero-banner__body type-body-large">{{ s.text }}</div>
+            {%- endif -%}
+            {%- if s.button_label != blank -%}
+              <a
+                {% if s.button_link != blank %}
+                  href="{{ s.button_link }}"
+                {% else %}
+                  role="link" aria-disabled="true"
+                {% endif %}
+                class="button hero-banner__button type-button"
+              >
+                {{- s.button_label | escape -}}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- if s.spotlight_product != blank -%}
+          <div class="hero-banner__spotlight">
+            {% render 'product-spotlight',
+              product: s.spotlight_product,
+              style: 'card',
+              button_label: s.spotlight_button_label,
+              price_label: s.spotlight_price_label,
+              image_sizes: '(min-width: 990px) 15vw, 33vw'
+            %}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% render 'dialog-styles' %}
+
+{% stylesheet %}
+  .hero-banner {
+    --hero-banner-header-offset: 0rem;
+    --hero-banner-min-height: calc(var(--space-80) * 8 + var(--space-60));
+
+    padding-block: var(--hero-banner-pt-mobile) var(--hero-banner-pb-mobile);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  main > .shopify-section:first-child .hero-banner {
+    --hero-banner-header-offset: calc(var(--header-height, 0rem) * var(--transparent-header-offset-boolean, 0));
+  }
+
+  .hero-banner--inset {
+    --hero-banner-min-height: calc(var(--space-80) * 8);
+  }
+
+  .hero-banner__frame {
+    position: relative;
+    display: grid;
+    min-height: var(--hero-banner-min-height);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero-banner__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .hero-banner__media picture,
+  .hero-banner__image,
+  .hero-banner__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+  }
+
+  .hero-banner__video {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-banner__placeholder {
+    background: var(--color-foreground);
+    opacity: var(--opacity-brand-subtle);
+  }
+
+  .hero-banner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-overlay) calc(var(--opacity-brand-overlay) * 100%), transparent),
+      transparent
+    );
+  }
+
+  .hero-banner--center_left .hero-banner__overlay {
+    background: linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-overlay) calc(var(--opacity-brand-overlay) * 100%), transparent),
+      transparent
+    );
+  }
+
+  .hero-banner__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--space-24);
+    padding: calc(var(--space-24) + var(--hero-banner-header-offset)) var(--layout-gutter) var(--space-24);
+    color: var(--color-on-media);
+  }
+
+  .hero-banner--center_left .hero-banner__inner {
+    justify-content: center;
+    padding-block: calc(var(--space-40) + var(--hero-banner-header-offset)) var(--space-40);
+  }
+
+  .hero-banner__play {
+    display: block;
+    align-self: center;
+    margin-block-end: auto;
+  }
+
+  .hero-banner__play-button {
+    display: grid;
+    place-items: center;
+    width: var(--icon-play-large);
+    height: var(--icon-play-large);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-full);
+    color: var(--color-on-media);
+    background: color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-subtle) * 100%), transparent);
+    backdrop-filter: blur(var(--layout-blur-label));
+    transition: background var(--duration-fast) var(--easing-standard);
+  }
+
+  .hero-banner__play-button svg {
+    width: 40%;
+    height: 40%;
+  }
+
+  .hero-banner__play-button:hover {
+    background: color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-overlay) * 100%), transparent);
+  }
+
+  .hero-banner__play-button:focus-visible,
+  .hero-banner__dialog-close:focus-visible,
+  .hero-banner__button:focus-visible {
+    outline: var(--border-strong) solid currentColor;
+    outline-offset: var(--space-2);
+    box-shadow: var(--effect-focus-ring);
+  }
+
+  .hero-banner .hero-banner__dialog {
+    padding: 0;
+    border: 0;
+    background: var(--color-black);
+    color: var(--color-on-media);
+  }
+
+  .hero-banner .hero-banner__dialog[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  .hero-banner__dialog-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .hero-banner .hero-banner__dialog-close {
+    position: absolute;
+    inset: var(--space-10) var(--space-10) auto auto;
+    display: grid;
+    place-items: center;
+    width: var(--layout-button-small);
+    height: var(--layout-button-small);
+    border-radius: var(--radius-full);
+    color: var(--color-on-media);
+    background: color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-subtle) * 100%), transparent);
+    backdrop-filter: blur(var(--layout-blur-label));
+  }
+
+  .hero-banner__dialog-close svg {
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+  }
+
+  .hero-banner__content {
+    display: grid;
+    gap: var(--space-24);
+  }
+
+  .hero-banner__copy {
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-24);
+  }
+
+  .hero-banner__bar {
+    flex: none;
+    width: var(--icon-bar-mobile);
+    background: currentColor;
+  }
+
+  .hero-banner__text {
+    display: grid;
+    justify-items: start;
+    align-content: center;
+    gap: var(--space-30);
+    min-width: 0;
+    max-width: var(--layout-text-width);
+  }
+
+  .hero-banner--full .hero-banner__text {
+    gap: var(--space-16);
+  }
+
+  .hero-banner__titles {
+    display: grid;
+    gap: var(--space-16);
+  }
+
+  .hero-banner__eyebrow,
+  .hero-banner__heading {
+    margin: 0;
+    color: inherit;
+    text-transform: uppercase;
+  }
+
+  .hero-banner__body > * {
+    margin: 0;
+  }
+
+  .hero-banner__body strong,
+  .hero-banner__body b {
+    font-weight: var(--font-weight-medium);
+  }
+
+  .hero-banner__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--layout-button-medium);
+    min-width: min(100%, calc(var(--space-112) * 2 + var(--space-30)));
+    padding-inline: var(--space-20);
+    text-transform: uppercase;
+  }
+
+  .hero-banner__spotlight .product-spotlight--card {
+    width: 100%;
+    grid-template-columns: calc(var(--space-112) + var(--space-10)) 1fr;
+    align-items: stretch;
+    gap: var(--space-16);
+    padding: var(--space-10);
+  }
+
+  .hero-banner__spotlight .product-spotlight__media {
+    aspect-ratio: 5 / 4;
+  }
+
+  .hero-banner__spotlight .product-spotlight__body {
+    align-content: space-between;
+  }
+
+  @media screen and (min-width: 990px) {
+    .hero-banner {
+      --hero-banner-min-height: calc(var(--space-80) * 10 + var(--space-30) + var(--space-6));
+
+      padding-block: var(--hero-banner-pt) var(--hero-banner-pb);
+    }
+
+    .hero-banner--inset {
+      --hero-banner-min-height: calc(var(--space-80) * 8 + var(--space-40) - var(--space-4));
+    }
+
+    .hero-banner--inset .hero-banner__frame {
+      max-width: var(--layout-content-width);
+      margin-inline: max(var(--layout-gutter), calc((100% - var(--layout-content-width)) / 2));
+    }
+
+    .hero-banner__inner {
+      padding: calc(var(--layout-gutter) + var(--hero-banner-header-offset)) var(--layout-gutter) var(--layout-gutter);
+    }
+
+    .hero-banner--inset .hero-banner__inner {
+      padding-inline: var(--space-40);
+    }
+
+    .hero-banner__play {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      translate: -50% -50%;
+      margin: 0;
+    }
+
+    .hero-banner__content {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--space-30);
+    }
+
+    .hero-banner__copy {
+      gap: var(--space-30);
+    }
+
+    .hero-banner__bar {
+      width: var(--icon-bar-desktop);
+    }
+
+    .hero-banner--full .hero-banner__text {
+      gap: var(--space-30);
+    }
+
+    .hero-banner--inset .hero-banner__text {
+      max-width: calc(var(--layout-text-width) - var(--space-80));
+    }
+
+    .hero-banner__spotlight .product-spotlight--card {
+      width: calc(var(--space-112) * 2 - var(--space-4));
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .hero-banner .hero-banner__dialog {
+      width: calc(100% - var(--layout-gutter) * 2);
+      max-width: var(--layout-content-width);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-banner__video {
+      display: none;
+    }
+
+    .hero-banner__dialog[open],
+    .hero-banner__dialog.dialog-closing {
+      animation: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.hero_banner",
+  "class": "section-wrapper",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "t:settings.desktop_image"
+    },
+    {
+      "type": "checkbox",
+      "id": "same_image_mobile",
+      "label": "t:settings.same_at_mobile",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.mobile_image",
+      "visible_if": "{{ section.settings.same_image_mobile == false }}"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.background_video",
+      "info": "t:info.background_video"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "t:settings.media_overlay",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.text"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:settings.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Body care. Reformatted."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:settings.heading_tag",
+      "options": [
+        { "value": "h1", "label": "t:options.h1" },
+        { "value": "h2", "label": "t:options.h2" },
+        { "value": "h3", "label": "t:options.h3" },
+        { "value": "p", "label": "t:options.paragraph" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:settings.heading_size",
+      "options": [
+        { "value": "display", "label": "t:options.display" },
+        { "value": "h1", "label": "t:options.h1" }
+      ],
+      "default": "display"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bar",
+      "label": "t:settings.show_bar",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:settings.text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings.button_label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:settings.link"
+    },
+    {
+      "type": "header",
+      "content": "t:content.play_video"
+    },
+    {
+      "type": "video",
+      "id": "play_video",
+      "label": "t:settings.video"
+    },
+    {
+      "type": "video_url",
+      "id": "play_video_url",
+      "label": "t:settings.video_external_url",
+      "accept": ["youtube", "vimeo"],
+      "info": "t:info.video_external"
+    },
+    {
+      "type": "image_picker",
+      "id": "play_poster",
+      "label": "t:settings.video_cover_image"
+    },
+    {
+      "type": "header",
+      "content": "t:content.product_spotlight"
+    },
+    {
+      "type": "product",
+      "id": "spotlight_product",
+      "label": "t:settings.product"
+    },
+    {
+      "type": "text",
+      "id": "spotlight_price_label",
+      "label": "t:settings.price_label",
+      "info": "t:info.price_label",
+      "default": "Starts from [price]/mo"
+    },
+    {
+      "type": "text",
+      "id": "spotlight_button_label",
+      "label": "t:settings.button_label",
+      "default": "Shop now"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "full", "label": "t:options.full" },
+        { "value": "inset", "label": "t:options.inset" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "t:settings.content_position",
+      "options": [
+        { "value": "bottom_left", "label": "t:options.bottom_left" },
+        { "value": "center_left", "label": "t:options.center_left" }
+      ],
+      "default": "bottom_left"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "same_padding_mobile",
+      "label": "t:settings.same_at_mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:settings.top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:settings.bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.hero",
+      "category": "t:categories.banners",
+      "settings": {
+        "heading": "Body care. Reformatted.",
+        "heading_tag": "h1",
+        "heading_size": "display",
+        "show_bar": true,
+        "text": "<p><strong>Multiple bottles. Multiple steps. Skin that still ends up dry.</strong><br>Meet The Barrier Cloth™ — 3½ teaspoons of body cream, infused into one ultra-soft cloth to cleanse, hydrate and protect your skin.</p>",
+        "show_overlay": true,
+        "spotlight_price_label": "Starts from [price]/mo",
+        "spotlight_button_label": "Shop now",
+        "width": "full",
+        "content_position": "bottom_left",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "same_padding_mobile": true
+      }
+    },
+    {
+      "name": "t:names.inset_banner",
+      "category": "t:categories.banners",
+      "settings": {
+        "eyebrow": "The Barrier Cloth",
+        "heading": "Your skin barrier doesn't stop at your face.",
+        "heading_tag": "h2",
+        "heading_size": "h1",
+        "show_bar": false,
+        "text": "<p><strong>Neither should your skincare.</strong><br>Years of dermatological research.<br>One revolutionary cloth.</p>",
+        "button_label": "Know more",
+        "button_link": "shopify://collections/all",
+        "show_overlay": false,
+        "width": "inset",
+        "content_position": "center_left",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "same_padding_mobile": false,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,16 @@
+{
+  "names": {
+    "feature_icons": "Feature icons",
+    "feature_item": "Feature"
+  },
+  "settings": {
+    "caption": "Caption",
+    "columns_desktop": "Desktop columns",
+    "same_at_mobile": "Same at mobile",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom"
+  },
+  "info": {
+    "feature_icon": "Use a square SVG or PNG badge"
+  }
+}

@@ -1,0 +1,101 @@
+{% doc %}
+  Poster with a frosted play button that loads the video only when clicked. Wraps Horizon's video snippet so playback, pausing other media and dialogs behave like the rest of the theme.
+
+  @param {object} [video] - Shopify video from a video setting or metafield
+  @param {object} [video_url] - Value of a video_url setting (YouTube or Vimeo)
+  @param {object} [poster] - Image shown before playing, defaults to the video's preview image
+  @param {string} [play_size] - 'small' or 'large', defaults to large
+  @param {boolean} [loop] - Loop once playing
+  @param {string} [class] - Extra classes on the wrapper
+  @param {string} [loading] - 'eager' or 'lazy', defaults to lazy
+
+  @example
+  {% render 'video-player', video: section.settings.video, poster: section.settings.poster %}
+{% enddoc %}
+{%- liquid
+  assign size_class = play_size | default: 'large'
+  assign poster_image = poster | default: video.preview_image
+  assign image_loading = loading | default: 'lazy'
+-%}
+<div class="video-player video-player--{{ size_class }} {{ class }}">
+  {%- if video_url != blank -%}
+    {% render 'video',
+      video: video_url.id,
+      video_type: video_url.type,
+      video_from_url: true,
+      video_preview_image: poster_image,
+      video_loop: loop,
+      loading: image_loading,
+      video_class: 'video-player__media'
+    %}
+  {%- elsif video != blank -%}
+    {% render 'video',
+      video: video,
+      video_preview_image: poster_image,
+      video_loop: loop,
+      loading: image_loading,
+      video_class: 'video-player__media'
+    %}
+  {%- elsif poster_image != blank -%}
+    {{ poster_image | image_url: width: 2880 | image_tag: loading: image_loading, class: 'video-player__poster', widths: '390, 750, 1100, 1500, 1920, 2880' }}
+  {%- else -%}
+    {{ 'hero-apparel-3' | placeholder_svg_tag: 'video-player__poster video-player__placeholder' }}
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .video-player {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .video-player .video-player__media,
+  .video-player .deferred-media__poster-button,
+  .video-player__poster,
+  .video-player .deferred-media__poster-image,
+  .video-player video,
+  .video-player iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+  }
+
+  .video-player .deferred-media__poster-icon {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    translate: -50% -50%;
+    display: grid;
+    place-items: center;
+    width: var(--icon-play-large);
+    height: var(--icon-play-large);
+    border-radius: var(--radius-full);
+    color: var(--color-white);
+    background: color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-subtle) * 100%), transparent);
+    backdrop-filter: blur(var(--layout-blur-label));
+    transition: background var(--duration-fast) var(--easing-standard);
+  }
+
+  .video-player--small .deferred-media__poster-icon {
+    width: var(--icon-play-small);
+    height: var(--icon-play-small);
+  }
+
+  .video-player .deferred-media__poster-icon svg {
+    width: 40%;
+    height: 40%;
+  }
+
+  .video-player .deferred-media__poster-button:hover .deferred-media__poster-icon,
+  .video-player .deferred-media__poster-button:focus-visible .deferred-media__poster-icon {
+    background: color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-overlay) * 100%), transparent);
+  }
+
+  .video-player__placeholder {
+    background: var(--color-foreground);
+    opacity: var(--opacity-brand-subtle);
+  }
+{% endstylesheet %}

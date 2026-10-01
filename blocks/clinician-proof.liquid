@@ -1,0 +1,237 @@
+{% doc %}
+  Endorsement strip: a mark image, a short line of text, up to three avatars and a link.
+
+  @example
+  {% content_for 'block', type: 'clinician-proof', id: 'clinician-proof' %}
+{% enddoc %}
+{%- liquid
+  assign block_settings = block.settings
+  assign avatars = ''
+  if block_settings.avatar_1 != blank
+    assign avatars = avatars | append: '1,'
+  endif
+  if block_settings.avatar_2 != blank
+    assign avatars = avatars | append: '2,'
+  endif
+  if block_settings.avatar_3 != blank
+    assign avatars = avatars | append: '3,'
+  endif
+  assign avatar_keys = avatars | split: ','
+-%}
+{% render 'contrast-override', background_color: block_settings.background_color, section_id: block.id %}
+<div class="clinician-proof color-custom-{{ block.id }}" {{ block.shopify_attributes }}>
+  {%- if block_settings.mark_image != blank or block_settings.mark_text != blank -%}
+    <div class="clinician-proof__mark">
+      {%- if block_settings.mark_image != blank -%}
+        {{
+          block_settings.mark_image
+          | image_url: width: 300
+          | image_tag:
+            widths: '150, 300',
+            sizes: '(min-width: 990px) 121px, 110px',
+            loading: 'lazy',
+            class: 'clinician-proof__mark-image',
+            alt: block_settings.mark_text
+        }}
+      {%- else -%}
+        <span class="clinician-proof__mark-text type-h6">{{ block_settings.mark_text | escape }}</span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+  {%- if block_settings.text != blank -%}
+    <p class="clinician-proof__text type-caption">{{ block_settings.text }}</p>
+  {%- endif -%}
+  {%- if avatar_keys.size > 0 or block_settings.link_label != blank -%}
+    <div class="clinician-proof__people">
+      {%- if avatar_keys.size > 0 -%}
+        <div class="clinician-proof__avatars">
+          {%- for key in avatar_keys -%}
+            {%- assign setting_id = 'avatar_' | append: key -%}
+            {{
+              block_settings[setting_id]
+              | image_url: width: 120
+              | image_tag:
+                widths: '60, 120',
+                sizes: '26px',
+                loading: 'lazy',
+                class: 'clinician-proof__avatar',
+                alt: ''
+            }}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      {%- if block_settings.link_label != blank -%}
+        {%- if block_settings.link_url != blank -%}
+          <a class="clinician-proof__link type-micro" href="{{ block_settings.link_url }}">
+            {{- block_settings.link_label | escape -}}
+          </a>
+        {%- else -%}
+          <span class="clinician-proof__link type-micro">{{ block_settings.link_label | escape }}</span>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .clinician-proof {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'mark text'
+      'people people';
+    align-items: center;
+    gap: var(--space-12) var(--space-8);
+    padding: var(--space-10);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .clinician-proof__mark {
+    grid-area: mark;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    padding-inline-end: var(--space-8);
+    border-inline-end: var(--border-hairline) solid var(--color-accent-bar);
+  }
+
+  .clinician-proof__mark-image {
+    display: block;
+    block-size: var(--space-24);
+    inline-size: auto;
+  }
+
+  .clinician-proof__mark-text {
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .clinician-proof__text {
+    grid-area: text;
+    margin: 0;
+  }
+
+  .clinician-proof__people {
+    grid-area: people;
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .clinician-proof__avatars {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .clinician-proof__avatar {
+    display: block;
+    inline-size: calc(var(--space-24) + var(--space-2));
+    block-size: calc(var(--space-24) + var(--space-2));
+    object-fit: cover;
+    border-radius: var(--radius-none);
+  }
+
+  .clinician-proof__link {
+    color: inherit;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: var(--space-2);
+  }
+
+  .clinician-proof__link:focus-visible {
+    outline: var(--border-hairline) solid var(--color-foreground);
+    outline-offset: var(--space-2);
+    box-shadow: var(--effect-focus-ring);
+  }
+
+  @media screen and (min-width: 990px) {
+    .clinician-proof {
+      grid-template-columns: auto 1fr auto;
+      grid-template-areas: 'mark text people';
+    }
+
+    .clinician-proof__people {
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.clinician_proof",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "mark_image",
+      "label": "t:settings.mark_image"
+    },
+    {
+      "type": "text",
+      "id": "mark_text",
+      "label": "t:settings.mark_text",
+      "info": "t:info.mark_text",
+      "default": "Clinicians' Choice"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "524 clinicians share The Barrier Co without compensation."
+    },
+    {
+      "type": "header",
+      "content": "t:content.images"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_1",
+      "label": "t:settings.avatar_1"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_2",
+      "label": "t:settings.avatar_2"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_3",
+      "label": "t:settings.avatar_3"
+    },
+    {
+      "type": "header",
+      "content": "t:content.link"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "t:settings.label",
+      "default": "View clinicians"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "t:settings.link"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.clinician_proof"
+    }
+  ]
+}
+{% endschema %}

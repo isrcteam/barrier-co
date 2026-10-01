@@ -1,0 +1,23 @@
+{
+  "names": {
+    "ingredient_list": "Ingredient list"
+  },
+  "content": {
+    "source": "Source"
+  },
+  "settings": {
+    "heading_tag": "Heading tag",
+    "name_tag": "Ingredient name tag",
+    "use_product_data": "Use product data",
+    "ingredients": "Ingredients",
+    "same_at_mobile": "Same at mobile",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom"
+  },
+  "info": {
+    "use_product_data_ingredients": "On product pages, shows the product's Ingredients metafield. Uses the list below when it's empty or on other pages."
+  },
+  "text_defaults": {
+    "ingredient_list_heading": "Key ingredients"
+  }
+}

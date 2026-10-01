@@ -1,0 +1,161 @@
+{% doc %}
+  Breadcrumb trail from the home page to the current product, collection or page, with BreadcrumbList structured data.
+
+  @example
+  {% content_for 'block', type: 'breadcrumbs', id: 'breadcrumbs' %}
+{% enddoc %}
+{%- liquid
+  assign current_product = closest.product | default: product
+  assign trail_collection = collection
+  if current_product != blank and trail_collection == blank and block.settings.show_collection
+    assign trail_collection = current_product.collections.first
+  endif
+
+  assign current_title = ''
+  if current_product != blank
+    assign current_title = current_product.title
+    assign current_url = current_product.url
+  elsif collection != blank
+    assign current_title = collection.title
+    assign current_url = collection.url
+    assign trail_collection = blank
+  elsif page != blank
+    assign current_title = page.title
+    assign current_url = page.url
+  elsif article != blank
+    assign current_title = article.title
+    assign current_url = article.url
+  endif
+
+  assign home_label = 'content.breadcrumbs_home' | t
+-%}
+{%- if current_title != blank -%}
+  <nav
+    class="breadcrumbs type-body-small{% unless block.settings.show_on_mobile %} breadcrumbs--desktop-only{% endunless %}"
+    aria-label="{{ 'accessibility.breadcrumbs' | t }}"
+    {{ block.shopify_attributes }}
+  >
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item">
+        <a class="breadcrumbs__link" href="{{ routes.root_url }}">{{ home_label }}</a>
+      </li>
+      {%- if trail_collection != blank -%}
+        <li class="breadcrumbs__item">
+          <a class="breadcrumbs__link" href="{{ trail_collection.url }}">{{ trail_collection.title | escape }}</a>
+        </li>
+      {%- endif -%}
+      <li class="breadcrumbs__item">
+        <span class="breadcrumbs__current" aria-current="page">{{ current_title | escape }}</span>
+      </li>
+    </ol>
+  </nav>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": {{ home_label | json }},
+          "item": {{ request.origin | append: routes.root_url | json }}
+        },
+        {%- if trail_collection != blank -%}
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ trail_collection.title | json }},
+            "item": {{ request.origin | append: trail_collection.url | json }}
+          },
+        {%- endif -%}
+        {
+          "@type": "ListItem",
+          "position": {% if trail_collection != blank %}3{% else %}2{% endif %},
+          "name": {{ current_title | json }},
+          "item": {{ request.origin | append: current_url | json }}
+        }
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .breadcrumbs {
+    color: var(--color-foreground);
+  }
+
+  .breadcrumbs--desktop-only {
+    display: none;
+  }
+
+  .breadcrumbs__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .breadcrumbs__item {
+    display: inline-flex;
+    gap: var(--space-4);
+    color: var(--color-accent-bar);
+  }
+
+  .breadcrumbs__item::before {
+    content: '|' / '';
+  }
+
+  .breadcrumbs__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .breadcrumbs__link:hover {
+    text-decoration: underline;
+    text-underline-offset: var(--space-4);
+  }
+
+  .breadcrumbs__link:focus-visible {
+    outline: var(--border-hairline) solid var(--color-foreground);
+    outline-offset: var(--space-2);
+    box-shadow: var(--effect-focus-ring);
+  }
+
+  .breadcrumbs__current {
+    color: var(--color-foreground);
+  }
+
+  @media screen and (min-width: 990px) {
+    .breadcrumbs--desktop-only {
+      display: block;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.breadcrumbs",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_collection",
+      "label": "t:settings.show_collection",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_mobile",
+      "label": "t:settings.show_on_mobile",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.breadcrumbs"
+    }
+  ]
+}
+{% endschema %}

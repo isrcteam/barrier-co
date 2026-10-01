@@ -1,0 +1,704 @@
+{%- liquid
+  assign slide_count = section.blocks.size
+  assign layout = section.settings.middle_card
+  assign heading_tag = section.settings.heading_tag
+
+  assign pt = section.settings['padding-block-start'] | divided_by: 16.0
+  assign pb = section.settings['padding-block-end'] | divided_by: 16.0
+  if section.settings.same_mobile_padding
+    assign pt_mobile = pt
+    assign pb_mobile = pb
+  else
+    assign pt_mobile = section.settings['padding-block-start-mobile'] | divided_by: 16.0
+    assign pb_mobile = section.settings['padding-block-end-mobile'] | divided_by: 16.0
+  endif
+
+  if layout == 'tall'
+    assign side_sizes = '(min-width: 990px) 30vw, 100vw'
+    assign middle_sizes = '(min-width: 990px) 40vw, 100vw'
+  else
+    assign side_sizes = '(min-width: 990px) 33vw, 100vw'
+    assign middle_sizes = side_sizes
+  endif
+-%}
+
+{% render 'contrast-override', background_color: section.settings.background_color, section_id: section.id %}
+
+<div
+  class="image-carousel image-carousel--{{ layout }} image-carousel--caption-{{ section.settings.caption_alignment }}{% if section.settings.show_side_bars %} image-carousel--bars{% endif %} color-custom-{{ section.id }}"
+  style="--section-pt: {{ pt }}rem; --section-pb: {{ pb }}rem; --section-pt-mobile: {{ pt_mobile }}rem; --section-pb-mobile: {{ pb_mobile }}rem;"
+>
+  <div class="image-carousel__inner">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="image-carousel__header">
+        {%- if section.settings.heading != blank -%}
+          <{{ heading_tag }} class="image-carousel__heading type-h1">
+            {{- section.settings.heading | escape | newline_to_br -}}
+          </{{ heading_tag }}>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="image-carousel__subheading type-body-large">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if slide_count > 0 -%}
+      {%- capture slides -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign position = forloop.index0 | modulo: 3
+            assign slide_class = 'image-carousel__slide'
+            assign image_sizes = side_sizes
+            if position == 1
+              assign slide_class = 'image-carousel__slide image-carousel__slide--middle'
+              assign image_sizes = middle_sizes
+            endif
+          -%}
+          {%- capture card -%}
+            <div class="image-carousel__card" {{ block.shopify_attributes }}>
+              <div class="image-carousel__media">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1500
+                    | image_tag:
+                      widths: '375, 550, 750, 1100, 1500',
+                      sizes: image_sizes,
+                      loading: 'lazy',
+                      class: 'image-carousel__image'
+                  }}
+                {%- else -%}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'image-carousel__image image-carousel__image--placeholder' }}
+                {%- endif -%}
+                {%- if block.settings.card_label != blank -%}
+                  <p class="image-carousel__label type-card-label">{{ block.settings.card_label | escape }}</p>
+                {%- endif -%}
+                {%- if block.settings.product != blank -%}
+                  <div class="image-carousel__spotlight">
+                    {% render 'product-spotlight',
+                      product: block.settings.product,
+                      style: 'glass',
+                      button_label: block.settings.button_label,
+                      price_label: block.settings.price_label
+                    %}
+                  </div>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.caption != blank -%}
+                <p class="image-carousel__caption {{ section.settings.caption_size }}">{{ block.settings.caption | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- endcapture -%}
+          {% render 'slideshow-slide', index: forloop.index0, children: card, class: slide_class %}
+        {%- endfor -%}
+      {%- endcapture -%}
+
+      {%- capture controls -%}
+        {%- if slide_count > 1 -%}
+          {% render 'slideshow-controls',
+            style: 'dots',
+            item_count: slide_count,
+            show_arrows: true,
+            icon_style: 'arrow',
+            pagination_position: 'center',
+            class: 'image-carousel__controls'
+          %}
+        {%- endif -%}
+      {%- endcapture -%}
+
+      <div class="image-carousel__stage">
+        {%- if section.settings.show_side_bars -%}
+          <span class="image-carousel__bar" aria-hidden="true"></span>
+        {%- endif -%}
+        {% render 'slideshow',
+          ref: 'imageCarousel',
+          class: 'image-carousel__slideshow',
+          slides: slides,
+          slide_count: slide_count,
+          controls: controls,
+          slide_position: 'top',
+          infinite: false,
+          initial_slide: 0
+        %}
+        {%- if section.settings.show_side_bars -%}
+          <span class="image-carousel__bar" aria-hidden="true"></span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .image-carousel {
+    padding-block: var(--section-pt-mobile) var(--section-pb-mobile);
+    padding-inline: var(--layout-gutter);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .image-carousel__inner {
+    display: grid;
+    gap: var(--space-24);
+    max-width: var(--layout-content-width);
+    margin-inline: auto;
+    container-type: inline-size;
+  }
+
+  .image-carousel__header {
+    display: grid;
+    gap: var(--space-24);
+    text-align: center;
+  }
+
+  .image-carousel__heading {
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .image-carousel__subheading {
+    margin: 0;
+  }
+
+  .image-carousel__stage {
+    --stage-pad: calc(var(--space-6) * 0);
+    --bar-width: var(--icon-bar-mobile);
+    --bar-height: calc(var(--space-60) + var(--space-10));
+    --card-gap: var(--space-10);
+    --bars-total: calc(var(--bar-width) * 0);
+    --track: calc(100cqi - 2 * var(--stage-pad) - var(--bars-total));
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    padding-inline: var(--stage-pad);
+  }
+
+  .image-carousel--bars .image-carousel__stage {
+    --stage-pad: var(--space-6);
+    --bars-total: calc(2 * (var(--bar-width) + var(--space-12)));
+
+    grid-template-columns: var(--bar-width) minmax(0, 1fr) var(--bar-width);
+    column-gap: var(--space-12);
+  }
+
+  .image-carousel__bar {
+    display: block;
+    width: var(--bar-width);
+    height: var(--bar-height);
+    margin-block-start: calc((var(--track) - var(--bar-height)) / 2);
+    background: var(--color-accent-bar);
+  }
+
+  .image-carousel__slideshow {
+    --track: 100cqi;
+    --slideshow-gap: var(--card-gap);
+
+    gap: var(--space-24);
+    min-width: 0;
+  }
+
+  .image-carousel .image-carousel__slide {
+    width: 100%;
+    scroll-snap-align: start;
+  }
+
+  .image-carousel__card {
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  .image-carousel__media {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    aspect-ratio: 1;
+    overflow: hidden;
+    padding: var(--space-16) var(--space-10);
+  }
+
+  .image-carousel--tall .image-carousel__slide--middle .image-carousel__media {
+    aspect-ratio: 6 / 7;
+  }
+
+  .image-carousel__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .image-carousel__image--placeholder {
+    background: var(--color-background);
+  }
+
+  .image-carousel__label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-10);
+    margin: 0;
+    color: var(--color-on-media);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .image-carousel__label::before,
+  .image-carousel__label::after {
+    content: '';
+    display: block;
+    width: var(--space-4);
+    height: var(--space-16);
+    background: currentColor;
+  }
+
+  .image-carousel__spotlight {
+    position: absolute;
+    inset-inline: var(--space-6);
+    inset-block-end: var(--space-6);
+  }
+
+  .image-carousel__caption {
+    margin: 0;
+    color: var(--color-caption);
+    text-align: center;
+  }
+
+  .image-carousel__controls {
+    justify-content: center;
+    mix-blend-mode: normal;
+  }
+
+  .image-carousel .image-carousel__controls .slideshow-controls__arrows {
+    display: none;
+  }
+
+  .image-carousel .image-carousel__controls .slideshow-controls__dots {
+    gap: var(--space-6);
+    padding: 0;
+    border-radius: var(--radius-none);
+  }
+
+  .image-carousel .image-carousel__controls .slideshow-controls__dots button {
+    --size: var(--space-6);
+
+    margin: 0;
+    border-radius: var(--radius-none);
+  }
+
+  .image-carousel .image-carousel__controls .slideshow-controls__dots button::after {
+    border-radius: var(--radius-none);
+    box-shadow: none;
+    background-color: var(--color-accent-bar);
+    opacity: var(--opacity-brand-inactive);
+  }
+
+  .image-carousel .image-carousel__controls .slideshow-controls__dots button[aria-selected='true']::after {
+    opacity: 1;
+  }
+
+  .image-carousel .image-carousel__controls .slideshow-control {
+    color: var(--color-foreground);
+  }
+
+  .image-carousel .image-carousel__controls .slideshow-control:focus-visible {
+    outline: var(--border-strong) solid var(--color-foreground);
+    box-shadow: var(--effect-focus-ring);
+  }
+
+  @media screen and (min-width: 990px) {
+    .image-carousel {
+      padding-block: var(--section-pt) var(--section-pb);
+    }
+
+    .image-carousel__inner {
+      gap: var(--space-30);
+    }
+
+    .image-carousel__stage {
+      --stage-pad: calc(var(--space-6) * 0);
+      --bar-width: var(--icon-bar-desktop);
+      --card-gap: var(--space-60);
+      --cards: calc(var(--track) - 2 * var(--card-gap));
+      --side: calc(var(--cards) / 3);
+      --middle: var(--side);
+      --side-offset: calc(var(--space-6) * 0);
+    }
+
+    .image-carousel--bars .image-carousel__stage {
+      --stage-pad: calc(var(--space-6) * 0);
+      --bars-total: calc(2 * (var(--bar-width) + var(--card-gap)));
+
+      column-gap: var(--card-gap);
+    }
+
+    .image-carousel--tall .image-carousel__stage {
+      --card-gap: var(--space-86);
+      --side: calc(var(--cards) * 0.3);
+      --middle: calc(var(--cards) * 0.4);
+      --side-offset: calc(var(--middle) * 7 / 6 - var(--side));
+    }
+
+    .image-carousel__bar {
+      height: var(--side);
+      margin-block-start: var(--side-offset);
+    }
+
+    .image-carousel .image-carousel__slide {
+      width: var(--side);
+    }
+
+    .image-carousel .image-carousel__slide--middle {
+      width: var(--middle);
+    }
+
+    .image-carousel--tall .image-carousel__slide:not(.image-carousel__slide--middle) {
+      margin-block-start: var(--side-offset);
+    }
+
+    .image-carousel--offset .image-carousel__slide--middle {
+      margin-block-start: calc(var(--space-80) + var(--space-20));
+    }
+
+    .image-carousel__card {
+      gap: var(--space-8);
+    }
+
+    .image-carousel__media {
+      padding: var(--space-30) var(--space-10);
+    }
+
+    .image-carousel__spotlight {
+      inset-inline: var(--space-12);
+      inset-block-end: var(--space-12);
+    }
+
+    .image-carousel__caption {
+      max-width: calc(var(--space-112) * 2 + var(--space-80));
+      justify-self: center;
+    }
+
+    .image-carousel--caption-left .image-carousel__caption {
+      justify-self: start;
+      text-align: start;
+    }
+
+    .image-carousel__controls {
+      justify-content: space-between;
+    }
+
+    .image-carousel .image-carousel__controls .slideshow-controls__arrows {
+      display: flex;
+    }
+
+    .image-carousel .image-carousel__controls .slideshow-controls__dots {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .image-carousel slideshow-slides {
+      scroll-behavior: auto;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.image_carousel",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "name": "t:names.card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:settings.image"
+        },
+        {
+          "type": "text",
+          "id": "card_label",
+          "label": "t:settings.label"
+        },
+        {
+          "type": "textarea",
+          "id": "caption",
+          "label": "t:settings.caption"
+        },
+        {
+          "type": "header",
+          "content": "t:content.product_overlay"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:settings.product"
+        },
+        {
+          "type": "text",
+          "id": "price_label",
+          "label": "t:settings.price_label",
+          "info": "t:info.price_label",
+          "default": "Starts from [price]"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:settings.button_label",
+          "default": "Shop now"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "t:settings.heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:settings.heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:settings.subheading"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "middle_card",
+      "label": "t:settings.middle_card",
+      "info": "t:info.middle_card",
+      "options": [
+        {
+          "value": "even",
+          "label": "t:options.even"
+        },
+        {
+          "value": "offset",
+          "label": "t:options.offset"
+        },
+        {
+          "value": "tall",
+          "label": "t:options.tall"
+        }
+      ],
+      "default": "offset"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_side_bars",
+      "label": "t:settings.show_side_bars",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "caption_alignment",
+      "label": "t:settings.caption_alignment",
+      "info": "t:info.caption_alignment",
+      "options": [
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "left",
+          "label": "t:options.left"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "caption_size",
+      "label": "t:settings.caption_size",
+      "options": [
+        {
+          "value": "type-body-small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "type-body",
+          "label": "t:options.medium"
+        }
+      ],
+      "default": "type-body-small"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "same_mobile_padding",
+      "label": "t:settings.same_at_mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.image_carousel_routine",
+      "category": "t:categories.storytelling",
+      "settings": {
+        "heading": "Your whole routine.\nOne cloth.",
+        "heading_tag": "h2",
+        "middle_card": "offset",
+        "show_side_bars": true,
+        "caption_alignment": "center",
+        "caption_size": "type-body-small",
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "same_mobile_padding": true
+      },
+      "blocks": {
+        "card_cleanse": {
+          "type": "card",
+          "settings": {
+            "card_label": "Cleanse",
+            "caption": "Lifts away sweat, impurities and buildup without stripping the skin."
+          }
+        },
+        "card_hydrate": {
+          "type": "card",
+          "settings": {
+            "card_label": "Hydrate",
+            "caption": "Replenishes moisture for lasting, comfortable hydration."
+          }
+        },
+        "card_protect": {
+          "type": "card",
+          "settings": {
+            "card_label": "Protect",
+            "caption": "Supports the skin barrier to help lock in moisture and protect against dryness."
+          }
+        }
+      },
+      "block_order": [
+        "card_cleanse",
+        "card_hydrate",
+        "card_protect"
+      ]
+    },
+    {
+      "name": "t:names.image_carousel_lifestyle",
+      "category": "t:categories.storytelling",
+      "settings": {
+        "heading": "Body care.\nWherever life happens.",
+        "heading_tag": "h2",
+        "subheading": "Post-workout. In-flight. Beach to dinner. On the go.",
+        "middle_card": "tall",
+        "show_side_bars": true,
+        "caption_alignment": "left",
+        "caption_size": "type-body",
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "same_mobile_padding": false,
+        "padding-block-start-mobile": 30,
+        "padding-block-end-mobile": 30
+      },
+      "blocks": {
+        "card_shell": {
+          "type": "card",
+          "settings": {}
+        },
+        "card_travel": {
+          "type": "card",
+          "settings": {}
+        },
+        "card_pack": {
+          "type": "card",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "card_shell",
+        "card_travel",
+        "card_pack"
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -9,6 +9,7 @@
  */
 {
   "accessibility": {
+    "breadcrumbs": "Breadcrumb",
     "account": "Account",
     "active_filters": "Active filters:",
     "cart": "Cart",
@@ -163,6 +164,9 @@
     }
   },
   "content": {
+    "breadcrumbs_home": "Home",
+    "after_label": "After",
+    "before_label": "Before",
     "cancel": "Cancel",
     "discount": "Discount",
     "account_title": "Account",
@@ -344,6 +348,11 @@
     }
   },
   "placeholders": {
+    "ingredient_benefits": "Tear open. Unfold. Wipe across your full body.|One cloth delivers a full dose of clinical-grade hydration in under 30 seconds.|Works immediately and lasts up to 72 hours.|No rinsing. No layering.",
+    "ingredient_names": "Chamomile flower extract|Cocoa butter|Witch hazel",
+    "faq_answer": "Each cloth is infused with 3½ teaspoons of a clinical-grade cream containing hyaluronic acid, glycerin, shea butter, cocoa butter, chamomile, adenosine, and other barrier-strengthening actives. See the full ingredient list in the product details above.",
+    "faq_questions": "What's in the formula?|Is it pregnancy safe?|Is it safe for everyone?|What is the benefit of the cloth?",
+    "clinical_result": "Choose clinical results to show here",
     "password": "Password",
     "search": "Search",
     "product_title": "Product title",

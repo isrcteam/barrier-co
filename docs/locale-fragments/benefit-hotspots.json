@@ -1,0 +1,36 @@
+{
+  "names": {
+    "benefit_hotspots": "Benefit hotspots",
+    "callout": "Callout",
+    "message": "Message"
+  },
+  "settings": {
+    "heading_tag": "Heading tag",
+    "message_heading_tag": "Message heading tag",
+    "product_image": "Product image",
+    "photo": "Photo",
+    "mobile_image": "Mobile image",
+    "same_at_mobile": "Same at mobile",
+    "panel_color": "Panel color",
+    "panel_text_color": "Panel text color",
+    "line_length": "Line length",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom"
+  },
+  "info": {
+    "callout_line_length": "Length of the dotted line on desktop, as a share of the panel width. On mobile, callouts show as a list under the image."
+  },
+  "text_defaults": {
+    "benefit_hotspots_heading": "Your whole routine. One cloth",
+    "callout_label": "Benefit",
+    "callout_text": "Describe what this part of the product does.",
+    "callout_cleanse_label": "Cleanse",
+    "callout_cleanse_text": "Lifts away impurities, sweat, and buildup without stripping — as effective as soap and water.",
+    "callout_hydrate_label": "Hydrate",
+    "callout_hydrate_text": "3½ teaspoons of clinical-grade cream delivers deep moisture that lasts up to 72 hours.",
+    "callout_protect_label": "Protect",
+    "callout_protect_text": "Mineral oil and dimethicone form an occlusive shield, locking in hydration and defending against environmental stress.",
+    "benefit_message_heading": "One cloth. Three key benefits.",
+    "benefit_message_text": "Cleanses, hydrates, and protects skin with minimal friction for softer, calmer, healthier skin."
+  }
+}

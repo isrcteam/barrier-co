@@ -1,0 +1,248 @@
+{%- liquid
+  assign pt = section.settings['padding-block-start'] | divided_by: 16.0
+  assign pb = section.settings['padding-block-end'] | divided_by: 16.0
+  if section.settings.same_mobile_padding
+    assign pt_mobile = pt
+    assign pb_mobile = pb
+  else
+    assign pt_mobile = section.settings['padding-block-start-mobile'] | divided_by: 16.0
+    assign pb_mobile = section.settings['padding-block-end-mobile'] | divided_by: 16.0
+  endif
+-%}
+
+{% render 'contrast-override', background_color: section.settings.background_color, section_id: section.id %}
+
+<div
+  class="feature-icons color-custom-{{ section.id }}"
+  style="--section-pt: {{ pt }}rem; --section-pb: {{ pb }}rem; --section-pt-mobile: {{ pt_mobile }}rem; --section-pb-mobile: {{ pb_mobile }}rem; --feature-columns: {{ section.settings.columns }};"
+>
+  {%- if section.blocks.size > 0 -%}
+    <ul class="feature-icons__list" role="list">
+      {%- for block in section.blocks -%}
+        <li class="feature-icons__item" {{ block.shopify_attributes }}>
+          <span class="feature-icons__icon">
+            {%- if block.settings.icon != blank -%}
+              {{
+                block.settings.icon
+                | image_url: width: 330
+                | image_tag:
+                  widths: '110, 220, 330',
+                  sizes: '7rem',
+                  loading: 'lazy',
+                  class: 'feature-icons__image',
+                  alt: ''
+              }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'feature-icons__image feature-icons__image--placeholder' }}
+            {%- endif -%}
+          </span>
+          {%- if block.settings.caption != blank -%}
+            <p class="feature-icons__caption type-body">{{ block.settings.caption | escape | newline_to_br }}</p>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .feature-icons {
+    padding-block: var(--section-pt-mobile) var(--section-pb-mobile);
+    padding-inline: var(--layout-gutter);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .feature-icons__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-30) var(--space-10);
+    max-width: calc(var(--space-112) * 10 + var(--space-30));
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .feature-icons__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-16);
+    text-align: center;
+  }
+
+  .feature-icons__icon {
+    display: block;
+    width: calc(var(--space-86) + var(--space-24));
+    aspect-ratio: 1;
+  }
+
+  .feature-icons__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .feature-icons__image--placeholder {
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--color-foreground) calc(var(--opacity-brand-subtle) * 100%), transparent);
+  }
+
+  .feature-icons__caption {
+    max-width: calc(var(--space-112) * 2);
+    margin: 0;
+    font-size: var(--type-body-large-size);
+    text-wrap: balance;
+  }
+
+  @media screen and (min-width: 990px) {
+    .feature-icons {
+      padding-block: var(--section-pt) var(--section-pb);
+    }
+
+    .feature-icons__list {
+      grid-template-columns: repeat(var(--feature-columns), minmax(0, 1fr));
+      column-gap: var(--space-86);
+    }
+
+    .feature-icons__caption {
+      font-size: var(--type-body-size);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.feature_icons",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "t:names.feature_item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "t:settings.icon",
+          "info": "t:info.feature_icon"
+        },
+        {
+          "type": "textarea",
+          "id": "caption",
+          "label": "t:settings.caption"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "t:settings.columns_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "same_mobile_padding",
+      "label": "t:settings.same_at_mobile",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 30,
+      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 30,
+      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.feature_icons",
+      "category": "t:categories.storytelling",
+      "settings": {
+        "columns": 4
+      },
+      "blocks": {
+        "item_hydration": {
+          "type": "item",
+          "settings": {
+            "caption": "Deep Skin Hydration in 30 Minutes"
+          }
+        },
+        "item_dryness": {
+          "type": "item",
+          "settings": {
+            "caption": "Helps Reduce Dryness"
+          }
+        },
+        "item_smoother": {
+          "type": "item",
+          "settings": {
+            "caption": "Supports Smoother Looking Skin"
+          }
+        },
+        "item_texture": {
+          "type": "item",
+          "settings": {
+            "caption": "Skin Texture Improvement"
+          }
+        }
+      },
+      "block_order": ["item_hydration", "item_dryness", "item_smoother", "item_texture"]
+    }
+  ]
+}
+{% endschema %}

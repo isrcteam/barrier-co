@@ -1,0 +1,14 @@
+{
+  "names": {
+    "quote_slider": "Quote slider"
+  },
+  "settings": {
+    "heading_tag": "Heading tag"
+  },
+  "info": {
+    "quote_card_background": "Colour of the quote card"
+  },
+  "content": {
+    "quote_slider_source": "Shows the product's Testimonials metafield (custom.testimonials). Hidden when it's empty."
+  }
+}

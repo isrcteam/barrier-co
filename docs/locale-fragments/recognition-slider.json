@@ -1,0 +1,11 @@
+{
+  "names": {
+    "recognition_slider": "Recognition slider"
+  },
+  "settings": {
+    "heading_tag": "Heading tag"
+  },
+  "content": {
+    "recognition_slider_source": "Shows the product's Recognitions metafield (custom.recognitions). Hidden when it's empty."
+  }
+}

@@ -1,0 +1,54 @@
+{% doc %}
+  Five stars filled to the rating, with an accessible label.
+
+  @param {number} rating - Rating out of 5, decimals allowed
+  @param {string} [size] - 'small' (12px) or 'medium' (16px), defaults to small
+
+  @example
+  {% render 'star-rating', rating: product.metafields.reviews.rating.value.rating %}
+{% enddoc %}
+{%- liquid
+  assign rating_value = rating | default: 0 | times: 1.0
+  if rating_value > 5
+    assign rating_value = 5
+  endif
+  assign fill = rating_value | divided_by: 5 | times: 100 | round: 1
+  assign star_size = size | default: 'small'
+-%}
+<span
+  class="star-rating star-rating--{{ star_size }}"
+  style="--star-fill: {{ fill }}%;"
+  role="img"
+  aria-label="{{ 'accessibility.rating' | t: rating: rating_value }}"
+>
+  <span class="star-rating__stars" aria-hidden="true">★★★★★</span>
+</span>
+
+{% stylesheet %}
+  .star-rating {
+    display: inline-flex;
+    line-height: 1;
+  }
+
+  .star-rating__stars {
+    font-family: var(--font-family-body);
+    letter-spacing: var(--space-2);
+    background: linear-gradient(
+      90deg,
+      var(--color-rating) var(--star-fill),
+      color-mix(in srgb, var(--color-foreground) calc(var(--opacity-brand-subtle) * 100%), transparent)
+        var(--star-fill)
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .star-rating--small .star-rating__stars {
+    font-size: var(--icon-xs);
+  }
+
+  .star-rating--medium .star-rating__stars {
+    font-size: var(--icon-sm);
+  }
+{% endstylesheet %}

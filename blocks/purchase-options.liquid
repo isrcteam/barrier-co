@@ -1,0 +1,526 @@
+{% doc %}
+  Subscription and one-time purchase choice for the product form, built on the product's native selling plans.
+  Renders nothing when the product has no selling plans.
+
+  @example
+  {% content_for 'block', type: 'purchase-options', id: 'purchase-options' %}
+{% enddoc %}
+{%- liquid
+  assign product = closest.product
+  assign block_settings = block.settings
+  assign variant = product.selected_or_first_available_variant
+  assign form_id = 'BuyButtons-ProductForm-' | append: section.id
+  assign allocations = variant.selling_plan_allocations
+
+  assign show_one_time = block_settings.show_one_time
+  if product.requires_selling_plan
+    assign show_one_time = false
+  endif
+
+  assign is_disabled = false
+  unless variant.available
+    assign is_disabled = true
+  endunless
+
+  assign selected_plan_id = product.selected_selling_plan.id
+  if selected_plan_id == blank
+    for allocation in allocations
+      if forloop.index == block_settings.recommended_position or forloop.first
+        assign selected_plan_id = allocation.selling_plan.id
+      endif
+    endfor
+  endif
+
+  assign one_time_price = variant.price | money | strip_html
+  assign one_time_button_label = block_settings.button_price_label | replace: '[price]', one_time_price | strip
+  assign initial_button_label = one_time_button_label
+-%}
+{%- capture newline %}
+{% endcapture -%}
+{%- if product.selling_plan_groups.size > 0 -%}
+  <script src="{{ 'purchase-options.js' | asset_url }}" type="module" fetchpriority="low"></script>
+  <purchase-options-component
+    class="purchase-options"
+    data-block-id="{{ block.id }}"
+    data-form-id="{{ form_id }}"
+    data-one-time-label="{{ one_time_button_label | escape }}"
+    {% if allocations.size == 0 %}
+      hidden
+    {% endif %}
+    {{ block.shopify_attributes }}
+  >
+    {%- if allocations.size > 0 -%}
+      <fieldset class="purchase-options__fieldset">
+        {%- if block_settings.heading != blank -%}
+          <legend class="purchase-options__legend type-micro">{{ block_settings.heading | escape }}</legend>
+        {%- endif -%}
+        <div class="purchase-options__plans">
+          {%- for allocation in allocations -%}
+            {%- liquid
+              assign plan = allocation.selling_plan
+              assign input_id = 'PurchaseOption-' | append: block.id | append: '-' | append: plan.id
+              assign plan_price = allocation.price | money | strip_html
+              assign button_label = block_settings.button_price_label | replace: '[price]', plan_price | strip
+
+              assign is_checked = false
+              if plan.id == selected_plan_id
+                assign is_checked = true
+                assign initial_button_label = button_label
+              endif
+
+              assign is_recommended = false
+              if forloop.index == block_settings.recommended_position and block_settings.recommended_label != blank
+                assign is_recommended = true
+              endif
+
+              assign savings = 0
+              if allocation.compare_at_price > allocation.price
+                assign savings = allocation.compare_at_price | minus: allocation.price
+              endif
+
+              case forloop.index
+                when 1
+                  assign plan_days = block_settings.days_1
+                when 2
+                  assign plan_days = block_settings.days_2
+                else
+                  assign plan_days = block_settings.days_3
+              endcase
+
+              assign summary = ''
+              assign timeline = ''
+              assign perks = ''
+              assign part = 1
+              assign part_has_text = false
+              assign description_lines = plan.description | split: newline
+              for line in description_lines
+                assign text = line | strip
+                if text == blank
+                  if part_has_text
+                    assign part = part | plus: 1
+                    assign part_has_text = false
+                  endif
+                  continue
+                endif
+                assign part_has_text = true
+                assign safe_text = text | escape
+                case part
+                  when 1
+                    assign summary = summary | append: ' ' | append: safe_text
+                  when 2
+                    assign timeline = timeline | append: '<li class="purchase-options__step">' | append: safe_text | append: '</li>'
+                  else
+                    assign perks = perks | append: ' ' | append: safe_text
+                endcase
+              endfor
+              assign summary = summary | strip
+              assign perks = perks | strip
+            -%}
+            <div class="purchase-options__card">
+              <div class="purchase-options__head">
+                <input
+                  type="radio"
+                  id="{{ input_id }}"
+                  class="purchase-options__radio"
+                  name="selling_plan"
+                  value="{{ plan.id }}"
+                  form="{{ form_id }}"
+                  data-button-label="{{ button_label | escape }}"
+                  aria-describedby="{{ input_id }}-details"
+                  on:change="/select"
+                  {% if is_checked %}
+                    checked
+                  {% endif %}
+                  {% if is_disabled %}
+                    disabled
+                  {% endif %}
+                >
+                <label for="{{ input_id }}" class="purchase-options__name type-h5">{{ plan.name | escape }}</label>
+              </div>
+              {%- if is_recommended -%}
+                <span class="purchase-options__tag type-micro">{{ block_settings.recommended_label | escape }}</span>
+              {%- endif -%}
+              <div id="{{ input_id }}-details" class="purchase-options__details">
+                {%- if summary != blank -%}
+                  <p class="purchase-options__summary type-caption">{{ summary }}</p>
+                {%- endif -%}
+                <div class="purchase-options__pricing">
+                  <span class="purchase-options__price type-h5">{{ plan_price }}</span>
+                  {%- if savings > 0 and block_settings.savings_label != blank -%}
+                    {%- assign savings_amount = savings | money | strip_html -%}
+                    <span class="purchase-options__savings type-micro">
+                      {{- block_settings.savings_label | replace: '[amount]', savings_amount | escape -}}
+                    </span>
+                  {%- endif -%}
+                  {%- if block_settings.show_per_day and plan_days > 0 -%}
+                    {%- assign per_day_price = allocation.price | divided_by: plan_days | money | strip_html -%}
+                    <span class="purchase-options__per-day type-caption">
+                      {{- block_settings.per_day_label | replace: '[price]', per_day_price | escape -}}
+                    </span>
+                  {%- endif -%}
+                </div>
+                {%- if timeline != blank -%}
+                  <ul class="purchase-options__timeline type-caption">{{ timeline }}</ul>
+                {%- endif -%}
+                {%- if perks != blank -%}
+                  <p class="purchase-options__perks type-micro">{{ perks }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+        {%- if show_one_time -%}
+          {%- assign once_id = 'PurchaseOption-' | append: block.id | append: '-once' -%}
+          <div class="purchase-options__once">
+            <input
+              type="radio"
+              id="{{ once_id }}"
+              class="purchase-options__once-radio"
+              name="selling_plan"
+              value=""
+              form="{{ form_id }}"
+              data-button-label="{{ one_time_button_label | escape }}"
+              on:change="/select"
+              {% if selected_plan_id == blank %}
+                checked
+              {% endif %}
+              {% if is_disabled %}
+                disabled
+              {% endif %}
+            >
+            <label for="{{ once_id }}" class="purchase-options__once-label type-body-small">
+              {{- block_settings.one_time_label | replace: '[price]', one_time_price | escape -}}
+            </label>
+          </div>
+        {%- endif -%}
+      </fieldset>
+    {%- endif -%}
+  </purchase-options-component>
+  {%- assign css_label = initial_button_label | replace: '\', '' | replace: '"', '' -%}
+  {% style %}
+    #{{ form_id }} {
+      --purchase-options-button-label: "{{ css_label }}";
+    }
+  {% endstyle %}
+{%- endif -%}
+
+{% stylesheet %}
+  .purchase-options {
+    display: block;
+    color: var(--color-foreground);
+  }
+
+  .purchase-options[hidden] {
+    display: none;
+  }
+
+  .purchase-options__fieldset {
+    display: grid;
+    gap: var(--space-4);
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .purchase-options__legend {
+    margin-block-end: var(--space-4);
+    padding: 0;
+    text-transform: uppercase;
+  }
+
+  .purchase-options__plans {
+    display: grid;
+    gap: var(--space-16);
+  }
+
+  .purchase-options__card {
+    position: relative;
+    display: grid;
+    gap: var(--space-10);
+    padding: var(--space-12);
+    border: var(--border-hairline) solid var(--color-divider);
+    transition: border-color var(--duration-fast) var(--easing-standard),
+      background-color var(--duration-fast) var(--easing-standard);
+  }
+
+  .purchase-options__card:has(.purchase-options__radio:checked) {
+    background: var(--color-white);
+    border-color: var(--color-foreground);
+  }
+
+  .purchase-options__card:has(.purchase-options__radio:focus-visible) {
+    outline: var(--border-hairline) solid var(--color-foreground);
+    outline-offset: var(--space-2);
+    box-shadow: var(--effect-focus-ring);
+  }
+
+  .purchase-options__card:has(.purchase-options__radio:disabled) {
+    opacity: var(--opacity-brand-disabled);
+  }
+
+  .purchase-options__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    padding-inline-end: var(--space-80);
+  }
+
+  .purchase-options__radio {
+    flex-shrink: 0;
+    margin: 0;
+  }
+
+  .purchase-options__name {
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .purchase-options__name::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .purchase-options__tag {
+    position: absolute;
+    inset-block-start: calc(-1 * var(--border-hairline));
+    inset-inline-end: calc(-1 * var(--border-hairline));
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-foreground);
+    color: var(--color-background);
+    text-transform: uppercase;
+  }
+
+  .purchase-options__details {
+    display: grid;
+    gap: var(--space-10);
+  }
+
+  .purchase-options__summary,
+  .purchase-options__perks {
+    margin: 0;
+  }
+
+  .purchase-options__pricing {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .purchase-options__savings {
+    padding: var(--space-2) var(--space-10);
+    background: var(--color-accent-bar);
+    color: var(--color-background);
+    text-transform: uppercase;
+  }
+
+  .purchase-options__per-day {
+    margin-inline-start: auto;
+  }
+
+  .purchase-options__timeline,
+  .purchase-options__perks {
+    padding-block-start: var(--space-12);
+    border-block-start: var(--border-hairline) solid
+      color-mix(in srgb, var(--color-foreground) calc(var(--opacity-brand-shadow) * 100%), transparent);
+  }
+
+  .purchase-options__timeline {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding-block-end: 0;
+    padding-inline: 0;
+    list-style: none;
+  }
+
+  .purchase-options__step {
+    position: relative;
+    padding-inline-start: var(--space-10);
+  }
+
+  .purchase-options__step::before {
+    content: '';
+    position: absolute;
+    inset-block-start: var(--space-2);
+    inset-inline-start: 0;
+    inline-size: var(--border-hairline);
+    block-size: var(--space-8);
+    background: var(--color-divider);
+    opacity: var(--opacity-brand-overlay);
+  }
+
+  .purchase-options__step:first-child::before {
+    opacity: 1;
+  }
+
+  .purchase-options__perks {
+    text-transform: uppercase;
+  }
+
+  .purchase-options__card:not(:has(.purchase-options__radio:checked)) .purchase-options__timeline,
+  .purchase-options__card:not(:has(.purchase-options__radio:checked)) .purchase-options__perks {
+    display: none;
+  }
+
+  .purchase-options__once {
+    position: relative;
+    justify-self: center;
+    margin-block-start: var(--space-12);
+  }
+
+  .purchase-options__once-radio {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    margin: 0;
+    opacity: 0;
+  }
+
+  .purchase-options__once-label {
+    text-underline-offset: var(--space-4);
+  }
+
+  .purchase-options__once-radio:checked + .purchase-options__once-label,
+  .purchase-options__once-radio:hover + .purchase-options__once-label {
+    text-decoration: underline;
+  }
+
+  .purchase-options__once:has(.purchase-options__once-radio:focus-visible) {
+    outline: var(--border-hairline) solid var(--color-foreground);
+    outline-offset: var(--space-2);
+    box-shadow: var(--effect-focus-ring);
+  }
+
+  .purchase-options__once-radio:disabled + .purchase-options__once-label {
+    opacity: var(--opacity-brand-disabled);
+  }
+
+  form[data-type='add-to-cart-form'] .add-to-cart-button:not(:disabled, [data-added='true'])::after {
+    content: var(--purchase-options-button-label, none);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .purchase-options__card {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.purchase_options",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Choose your subscription:"
+    },
+    {
+      "type": "header",
+      "content": "t:content.recommended_plan"
+    },
+    {
+      "type": "range",
+      "id": "recommended_position",
+      "label": "t:settings.recommended_position",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "text",
+      "id": "recommended_label",
+      "label": "t:settings.recommended_label",
+      "info": "t:info.recommended_label",
+      "default": "Recommended"
+    },
+    {
+      "type": "header",
+      "content": "t:content.prices"
+    },
+    {
+      "type": "text",
+      "id": "savings_label",
+      "label": "t:settings.savings_label",
+      "info": "t:info.savings_label",
+      "default": "Save [amount] vs try once"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_per_day",
+      "label": "t:settings.show_per_day",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "per_day_label",
+      "label": "t:settings.per_day_label",
+      "info": "t:info.purchase_price_placeholder",
+      "default": "[price]/day",
+      "visible_if": "{{ block.settings.show_per_day }}"
+    },
+    {
+      "type": "number",
+      "id": "days_1",
+      "label": "t:settings.days_plan_1",
+      "default": 90,
+      "visible_if": "{{ block.settings.show_per_day }}"
+    },
+    {
+      "type": "number",
+      "id": "days_2",
+      "label": "t:settings.days_plan_2",
+      "default": 30,
+      "visible_if": "{{ block.settings.show_per_day }}"
+    },
+    {
+      "type": "number",
+      "id": "days_3",
+      "label": "t:settings.days_plan_3",
+      "default": 30,
+      "visible_if": "{{ block.settings.show_per_day }}"
+    },
+    {
+      "type": "text",
+      "id": "button_price_label",
+      "label": "t:settings.button_price_label",
+      "info": "t:info.button_price_label",
+      "default": "- [price]"
+    },
+    {
+      "type": "header",
+      "content": "t:content.one_time_purchase"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_one_time",
+      "label": "t:settings.show_one_time",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "one_time_label",
+      "label": "t:settings.one_time_label",
+      "info": "t:info.purchase_price_placeholder",
+      "default": "Try once for [price]",
+      "visible_if": "{{ block.settings.show_one_time }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:content.purchase_options_plan_copy"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.purchase_options"
+    }
+  ]
+}
+{% endschema %}

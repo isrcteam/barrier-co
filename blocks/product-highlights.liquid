@@ -1,0 +1,67 @@
+{% doc %}
+  Ticked list of the product's selling points from its Highlights metafield. Hidden when the metafield is empty.
+
+  @example
+  {% content_for 'block', type: 'product-highlights', id: 'product-highlights' %}
+{% enddoc %}
+{%- assign highlights = closest.product.metafields.custom.highlights.value -%}
+{%- if highlights.size > 0 -%}
+  <ul class="product-highlights type-caption" {{ block.shopify_attributes }}>
+    {%- for highlight in highlights -%}
+      <li class="product-highlights__item">
+        <span class="product-highlights__icon" aria-hidden="true">
+          {{- 'icon-checkmark.svg' | inline_asset_content -}}
+        </span>
+        <span>{{ highlight | escape }}</span>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-highlights {
+    display: grid;
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-foreground);
+  }
+
+  .product-highlights__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-10);
+  }
+
+  .product-highlights__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    inline-size: var(--icon-xs);
+    block-size: var(--icon-xs);
+    color: var(--color-accent-bar);
+  }
+
+  .product-highlights__icon svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.product_highlights",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.product_highlights_source"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_highlights"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,356 @@
+{%- liquid
+  assign scroll_mobile = section.settings.scroll_mobile
+  assign logo_height = section.settings.logo_height | divided_by: 16.0
+
+  assign pt = section.settings['padding-block-start'] | divided_by: 16.0
+  assign pb = section.settings['padding-block-end'] | divided_by: 16.0
+  if section.settings.same_mobile_padding
+    assign pt_mobile = pt
+    assign pb_mobile = pb
+  else
+    assign pt_mobile = section.settings['padding-block-start-mobile'] | divided_by: 16.0
+    assign pb_mobile = section.settings['padding-block-end-mobile'] | divided_by: 16.0
+  endif
+-%}
+
+{%- capture logos -%}
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign logo_alt = block.settings.alt | default: block.settings.image.alt
+    -%}
+    <li class="logo-list__item" {{ block.shopify_attributes }}>
+      {%- capture logo_image -%}
+        {%- if block.settings.image != blank -%}
+          {{
+            block.settings.image
+            | image_url: height: 180
+            | image_tag:
+              height: section.settings.logo_height,
+              widths: '120, 240, 360',
+              sizes: '12rem',
+              loading: 'lazy',
+              class: 'logo-list__image',
+              alt: logo_alt
+          }}
+        {%- else -%}
+          {{ 'logo' | placeholder_svg_tag: 'logo-list__image logo-list__image--placeholder' }}
+        {%- endif -%}
+      {%- endcapture -%}
+      {%- if block.settings.link != blank -%}
+        <a href="{{ block.settings.link }}" class="logo-list__link">{{ logo_image }}</a>
+      {%- else -%}
+        {{ logo_image }}
+      {%- endif -%}
+    </li>
+  {%- endfor -%}
+{%- endcapture -%}
+
+{% render 'contrast-override', background_color: section.settings.background_color, section_id: section.id %}
+
+<div
+  class="logo-list{% if scroll_mobile %} logo-list--scroll{% endif %} color-custom-{{ section.id }}"
+  style="--section-pt: {{ pt }}rem; --section-pb: {{ pb }}rem; --section-pt-mobile: {{ pt_mobile }}rem; --section-pb-mobile: {{ pb_mobile }}rem; --logo-height: {{ logo_height }}rem;"
+>
+  {%- if section.blocks.size > 0 -%}
+    {%- if scroll_mobile -%}
+      <script
+        src="{{ 'marquee.js' | asset_url }}"
+        type="module"
+        fetchpriority="low"
+      ></script>
+      <marquee-component
+        class="logo-list__marquee"
+        data-speed-factor="25"
+        data-movement-direction="normal"
+      >
+        <div class="logo-list__wrapper" ref="wrapper">
+          <div class="logo-list__content" ref="content">
+            <ul class="logo-list__row" ref="marqueeItems[]" role="list">
+              {{ logos }}
+            </ul>
+          </div>
+        </div>
+      </marquee-component>
+    {%- else -%}
+      <ul class="logo-list__row logo-list__row--static" role="list">
+        {{ logos }}
+      </ul>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .logo-list {
+    --logo-gap: var(--space-60);
+
+    padding-block: var(--section-pt-mobile) var(--section-pb-mobile);
+    padding-inline: var(--layout-gutter);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .logo-list--scroll {
+    padding-inline: 0;
+    overflow: hidden;
+  }
+
+  .logo-list__row {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .logo-list__row--static {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-30) var(--logo-gap);
+    max-width: var(--layout-content-width);
+    margin-inline: auto;
+  }
+
+  .logo-list__item {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-list__link {
+    display: block;
+    color: inherit;
+  }
+
+  .logo-list__link:hover {
+    opacity: var(--opacity-brand-hover);
+  }
+
+  .logo-list__link:focus-visible {
+    outline: var(--border-strong) solid var(--color-foreground);
+    outline-offset: var(--space-4);
+    box-shadow: var(--effect-focus-ring);
+  }
+
+  .logo-list__image {
+    display: block;
+    width: auto;
+    height: var(--logo-height);
+    max-width: none;
+  }
+
+  .logo-list__image--placeholder {
+    width: calc(var(--logo-height) * 3);
+    background: color-mix(in srgb, var(--color-foreground) calc(var(--opacity-brand-subtle) * 100%), transparent);
+  }
+
+  .logo-list__marquee {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .logo-list__wrapper,
+  .logo-list__content,
+  .logo-list__marquee .logo-list__row {
+    display: flex;
+    gap: var(--logo-gap);
+    width: max-content;
+    min-width: max-content;
+  }
+
+  .logo-list__marquee .logo-list__row {
+    align-items: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .logo-list__marquee:not([data-disabled]) .logo-list__wrapper {
+      animation: logo-list-scroll var(--marquee-speed, var(--duration-marquee)) var(--easing-linear) infinite;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-list--scroll {
+      padding-inline: var(--layout-gutter);
+    }
+
+    .logo-list__marquee {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+  }
+
+  @keyframes logo-list-scroll {
+    to {
+      transform: translate3d(calc(-50% - (var(--logo-gap) / 2)), 0, 0);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .logo-list {
+      padding-block: var(--section-pt) var(--section-pb);
+    }
+
+    .logo-list--scroll {
+      padding-inline: var(--layout-gutter);
+    }
+
+    .logo-list__row--static {
+      flex-wrap: nowrap;
+      justify-content: space-between;
+    }
+
+    .logo-list__marquee {
+      max-width: var(--layout-content-width);
+      margin-inline: auto;
+    }
+
+    .logo-list__marquee:not([data-disabled]) .logo-list__wrapper {
+      animation: none;
+    }
+
+    .logo-list__wrapper,
+    .logo-list__content,
+    .logo-list__marquee .logo-list__row:first-child {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .logo-list__marquee .logo-list__row:first-child {
+      justify-content: space-between;
+    }
+
+    .logo-list__content[aria-hidden='true'],
+    .logo-list__marquee .logo-list__row + .logo-list__row {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.logo_list",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "t:names.logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:settings.image"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "t:settings.alt_text",
+          "info": "t:info.logo_alt_text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:settings.link"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "t:settings.logo_list_height",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "checkbox",
+      "id": "scroll_mobile",
+      "label": "t:settings.scroll_on_mobile",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "same_mobile_padding",
+      "label": "t:settings.same_at_mobile",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 30,
+      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 30,
+      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.logo_list",
+      "category": "t:categories.decorative",
+      "settings": {
+        "logo_height": 32,
+        "scroll_mobile": true
+      },
+      "blocks": {
+        "logo_1": { "type": "logo", "settings": { "alt": "Equinox" } },
+        "logo_2": { "type": "logo", "settings": { "alt": "Delta One" } },
+        "logo_3": { "type": "logo", "settings": { "alt": "Credo" } },
+        "logo_4": { "type": "logo", "settings": { "alt": "Equinox" } },
+        "logo_5": { "type": "logo", "settings": { "alt": "Delta One" } },
+        "logo_6": { "type": "logo", "settings": { "alt": "Credo" } }
+      },
+      "block_order": ["logo_1", "logo_2", "logo_3", "logo_4", "logo_5", "logo_6"]
+    }
+  ]
+}
+{% endschema %}

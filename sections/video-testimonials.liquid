@@ -1,0 +1,521 @@
+{%- liquid
+  assign quote_scope = section.id | append: '-quote'
+
+  assign videos = section.settings.ugc_videos
+  if section.settings.use_product_data and product != blank and product.metafields.custom.ugc_videos != blank
+    assign videos = product.metafields.custom.ugc_videos.value
+  endif
+
+  assign video_count = videos.size | default: 0
+  assign show_placeholders = false
+  if video_count == 0 and request.design_mode
+    assign show_placeholders = true
+    assign video_count = 3
+  endif
+
+  assign quote_count = section.blocks.size
+  assign slide_count = video_count | plus: quote_count
+
+  assign padding_top = section.settings['padding-block-start']
+  assign padding_bottom = section.settings['padding-block-end']
+  assign padding_top_mobile = section.settings['padding-block-start-mobile']
+  assign padding_bottom_mobile = section.settings['padding-block-end-mobile']
+  if section.settings.same_mobile_padding
+    assign padding_top_mobile = padding_top
+    assign padding_bottom_mobile = padding_bottom
+  endif
+-%}
+
+{% render 'contrast-override', background_color: section.settings.background_color, section_id: section.id %}
+{% render 'contrast-override', background_color: section.settings.quote_background_color, section_id: quote_scope %}
+
+<div
+  class="video-testimonials color-custom-{{ section.id }}"
+  style="
+    --section-padding-top: {{ padding_top | divided_by: 16.0 }}rem;
+    --section-padding-bottom: {{ padding_bottom | divided_by: 16.0 }}rem;
+    --section-padding-top-mobile: {{ padding_top_mobile | divided_by: 16.0 }}rem;
+    --section-padding-bottom-mobile: {{ padding_bottom_mobile | divided_by: 16.0 }}rem;
+    --video-testimonials-columns: {{ section.settings.columns_desktop }};
+  "
+>
+  <div class="video-testimonials__inner">
+    {%- if section.settings.heading != blank -%}
+      <{{ section.settings.heading_tag }} class="video-testimonials__heading type-h1">
+        {{- section.settings.heading | escape -}}
+      </{{ section.settings.heading_tag }}>
+    {%- endif -%}
+
+    {%- if slide_count > 0 -%}
+      {%- liquid
+        assign video_index = 0
+        assign quote_index = 0
+        assign next_is_video = true
+        assign slide_index = 0
+      -%}
+      {%- capture slides -%}
+        {%- for position in (1..slide_count) -%}
+          {%- liquid
+            assign use_video = false
+            if next_is_video and video_index < video_count
+              assign use_video = true
+            elsif quote_index >= quote_count
+              assign use_video = true
+            endif
+          -%}
+          {%- capture card -%}
+            {%- if use_video -%}
+              {%- if show_placeholders -%}
+                <div class="video-testimonials__video">
+                  {% render 'video-player', play_size: 'small' %}
+                </div>
+              {%- else -%}
+                {%- assign entry = videos[video_index] -%}
+                <figure class="video-testimonials__video">
+                  {% render 'video-player', video: entry.video.value, poster: entry.poster.value, play_size: 'small' %}
+                  {%- if entry.title != blank -%}
+                    <figcaption class="visually-hidden">{{ entry.title.value | escape }}</figcaption>
+                  {%- endif -%}
+                </figure>
+              {%- endif -%}
+              {%- assign video_index = video_index | plus: 1 -%}
+              {%- assign next_is_video = false -%}
+            {%- else -%}
+              {%- liquid
+                assign quote_block = section.blocks[quote_index]
+                assign testimonial = quote_block.settings.testimonial
+                if testimonial != blank
+                  assign quote_name = testimonial.name.value
+                  assign quote_text = testimonial.quote.value
+                  assign quote_rating = testimonial.rating.value.rating
+                else
+                  assign quote_name = quote_block.settings.author
+                  assign quote_text = quote_block.settings.quote
+                  assign quote_rating = quote_block.settings.rating
+                endif
+              -%}
+              <figure class="video-testimonials__quote color-custom-{{ quote_scope }}" {{ quote_block.shopify_attributes }}>
+                <div class="video-testimonials__quote-body">
+                  {%- if quote_rating > 0 -%}
+                    {% render 'star-rating', rating: quote_rating, size: 'medium' %}
+                  {%- endif -%}
+                  {%- if quote_text != blank -%}
+                    <blockquote class="video-testimonials__quote-text type-body">
+                      <p>{{ quote_text | escape | newline_to_br }}</p>
+                    </blockquote>
+                  {%- endif -%}
+                </div>
+                {%- if quote_name != blank -%}
+                  <figcaption class="video-testimonials__quote-name type-h5">{{ quote_name | escape }}</figcaption>
+                {%- endif -%}
+              </figure>
+              {%- assign quote_index = quote_index | plus: 1 -%}
+              {%- assign next_is_video = true -%}
+            {%- endif -%}
+          {%- endcapture -%}
+          {% render 'slideshow-slide', index: slide_index, children: card, class: 'video-testimonials__slide' %}
+          {%- assign slide_index = slide_index | plus: 1 -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+
+      {%- capture controls -%}
+        {%- if slide_count > 1 -%}
+          {% render 'slideshow-controls',
+            style: 'dots',
+            item_count: slide_count,
+            show_arrows: true,
+            arrows_on_media: false,
+            controls_on_media: false,
+            pagination_position: 'center',
+            icon_style: 'arrow',
+            class: 'video-testimonials__controls'
+          %}
+        {%- endif -%}
+      {%- endcapture -%}
+
+      {% render 'slideshow',
+        ref: 'videoTestimonialsSlideshow',
+        class: 'video-testimonials__slideshow',
+        slides: slides,
+        controls: controls,
+        slide_count: slide_count,
+        infinite: false,
+        initial_slide: 0,
+        auto_hide_controls: true,
+        show_arrows: false
+      %}
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .video-testimonials {
+    padding-block: var(--section-padding-top-mobile) var(--section-padding-bottom-mobile);
+    padding-inline: var(--layout-gutter);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .video-testimonials__inner {
+    display: grid;
+    gap: var(--space-16);
+    max-width: var(--layout-content-width);
+    margin-inline: auto;
+  }
+
+  .video-testimonials__heading {
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+  }
+
+  .video-testimonials__slideshow {
+    --slideshow-gap: var(--space-10);
+  }
+
+  .video-testimonials__slideshow slideshow-slide.video-testimonials__slide {
+    --slide-width: 70%;
+    scroll-snap-align: start;
+    content-visibility: visible;
+    aspect-ratio: 13 / 17;
+    overflow: visible;
+  }
+
+  .video-testimonials__video,
+  .video-testimonials__quote {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-testimonials__video {
+    overflow: hidden;
+  }
+
+  .video-testimonials__quote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-40);
+    padding: var(--space-40) var(--space-12);
+    text-align: center;
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .video-testimonials__quote-body {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-16);
+  }
+
+  .video-testimonials__quote-text {
+    margin: 0;
+    font-size: var(--type-body-large-size);
+  }
+
+  .video-testimonials__quote-text p {
+    margin: 0;
+  }
+
+  .video-testimonials__quote-name {
+    text-transform: uppercase;
+  }
+
+  .video-testimonials__controls {
+    margin-block-start: var(--space-16);
+    min-height: auto;
+    mix-blend-mode: normal;
+  }
+
+  .video-testimonials slideshow-controls.video-testimonials__controls {
+    justify-content: center;
+  }
+
+  .video-testimonials__controls .slideshow-controls__arrows {
+    display: none;
+  }
+
+  .video-testimonials__controls .slideshow-controls__dots {
+    gap: var(--space-6);
+    padding: 0;
+    border-radius: var(--radius-none);
+  }
+
+  .video-testimonials__controls .slideshow-controls__dots button {
+    --size: var(--space-6);
+    --color: color-mix(in srgb, var(--color-accent-bar) calc(var(--opacity-brand-inactive) * 100%), transparent);
+    --color-hover: var(--color-accent-bar);
+    --color-active: var(--color-accent-bar);
+
+    width: var(--space-12);
+    height: var(--space-12);
+    margin: calc(var(--space-6) / -2);
+    border-radius: var(--radius-none);
+  }
+
+  .video-testimonials__controls .slideshow-controls__dots button::after {
+    border-radius: var(--radius-none);
+    box-shadow: none;
+  }
+
+  .video-testimonials__controls .slideshow-control:focus-visible {
+    outline: var(--border-hairline) solid var(--color-foreground);
+    box-shadow: var(--effect-focus-ring);
+  }
+
+  .video-testimonials__controls .slideshow-control[disabled] {
+    visibility: hidden;
+  }
+
+  @media screen and (min-width: 990px) {
+    .video-testimonials {
+      padding-block: var(--section-padding-top) var(--section-padding-bottom);
+    }
+
+    .video-testimonials__inner {
+      gap: var(--space-30);
+    }
+
+    .video-testimonials__slideshow {
+      --slideshow-gap: var(--space-20);
+    }
+
+    .video-testimonials__slideshow slideshow-slide.video-testimonials__slide {
+      --slide-width: calc(
+        (100% - var(--space-20) * (var(--video-testimonials-columns) - 1)) / var(--video-testimonials-columns)
+      );
+    }
+
+    .video-testimonials__quote-text {
+      font-size: var(--type-body-size);
+    }
+
+    .video-testimonials__controls {
+      margin-block-start: 0;
+    }
+
+    .video-testimonials slideshow-controls.video-testimonials__controls {
+      justify-content: space-between;
+    }
+
+    .video-testimonials__controls .slideshow-controls__arrows {
+      display: flex;
+    }
+
+    .video-testimonials__controls .slideshow-controls__dots {
+      display: none;
+    }
+
+    .video-testimonials__controls .slideshow-control {
+      color: var(--color-foreground);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .video-testimonials__slideshow slideshow-slides {
+      scroll-behavior: auto;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.video_testimonials",
+  "tag": "section",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Real use. Real routines."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:settings.heading_tag",
+      "options": [
+        { "value": "h1", "label": "t:options.h1" },
+        { "value": "h2", "label": "t:options.h2" },
+        { "value": "h3", "label": "t:options.h3" },
+        { "value": "h4", "label": "t:options.h4" },
+        { "value": "p", "label": "t:options.paragraph" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "header",
+      "content": "t:content.videos"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_product_data",
+      "label": "t:settings.use_product_data",
+      "info": "t:info.use_product_ugc_videos",
+      "default": false
+    },
+    {
+      "type": "metaobject_list",
+      "id": "ugc_videos",
+      "label": "t:settings.ugc_videos",
+      "metaobject_type": "ugc_video"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "t:settings.cards_per_row_desktop",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": false
+    },
+    {
+      "type": "color",
+      "id": "quote_background_color",
+      "label": "t:settings.quote_card_background",
+      "alpha": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "same_mobile_padding",
+      "label": "t:settings.same_at_mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 30,
+      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 30,
+      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "t:names.quote_card",
+      "settings": [
+        {
+          "type": "metaobject",
+          "id": "testimonial",
+          "label": "t:settings.testimonial",
+          "metaobject_type": "testimonial",
+          "info": "t:info.testimonial_overrides_text"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "t:settings.quote",
+          "default": "After just one use, my skin felt fresh, calm, and hydrated. It's simple, gentle, and genuinely feels different from anything I've used before.",
+          "visible_if": "{{ block.settings.testimonial == blank }}"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "t:settings.name",
+          "default": "Jordan Miles",
+          "visible_if": "{{ block.settings.testimonial == blank }}"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "t:settings.rating",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.testimonial == blank }}"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.video_testimonials",
+      "category": "t:categories.storytelling",
+      "settings": {
+        "heading": "Real use. Real routines.",
+        "heading_tag": "h2",
+        "columns_desktop": 5,
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "same_mobile_padding": false,
+        "padding-block-start-mobile": 30,
+        "padding-block-end-mobile": 30
+      },
+      "blocks": [
+        {
+          "type": "quote",
+          "settings": {
+            "quote": "After just one use, my skin felt fresh, calm, and hydrated. It's simple, gentle, and genuinely feels different from anything I've used before.",
+            "author": "Jordan Miles",
+            "rating": 5
+          }
+        },
+        {
+          "type": "quote",
+          "settings": {
+            "quote": "After just one use, my skin felt fresh, calm, and hydrated. It's simple, gentle, and genuinely feels different from anything I've used before.",
+            "author": "Jordan Miles",
+            "rating": 5
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,26 @@
+{
+  "names": {
+    "faq_panel": "FAQ panel"
+  },
+  "content": {
+    "source": "Source",
+    "button": "Button"
+  },
+  "settings": {
+    "heading_tag": "Heading tag",
+    "use_product_data": "Use product data",
+    "faq_items": "FAQ items",
+    "open_first": "Open first question",
+    "mobile_image": "Mobile image",
+    "same_at_mobile": "Same at mobile",
+    "top_mobile": "Mobile top",
+    "bottom_mobile": "Mobile bottom"
+  },
+  "info": {
+    "use_product_data_faq": "On product pages, shows the product's FAQ items metafield and adds FAQ structured data. Uses the list below when it's empty or on other pages."
+  },
+  "text_defaults": {
+    "faq_panel_heading": "Most asked questions",
+    "faq_panel_button": "Read more FAQ"
+  }
+}

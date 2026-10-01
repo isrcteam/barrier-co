@@ -1,0 +1,165 @@
+{
+  "files": {
+    "cloth-pack-shelf": {
+      "id": "gid://shopify/MediaImage/46171445952767",
+      "filename": "cloth-pack-shelf.jpg"
+    },
+    "cloth-pack-closeup": {
+      "id": "gid://shopify/MediaImage/46171446968575",
+      "filename": "cloth-pack-closeup.jpg"
+    },
+    "cloth-face-towel": {
+      "id": "gid://shopify/MediaImage/46171447361791",
+      "filename": "cloth-face-towel.jpg"
+    },
+    "cloth-squeeze": {
+      "id": "gid://shopify/MediaImage/46171447820543",
+      "filename": "cloth-squeeze.jpg"
+    },
+    "cloth-pack-rock": {
+      "id": "gid://shopify/MediaImage/46171448312063",
+      "filename": "cloth-pack-rock.jpg"
+    },
+    "cloth-pack-front": {
+      "id": "gid://shopify/MediaImage/46171448639743",
+      "filename": "cloth-pack-front.jpg"
+    },
+    "expert-avatar": {
+      "id": "gid://shopify/MediaImage/46171449458943",
+      "filename": "expert-avatar.jpg"
+    },
+    "ingredient-chamomile": {
+      "id": "gid://shopify/MediaImage/46171450179839",
+      "filename": "ingredient-chamomile.png"
+    },
+    "ingredient-cocoa-butter": {
+      "id": "gid://shopify/MediaImage/46171450573055",
+      "filename": "ingredient-cocoa-butter.png"
+    },
+    "ingredient-witch-hazel": {
+      "id": "gid://shopify/MediaImage/46171451261183",
+      "filename": "ingredient-witch-hazel.png"
+    },
+    "before-day-0": {
+      "id": "gid://shopify/MediaImage/46171451687167",
+      "filename": "before-day-0.jpg"
+    },
+    "after-day-14": {
+      "id": "gid://shopify/MediaImage/46171452047615",
+      "filename": "after-day-14.jpg"
+    }
+  },
+  "metaobjects": {
+    "faq_item/whats-in-the-formula": {
+      "id": "gid://shopify/Metaobject/607223185663",
+      "status": "ACTIVE",
+      "source": "figma 978:4245"
+    },
+    "faq_item/is-it-pregnancy-safe": {
+      "id": "gid://shopify/Metaobject/607223251199",
+      "status": "DRAFT",
+      "source": "placeholder"
+    },
+    "faq_item/is-it-safe-for-everyone": {
+      "id": "gid://shopify/Metaobject/607223316735",
+      "status": "DRAFT",
+      "source": "placeholder"
+    },
+    "faq_item/what-is-the-benefit-of-the-cloth": {
+      "id": "gid://shopify/Metaobject/607223349503",
+      "status": "DRAFT",
+      "source": "placeholder"
+    },
+    "testimonial/marco-bellini": {
+      "id": "gid://shopify/Metaobject/607223382271",
+      "status": "ACTIVE",
+      "source": "figma 978:3946"
+    },
+    "recognition/national-eczema-association": {
+      "id": "gid://shopify/Metaobject/607223415039",
+      "status": "ACTIVE",
+      "source": "figma 965:2147"
+    },
+    "clinical_result/improved-facial-appearance": {
+      "id": "gid://shopify/Metaobject/607223447807",
+      "status": "ACTIVE",
+      "source": "figma 978:4052"
+    },
+    "clinical_result/reduced-fine-lines": {
+      "id": "gid://shopify/Metaobject/607223480575",
+      "status": "ACTIVE",
+      "source": "figma 978:4052"
+    },
+    "clinical_result/increased-skin-hydration": {
+      "id": "gid://shopify/Metaobject/607223513343",
+      "status": "ACTIVE",
+      "source": "figma 978:4052"
+    },
+    "clinical_result/improved-skin-elasticity": {
+      "id": "gid://shopify/Metaobject/607223546111",
+      "status": "ACTIVE",
+      "source": "figma 978:4052"
+    },
+    "ingredient/chamomile-flower-extract": {
+      "id": "gid://shopify/Metaobject/607223578879",
+      "status": "DRAFT",
+      "source": "placeholder"
+    },
+    "ingredient/cocoa-butter": {
+      "id": "gid://shopify/Metaobject/607223611647",
+      "status": "DRAFT",
+      "source": "placeholder"
+    },
+    "ingredient/witch-hazel": {
+      "id": "gid://shopify/Metaobject/607223677183",
+      "status": "DRAFT",
+      "source": "placeholder"
+    },
+    "before_after/the-30-day-14": {
+      "id": "gid://shopify/Metaobject/607223709951",
+      "status": "ACTIVE",
+      "source": "figma 965:2350"
+    }
+  },
+  "products": {
+    "the-30-the-everyday": {
+      "id": "gid://shopify/Product/10342102434047",
+      "status": "ACTIVE",
+      "variant_id": "gid://shopify/ProductVariant/50580912898303",
+      "price": "16.99"
+    },
+    "the-8-made-to-go-where-you-go": {
+      "id": "gid://shopify/Product/10342102892799",
+      "status": "ACTIVE",
+      "variant_id": "gid://shopify/ProductVariant/50580913553663",
+      "price": "16.99"
+    }
+  },
+  "publication_checks": {
+    "the-30-the-everyday": {
+      "checked_at": "2026-10-01T14:55:35Z",
+      "status": "ACTIVE",
+      "channels_checked": [
+        "Online Store",
+        "Point of Sale",
+        "Shop",
+        "Google & YouTube"
+      ],
+      "published_on": [],
+      "resourcePublicationsCount": 0
+    },
+    "the-8-made-to-go-where-you-go": {
+      "checked_at": "2026-10-01T14:55:50Z",
+      "status": "ACTIVE",
+      "channels_checked": [
+        "Online Store",
+        "Point of Sale",
+        "Shop",
+        "Google & YouTube"
+      ],
+      "published_on": [],
+      "resourcePublicationsCount": 0
+    }
+  },
+  "updated_at": "2026-10-01T14:55:50Z"
+}

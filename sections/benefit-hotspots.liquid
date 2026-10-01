@@ -1,0 +1,751 @@
+{%- liquid
+  assign panel_id = section.id | append: '-panel'
+  assign settings_ref = section.settings
+
+  assign pad_top = settings_ref['padding-block-start'] | divided_by: 16.0
+  assign pad_bottom = settings_ref['padding-block-end'] | divided_by: 16.0
+  if settings_ref.padding_same_mobile
+    assign pad_top_mobile = pad_top
+    assign pad_bottom_mobile = pad_bottom
+  else
+    assign pad_top_mobile = settings_ref['padding-block-start-mobile'] | divided_by: 16.0
+    assign pad_bottom_mobile = settings_ref['padding-block-end-mobile'] | divided_by: 16.0
+  endif
+
+  assign product_image = settings_ref.product_image
+  assign product_image_mobile = product_image
+  if settings_ref.product_image_mobile_same == false and settings_ref.product_image_mobile != blank
+    assign product_image_mobile = settings_ref.product_image_mobile
+  endif
+
+  assign photo = settings_ref.photo
+  assign photo_mobile = photo
+  if settings_ref.photo_mobile_same == false and settings_ref.photo_mobile != blank
+    assign photo_mobile = settings_ref.photo_mobile
+  endif
+
+  assign callouts = section.blocks | where: 'type', 'callout'
+  assign messages = section.blocks | where: 'type', 'message'
+  assign heading_tag = settings_ref.heading_tag | default: 'h2'
+  assign message_tag = settings_ref.message_heading_tag | default: 'h3'
+-%}
+
+{% render 'contrast-override',
+  background_color: section.settings.background_color,
+  section_id: section.id
+%}
+{% render 'contrast-override',
+  background_color: section.settings.panel_color,
+  text_color: section.settings.panel_text_color,
+  section_id: panel_id
+%}
+
+<div
+  class="benefit-hotspots color-custom-{{ section.id }}"
+  style="--section-padding-top: {{ pad_top }}rem; --section-padding-bottom: {{ pad_bottom }}rem; --section-padding-top-mobile: {{ pad_top_mobile }}rem; --section-padding-bottom-mobile: {{ pad_bottom_mobile }}rem;"
+>
+  <div class="benefit-hotspots__inner">
+    <div class="benefit-hotspots__panel color-custom-{{ panel_id }}">
+      {%- if settings_ref.heading != blank -%}
+        <{{ heading_tag }} class="benefit-hotspots__heading type-h2">{{ settings_ref.heading | escape }}</{{ heading_tag }}>
+      {%- endif -%}
+
+      <div class="benefit-hotspots__figure">
+        {%- if product_image != blank -%}
+          <picture>
+            {%- if product_image_mobile != product_image -%}
+              <source
+                media="(min-width: 990px)"
+                srcset="{{ product_image | image_url: width: 800 }} 800w, {{ product_image | image_url: width: 1100 }} 1100w, {{ product_image | image_url: width: 1640 }} 1640w"
+                sizes="60vw"
+              >
+            {%- endif -%}
+            {{
+              product_image_mobile
+              | image_url: width: 1640
+              | image_tag:
+                widths: '390, 750, 1100, 1640',
+                sizes: '(min-width: 990px) 60vw, 100vw',
+                loading: 'lazy',
+                class: 'benefit-hotspots__image'
+            }}
+          </picture>
+        {%- else -%}
+          {{ 'hero-apparel-1' | placeholder_svg_tag: 'benefit-hotspots__image benefit-hotspots__placeholder' }}
+        {%- endif -%}
+      </div>
+
+      {%- if callouts.size > 0 -%}
+        <ul class="benefit-hotspots__callouts" role="list">
+          {%- for block in callouts -%}
+            <li
+              class="benefit-hotspots__callout"
+              style="--callout-x: {{ block.settings.x_position }}; --callout-y: {{ block.settings.y_position }}; --callout-line: {{ block.settings.line_length }};"
+              {{ block.shopify_attributes }}
+            >
+              <span class="benefit-hotspots__marker" aria-hidden="true"></span>
+              {%- if block.settings.label != blank -%}
+                <span class="benefit-hotspots__label type-h5">{{ block.settings.label | escape }}</span>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="benefit-hotspots__text type-caption">{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    <div class="benefit-hotspots__story">
+      <div class="benefit-hotspots__photo">
+        {%- if photo != blank -%}
+          <picture>
+            {%- if photo_mobile != photo -%}
+              <source
+                media="(min-width: 990px)"
+                srcset="{{ photo | image_url: width: 600 }} 600w, {{ photo | image_url: width: 900 }} 900w, {{ photo | image_url: width: 1200 }} 1200w"
+                sizes="40vw"
+              >
+            {%- endif -%}
+            {{
+              photo_mobile
+              | image_url: width: 1200
+              | image_tag:
+                widths: '390, 600, 780, 900, 1200',
+                sizes: '(min-width: 990px) 40vw, 100vw',
+                loading: 'lazy',
+                class: 'benefit-hotspots__photo-image'
+            }}
+          </picture>
+        {%- else -%}
+          {{ 'hero-apparel-2' | placeholder_svg_tag: 'benefit-hotspots__photo-image benefit-hotspots__placeholder' }}
+        {%- endif -%}
+      </div>
+
+      {%- if messages.size > 0 -%}
+        <div class="benefit-hotspots__card">
+          {%- if messages.size > 1 -%}
+            {%- capture slides -%}
+              {%- for block in messages -%}
+                {%- capture message_content -%}
+                  <div class="benefit-hotspots__message" {{ block.shopify_attributes }}>
+                    {%- if block.settings.heading != blank -%}
+                      <{{ message_tag }} class="benefit-hotspots__message-heading type-h2">{{ block.settings.heading | escape }}</{{ message_tag }}>
+                    {%- endif -%}
+                    {%- if block.settings.text != blank -%}
+                      <p class="benefit-hotspots__message-text type-body">{{ block.settings.text | escape }}</p>
+                    {%- endif -%}
+                  </div>
+                {%- endcapture -%}
+                {% render 'slideshow-slide', index: forloop.index0, children: message_content, class: 'benefit-hotspots__slide' %}
+              {%- endfor -%}
+            {%- endcapture -%}
+            {%- capture controls -%}
+              {% render 'slideshow-controls', style: 'dots', item_count: messages.size, class: 'benefit-hotspots__dots' %}
+            {%- endcapture -%}
+            {% render 'slideshow',
+              slides: slides,
+              slide_count: messages.size,
+              controls: controls,
+              class: 'benefit-hotspots__slideshow',
+              show_arrows: false
+            %}
+          {%- else -%}
+            {%- assign block = messages.first -%}
+            <div class="benefit-hotspots__message" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <{{ message_tag }} class="benefit-hotspots__message-heading type-h2">{{ block.settings.heading | escape }}</{{ message_tag }}>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="benefit-hotspots__message-text type-body">{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .benefit-hotspots {
+    padding-block: var(--section-padding-top-mobile) var(--section-padding-bottom-mobile);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .benefit-hotspots__inner {
+    display: grid;
+    max-width: var(--layout-page-width);
+    margin-inline: auto;
+  }
+
+  .benefit-hotspots__panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    container-type: inline-size;
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .benefit-hotspots__heading {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: var(--space-30) var(--space-30) var(--space-16);
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .benefit-hotspots__figure {
+    position: relative;
+  }
+
+  .benefit-hotspots__image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .benefit-hotspots__placeholder {
+    aspect-ratio: 1;
+    height: 100%;
+    object-fit: cover;
+    background: var(--color-foreground);
+    opacity: var(--opacity-brand-subtle);
+  }
+
+  .benefit-hotspots__callouts {
+    display: grid;
+    gap: var(--space-24);
+    margin: 0;
+    padding: var(--space-24) var(--layout-gutter) var(--space-30);
+    list-style: none;
+  }
+
+  .benefit-hotspots__callout {
+    display: grid;
+    gap: var(--space-10);
+    justify-items: start;
+  }
+
+  .benefit-hotspots__marker {
+    display: none;
+  }
+
+  .benefit-hotspots__label {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--space-24);
+    padding: var(--space-4) var(--space-12);
+    background: var(--color-white);
+    text-transform: uppercase;
+  }
+
+  .benefit-hotspots__text {
+    margin: 0;
+  }
+
+  .benefit-hotspots__story {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-block-size: calc(var(--space-112) * 5 + var(--space-60));
+    overflow: hidden;
+    color: var(--color-white);
+  }
+
+  .benefit-hotspots__photo {
+    position: absolute;
+    inset: 0;
+  }
+
+  .benefit-hotspots__photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--color-overlay) calc(var(--opacity-brand-overlay) * 100%), transparent);
+  }
+
+  .benefit-hotspots__photo picture,
+  .benefit-hotspots__photo-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .benefit-hotspots__card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: var(--space-24) var(--space-30);
+    background: color-mix(in srgb, var(--color-glass) calc(var(--opacity-brand-glass) * 100%), transparent);
+    backdrop-filter: blur(var(--layout-blur-glass));
+    text-align: center;
+  }
+
+  .benefit-hotspots__message {
+    display: grid;
+    gap: var(--space-16);
+  }
+
+  .benefit-hotspots__message-heading,
+  .benefit-hotspots__message-text {
+    margin: 0;
+    color: var(--color-white);
+  }
+
+  .benefit-hotspots__message-heading {
+    text-transform: uppercase;
+  }
+
+  .benefit-hotspots__slideshow slideshow-container {
+    background: transparent;
+  }
+
+  .benefit-hotspots__slideshow .benefit-hotspots__slide {
+    border-radius: var(--radius-none);
+  }
+
+  .benefit-hotspots__slideshow slideshow-controls {
+    margin-block-start: var(--space-16);
+    mix-blend-mode: normal;
+  }
+
+  .benefit-hotspots__slideshow .slideshow-controls__dots {
+    gap: var(--space-6);
+    padding: 0;
+    border-radius: var(--radius-none);
+  }
+
+  .benefit-hotspots__slideshow .slideshow-controls__dots button {
+    --size: var(--space-6);
+    --color: color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-inactive) * 100%), transparent);
+    --color-active: var(--color-white);
+    --color-hover: color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-muted) * 100%), transparent);
+
+    width: var(--space-16);
+    height: var(--space-16);
+    margin: calc(var(--space-6) / -2);
+    border-radius: var(--radius-none);
+  }
+
+  .benefit-hotspots__slideshow .slideshow-controls__dots button::after,
+  .benefit-hotspots__slideshow .slideshow-controls__dots button[aria-selected='true']::after {
+    border-radius: var(--radius-none);
+    box-shadow: none;
+  }
+
+  .benefit-hotspots__slideshow .slideshow-controls__dots button:focus-visible {
+    outline: var(--border-hairline) solid var(--color-white);
+    box-shadow: var(--effect-focus-ring);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .benefit-hotspots__slideshow slideshow-slides {
+      scroll-behavior: auto;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .benefit-hotspots {
+      padding-block: var(--section-padding-top) var(--section-padding-bottom);
+    }
+
+    .benefit-hotspots__inner {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      padding-inline: var(--layout-gutter);
+    }
+
+    .benefit-hotspots__panel {
+      min-block-size: calc(var(--space-112) * 5 + var(--space-60));
+    }
+
+    .benefit-hotspots__heading {
+      max-inline-size: calc(var(--space-112) * 3 + var(--space-30));
+      padding: var(--space-30);
+      text-align: start;
+    }
+
+    .benefit-hotspots__figure {
+      position: absolute;
+      inset: 0;
+    }
+
+    .benefit-hotspots__figure picture,
+    .benefit-hotspots__image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .benefit-hotspots__callouts {
+      position: absolute;
+      inset: 0;
+      display: block;
+      padding: 0;
+    }
+
+    .benefit-hotspots__callout {
+      position: absolute;
+      inset-inline-start: calc(var(--callout-x) * 1%);
+      inset-block-start: calc(var(--callout-y) * 1%);
+      grid-template-columns: auto auto;
+      grid-template-areas:
+        'marker label'
+        '. text';
+      align-items: center;
+      column-gap: 0;
+      row-gap: var(--space-10);
+      translate: calc(var(--space-6) / -2) calc(var(--space-24) / -2);
+    }
+
+    .benefit-hotspots__marker {
+      grid-area: marker;
+      display: flex;
+      align-items: center;
+      inline-size: calc(var(--callout-line) * 1cqi);
+    }
+
+    .benefit-hotspots__marker::before {
+      content: '';
+      flex: none;
+      inline-size: var(--space-6);
+      block-size: var(--space-6);
+      border-radius: var(--radius-full);
+      background: currentColor;
+    }
+
+    .benefit-hotspots__marker::after {
+      content: '';
+      flex: 1;
+      border-block-start: var(--border-hairline) dotted currentColor;
+    }
+
+    .benefit-hotspots__label {
+      grid-area: label;
+    }
+
+    .benefit-hotspots__text {
+      grid-area: text;
+      max-inline-size: calc(var(--space-86) * 2 + var(--space-20));
+    }
+
+    .benefit-hotspots__story {
+      min-block-size: calc(var(--space-112) * 5 + var(--space-60));
+    }
+
+    .benefit-hotspots__card {
+      padding: var(--space-40) var(--space-30);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.benefit_hotspots",
+  "class": "section-wrapper",
+  "tag": "section",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "blocks": [
+    {
+      "type": "callout",
+      "name": "t:names.callout",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:settings.label",
+          "default": "t:text_defaults.callout_label"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:settings.text",
+          "default": "t:text_defaults.callout_text"
+        },
+        {
+          "type": "range",
+          "id": "x_position",
+          "label": "t:settings.x_position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 40
+        },
+        {
+          "type": "range",
+          "id": "y_position",
+          "label": "t:settings.y_position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 40
+        },
+        {
+          "type": "range",
+          "id": "line_length",
+          "label": "t:settings.line_length",
+          "info": "t:info.callout_line_length",
+          "min": 0,
+          "max": 60,
+          "step": 1,
+          "unit": "%",
+          "default": 20
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "name": "t:names.message",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:settings.heading",
+          "default": "t:text_defaults.benefit_message_heading"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:settings.text",
+          "default": "t:text_defaults.benefit_message_text"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "t:text_defaults.benefit_hotspots_heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:settings.heading_tag",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "message_heading_tag",
+      "label": "t:settings.message_heading_tag",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "header",
+      "content": "t:content.images"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "t:settings.product_image"
+    },
+    {
+      "type": "checkbox",
+      "id": "product_image_mobile_same",
+      "label": "t:settings.same_at_mobile",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image_mobile",
+      "label": "t:settings.mobile_image",
+      "visible_if": "{{ section.settings.product_image_mobile_same == false }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "photo",
+      "label": "t:settings.photo"
+    },
+    {
+      "type": "checkbox",
+      "id": "photo_mobile_same",
+      "label": "t:settings.same_at_mobile",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "photo_mobile",
+      "label": "t:settings.mobile_image",
+      "visible_if": "{{ section.settings.photo_mobile_same == false }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": false
+    },
+    {
+      "type": "color",
+      "id": "panel_color",
+      "label": "t:settings.panel_color",
+      "alpha": false
+    },
+    {
+      "type": "color",
+      "id": "panel_text_color",
+      "label": "t:settings.panel_text_color",
+      "alpha": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_same_mobile",
+      "label": "t:settings.same_at_mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.padding_same_mobile == false }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.padding_same_mobile == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.benefit_hotspots",
+      "category": "t:categories.product",
+      "settings": {
+        "heading": "t:text_defaults.benefit_hotspots_heading",
+        "padding_same_mobile": false
+      },
+      "blocks": [
+        {
+          "type": "callout",
+          "settings": {
+            "label": "t:text_defaults.callout_cleanse_label",
+            "text": "t:text_defaults.callout_cleanse_text",
+            "x_position": 47,
+            "y_position": 20,
+            "line_length": 15
+          }
+        },
+        {
+          "type": "callout",
+          "settings": {
+            "label": "t:text_defaults.callout_hydrate_label",
+            "text": "t:text_defaults.callout_hydrate_text",
+            "x_position": 39,
+            "y_position": 40,
+            "line_length": 35
+          }
+        },
+        {
+          "type": "callout",
+          "settings": {
+            "label": "t:text_defaults.callout_protect_label",
+            "text": "t:text_defaults.callout_protect_text",
+            "x_position": 39,
+            "y_position": 80,
+            "line_length": 32
+          }
+        },
+        {
+          "type": "message",
+          "settings": {
+            "heading": "t:text_defaults.benefit_message_heading",
+            "text": "t:text_defaults.benefit_message_text"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

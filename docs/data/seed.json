@@ -1,0 +1,124 @@
+{
+  "figma_file": "oZ00gYRP11BAdFQYwo4fxj",
+  "files": [
+    { "key": "cloth-pack-shelf", "path": "docs/data/seed-media/cloth-pack-shelf.jpg", "alt": "The Barrier Cloth pack resting on its kraft Barrier box on a stone shelf, beside amber pump bottles", "source": "figma 965:2042" },
+    { "key": "cloth-pack-closeup", "path": "docs/data/seed-media/cloth-pack-closeup.jpg", "alt": "Close-up of a sealed Barrier Cloth pack on a textured stone surface", "source": "figma 965:2035" },
+    { "key": "cloth-face-towel", "path": "docs/data/seed-media/cloth-face-towel.jpg", "alt": "Person pressing a soft cloth to their face with both hands", "source": "figma 965:2036" },
+    { "key": "cloth-squeeze", "path": "docs/data/seed-media/cloth-squeeze.jpg", "alt": "Hand squeezing a Barrier Cloth to show the cream it holds", "source": "figma 965:2037" },
+    { "key": "cloth-pack-rock", "path": "docs/data/seed-media/cloth-pack-rock.jpg", "alt": "The Barrier Cloth pack on its kraft box, set on dark volcanic rock", "source": "figma 965:1291" },
+    { "key": "cloth-pack-front", "path": "docs/data/seed-media/cloth-pack-front.jpg", "alt": "The Barrier Cloth pack on its kraft Barrier box, on a plain background", "source": "figma 965:1602" },
+    { "key": "expert-avatar", "path": "docs/data/seed-media/expert-avatar.jpg", "alt": "Portrait of Marco Bellini", "source": "figma 978:3906" },
+    { "key": "ingredient-chamomile", "path": "docs/data/seed-media/ingredient-chamomile.png", "alt": "Glass dish of golden chamomile extract with chamomile flowers", "source": "figma 965:2296" },
+    { "key": "ingredient-cocoa-butter", "path": "docs/data/seed-media/ingredient-cocoa-butter.png", "alt": "Cocoa beans resting in drops of cocoa butter", "source": "figma 965:2313" },
+    { "key": "ingredient-witch-hazel", "path": "docs/data/seed-media/ingredient-witch-hazel.png", "alt": "Yellow witch hazel flower", "source": "figma 965:2330" },
+    { "key": "before-day-0", "path": "docs/data/seed-media/before-day-0.jpg", "alt": "Close-up of a woman's cheek before using The Barrier Cloth", "source": "figma 965:2366" },
+    { "key": "after-day-14", "path": "docs/data/seed-media/after-day-14.jpg", "alt": "The same cheek after 14 days of using The Barrier Cloth, smoother and more even", "source": "figma 965:2370" }
+  ],
+  "existing_files": {
+    "seal-nea": { "id": "gid://shopify/MediaImage/40819457589503", "note": "Seal-logo-CMYK_Rev_2.jpg, already in the store's Files; matches the Figma layer 'Seal-logo-CMYK_Rev 2'" }
+  },
+  "metaobjects": [
+    { "type": "faq_item", "handle": "whats-in-the-formula", "status": "ACTIVE", "source": "figma 978:4245",
+      "fields": {
+        "question": "What's in the formula?",
+        "answer": { "rich_text": ["Each cloth is infused with 3½ teaspoons of a clinical-grade cream containing hyaluronic acid, glycerin, shea butter, cocoa butter, chamomile, adenosine, and other barrier-strengthening actives. See the full ingredient list in the product details above."] }
+      } },
+    { "type": "faq_item", "handle": "is-it-pregnancy-safe", "status": "DRAFT", "source": "placeholder",
+      "fields": { "question": "Is it pregnancy safe?", "answer": { "rich_text": ["Answer to be supplied by The Barrier Co."] } } },
+    { "type": "faq_item", "handle": "is-it-safe-for-everyone", "status": "DRAFT", "source": "placeholder",
+      "fields": { "question": "Is it safe for everyone?", "answer": { "rich_text": ["Answer to be supplied by The Barrier Co."] } } },
+    { "type": "faq_item", "handle": "what-is-the-benefit-of-the-cloth", "status": "DRAFT", "source": "placeholder",
+      "fields": { "question": "What is the benefit of the cloth?", "answer": { "rich_text": ["Answer to be supplied by The Barrier Co."] } } },
+
+    { "type": "testimonial", "handle": "marco-bellini", "status": "ACTIVE", "source": "figma 978:3946",
+      "fields": {
+        "name": "Marco Bellini",
+        "role": "Distinguished Lecturer in Pharmaceutical Sciences",
+        "quote": "Peel back. Spread out. Glide over your entire skin. Each wipe provides a complete dose of premium hydration in less than half a minute. No need to rinse. No extra steps required.",
+        "avatar": { "file": "expert-avatar" },
+        "rating": { "rating": 5, "scale_min": 1, "scale_max": 5 }
+      } },
+
+    { "type": "recognition", "handle": "national-eczema-association", "status": "ACTIVE", "source": "figma 965:2147",
+      "fields": {
+        "title": "The National Eczema Association",
+        "description": "Seal of Acceptance means you can be sure the product is free from ingredients on the Ecz-clusion List — a list of known eczema triggers — and has undergone rigorous testing and scientific review by the National Eczema Association.",
+        "logo": { "existing_file": "seal-nea" }
+      } },
+
+    { "type": "clinical_result", "handle": "improved-facial-appearance", "status": "ACTIVE", "source": "figma 978:4052",
+      "fields": { "title": "Experienced improved facial appearance based on clinical images.", "value": 98, "unit": "%" } },
+    { "type": "clinical_result", "handle": "reduced-fine-lines", "status": "ACTIVE", "source": "figma 978:4052",
+      "fields": { "title": "Experienced a reduction in fine lines and wrinkles.", "value": 85, "unit": "%" } },
+    { "type": "clinical_result", "handle": "increased-skin-hydration", "status": "ACTIVE", "source": "figma 978:4052",
+      "fields": { "title": "Experienced increased skin hydration", "value": 80, "unit": "%" } },
+    { "type": "clinical_result", "handle": "improved-skin-elasticity", "status": "ACTIVE", "source": "figma 978:4052",
+      "fields": { "title": "Experienced improved skin elasticity", "value": 83, "unit": "%" } },
+
+    { "type": "ingredient", "handle": "chamomile-flower-extract", "status": "DRAFT", "source": "placeholder",
+      "note": "Name and image are real; the benefits repeat the How to use copy in Figma and need real copy.",
+      "fields": {
+        "name": "Chamomile Flower Extract",
+        "image": { "file": "ingredient-chamomile" },
+        "benefits": ["Tear open. Unfold. Wipe across your full body.", "One cloth delivers a full dose of clinical-grade hydration in under 30 seconds.", "Works immediately and lasts up to 72 hours.", "No rinsing. No layering."]
+      } },
+    { "type": "ingredient", "handle": "cocoa-butter", "status": "DRAFT", "source": "placeholder",
+      "note": "Name and image are real; the benefits repeat the How to use copy in Figma and need real copy.",
+      "fields": {
+        "name": "Cocoa Butter",
+        "image": { "file": "ingredient-cocoa-butter" },
+        "benefits": ["Tear open. Unfold. Wipe across your full body.", "One cloth delivers a full dose of clinical-grade hydration in under 30 seconds.", "Works immediately and lasts up to 72 hours.", "No rinsing. No layering."]
+      } },
+    { "type": "ingredient", "handle": "witch-hazel", "status": "DRAFT", "source": "placeholder",
+      "note": "Name and image are real; the benefits repeat the How to use copy in Figma and need real copy.",
+      "fields": {
+        "name": "Witch Hazel",
+        "image": { "file": "ingredient-witch-hazel" },
+        "benefits": ["Tear open. Unfold. Wipe across your full body.", "One cloth delivers a full dose of clinical-grade hydration in under 30 seconds.", "Works immediately and lasts up to 72 hours.", "No rinsing. No layering."]
+      } },
+
+    { "type": "before_after", "handle": "the-30-day-14", "status": "ACTIVE", "source": "figma 965:2350",
+      "fields": {
+        "title": "The 30, day 14",
+        "before_image": { "file": "before-day-0" },
+        "after_image": { "file": "after-day-14" },
+        "before_label": "Before",
+        "after_label": "After · Day 14",
+        "testimonial": { "metaobject": "testimonial/marco-bellini" }
+      } }
+  ],
+  "skipped": [
+    { "type": "ugc_video", "reason": "The video files aren't in Figma (965:2235). Create the entries when the client supplies the videos." },
+    { "type": "selling_plan", "reason": "No subscription app is installed and the token has no selling-plan scope. The purchase options can't be tested until one exists." }
+  ],
+  "products": [
+    { "handle": "the-30-the-everyday", "title": "The 30. The Everyday.", "source": "figma 965:2045",
+      "description_html": "<p>Infused with 3½ teaspoons of clinical-grade cream in each cloth. Clinically proven to hydrate and protect the skin barrier.</p>",
+      "vendor": "The Barrier Co", "product_type": "Body Care", "status": "ACTIVE", "price": "16.99",
+      "media": ["cloth-pack-shelf", "cloth-pack-closeup", "cloth-face-towel", "cloth-squeeze", "cloth-pack-rock"],
+      "metafields": {
+        "highlights": ["Tear open. Unfold. Wipe across your full body.", "One cloth delivers a full dose of clinical-grade hydration in under 30 seconds.", "Works immediately and lasts up to 72 hours.", "No rinsing. No layering."],
+        "media_badge": "Flagship",
+        "how_to_use": { "rich_text": ["Tear open. Unfold. Wipe across your full body. One cloth delivers a full dose of clinical-grade hydration in under 30 seconds. No rinsing. No layering. Just barrier-strengthening moisture that works immediately and lasts up to 72 hours."] },
+        "faq_items": { "metaobjects": ["faq_item/whats-in-the-formula", "faq_item/is-it-pregnancy-safe", "faq_item/is-it-safe-for-everyone", "faq_item/what-is-the-benefit-of-the-cloth"] },
+        "testimonials": { "metaobjects": ["testimonial/marco-bellini"] },
+        "recognitions": { "metaobjects": ["recognition/national-eczema-association"] },
+        "clinical_results": { "metaobjects": ["clinical_result/improved-facial-appearance", "clinical_result/reduced-fine-lines", "clinical_result/increased-skin-hydration", "clinical_result/improved-skin-elasticity"] },
+        "ingredients": { "metaobjects": ["ingredient/chamomile-flower-extract", "ingredient/cocoa-butter", "ingredient/witch-hazel"] },
+        "before_afters": { "metaobjects": ["before_after/the-30-day-14"] }
+      },
+      "left_empty": {
+        "claims": "Accordion row has a heading only in Figma, no copy.",
+        "size_and_pack_details": "Accordion row has a heading only in Figma, no copy.",
+        "full_ingredient_list": "Ingredients accordion row (965:1385) has a heading only, no copy.",
+        "ugc_videos": "No video files."
+      } },
+    { "handle": "the-8-made-to-go-where-you-go", "title": "The 8. Made to go where you go.", "source": "figma 965:1600",
+      "description_html": "",
+      "vendor": "The Barrier Co", "product_type": "Body Care", "status": "ACTIVE", "price": "16.99",
+      "price_question": "The design shows 'Starts from £68.99' on this card, the same figure as The 30's 3-month subscription. 16.99 is a stand-in until the owner confirms.",
+      "media": ["cloth-pack-front"],
+      "metafields": {},
+      "left_empty": { "description": "No description for The 8 in Figma." } }
+  ]
+}
