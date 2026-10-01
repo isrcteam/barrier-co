@@ -1,8 +1,8 @@
 {% doc %}
   Self-hosted brand fonts. Declares the faces, preloads the two weights used above the fold and points Horizon's font variables at the brand families.
 {% enddoc %}
-{{ 'akzidenz-grotesk-next-extrabold.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
-{{ 'gt-america-regular.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+{{ 'akzidenz-grotesk-next-extrabold.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2' }}
+{{ 'gt-america-regular.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2' }}
 {% style %}
   @font-face {
     font-family: 'Akzidenz-Grotesk Next';
