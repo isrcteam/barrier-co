@@ -403,6 +403,12 @@
       scroll-behavior: auto;
     }
   }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .image-carousel .image-carousel__slide {
+      width: calc((100% - var(--card-gap)) / 2);
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
