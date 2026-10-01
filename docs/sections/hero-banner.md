@@ -39,3 +39,13 @@ From the architecture entry (Figma hero 965:1254 / 965:3083, inset banner 965:15
 
 ## Merchant guide
 Add **Hero banner** from Banners and pick the **Hero** or **Inset banner** preset. Choose a desktop image (and untick "Same at mobile" to set a mobile crop). Type the eyebrow, heading and text; bold text in the text box shows in the medium weight. To show the film, upload it under **Play video** (or paste a YouTube/Vimeo link with a cover image). Pick a product under **Product spotlight** to show the Shop now card; `[price]` in the price label becomes the lowest subscription price. Width and content position switch between the two layouts. Leave Background color empty to use the page background.
+
+
+### Reasoning, 2026-10-01: preload the first hero image
+- **What:** when the hero is the first section, its base `<img>` (the mobile crop when one is set) is output with `preload: true`. Shopify then sends a `Link: rel=preload` header.
+- **Why:** Lighthouse mobile showed about 2.8 s of LCP load delay while the hero waited behind CSS, fonts and scripts. Home scored 83–84 with a 4.2 s LCP.
+- **Trade-off:** a preload can't carry the `<picture>` media query, so desktop visitors also fetch the mobile crop (about 80 KB). Mobile is the larger audience and the weaker LCP, so it gets the preload.
+- **Alternative rejected:** a hand-written preload in the layout. The layout can't read the hero's settings.
+- **Approver:** Jeet (delegated).
+
+**Outcome, same day:** reverted. Measured on the preview theme (Lighthouse mobile, two runs each), the preload made the page slower: 72/76 with it against 83/84 without, and LCP load delay rose from 2.8 s to 3.6–3.9 s. The image stays `eager` + `fetchpriority="high"` with no preload. Re-measure on the published theme at launch, where pages are cached and the preview bar is gone.

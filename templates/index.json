@@ -28,7 +28,8 @@
         "image_desktop": "shopify://shop_images/home-hero-desktop.jpg",
         "image_mobile": "shopify://shop_images/home-hero-mobile.jpg",
         "spotlight_product": "the-30-the-everyday",
-        "play_poster": "shopify://shop_images/intro-video-poster-desktop.jpg"
+        "play_poster": "shopify://shop_images/intro-video-poster-desktop.jpg",
+        "same_image_mobile": false
       }
     },
     "press": {
@@ -465,7 +466,8 @@
           "reduced-fine-lines",
           "increased-skin-hydration",
           "improved-skin-elasticity"
-        ]
+        ],
+        "same_mobile_image": false
       }
     },
     "proof_icons": {
@@ -530,7 +532,8 @@
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0,
         "image_desktop": "shopify://shop_images/inset-banner-desktop.jpg",
-        "image_mobile": "shopify://shop_images/inset-banner-mobile.jpg"
+        "image_mobile": "shopify://shop_images/inset-banner-mobile.jpg",
+        "same_image_mobile": false
       }
     },
     "lifestyle": {

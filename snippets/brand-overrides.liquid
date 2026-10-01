@@ -368,7 +368,7 @@
   }
 
   slideshow-controls .slideshow-controls__dots {
-    gap: var(--space-8);
+    gap: var(--space-2);
   }
 
   slideshow-controls .slideshow-controls__dots button {
@@ -376,6 +376,11 @@
     --color: color-mix(in srgb, var(--color-accent-bar) calc(var(--opacity-brand-inactive) * 100%), transparent);
     --color-active: var(--color-accent-bar);
     --color-hover: var(--color-accent-bar);
+
+    min-inline-size: var(--space-24);
+    min-block-size: var(--space-24);
+    display: grid;
+    place-items: center;
   }
 
   slideshow-controls .slideshow-controls__dots button::after {
@@ -405,5 +410,9 @@
       grid-column: 1;
       padding-inline: 0;
     }
+  }
+
+  footer .section {
+    background-color: var(--color-background);
   }
 {% endstylesheet %}

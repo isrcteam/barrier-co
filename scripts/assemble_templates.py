@@ -115,6 +115,14 @@ def from_preset(name, preset_index=0, settings=None, prefix=None):
     for k, v in (settings or {}).items():
         if v is not None:
             s["settings"][k] = v
+    toggles = {"image_mobile": ["same_image_mobile", "same_mobile_image", "image_mobile_same"], "poster_mobile": ["same_poster_mobile"],
+               "product_image_mobile": ["product_image_mobile_same"], "photo_mobile": ["photo_mobile_same"]}
+    ids = {x.get("id") for x in sch.get("settings", [])}
+    for mobile_key, toggle_keys in toggles.items():
+        if s["settings"].get(mobile_key):
+            for t in toggle_keys:
+                if t in ids:
+                    s["settings"][t] = False
     if blocks:
         s["blocks"], s["block_order"] = blocks, order
     return s

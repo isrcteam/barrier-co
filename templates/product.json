@@ -393,7 +393,8 @@
         "padding-block-end-mobile": 0,
         "use_product_data": true,
         "image": "shopify://shop_images/stats-background-desktop.jpg",
-        "image_mobile": "shopify://shop_images/stats-background-mobile.jpg"
+        "image_mobile": "shopify://shop_images/stats-background-mobile.jpg",
+        "same_mobile_image": false
       }
     },
     "ingredients": {
@@ -418,7 +419,8 @@
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0,
         "poster_desktop": "shopify://shop_images/video-banner-poster-desktop.jpg",
-        "poster_mobile": "shopify://shop_images/video-banner-poster-mobile.jpg"
+        "poster_mobile": "shopify://shop_images/video-banner-poster-mobile.jpg",
+        "same_poster_mobile": false
       }
     },
     "before_after": {
@@ -471,7 +473,8 @@
         "use_product_data": true,
         "divider_color": "#BBAE9A",
         "image": "shopify://shop_images/faq-background.jpg",
-        "image_mobile": "shopify://shop_images/faq-background.jpg"
+        "image_mobile": "shopify://shop_images/faq-background.jpg",
+        "image_mobile_same": false
       }
     }
   },

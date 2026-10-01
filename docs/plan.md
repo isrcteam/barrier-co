@@ -149,6 +149,10 @@ Link to seo.md. Redirect count, canonical and noindex rules, JSON-LD types. New 
 | D-9 | The before/after quote card shows "Marco Bellini" beside a woman's photo, and the quote reads like the How to use copy | Designer | Treated as placeholder | Open |
 | D-10 | The 4th gallery item is a video in the design; the close-up image is only 480px (cropped from a composite) | Client | Stills used; full-resolution photography needed | Open |
 | D-11 | The Claims, Size and pack details, and Full ingredient list accordions have headings but no copy | Client | Rows hide when empty | Open |
+| D-12 | Full-resolution photography | Client / designer | Figma only holds the photos at 1402–1672px wide (the stats background at 736px), so they soften at a 1920 wrapper on retina. Originals at 3840 wide are needed to replace them in place | Open |
+| D-13 | Recharge selling plan names | Jeet / client | Once the plans exist in Recharge, put each plan's exact name in its subscription_plan entry's "Selling plan name"; until then cards match by order (3 month first, then 1 month) | Open |
+| D-14 | Klaviyo list for the footer signup | Client | The footer uses Shopify customer signup, which Klaviyo syncs; confirm the list | Open |
+| D-15 | Mobile search | Jeet | The design hides search on mobile, so it's hidden there for now | Open |
 | 1 | Figma design file, library file and prototype links | Client / designer | Design file received; no separate library | Answered |
 | 2 | Brand font files and licences | Client | Files taken from the live theme; licence confirmation is T-2 | Partly answered |
 | 3 | Launch date | Client | | Open |
