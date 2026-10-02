@@ -39,3 +39,6 @@ From docs/architecture.md (video-testimonials). Figma: home 965:1433 / 965:3223,
 2. In the theme editor, open "Video testimonials" and pick the videos under "UGC videos". On the product template, turn on "Use product data" to use each product's own "UGC videos" metafield instead.
 3. Add "Quote card" blocks. Pick a testimonial, or type a quote, name and rating. Quote cards sit between videos in the order you add them.
 4. Set "Quote card background" (Clay in the design) and the section background, then adjust padding (turn off "Same at mobile" to set mobile padding separately).
+
+## Figma diff 2026-10-02
+Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.

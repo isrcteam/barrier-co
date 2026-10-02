@@ -107,7 +107,7 @@
                     {%- else -%}
                       {{ 'image' | placeholder_svg_tag: 'before-after__image before-after__placeholder' }}
                     {%- endif -%}
-                    <span class="before-after__label type-label">{{ before_label | escape }}</span>
+                    <span class="before-after__label type-h5">{{ before_label | escape }}</span>
                   </div>
                   <div class="before-after__photo">
                     {%- if after_image != blank -%}
@@ -124,7 +124,7 @@
                     {%- else -%}
                       {{ 'image' | placeholder_svg_tag: 'before-after__image before-after__placeholder' }}
                     {%- endif -%}
-                    <span class="before-after__label type-label">{{ after_label | escape }}</span>
+                    <span class="before-after__label type-h5">{{ after_label | escape }}</span>
                   </div>
                 </div>
 
@@ -356,6 +356,7 @@
   }
 
   .before-after__controls .slideshow-controls__dots {
+    margin-inline: auto;
     gap: var(--space-6);
     padding: 0;
     border-radius: var(--radius-none);
@@ -383,10 +384,6 @@
     box-shadow: var(--effect-focus-ring);
   }
 
-  .before-after__controls .slideshow-control[disabled] {
-    visibility: hidden;
-  }
-
   @media screen and (min-width: 990px) {
     .before-after {
       padding-block: var(--section-padding-top) var(--section-padding-bottom);
@@ -407,7 +404,7 @@
     }
 
     .before-after__product .product-spotlight {
-      padding-inline-end: var(--space-60);
+      padding-inline-end: calc(var(--space-40) + var(--space-10));
     }
 
     .before-after__photo {
@@ -436,6 +433,7 @@
     }
 
     .before-after__controls .slideshow-control {
+      padding-inline: 0;
       color: var(--color-foreground);
     }
   }

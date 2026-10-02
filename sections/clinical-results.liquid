@@ -267,6 +267,7 @@
     margin: 0;
     text-transform: uppercase;
     white-space: nowrap;
+    height: calc(var(--type-stat-size) * 0.7);
   }
 
   .clinical-results__unit {
@@ -295,9 +296,9 @@
     }
 
     .clinical-results__content {
-      grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
+      grid-template-columns: minmax(0, 1fr) 70%;
       align-items: stretch;
-      gap: var(--space-30);
+      gap: 0;
     }
 
     .clinical-results__intro {
@@ -318,10 +319,16 @@
 
     .clinical-results__stat {
       justify-content: center;
-      padding: var(--space-60);
+      aspect-ratio: 462 / 276;
+      padding: var(--space-40) var(--space-30) calc(var(--space-40) + var(--space-12));
+    }
+
+    .clinical-results__figure {
+      height: calc(var(--type-stat-size) * var(--type-stat-line));
     }
 
     .clinical-results__caption {
+      max-width: calc(var(--space-112) * 2 + var(--space-86));
       font-size: var(--type-body-large-size);
     }
   }

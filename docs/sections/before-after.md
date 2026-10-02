@@ -36,3 +36,6 @@ From docs/architecture.md (before-after). Figma: home 965:1614 / 965:3328, PDP 9
 2. In the theme editor, open "Before and after", edit the heading and text, and choose a product for the mini card (leave it blank on the product template to show the current product).
 3. Pick comparisons under "Comparisons". On the product template, turn on "Use product data" to use each product's "Before and afters" metafield.
 4. Set "Card background" (Linen in the design) and the section background, then adjust padding.
+
+## Figma diff 2026-10-02
+Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.

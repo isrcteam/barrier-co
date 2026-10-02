@@ -31,3 +31,6 @@ From the architecture entry (Figma 965:1329 / 965:3147, editorial option 965:306
 
 ## Merchant guide
 Add **Intro with media** from Storytelling, or the **Editorial** preset for two tiles. Fill in the eyebrow, heading and text. Under **Media 1**, choose Image or Video; for a video, upload it (or paste a YouTube/Vimeo link) and add a cover image. Tick **Show second tile** to add a narrower tile on the right with its own image or video.
+
+## Figma diff 2026-10-02
+Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.

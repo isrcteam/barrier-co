@@ -41,3 +41,6 @@ From docs/architecture.md (image-carousel). Figma: Routine 965:1339 / mobile 965
 4. To show a product over a card, choose a product in the card's "Product overlay" fields; edit the price label ([price] is filled in) and the button label.
 5. Choose the middle card style (Even, Offset, Tall), side bars, caption alignment and size.
 6. Set the background colour (Linen for Routine, blank for Lifestyle) and padding.
+
+## Figma diff 2026-10-02
+Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.

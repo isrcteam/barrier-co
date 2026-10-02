@@ -34,9 +34,14 @@
   .product-rating {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-8);
+    gap: var(--space-4);
     color: var(--color-foreground);
     text-decoration: none;
+  }
+
+  .product-rating .star-rating .star-rating__stars {
+    letter-spacing: var(--space-6);
+    margin-inline-end: calc(var(--space-6) * -1);
   }
 
   .product-rating__label {

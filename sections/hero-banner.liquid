@@ -176,7 +176,7 @@
                 {% else %}
                   role="link" aria-disabled="true"
                 {% endif %}
-                class="button hero-banner__button type-button"
+                class="button button--medium hero-banner__button type-button"
               >
                 {{- s.button_label | escape -}}
               </a>
@@ -205,7 +205,7 @@
 {% stylesheet %}
   .hero-banner {
     --hero-banner-header-offset: 0rem;
-    --hero-banner-min-height: calc(var(--space-80) * 8 + var(--space-60));
+    --hero-banner-min-height: calc(var(--space-80) * 9 + var(--space-14));
 
     padding-block: var(--hero-banner-pt-mobile) var(--hero-banner-pb-mobile);
     background: var(--color-background);
@@ -438,7 +438,7 @@
 
   @media screen and (min-width: 990px) {
     .hero-banner {
-      --hero-banner-min-height: calc(var(--space-80) * 10 + var(--space-30) + var(--space-6));
+      --hero-banner-min-height: calc(var(--space-80) * 10 - var(--space-20));
 
       padding-block: var(--hero-banner-pt) var(--hero-banner-pb);
     }
@@ -461,7 +461,11 @@
     }
 
     .hero-banner--inset .hero-banner__inner {
-      padding-inline: var(--space-40);
+      padding-inline: calc(var(--space-40) + var(--space-6));
+    }
+
+    .hero-banner--inset .hero-banner__body {
+      font-size: var(--type-body-size);
     }
 
     .hero-banner__play {

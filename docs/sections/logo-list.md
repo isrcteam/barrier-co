@@ -30,3 +30,6 @@ From docs/architecture.md (logo-list). Figma: logo bar inside 965:1652 (965:1668
 2. Set the logo height so the logos look balanced.
 3. Turn "Scroll on mobile" off to show a static wrapped grid on phones.
 4. Leave the background blank for Sandstone and adjust padding.
+
+## Figma diff 2026-10-02
+Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.

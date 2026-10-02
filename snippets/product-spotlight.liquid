@@ -41,7 +41,7 @@
       </a>
     {%- endif -%}
     <div class="product-spotlight__body">
-      <{{ title_tag }} class="product-spotlight__title type-title-bold">{{ product.title | escape }}</{{ title_tag }}>
+      <{{ title_tag }} class="product-spotlight__title {% if card_style == 'card' %}type-title-bold{% else %}type-h5{% endif %}">{{ product.title | escape }}</{{ title_tag }}>
       <p class="product-spotlight__price type-caption">{{ price_text }}</p>
       <a href="{{ product.url }}" class="product-spotlight__button button button--small">
         {{- button_label | default: product.title | escape -}}
@@ -66,13 +66,20 @@
 
   .product-spotlight--row,
   .product-spotlight--glass {
-    grid-template-columns: auto 1fr;
+    --spotlight-media: calc(var(--space-112) + var(--space-12));
+
+    grid-template-columns: var(--spotlight-media) minmax(0, calc(var(--space-112) + var(--space-20)));
     align-items: center;
-    gap: var(--space-12);
-    padding: var(--space-10);
+    gap: var(--space-20);
+    padding: var(--space-12);
   }
 
   .product-spotlight--glass {
+    --spotlight-media: calc(var(--space-80) + var(--space-12));
+
+    grid-template-columns: var(--spotlight-media) minmax(0, 1fr);
+    gap: var(--space-8);
+    padding: var(--space-6);
     background: color-mix(in srgb, var(--color-glass) calc(var(--opacity-brand-glass) * 100%), transparent);
     backdrop-filter: blur(var(--layout-blur-card));
     color: var(--color-white);
@@ -87,7 +94,7 @@
 
   .product-spotlight--row .product-spotlight__media,
   .product-spotlight--glass .product-spotlight__media {
-    width: var(--space-86);
+    width: var(--spotlight-media);
   }
 
   .product-spotlight__image {
@@ -103,9 +110,17 @@
     align-content: start;
   }
 
+  .product-spotlight--row .product-spotlight__body,
+  .product-spotlight--glass .product-spotlight__body {
+    gap: var(--space-8);
+  }
+
   .product-spotlight__title {
     margin: 0;
     text-transform: uppercase;
+  }
+
+  .product-spotlight--card .product-spotlight__title {
     font-size: var(--type-h5-size);
   }
 
@@ -113,23 +128,30 @@
     margin: 0 0 var(--space-8);
   }
 
-  .product-spotlight__button {
-    justify-self: stretch;
+  .product-spotlight--row .product-spotlight__price {
+    margin-block-end: var(--space-12);
   }
 
-  .product-spotlight--row .product-spotlight__button,
-  .product-spotlight--glass .product-spotlight__button {
-    justify-self: start;
+  .product-spotlight--glass .product-spotlight__price {
+    margin-block-end: var(--space-6);
+  }
+
+  .product-spotlight__button {
+    justify-self: stretch;
+    width: 100%;
   }
 
   @media screen and (min-width: 990px) {
-    .product-spotlight--row .product-spotlight__media {
-      width: var(--space-86);
+    .product-spotlight--glass {
+      --spotlight-media: calc(var(--space-112) + var(--space-12));
+
+      grid-template-columns: var(--spotlight-media) minmax(0, calc(var(--space-112) + var(--space-20)));
+      gap: var(--space-20);
+      padding: var(--space-12);
     }
 
-    .product-spotlight--row .product-spotlight__title {
-      font-size: var(--type-card-label-size);
-      line-height: var(--type-card-label-line);
+    .product-spotlight--glass .product-spotlight__price {
+      margin-block-end: var(--space-12);
     }
   }
 {% endstylesheet %}

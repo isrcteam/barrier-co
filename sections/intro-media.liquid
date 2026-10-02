@@ -187,7 +187,7 @@
     }
 
     .intro-media__header {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, calc(var(--layout-text-width) + var(--space-80) - var(--space-4)));
       align-items: end;
       gap: var(--space-30);
       padding-inline: 0;
@@ -219,7 +219,7 @@
   @media screen and (min-width: 990px) {
     .intro-media__text {
       justify-self: end;
-      max-width: calc(var(--layout-text-width) + var(--space-80));
+      max-width: calc(var(--layout-text-width) + var(--space-80) - var(--space-4));
     }
   }
 {% endstylesheet %}

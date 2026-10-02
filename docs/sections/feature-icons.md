@@ -30,3 +30,6 @@ From docs/architecture.md (feature-icons). Figma: 965:1502 / mobile 965:3293.
 1. Add "Feature icons" and upload each badge SVG to its Feature block.
 2. Type the caption; it wraps evenly on its own (press Enter to force a line break).
 3. Set desktop columns to match the number of features, the background colour and padding.
+
+## Figma diff 2026-10-02
+Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.

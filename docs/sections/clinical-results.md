@@ -38,3 +38,6 @@ From docs/architecture.md (clinical-results). Figma: STATS component 978:4053 (W
 2. In the theme editor, open "Clinical results", choose an image (and a mobile image after turning off "Same at mobile"), then edit heading, text, button label and link.
 3. Pick up to four results. On the product template, turn on "Use product data" to use each product's "Clinical results" metafield.
 4. Turn "Inset width" off to run the image edge to edge on desktop. Adjust padding as needed.
+
+## Figma diff 2026-10-02
+Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.

@@ -49,3 +49,6 @@ Add **Hero banner** from Banners and pick the **Hero** or **Inset banner** prese
 - **Approver:** Jeet (delegated).
 
 **Outcome, same day:** reverted. Measured on the preview theme (Lighthouse mobile, two runs each), the preload made the page slower: 72/76 with it against 83/84 without, and LCP load delay rose from 2.8 s to 3.6–3.9 s. The image stays `eager` + `fetchpriority="high"` with no preload. Re-measure on the published theme at launch, where pages are cached and the preview bar is gone.
+
+## Figma diff 2026-10-02
+Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.

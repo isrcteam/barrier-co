@@ -32,3 +32,6 @@ From docs/architecture.md (social-gallery). Figma: Insta component 978:4341 (WEB
 2. Add Tile blocks, upload a photo to each and optionally a post link (blank uses the profile link).
 3. Tick "Show Instagram icon" on the tile that should carry the glyph.
 4. Set the background colour to Linen and adjust padding.
+
+## Figma diff 2026-10-02
+Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.
