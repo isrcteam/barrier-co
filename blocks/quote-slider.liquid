@@ -136,6 +136,7 @@
     object-fit: cover;
     object-position: bottom;
     border-radius: var(--radius-full);
+    filter: grayscale(1);
   }
 
   .quote-slider__person {
@@ -153,10 +154,10 @@
     min-block-size: 0;
   }
 
-  /* 24px targets stay (accessibility), pulled left so the first 6px dot starts at the card edge */
+  /* Pulled left by half a target's side padding so the first 6px dot starts at the card edge */
   .quote-slider slideshow-controls .slideshow-controls__dots {
     gap: 0;
-    margin-inline: calc(var(--space-6) - var(--space-12)) 0;
+    margin-inline: calc(var(--space-6) / -2) 0;
     padding: 0;
     border-radius: var(--radius-none);
   }

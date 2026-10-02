@@ -99,8 +99,9 @@ Every home and PDP section was measured against its Figma node at 1440 and 390, 
 | P9 | PDP description is 16 on both widths; body copy elsewhere is 14 on mobile | Description 16 on both widths |
 | P10 | FAQ panel icons are 14, Horizon's are 16 | 14 in both accordions |
 | P11 | Before/after product card: the home frame draws a compact card (Akzidenz Medium 14 title, small button), the PDP frame a large one (ExtraBold 24 title, full-width 43 button, 287 text column) | Section setting **Card size**: Compact (default, home) and Large (PDP template). Mobile is compact on both, as in both mobile frames |
-| P12 | Slider dots are 6 squares 6 apart; accessible targets need 24 | Dots stay 6 square and left-aligned under the card as drawn, on 24 targets, so they sit 18 apart (also the recognition and clinical-trial sliders) |
+| P12 | Slider dots are 6 squares 6 apart, tan with inactive at 34%; Horizon blended them with `difference` (they showed blue-grey) and each section had its own spacing (6 to 18 apart) | One global rule: 6 square, 6 apart, tan / 34%, no blend, every slider. Targets are 12 × 24, below the 24 × 24 guideline, at Jeet's request to match Figma exactly; swiping still works |
 | P13 | UGC row: the mobile PDP frame puts a written review card fourth, the desktop PDP frame shows five creators only | PDP shows creators only on both widths; home interleaves review cards as drawn |
+| P15 | Clinical-trial author photo is grayscale in Figma; the uploaded photo is colour | `filter: grayscale(1)` on quote-slider avatars |
 | P14 | Ingredient images: the PNGs in the file have uneven canvases (the witch hazel is tall portrait), so rows came out 270 to 470 high | Every image sits in the 112 × 94 box from the mobile frame (273 × 229 on desktop), object-fit contain |
 
 ### Height differences left on purpose (content, not layout)
