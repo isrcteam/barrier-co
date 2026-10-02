@@ -69,3 +69,8 @@ This file has no settings. The look comes from theme settings and section settin
   - A breakpoint switch to 55/45 at 1441: the image shrank from 780 to 743 at 1600.
   - Horizon's "constrain to viewport": it limits by height, not by the split.
 - **Approver:** Jeet.
+
+### Reasoning, 2026-10-02: compact Shop mega menu
+- **What:** on desktop, when the mega menu holds featured products, the full-page 12-column grid is replaced by one centred row: the links column (with a hairline divider), then the product cards at a fixed 224 each. The group is about 790 wide, centred under the nav, at every desktop width.
+- **Why:** Jeet: "too off, too wide, too scattered". Horizon pinned the links to the left page edge and the products to the right edge, leaving about 1000px of empty space between them at 1920.
+- **Approver:** Jeet.
