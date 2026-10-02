@@ -25,7 +25,7 @@
 {% render 'contrast-override', background_color: section.settings.background_color, section_id: section.id %}
 
 <div
-  class="image-carousel image-carousel--{{ layout }} image-carousel--caption-{{ section.settings.caption_alignment }}{% if section.settings.show_side_bars %} image-carousel--bars{% endif %} color-custom-{{ section.id }}"
+  class="image-carousel image-carousel--{{ layout }}{% if section.blocks.size <= 3 %} image-carousel--fits{% endif %} image-carousel--caption-{{ section.settings.caption_alignment }}{% if section.settings.show_side_bars %} image-carousel--bars{% endif %} color-custom-{{ section.id }}"
   style="--section-pt: {{ pt }}rem; --section-pb: {{ pb }}rem; --section-pt-mobile: {{ pt_mobile }}rem; --section-pb-mobile: {{ pb_mobile }}rem;"
 >
   <div class="image-carousel__inner">
@@ -219,7 +219,7 @@
   }
 
   .image-carousel--tall .image-carousel__slide--middle .image-carousel__media {
-    aspect-ratio: 6 / 7;
+    aspect-ratio: 397 / 458;
   }
 
   .image-carousel__image {
@@ -318,48 +318,53 @@
     }
 
     .image-carousel__stage {
-      --stage-pad: calc(var(--space-6) * 0);
       --bar-width: var(--icon-bar-desktop);
-      --card-gap: var(--space-60);
-      --cards: calc(var(--track) - 2 * var(--card-gap));
-      --side: calc(var(--cards) / 3);
-      --middle: var(--side);
-      --side-offset: calc(var(--space-6) * 0);
+      --side-ratio: 0.2816;
+      --middle-ratio: 0.2816;
+      --side-drop-ratio: 0;
+      --middle-drop-ratio: 0;
     }
 
     .image-carousel--bars .image-carousel__stage {
-      --stage-pad: calc(var(--space-6) * 0);
-      --bars-total: calc(2 * (var(--bar-width) + var(--card-gap)));
-
-      column-gap: var(--card-gap);
+      grid-template-columns: var(--bar-width) minmax(0, 1fr) var(--bar-width);
+      column-gap: 0;
+      padding-inline: 0;
     }
 
     .image-carousel--tall .image-carousel__stage {
-      --card-gap: var(--space-86);
-      --side: calc(var(--cards) * 0.3);
-      --middle: calc(var(--cards) * 0.4);
-      --side-offset: calc(var(--middle) * 7 / 6 - var(--side));
+      --bar-width: calc(var(--icon-bar-desktop) - var(--space-2));
+      --side-ratio: 0.224;
+      --middle-ratio: 0.3005;
+      --side-drop-ratio: 0.0855;
+    }
+
+    .image-carousel--offset .image-carousel__stage {
+      --middle-drop-ratio: 0.0757;
     }
 
     .image-carousel__bar {
-      height: var(--side);
-      margin-block-start: var(--side-offset);
+      height: calc((100cqi - 2 * var(--bar-width)) * var(--side-ratio));
+      margin-block-start: calc((100cqi - 2 * var(--bar-width)) * var(--side-drop-ratio));
     }
 
     .image-carousel .image-carousel__slide {
-      width: var(--side);
+      flex: none;
+      width: calc(100cqi * var(--side-ratio));
+      margin-block-start: calc(100cqi * var(--side-drop-ratio));
     }
 
     .image-carousel .image-carousel__slide--middle {
-      width: var(--middle);
+      width: calc(100cqi * var(--middle-ratio));
+      margin-block-start: calc(100cqi * var(--middle-drop-ratio));
     }
 
-    .image-carousel--tall .image-carousel__slide:not(.image-carousel__slide--middle) {
-      margin-block-start: var(--side-offset);
+    .image-carousel--fits .image-carousel__slideshow {
+      --slideshow-gap: 0;
     }
 
-    .image-carousel--offset .image-carousel__slide--middle {
-      margin-block-start: calc(var(--space-80) + var(--space-20));
+    .image-carousel--fits slideshow-slides {
+      justify-content: space-evenly;
+      gap: 0;
     }
 
     .image-carousel__card {
