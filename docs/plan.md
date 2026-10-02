@@ -154,6 +154,8 @@ Link to seo.md. Redirect count, canonical and noindex rules, JSON-LD types. New 
 | D-14 | Klaviyo list for the footer signup | Client | The footer uses Shopify customer signup, which Klaviyo syncs; confirm the list | Open |
 | D-15 | Mobile search | Jeet | The design hides search on mobile, so it's hidden there for now | Open |
 | D-17 | The 8 highlights are placeholder copy written to match The 30 ("Eight cloths in a travel-size pack." and so on) | Client | Replace with approved copy | Open |
+| D-18 | FAQ page: the footer "FAQs" link and the PDP "Read more FAQ" button point to /pages/faq, which does not exist yet (404) | Client / Jeet | Create the page (a template with the faq-panel section reading all faq_item entries) before launch | Open |
+| D-19 | Reviews layout: Figma draws a sidebar (rating, search, write review, ask a question, histogram, sort) and a feed with Reviews / Questions tabs. Judge.me controls that layout from its own admin settings | Jeet | Theme restyles Judge.me (colours, fonts, stars, buttons); switch on the summary, search and Q&A widgets in Judge.me settings | Open |
 | 1 | Figma design file, library file and prototype links | Client / designer | Design file received; no separate library | Answered |
 | 2 | Brand font files and licences | Client | Files taken from the live theme; licence confirmation is T-2 | Partly answered |
 | 3 | Launch date | Client | | Open |

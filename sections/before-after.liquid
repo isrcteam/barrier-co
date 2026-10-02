@@ -153,9 +153,6 @@
                           {% render 'star-rating', rating: rating, size: 'medium' %}
                         {%- endif -%}
                         <span class="before-after__name type-h5">{{ testimonial.name.value | escape }}</span>
-                        {%- if testimonial.role != blank -%}
-                          <span class="before-after__role type-caption">{{ testimonial.role.value | escape }}</span>
-                        {%- endif -%}
                       </span>
                     </figcaption>
                   </figure>
@@ -274,7 +271,7 @@
   .before-after__photo {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 179 / 240;
   }
 
   .before-after__image {
@@ -375,6 +372,13 @@
     box-shadow: none;
   }
 
+  /* Figma's arrow row is the 14px glyph plus 12 above and below (38), not Horizon's 44px button */
+  .before-after__controls .slideshow-control {
+    block-size: var(--space-14);
+    min-block-size: 0;
+    padding: 0;
+  }
+
   .before-after__controls .slideshow-control:focus-visible {
     outline: var(--border-hairline) solid var(--color-foreground);
     box-shadow: var(--effect-focus-ring);
@@ -405,6 +409,11 @@
 
     /* Large card (PDP Figma 965:2355): 287 text column, ExtraBold 24 title, full-width 43 button.
        Home Figma draws the compact card (Medium 14 title), so the size is a setting. */
+    /* Figma 965:2350: the intro column is as wide as the large card (493) */
+    .before-after--card-large .before-after__inner {
+      grid-template-columns: minmax(0, calc(var(--space-112) * 4 + var(--space-40) + var(--space-4) + 0.0625rem)) minmax(0, 1fr);
+    }
+
     .before-after--card-large .before-after__product .product-spotlight {
       grid-template-columns: var(--spotlight-media) minmax(0, calc(var(--space-112) * 2 + var(--space-60) + var(--space-4)));
     }

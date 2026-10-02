@@ -10,7 +10,7 @@
     {%- for highlight in highlights -%}
       <li class="product-highlights__item">
         <span class="product-highlights__icon" aria-hidden="true">
-          {{- 'icon-checkmark.svg' | inline_asset_content -}}
+          {{- 'icon-tick.svg' | inline_asset_content -}}
         </span>
         <span>{{ highlight | escape }}</span>
       </li>
@@ -37,14 +37,16 @@
   .product-highlights__icon {
     display: inline-flex;
     flex-shrink: 0;
-    inline-size: var(--icon-xs);
-    block-size: var(--icon-xs);
+    /* Figma tick (Vector 64): 10.5 x 7, 1.4 stroke */
+    inline-size: calc(var(--space-10) + 0.03125rem);
+    block-size: auto;
     color: var(--color-accent-bar);
   }
 
   .product-highlights__icon svg {
+    display: block;
     inline-size: 100%;
-    block-size: 100%;
+    block-size: auto;
   }
 {% endstylesheet %}
 

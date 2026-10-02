@@ -317,10 +317,11 @@
       grid-auto-rows: 1fr;
     }
 
+    /* Figma 978:4083: every card's number starts 66 from the top, whatever the caption length */
     .clinical-results__stat {
-      justify-content: center;
+      justify-content: flex-start;
       aspect-ratio: 462 / 276;
-      padding: var(--space-40) var(--space-30) calc(var(--space-40) + var(--space-12));
+      padding: calc(var(--space-60) + var(--space-6)) var(--space-30) var(--space-40);
     }
 
     .clinical-results__figure {

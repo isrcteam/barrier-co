@@ -68,7 +68,7 @@
                 <ul class="ingredient-list__benefits" role="list">
                   {%- for benefit in placeholder_benefits -%}
                     <li class="ingredient-list__benefit type-caption">
-                      <span class="svg-wrapper ingredient-list__tick">{{ 'icon-checkmark.svg' | inline_asset_content }}</span>
+                      <span class="svg-wrapper ingredient-list__tick">{{ 'icon-tick.svg' | inline_asset_content }}</span>
                       <span>{{ benefit }}</span>
                     </li>
                   {%- endfor -%}
@@ -106,7 +106,7 @@
                   <ul class="ingredient-list__benefits" role="list">
                     {%- for benefit in item_benefits -%}
                       <li class="ingredient-list__benefit type-caption">
-                        <span class="svg-wrapper ingredient-list__tick">{{ 'icon-checkmark.svg' | inline_asset_content }}</span>
+                        <span class="svg-wrapper ingredient-list__tick">{{ 'icon-tick.svg' | inline_asset_content }}</span>
                         <span>{{ benefit | escape }}</span>
                       </li>
                     {%- endfor -%}
@@ -208,17 +208,18 @@
     gap: var(--space-10);
   }
 
+  /* Figma tick (Vector 64): 10.5 x 7, 1.4 stroke */
   .ingredient-list__tick {
     display: inline-flex;
     flex: none;
-    inline-size: var(--icon-xs);
-    block-size: var(--icon-xs);
+    inline-size: calc(var(--space-10) + 0.03125rem);
     color: var(--color-accent-bar);
   }
 
   .ingredient-list__tick svg {
+    display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
   }
 
   @media screen and (min-width: 990px) {
@@ -239,7 +240,7 @@
     .ingredient-list__row {
       grid-template-columns: calc(var(--space-112) * 2 + var(--space-40) + var(--space-8)) minmax(0, 1fr);
       gap: var(--space-24);
-      align-items: center;
+      align-items: start;
     }
 
     .ingredient-list__media {

@@ -19,7 +19,7 @@
         "breadcrumbs": {
           "type": "breadcrumbs",
           "settings": {
-            "show_collection": false
+            "show_collection": true
           }
         }
       },
@@ -296,8 +296,9 @@
             "label": "Cleanse",
             "text": "Lifts away impurities, sweat, and buildup without stripping — as effective as soap and water.",
             "x_position": 47,
-            "y_position": 20,
-            "line_length": 15
+            "y_position": 19.84,
+            "line_length": 15.42,
+            "text_width": 199
           }
         },
         "benefit_hotspots_callout_2": {
@@ -305,9 +306,10 @@
           "settings": {
             "label": "Hydrate",
             "text": "3½ teaspoons of clinical-grade cream delivers deep moisture that lasts up to 72 hours.",
-            "x_position": 39,
-            "y_position": 40,
-            "line_length": 35
+            "x_position": 39.17,
+            "y_position": 39.68,
+            "line_length": 35.5,
+            "text_width": 183
           }
         },
         "benefit_hotspots_callout_3": {
@@ -315,9 +317,10 @@
           "settings": {
             "label": "Protect",
             "text": "Mineral oil and dimethicone form an occlusive shield, locking in hydration and defending against environmental stress.",
-            "x_position": 39,
-            "y_position": 80,
-            "line_length": 32
+            "x_position": 39.54,
+            "y_position": 80.32,
+            "line_length": 32.44,
+            "text_width": 193
           }
         },
         "benefit_hotspots_message_4": {
@@ -372,7 +375,7 @@
         "inset": true,
         "use_product_data": true,
         "image": "shopify://shop_images/stats-background-desktop.jpg",
-        "image_mobile": "shopify://shop_images/stats-background-mobile.jpg",
+        "image_mobile": "shopify://shop_images/stats-background-mobile-skin.jpg",
         "same_mobile_image": false
       }
     },
@@ -438,11 +441,12 @@
       "settings": {
         "heading": "Most asked questions",
         "button_label": "Read more FAQ",
+        "button_link": "/pages/faq",
+        "background_color": "#FFFFFF",
         "open_first": true,
         "use_product_data": true,
         "divider_color": "#BBAE9A",
         "image": "shopify://shop_images/faq-background.jpg",
-        "image_mobile": "shopify://shop_images/faq-background.jpg",
         "image_mobile_same": false
       }
     }

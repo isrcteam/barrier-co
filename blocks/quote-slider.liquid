@@ -77,7 +77,7 @@
   /* The block's colour only paints the quote card, the heading and dots sit on the page */
   .quote-slider {
     display: grid;
-    gap: var(--space-12);
+    gap: var(--space-8);
     color: var(--color-foreground);
   }
 
@@ -103,7 +103,7 @@
     gap: var(--space-20);
     block-size: 100%;
     margin: 0;
-    padding: var(--space-12);
+    padding: var(--space-10);
     background: var(--color-background);
   }
 
@@ -115,7 +115,7 @@
     margin-inline-end: var(--space-2);
     font-family: var(--font-family-heading);
     font-weight: var(--font-weight-extrabold);
-    font-size: var(--type-h2-size);
+    font-size: calc(var(--space-30) + var(--space-6));
     line-height: 0;
     color: var(--color-accent-bar);
     display: inline-block;
@@ -165,6 +165,16 @@
   .quote-slider .slideshow-controls__dots button:focus-visible {
     outline: var(--border-hairline) solid var(--color-foreground);
     box-shadow: var(--effect-focus-ring);
+  }
+
+  @media screen and (min-width: 990px) {
+    .quote-slider {
+      gap: var(--space-12);
+    }
+
+    .quote-slider__card {
+      padding: var(--space-12);
+    }
   }
 {% endstylesheet %}
 

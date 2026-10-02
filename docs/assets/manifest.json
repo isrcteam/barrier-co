@@ -45,13 +45,14 @@
   },
   "stats_background": {
     "desktop": "stats-background-desktop.jpg",
-    "mobile": "stats-background-mobile.jpg",
+    "mobile": "stats-background-mobile-skin.jpg",
     "alt": "Close-up of warm brown skin across the neck, collarbone and shoulder",
     "source": "figma 978:4052 / 978:4051",
     "width": 736,
     "height": 359,
-    "mobile_width": 636,
-    "mobile_height": 1104
+    "mobile_width": 780,
+    "mobile_height": 1356,
+    "note": "Mobile file reproduces the Figma fill crop of 978:4141 (top -88.69%, height 233.94%), 2026-10-02"
   },
   "feature_icon_1": {
     "desktop": "feature-icon-1.svg",

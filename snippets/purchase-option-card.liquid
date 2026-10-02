@@ -32,6 +32,8 @@
         form="{{ form_id }}"
       {% endif %}
       data-button-label="{{ button_label | escape }}"
+      data-price="{{ price | escape }}"
+      data-savings="{{ savings | escape }}"
       aria-describedby="{{ input_id }}-details"
       on:change="/select"
       {% if checked %}

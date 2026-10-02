@@ -445,7 +445,7 @@
         "button_link": "/collections/all",
         "inset": true,
         "image": "shopify://shop_images/stats-background-desktop.jpg",
-        "image_mobile": "shopify://shop_images/stats-background-mobile.jpg",
+        "image_mobile": "shopify://shop_images/stats-background-mobile-skin.jpg",
         "results": [
           "improved-facial-appearance",
           "reduced-fine-lines",

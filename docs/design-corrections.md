@@ -53,7 +53,7 @@ Node IDs refer to file oZ00gYRP11BAdFQYwo4fxj. "T-" numbers link to the alignmen
 | K1 | Two primary button components (MAIN CTA and Button), with different padding and no text style on MAIN CTA (T-20) | One button system: Large 55, Medium 44, Small 40. The ATC label keeps its price |
 | K2 | Button instances resized to 31, 43, 45 and 47 (T-19) | Snapped to 40, 44 or 55. "Take the test" and the spotlight "Shop now" use Small |
 | K3 | Secondary button background is a raw hex; "Our science" is White (T-21) | Secondary uses the surface background. "Our science" is the white primary on images |
-| K4 | Play icon in four sizes: 57, 40, 30.3 and 20.3 (T-22) | Two sizes: 57 large, 40 small |
+| K4 | Play icon in four sizes: 57, 40, 30.3 and 20.3 (T-22), plus 79 on the video banner | Three sizes: 79 on the video banner (Sandstone glyph, 12 blur), 57 large, 40 small |
 | K5 | FAQ dividers differ on every item: top+bottom, bottom only, or none (T-26) | Every item has one bottom hairline |
 | K6 | Carousel arrows drawn as 24×14 Clay arrows; Horizon renders a small thin chevron | Every carousel uses the same 24px arrow, and the disabled arrow uses the disabled opacity token |
 | K7 | Carousel dots are 6px (12px tap area) | The dot stays 6px with a 24px tap area (accessibility) |

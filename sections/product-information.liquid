@@ -90,6 +90,18 @@
         data-singleton="{{ product.has_only_default_variant }}"
         data-single-option="{{ has_single_option }}"
       >
+        {%- liquid
+          assign sticky_rating = product.metafields.reviews.rating.value.rating | default: 0 | times: 1.0
+          assign sticky_rating_count = product.metafields.reviews.rating_count.value | default: 0
+        -%}
+        {%- if sticky_rating_count > 0 -%}
+          <p class="sticky-add-to-cart__rating type-caption">
+            {% render 'star-rating', rating: sticky_rating %}
+            <span>{{ sticky_rating | round: 1 }}</span>
+            <span aria-hidden="true">|</span>
+            <span>{{ 'content.sticky_review_count' | t: count: sticky_rating_count }}</span>
+          </p>
+        {%- endif -%}
         <p
           class="sticky-add-to-cart__title"
           data-testid="sticky-product-title"
@@ -117,7 +129,15 @@
         data-testid="sticky-price-display"
       >
         {% render 'price', product_resource: product, show_sale_price_first: true %}
+        {%- comment -%} Filled by purchase-options.js with the selected plan's price and savings {%- endcomment -%}
+        <span class="sticky-add-to-cart__plan-price" data-sticky-plan-price hidden></span>
+        <span class="sticky-add-to-cart__savings type-micro" data-sticky-plan-savings hidden></span>
       </div>
+
+      <label class="sticky-add-to-cart__plan" data-sticky-plan hidden>
+        <span class="visually-hidden">{{ 'content.sticky_plan_label' | t }}</span>
+        <select class="sticky-add-to-cart__plan-select" data-sticky-plan-select></select>
+      </label>
 
       <button
         type="button"

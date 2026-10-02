@@ -33,6 +33,65 @@ class PurchaseOptionsComponent extends Component {
     const label =
       checked instanceof HTMLInputElement ? checked.dataset.buttonLabel ?? '' : this.dataset.oneTimeLabel ?? '';
     form.style.setProperty(LABEL_PROPERTY, JSON.stringify(label));
+    this.#syncSticky(checked instanceof HTMLInputElement ? checked : null, label);
+  }
+
+  /**
+   * Mirrors the selected plan in the sticky add to cart bar: button label, price, savings and a plan select
+   * that checks the same radios, so the sticky button (which clicks the main one) adds the chosen plan.
+   * @param {HTMLInputElement | null} checked
+   * @param {string} label
+   */
+  #syncSticky(checked, label) {
+    const sticky = this.closest('.shopify-section')?.querySelector('sticky-add-to-cart');
+    if (!(sticky instanceof HTMLElement)) return;
+
+    sticky.style.setProperty(LABEL_PROPERTY, JSON.stringify(label));
+
+    const inputs = Array.from(this.querySelectorAll('input[data-button-label]')).filter(
+      (input) => input instanceof HTMLInputElement
+    );
+    const planPrice = sticky.querySelector('[data-sticky-plan-price]');
+    const savings = sticky.querySelector('[data-sticky-plan-savings]');
+    const planField = sticky.querySelector('[data-sticky-plan]');
+    const select = sticky.querySelector('[data-sticky-plan-select]');
+    const hasPlans = inputs.length > 1 && checked !== null;
+
+    sticky.toggleAttribute('data-has-plans', hasPlans);
+    if (planField instanceof HTMLElement) planField.hidden = !hasPlans;
+    if (planPrice instanceof HTMLElement) {
+      planPrice.hidden = !hasPlans;
+      planPrice.textContent = checked?.dataset.price ?? '';
+    }
+    if (savings instanceof HTMLElement) {
+      savings.hidden = !hasPlans || !checked?.dataset.savings;
+      savings.textContent = checked?.dataset.savings ?? '';
+    }
+    if (!hasPlans || !(select instanceof HTMLSelectElement)) return;
+
+    select.replaceChildren(
+      ...inputs.map((input) => {
+        const name = this.querySelector(`label[for="${CSS.escape(input.id)}"]`)?.textContent?.trim() ?? input.value;
+        const option = new Option(name, input.id, false, input.checked);
+        option.disabled = input.disabled;
+        return option;
+      })
+    );
+
+    if (!select.dataset.bound) {
+      select.dataset.bound = 'true';
+      select.addEventListener(
+        'change',
+        () => {
+          const input = this.querySelector(`#${CSS.escape(select.value)}`);
+          if (!(input instanceof HTMLInputElement)) return;
+          input.checked = true;
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+          this.#syncButtonLabel();
+        },
+        { signal: this.#abortController.signal }
+      );
+    }
   }
 
   /** @param {Event & { promise?: Promise<any> }} event */

@@ -80,7 +80,7 @@
           {%- for block in callouts -%}
             <li
               class="benefit-hotspots__callout"
-              style="--callout-x: {{ block.settings.x_position }}; --callout-y: {{ block.settings.y_position }}; --callout-line: {{ block.settings.line_length }};"
+              style="--callout-x: {{ block.settings.x_position }}; --callout-y: {{ block.settings.y_position }}; --callout-line: {{ block.settings.line_length }}; --callout-text-width: {{ block.settings.text_width | default: 193 | divided_by: 16.0 }}rem;"
               {{ block.shopify_attributes }}
             >
               <span class="benefit-hotspots__marker" aria-hidden="true"></span>
@@ -103,16 +103,16 @@
             {%- if photo_mobile != photo -%}
               <source
                 media="(min-width: 990px)"
-                srcset="{{ photo | image_url: width: 600 }} 600w, {{ photo | image_url: width: 900 }} 900w, {{ photo | image_url: width: 1200 }} 1200w"
-                sizes="40vw"
+                srcset="{{ photo | image_url: width: 900 }} 900w, {{ photo | image_url: width: 1200 }} 1200w, {{ photo | image_url: width: 1800 }} 1800w, {{ photo | image_url: width: 2400 }} 2400w"
+                sizes="80vw"
               >
             {%- endif -%}
             {{
               photo_mobile
-              | image_url: width: 1200
+              | image_url: width: 2400
               | image_tag:
-                widths: '390, 600, 780, 900, 1200',
-                sizes: '(min-width: 990px) 40vw, 100vw',
+                widths: '780, 1100, 1500, 1800, 2400',
+                sizes: '(min-width: 990px) 80vw, 280vw',
                 loading: 'lazy',
                 class: 'benefit-hotspots__photo-image'
             }}
@@ -190,11 +190,12 @@
   }
 
   .benefit-hotspots__heading {
-    position: relative;
+    position: absolute;
+    inset: 0 0 auto;
     z-index: 1;
     margin: 0;
-    padding: var(--space-30) var(--space-30) var(--space-16);
-    text-align: center;
+    padding: calc(var(--space-30) + var(--space-4)) calc(var(--space-30) + var(--space-2)) var(--space-16);
+    text-align: start;
     text-transform: uppercase;
   }
 
@@ -202,10 +203,13 @@
     position: relative;
   }
 
+  /* Mobile (Figma 965:3616): the cloth fills a 390 x 531 frame with the heading over its top */
   .benefit-hotspots__image {
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: 390 / 531;
+    object-fit: cover;
   }
 
   .benefit-hotspots__placeholder {
@@ -310,7 +314,9 @@
   }
 
   .benefit-hotspots__slideshow slideshow-controls {
-    margin-block-start: var(--space-16);
+    min-block-size: 0;
+    margin-block-start: calc(var(--space-16) - (var(--space-24) - var(--space-6)) / 2);
+    margin-block-end: calc((var(--space-24) - var(--space-6)) / -2);
     mix-blend-mode: normal;
   }
 
@@ -322,9 +328,9 @@
 
   .benefit-hotspots__slideshow .slideshow-controls__dots button {
     --size: var(--space-6);
-    --color: color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-inactive) * 100%), transparent);
-    --color-active: var(--color-white);
-    --color-hover: color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-muted) * 100%), transparent);
+    --color: color-mix(in srgb, var(--color-on-media) calc(var(--opacity-brand-inactive) * 100%), transparent);
+    --color-active: var(--color-on-media);
+    --color-hover: color-mix(in srgb, var(--color-on-media) calc(var(--opacity-brand-muted) * 100%), transparent);
     border-radius: var(--radius-none);
   }
 
@@ -418,7 +424,8 @@
     .benefit-hotspots__marker::after {
       content: '';
       flex: 1;
-      border-block-start: var(--border-hairline) dotted currentColor;
+      block-size: var(--border-hairline);
+      background: repeating-linear-gradient(to right, currentColor 0 calc(var(--space-6) / 2), transparent calc(var(--space-6) / 2) var(--space-6));
     }
 
     .benefit-hotspots__label {
@@ -427,7 +434,7 @@
 
     .benefit-hotspots__text {
       grid-area: text;
-      max-inline-size: calc(var(--space-86) * 2 + var(--space-20));
+      inline-size: var(--callout-text-width);
     }
 
     .benefit-hotspots__story {
@@ -436,6 +443,7 @@
 
     .benefit-hotspots__card {
       padding: var(--space-40) var(--space-30);
+      border-inline-end: var(--border-hairline) solid color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-edge) * 100%), transparent);
     }
   }
 {% endstylesheet %}
@@ -470,35 +478,33 @@
           "default": "t:text_defaults.callout_text"
         },
         {
-          "type": "range",
+          "type": "number",
           "id": "x_position",
           "label": "t:settings.x_position",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
           "default": 40
         },
         {
-          "type": "range",
+          "type": "number",
           "id": "y_position",
           "label": "t:settings.y_position",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
           "default": 40
         },
         {
-          "type": "range",
+          "type": "number",
           "id": "line_length",
           "label": "t:settings.line_length",
           "info": "t:info.callout_line_length",
-          "min": 0,
-          "max": 60,
-          "step": 1,
-          "unit": "%",
           "default": 20
+        },
+        {
+          "type": "range",
+          "id": "text_width",
+          "label": "t:settings.callout_text_width",
+          "min": 121,
+          "max": 301,
+          "step": 2,
+          "unit": "px",
+          "default": 193
         }
       ]
     },
@@ -708,8 +714,9 @@
             "label": "t:text_defaults.callout_cleanse_label",
             "text": "t:text_defaults.callout_cleanse_text",
             "x_position": 47,
-            "y_position": 20,
-            "line_length": 15
+            "y_position": 19.84,
+            "line_length": 15.42,
+            "text_width": 199
           }
         },
         {
@@ -717,9 +724,10 @@
           "settings": {
             "label": "t:text_defaults.callout_hydrate_label",
             "text": "t:text_defaults.callout_hydrate_text",
-            "x_position": 39,
-            "y_position": 40,
-            "line_length": 35
+            "x_position": 39.17,
+            "y_position": 39.68,
+            "line_length": 35.5,
+            "text_width": 183
           }
         },
         {
@@ -727,9 +735,10 @@
           "settings": {
             "label": "t:text_defaults.callout_protect_label",
             "text": "t:text_defaults.callout_protect_text",
-            "x_position": 39,
-            "y_position": 80,
-            "line_length": 32
+            "x_position": 39.54,
+            "y_position": 80.32,
+            "line_length": 32.44,
+            "text_width": 193
           }
         },
         {

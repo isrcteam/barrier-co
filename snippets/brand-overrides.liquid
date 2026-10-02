@@ -213,6 +213,16 @@
     inline-size: calc(var(--space-60) + var(--space-14));
   }
 
+  /* Figma draws every thumbnail plain (no selected outline) and no arrows on the main image; the rail is the navigation */
+  :is(.product-information, featured-product-information) .slideshow-controls__thumbnails .slideshow-control[aria-selected='true']:not(:focus-visible) {
+    outline: none;
+  }
+
+  :is(.product-information, featured-product-information) .product-media-container slideshow-arrows,
+  :is(.product-information, featured-product-information) media-gallery slideshow-arrows {
+    display: none;
+  }
+
   .product-information .slideshow-controls__thumbnails::before,
   .product-information .slideshow-controls__thumbnails::after {
     content: '';
@@ -238,8 +248,10 @@
       padding-inline: 0 var(--space-10);
     }
 
-    .product-information .slideshow-controls__thumbnails .slideshow-control[aria-selected='true'] {
-      outline-offset: calc(var(--border-hairline) * -1);
+    /* Desktop frames draw the rail's end bars in Tan (965:2033); the mobile frame uses Fossil */
+    :is(.product-information, featured-product-information) .slideshow-controls__thumbnails::before,
+    :is(.product-information, featured-product-information) .slideshow-controls__thumbnails::after {
+      background-color: var(--color-accent-bar);
     }
 
     :is(.product-information, featured-product-information) .product-information__grid:not(.product-information__grid--half, .product-information--media-none).product-information--media-left {
@@ -260,13 +272,27 @@
     text-transform: uppercase;
   }
 
+  /* Buy-box rhythm: 16 between blocks on mobile, 24 on desktop (Figma 965:3468 / 965:2045).
+     The template's --gap is inline, so the buy box carries its own variable. */
+  .product-details .group-block-content:has(> .buy-buttons-block) {
+    --buybox-gap: var(--space-16);
+
+    gap: var(--buybox-gap);
+  }
+
+  @media screen and (min-width: 990px) {
+    .product-details .group-block-content:has(> .buy-buttons-block) {
+      --buybox-gap: var(--space-24);
+    }
+  }
+
   .product-details .product-rating + .text-block {
-    margin-block-start: calc(var(--space-16) - var(--gap));
+    margin-block-start: calc(var(--space-16) - var(--buybox-gap));
   }
 
   .product-details .text-block:has(> h1) + .text-block,
   .product-details .text-block + .product-highlights {
-    margin-block-start: calc(var(--space-10) - var(--gap));
+    margin-block-start: calc(var(--space-10) - var(--buybox-gap));
   }
 
   .product-details .text-block:has(> h1) + .text-block :is(p, li) {
@@ -277,13 +303,13 @@
   @media screen and (min-width: 990px) {
     .product-details .text-block:has(> h1) + .text-block,
     .product-details .text-block + .product-highlights {
-      margin-block-start: calc(var(--space-20) - var(--gap));
+      margin-block-start: calc(var(--space-20) - var(--buybox-gap));
     }
   }
 
   .product-details .buy-buttons-block + .text-block,
   .product-details .buy-buttons-block ~ .product__pickup-availabilities + .text-block {
-    margin-block-start: calc(var(--space-10) - var(--gap));
+    margin-block-start: calc(var(--space-10) - var(--buybox-gap));
   }
 
   .product-details .add-to-cart-icon {
@@ -310,11 +336,25 @@
     text-transform: uppercase;
   }
 
+  /* Figma accordion icon: 14 x 14, 2px bars, top-aligned with the row's 20 padding */
+  .product-details .accordion .details__header {
+    align-items: flex-start;
+  }
+
   .product-details .accordion .details__header > .svg-wrapper {
     order: -1;
-    margin-inline: 0;
+    margin: 0;
     inline-size: var(--space-14);
     block-size: var(--space-14);
+  }
+
+  .product-details .accordion .details__header > .svg-wrapper svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .product-details .accordion .details-content :is(.text-block, rte-formatter) > :last-child {
+    margin-block-end: 0;
   }
 
   .product-details .accordion .details-content {
@@ -337,6 +377,7 @@
     grid-template-areas:
       'image info'
       'image price'
+      'plan plan'
       'button button';
     gap: var(--space-8) var(--space-12);
     padding: var(--space-10);
@@ -365,7 +406,7 @@
     font-family: var(--font-family-heading);
     font-weight: var(--font-weight-extrabold);
     font-size: var(--type-title-bold-size);
-    line-height: var(--type-title-bold-line);
+    line-height: 1;
     text-transform: uppercase;
     white-space: normal;
   }
@@ -377,6 +418,79 @@
     font-weight: var(--font-weight-medium);
     font-size: var(--type-h5-size);
     line-height: normal;
+  }
+
+  /* Sticky bar extras (Figma 965:1973 / 965:4237): rating row, plan price + savings tag, plan select */
+  .sticky-add-to-cart .sticky-add-to-cart__rating {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    margin: 0 0 var(--space-6);
+    color: var(--color-foreground);
+  }
+
+  .sticky-add-to-cart .sticky-add-to-cart__rating .star-rating {
+    margin-inline-end: var(--space-2);
+  }
+
+  .sticky-add-to-cart .sticky-add-to-cart__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .sticky-add-to-cart[data-has-plans] .sticky-add-to-cart__price > :not([data-sticky-plan-price], [data-sticky-plan-savings]) {
+    display: none;
+  }
+
+  .sticky-add-to-cart .sticky-add-to-cart__savings {
+    padding: var(--space-2) var(--space-10);
+    background: var(--color-accent-bar);
+    color: var(--color-background);
+    text-transform: uppercase;
+  }
+
+  .sticky-add-to-cart .sticky-add-to-cart__plan {
+    position: relative;
+    grid-area: plan;
+    display: block;
+  }
+
+  .sticky-add-to-cart .sticky-add-to-cart__plan[hidden] {
+    display: none;
+  }
+
+  .sticky-add-to-cart .sticky-add-to-cart__plan::after {
+    content: '';
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: var(--space-14);
+    inline-size: var(--space-6);
+    block-size: var(--space-6);
+    border-inline-end: var(--border-hairline) solid var(--color-foreground);
+    border-block-end: var(--border-hairline) solid var(--color-foreground);
+    translate: 0 -75%;
+    rotate: 45deg;
+    pointer-events: none;
+  }
+
+  .sticky-add-to-cart .sticky-add-to-cart__plan-select {
+    inline-size: 100%;
+    min-inline-size: calc(var(--space-112) * 2 + var(--space-6));
+    padding: var(--space-12) calc(var(--space-14) * 2 + var(--space-8)) var(--space-12) var(--space-10);
+    border: var(--border-hairline) solid var(--color-divider);
+    border-radius: var(--radius-none);
+    background: var(--color-white);
+    color: var(--color-foreground);
+    font-family: var(--font-family-body);
+    font-size: var(--type-body-small-size);
+    line-height: 1.3;
+    appearance: none;
+  }
+
+  .sticky-add-to-cart .sticky-add-to-cart__button:not(:disabled, [data-added='true'])::after {
+    content: var(--purchase-options-button-label, none);
   }
 
   .sticky-add-to-cart .sticky-add-to-cart__button {
@@ -397,17 +511,24 @@
 
   @media screen and (min-width: 990px) {
     .sticky-add-to-cart .sticky-add-to-cart__bar {
-      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-columns: auto minmax(0, 1fr) auto auto;
       grid-template-areas:
-        'image info button'
-        'image price button';
+        'image info plan button'
+        'image price plan button';
+      column-gap: var(--space-12);
       inline-size: min(calc(100% - var(--layout-gutter) * 2), var(--layout-content-width));
       padding: var(--space-30);
+    }
+
+    .sticky-add-to-cart .sticky-add-to-cart__plan {
+      align-self: center;
+      margin-inline: var(--space-80) var(--space-8);
     }
 
     .sticky-add-to-cart .sticky-add-to-cart__button {
       align-self: center;
       inline-size: auto;
+      min-inline-size: calc(var(--space-112) * 2 + var(--space-40) + 0.1875rem);
       margin-block-start: 0;
       padding-inline: var(--space-40);
     }
@@ -600,6 +721,105 @@
 
   :is(p, li, .rte) {
     text-wrap: pretty;
+  }
+
+  /* Judge.me review widget (minimal-header layout) restyled to the Figma reviews block (965:2002).
+     The sidebar, histogram, search and Q&A tabs are Judge.me layout settings (plan D-19). */
+  #judgeme_product_reviews .jm-review-widget {
+    --jm-review-widget-text-color: var(--color-foreground);
+    --jm-review-widget-lighter-text-color: var(--color-palette-sepia);
+    --jm-review-widget-star-and-histogram-color: var(--color-rating);
+    --jm-review-widget-button-color: var(--color-foreground);
+    --jm-review-widget-button-text-color: var(--color-background);
+    --jm-btn-border-radius: 0;
+    --jm-widget-border-radius: 0;
+    --jm-widget-border-radius-simplified: 0;
+    --jm-input-border-radius: 0;
+    --jm-tabs-border-radius: 0;
+    --jm-tag-bg: var(--color-foreground);
+    --jm-tag-color: var(--color-background);
+    --jm-center-max: none;
+    --jm-center-gutters: 0;
+
+    padding-block-start: var(--space-16);
+    color: var(--color-foreground);
+    font-family: var(--font-family-body);
+  }
+
+  #judgeme_product_reviews .jm-review-widget-minimal-header__title {
+    display: none;
+  }
+
+  #judgeme_product_reviews .jm-average-rating-display .jm-text {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-medium);
+    font-size: calc(var(--space-16) + var(--space-2));
+    color: var(--color-foreground);
+  }
+
+  #judgeme_product_reviews .jm-button--primary {
+    min-block-size: var(--layout-button-large);
+    min-inline-size: min(100%, calc(var(--space-112) * 4 - var(--space-8)));
+    padding-inline: var(--space-40);
+    border-radius: var(--radius-none);
+    background: var(--color-foreground);
+    color: var(--color-background);
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-extrabold);
+    font-size: var(--type-button-size);
+    line-height: var(--type-button-line);
+    text-transform: uppercase;
+  }
+
+  #judgeme_product_reviews .jm-button--secondary,
+  #judgeme_product_reviews .jm-sort-filter :is(select, button) {
+    border: var(--border-hairline) solid var(--color-divider);
+    border-radius: var(--radius-none);
+    background: var(--color-white);
+    color: var(--color-foreground);
+  }
+
+  #judgeme_product_reviews .jm-star-rating {
+    gap: var(--space-6);
+  }
+
+  #judgeme_product_reviews .jm-star-rating svg {
+    inline-size: var(--space-16);
+    block-size: var(--space-16);
+  }
+
+  #judgeme_product_reviews .jm-review-item {
+    padding-block: var(--space-24);
+    border-block-end: var(--border-hairline) solid var(--color-divider);
+    color: var(--color-foreground);
+  }
+
+  #judgeme_product_reviews .jm-reviewer-avatar {
+    inline-size: var(--space-60);
+    block-size: var(--space-60);
+    border-radius: var(--radius-none);
+    background: var(--color-palette-linen);
+  }
+
+  #judgeme_product_reviews .jm-reviewer-info__details > :first-child {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-medium);
+    font-size: calc(var(--space-16) + var(--space-2));
+    color: var(--color-foreground);
+  }
+
+  #judgeme_product_reviews .jm-reviewer-info__details :is(.jm-tag, [class*='verified']) {
+    padding: var(--space-2) var(--space-6);
+    border: 0;
+    border-radius: var(--radius-none);
+    background: var(--color-foreground);
+    color: var(--color-background);
+    font-size: var(--type-caption-size);
+  }
+
+  #judgeme_product_reviews .jm-review-content {
+    color: var(--color-foreground);
+    line-height: 1.3;
   }
 
   :is(slideshow-arrows, slideshow-controls) .slideshow-control :is(svg, .icon) {

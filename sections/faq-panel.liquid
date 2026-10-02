@@ -40,9 +40,14 @@
   endif
 
   assign image = settings_ref.image
+  # A different mobile image left empty means no photo on mobile (Figma mobile shows plain bands)
   assign image_mobile = image
-  if settings_ref.image_mobile_same == false and settings_ref.image_mobile != blank
+  assign hide_image_mobile = false
+  if settings_ref.image_mobile_same == false
     assign image_mobile = settings_ref.image_mobile
+    if image_mobile == blank
+      assign hide_image_mobile = true
+    endif
   endif
 
   assign heading_tag = settings_ref.heading_tag | default: 'h2'
@@ -60,8 +65,8 @@
   >
     <div class="faq-panel__stage">
       {%- if image != blank or image_mobile != blank -%}
-        <picture class="faq-panel__background">
-          {%- if image_mobile != image and image != blank -%}
+        <picture class="faq-panel__background{% if hide_image_mobile %} faq-panel__background--desktop{% endif %}">
+          {%- if image_mobile != image and image != blank and hide_image_mobile == false -%}
             <source
               media="(min-width: 990px)"
               srcset="{{ image | image_url: width: 1100 }} 1100w, {{ image | image_url: width: 1500 }} 1500w, {{ image | image_url: width: 1920 }} 1920w, {{ image | image_url: width: 2880 }} 2880w, {{ image | image_url: width: 3840 }} 3840w"
@@ -103,7 +108,7 @@
                     <details class="details faq-panel__item"{% if is_open %} open{% endif %}>
                       <summary class="details__header faq-panel__question type-h5">
                         <span class="svg-wrapper icon-plus faq-panel__icon">
-                          {{- 'icon-plus.svg' | inline_asset_content -}}
+                          {{- 'icon-accordion.svg' | inline_asset_content -}}
                         </span>
                         <span>{{ question }}</span>
                       </summary>
@@ -130,7 +135,7 @@
                     <details class="details faq-panel__item"{% if is_open %} open{% endif %}>
                       <summary class="details__header faq-panel__question type-h5">
                         <span class="svg-wrapper icon-plus faq-panel__icon">
-                          {{- 'icon-plus.svg' | inline_asset_content -}}
+                          {{- 'icon-accordion.svg' | inline_asset_content -}}
                         </span>
                         <span>{{ item.question.value | escape }}</span>
                       </summary>
@@ -184,7 +189,7 @@
 
   .faq-panel__stage {
     position: relative;
-    padding-block: var(--space-60);
+    padding-block: calc(var(--space-40) + var(--space-10));
   }
 
   .faq-panel__background,
@@ -195,6 +200,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  @media screen and (max-width: 989px) {
+    .faq-panel__background--desktop {
+      display: none;
+    }
   }
 
   .faq-panel__frame {
@@ -408,7 +419,8 @@
       "type": "image_picker",
       "id": "image_mobile",
       "label": "t:settings.mobile_image",
-      "visible_if": "{{ section.settings.image_mobile_same == false }}"
+      "visible_if": "{{ section.settings.image_mobile_same == false }}",
+      "info": "t:info.faq_mobile_image_empty"
     },
     {
       "type": "header",

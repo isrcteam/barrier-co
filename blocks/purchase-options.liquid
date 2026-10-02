@@ -288,6 +288,8 @@
                 form="{{ form_id }}"
               {% endif %}
               data-button-label="{{ one_time_button_label | escape }}"
+              data-price="{{ one_time_price | escape }}"
+              data-savings=""
               on:change="/select"
               {% if selected_plan_id == blank and preview_mode == false %}
                 checked
@@ -342,20 +344,21 @@
 
   .purchase-options__plans {
     display: grid;
-    gap: var(--space-16);
+    gap: var(--space-12);
   }
 
   .purchase-options__card {
     position: relative;
     display: grid;
-    gap: var(--space-10);
-    padding: var(--space-12);
+    gap: var(--space-8);
+    padding: var(--space-10);
     border: var(--border-hairline) solid var(--color-divider);
     transition: border-color var(--duration-fast) var(--easing-standard),
       background-color var(--duration-fast) var(--easing-standard);
   }
 
   .purchase-options__card:has(.purchase-options__radio:checked) {
+    gap: var(--space-10);
     background: var(--color-white);
     border-color: var(--color-foreground);
   }
@@ -377,9 +380,20 @@
     padding-inline-end: var(--space-80);
   }
 
+  /* Figma radio (Group 7415): 17px Sepia ring, 9px Sepia dot when selected */
   .purchase-options__radio {
     flex-shrink: 0;
+    inline-size: calc(var(--space-16) + 0.0625rem);
+    block-size: calc(var(--space-16) + 0.0625rem);
     margin: 0;
+    border: var(--border-hairline) solid var(--color-palette-sepia);
+    border-radius: var(--radius-full);
+    background: transparent;
+    appearance: none;
+  }
+
+  .purchase-options__radio:checked {
+    background: radial-gradient(circle, var(--color-palette-sepia) 0 calc(var(--space-4) + 0.03125rem), transparent calc(var(--space-4) + 0.0625rem));
   }
 
   .purchase-options__name {
@@ -434,8 +448,7 @@
   .purchase-options__timeline,
   .purchase-options__perks {
     padding-block-start: var(--space-12);
-    border-block-start: var(--border-hairline) solid
-      color-mix(in srgb, var(--color-foreground) calc(var(--opacity-brand-shadow) * 100%), transparent);
+    border-block-start: var(--border-hairline) solid var(--color-palette-linen);
   }
 
   .purchase-options__timeline {
@@ -450,6 +463,9 @@
   .purchase-options__step {
     position: relative;
     padding-inline-start: var(--space-10);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .purchase-options__step::before {
@@ -517,6 +533,16 @@
 
   form[data-type='add-to-cart-form'] .add-to-cart-button:not(:disabled, [data-added='true'])::after {
     content: var(--purchase-options-button-label, none);
+  }
+
+  @media screen and (min-width: 990px) {
+    .purchase-options__card {
+      padding: var(--space-12);
+    }
+
+    .purchase-options__plans {
+      gap: var(--space-16);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

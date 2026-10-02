@@ -164,6 +164,8 @@
     }
   },
   "content": {
+    "sticky_plan_label": "Purchase option",
+    "sticky_review_count": "{{ count }} Reviews",
     "purchase_options_preview_note": "Preview: these cards show the plan copy but do not subscribe until Recharge creates the selling plans.",
     "breadcrumbs_home": "Home",
     "after_label": "After",

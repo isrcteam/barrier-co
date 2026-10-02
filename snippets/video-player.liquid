@@ -4,7 +4,7 @@
   @param {object} [video] - Shopify video from a video setting or metafield
   @param {object} [video_url] - Value of a video_url setting (YouTube or Vimeo)
   @param {object} [poster] - Image shown before playing, defaults to the video's preview image
-  @param {string} [play_size] - 'small' or 'large', defaults to large
+  @param {string} [play_size] - 'small', 'large' or 'xlarge' (video banner), defaults to large
   @param {boolean} [loop] - Loop once playing
   @param {string} [class] - Extra classes on the wrapper
   @param {string} [loading] - 'eager' or 'lazy', defaults to lazy
@@ -104,6 +104,14 @@
   .video-player--small .deferred-media__poster-icon {
     width: var(--icon-play-small);
     height: var(--icon-play-small);
+  }
+
+  /* Video banner (Figma 965:2346): 79 circle, Sandstone glyph, 12 blur */
+  .video-player--xlarge .deferred-media__poster-icon {
+    width: var(--icon-play-xlarge);
+    height: var(--icon-play-xlarge);
+    color: var(--color-on-media);
+    backdrop-filter: blur(var(--space-12));
   }
 
   .video-player .deferred-media__poster-icon svg {
