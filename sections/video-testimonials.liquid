@@ -206,6 +206,15 @@
     overflow: hidden;
   }
 
+  /* The slide sets the card height (it matches the video cards); stretch the review card so its content stays centred at every width */
+  .video-testimonials__slideshow slideshow-slide:has(> .video-testimonials__quote) {
+    display: flex;
+  }
+
+  .video-testimonials__slideshow slideshow-slide > .video-testimonials__quote {
+    flex: 1;
+  }
+
   .video-testimonials__quote {
     display: flex;
     flex-direction: column;

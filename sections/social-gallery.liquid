@@ -50,10 +50,10 @@
               {%- if block.settings.image != blank -%}
                 {{
                   block.settings.image
-                  | image_url: width: 760
+                  | image_url: width: 1100
                   | image_tag:
-                    widths: '254, 380, 508, 760',
-                    sizes: '16rem',
+                    widths: '380, 508, 760, 1100',
+                    sizes: '(min-width: 990px) 25vw, 70vw',
                     loading: 'lazy',
                     class: 'social-gallery__image',
                     alt: ''

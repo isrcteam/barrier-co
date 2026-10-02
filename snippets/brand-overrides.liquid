@@ -1158,11 +1158,24 @@
     text-transform: uppercase;
   }
 
+  /* Judge.me writes max-width: 1200px; margin: 0 auto inline on its widget; only !important overrides an inline style.
+     The reviews sit on the page grid under the heading. */
+  #judgeme_product_reviews.jdgm-widget {
+    max-width: none !important;
+    margin-inline: 0 !important;
+  }
+
+  /* The sort icon sits behind a transparent select, so the white fill goes on the wrapper */
   #judgeme_product_reviews .jm-button--secondary,
-  #judgeme_product_reviews .jm-sort-filter :is(select, button) {
+  #judgeme_product_reviews .jm-sort-filter {
     border: var(--border-hairline) solid var(--color-divider);
     border-radius: var(--radius-none);
     background-color: var(--color-white);
+  }
+
+  #judgeme_product_reviews .jm-sort-filter :is(select, button) {
+    border: 0;
+    border-radius: var(--radius-none);
   }
 
   /* Card stars are font glyphs: 15px Accent, 6 apart. Judge.me writes size and colour inline, so only !important overrides them */
@@ -1202,6 +1215,11 @@
   }
 
   #judgeme_product_reviews .jm-verified-buyer-badge__text {
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-none);
+    background: none;
+    color: var(--color-background);
     font-family: var(--font-family-body);
     font-weight: var(--font-weight-regular);
     font-size: var(--type-caption-size);

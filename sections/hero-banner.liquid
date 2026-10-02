@@ -509,8 +509,9 @@
       gap: var(--space-30);
     }
 
+    /* Figma 483 at the 60 heading; grows with the fluid heading so the four Figma lines hold on wide screens */
     .hero-banner--inset .hero-banner__text {
-      max-width: calc(var(--space-112) * 4 + var(--space-30) + var(--space-4) + 0.0625rem);
+      max-width: max(calc(var(--space-112) * 4 + var(--space-30) + var(--space-4) + 0.0625rem), calc(var(--type-h1-size) * 8.05));
     }
 
     .hero-banner__spotlight .product-spotlight--card {
