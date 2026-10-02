@@ -241,6 +241,7 @@
     "work_quickly_to_ship": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>"
   },
   "info": {
+    "video_playback": "Autoplay plays muted and looped, with no play button. Play on click plays with sound.",
     "use_collection_products": "On a collection page, show its products instead of the blocks below",
     "showcase_image": "Optional lifestyle image. Defaults to the product image.",
     "testimonial_overrides_text": "When a testimonial is chosen, its quote, name and rating are used instead of the fields below.",
@@ -500,6 +501,8 @@
     "comparison_slider": "Comparison slider"
   },
   "options": {
+    "autoplay_muted": "Autoplay (muted, looped)",
+    "play_on_click": "Play on click",
     "collection_order": "Collection order",
     "price_high_low": "Price, high to low",
     "tall": "Tall",
@@ -833,6 +836,7 @@
     "below_media": "Below media"
   },
   "settings": {
+    "video_playback": "Video playback",
     "soon_label": "Label when there is no subscription",
     "featured_label": "Highlight label",
     "highlight_first": "Highlight the first product",

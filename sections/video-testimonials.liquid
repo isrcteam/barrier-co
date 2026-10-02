@@ -1,4 +1,8 @@
 {%- liquid
+  assign autoplay_on = false
+  if section.settings.video_playback == 'autoplay'
+    assign autoplay_on = true
+  endif
   assign quote_scope = section.id | append: '-quote'
 
   assign videos = section.settings.ugc_videos
@@ -59,7 +63,7 @@
       {%- capture video_cards -%}
         {%- for entry in videos -%}
           <figure class="video-testimonials__video">
-            {% render 'video-player', video: entry.video.value, poster: entry.poster.value, play_size: 'small' %}
+            {% render 'video-player', video: entry.video.value, poster: entry.poster.value, play_size: 'small', autoplay: autoplay_on %}
             {%- if entry.title != blank -%}
               <figcaption class="visually-hidden">{{ entry.title.value | escape }}</figcaption>
             {%- endif -%}
@@ -399,6 +403,23 @@
       "id": "ugc_videos",
       "label": "t:settings.ugc_videos",
       "metaobject_type": "ugc_video"
+    },
+    {
+      "type": "select",
+      "id": "video_playback",
+      "label": "t:settings.video_playback",
+      "info": "t:info.video_playback",
+      "options": [
+        {
+          "value": "click",
+          "label": "t:options.play_on_click"
+        },
+        {
+          "value": "autoplay",
+          "label": "t:options.autoplay_muted"
+        }
+      ],
+      "default": "click"
     },
     {
       "type": "range",

@@ -1,4 +1,8 @@
 {%- liquid
+  assign autoplay_on = false
+  if section.settings.video_playback == 'autoplay'
+    assign autoplay_on = true
+  endif
   assign s = section.settings
 
   assign padding_top_mobile = s['padding-block-start']
@@ -37,13 +41,14 @@
 >
   <div class="video-banner__frame">
     {%- if can_play -%}
-      {%- if has_mobile_poster -%}
+      {%- if has_mobile_poster and autoplay_on == false -%}
         {% render 'video-player',
           video: s.video,
           video_url: s.video_url,
           poster: poster_mobile,
           play_size: 'large',
           loop: s.loop,
+          autoplay: autoplay_on,
           class: 'video-banner__player video-banner__player--mobile'
         %}
         {% render 'video-player',
@@ -52,6 +57,7 @@
           poster: poster_desktop,
           play_size: 'large',
           loop: s.loop,
+          autoplay: autoplay_on,
           class: 'video-banner__player video-banner__player--desktop'
         %}
       {%- else -%}
@@ -61,6 +67,7 @@
           poster: poster_desktop,
           play_size: 'large',
           loop: s.loop,
+          autoplay: autoplay_on,
           class: 'video-banner__player'
         %}
       {%- endif -%}
@@ -176,6 +183,23 @@
       "id": "loop",
       "label": "t:settings.video_loop",
       "default": false
+    },
+    {
+      "type": "select",
+      "id": "video_playback",
+      "label": "t:settings.video_playback",
+      "info": "t:info.video_playback",
+      "options": [
+        {
+          "value": "click",
+          "label": "t:options.play_on_click"
+        },
+        {
+          "value": "autoplay",
+          "label": "t:options.autoplay_muted"
+        }
+      ],
+      "default": "autoplay"
     },
     {
       "type": "image_picker",

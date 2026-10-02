@@ -24,6 +24,14 @@ From docs/architecture.md (video-testimonials). Figma: home 965:1433 / 965:3223,
 - **Impact:** no new JS or CSS files; styles live in the section's stylesheet. The PDP needs `use_product_data` on.
 - **Approver:** Jeet (delegated).
 
+### 2026-10-02: video playback setting
+- **What:** a `video_playback` setting (Play on click / Autoplay) passed to `video-player` as `autoplay`. Figma's play buttons mark where video can go, and that video can autoplay.
+- **Why:** play on click is the default, since creators talking need sound. The merchant can switch to autoplay for silent clips.
+- **How:** an uploaded video autoplays through Horizon's `video-background-component` (muted, looped, inline, over the poster); a YouTube or Vimeo link autoplays through Horizon's `video` snippet with its controls hidden, scaled from the centre to cover the frame. Under reduced motion an uploaded video stays on its poster.
+- **Alternatives rejected:** always autoplay (talking-head UGC loses its sound); a separate autoplay section (duplicate markup and settings).
+- **Impact:** an autoplaying uploaded video starts downloading when the page loads (`preload="none"` until the component connects). Keep files short and compressed.
+- **Approver:** Jeet (delegated)
+
 ## QA checklist
 - [ ] Desktop 1440: heading centred, 5 cards of equal width with 20 gaps, arrows at the row's edges below; previous arrow is hidden on the first slide.
 - [ ] Mobile 390: one card plus a peek, 10 gap, square Tan dots (6) below; no arrows.
@@ -49,3 +57,4 @@ Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figm
 - **Bug fixed:** cards were picked with `videos[video_index]`, which doesn't resolve on metaobject lists. Cards are now pre-rendered in a `for` loop into a plain array, then interleaved with the quotes.
 - **Open:** the actual video files (D-6). Upload each to Files and set it on its entry under Content › Metaobjects › UGC video.
 - **Approver:** Jeet.
+- **Video playback** sets all creator videos to play on click (with sound) or autoplay (muted, looped).

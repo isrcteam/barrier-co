@@ -20,6 +20,14 @@ From the architecture entry (Figma 965:1329 / 965:3147, editorial option 965:306
 - **Impact:** no JS beyond Horizon's `deferred-media`. A YouTube/Vimeo link without any cover image falls back to a placeholder so no iframe loads on page load.
 - **Approver:** Jeet (delegated)
 
+### 2026-10-02: video playback setting
+- **What:** a `video_playback` setting (Play on click / Autoplay) passed to `video-player` as `autoplay`. Figma's play buttons mark where video can go, and that video can autoplay.
+- **Why:** autoplay is the default, since the Figma tiles are ambient footage.
+- **How:** an uploaded video autoplays through Horizon's `video-background-component` (muted, looped, inline, over the poster); a YouTube or Vimeo link autoplays through Horizon's `video` snippet with its controls hidden, scaled from the centre to cover the frame. Under reduced motion an uploaded video stays on its poster.
+- **Alternatives rejected:** always autoplay (talking-head UGC loses its sound); a separate autoplay section (duplicate markup and settings).
+- **Impact:** an autoplaying uploaded video starts downloading when the page loads (`preload="none"` until the component connects). Keep files short and compressed.
+- **Approver:** Jeet (delegated)
+
 ## QA checklist
 - [ ] 1440: heading left, text right, bottoms aligned, 30 gap; media 1380×660.
 - [ ] 390: eyebrow, heading, text stacked with 10 gutters; media full width at 390×330.
@@ -34,3 +42,4 @@ Add **Intro with media** from Storytelling, or the **Editorial** preset for two 
 
 ## Figma diff 2026-10-02
 Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.
+- **Video playback** applies to both tiles: Autoplay plays muted and looped with no play button; Play on click shows the cover with a play button and plays with sound.

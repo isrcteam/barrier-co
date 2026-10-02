@@ -1,0 +1,12 @@
+{
+  "settings": {
+    "video_playback": "Video playback"
+  },
+  "info": {
+    "video_playback": "Autoplay plays muted and looped, with no play button. Play on click plays with sound."
+  },
+  "options": {
+    "play_on_click": "Play on click",
+    "autoplay_muted": "Autoplay (muted, looped)"
+  }
+}

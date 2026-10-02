@@ -8,6 +8,7 @@
   @param {boolean} [loop] - Loop once playing
   @param {string} [class] - Extra classes on the wrapper
   @param {string} [loading] - 'eager' or 'lazy', defaults to lazy
+  @param {boolean} [autoplay] - Play muted, looped and inline as soon as it loads, with no play button
 
   @example
   {% render 'video-player', video: section.settings.video, poster: section.settings.poster %}
@@ -17,8 +18,29 @@
   assign poster_image = poster | default: video.preview_image
   assign image_loading = loading | default: 'lazy'
 -%}
-<div class="video-player video-player--{{ size_class }} {{ class }}">
-  {%- if video_url != blank -%}
+<div class="video-player video-player--{{ size_class }}{% if autoplay %} video-player--autoplay{% endif %} {{ class }}">
+  {%- if autoplay and video != blank and video_url == blank -%}
+    {%- if poster_image != blank -%}
+      {{ poster_image | image_url: width: 2880 | image_tag: loading: image_loading, class: 'video-player__poster', widths: '390, 750, 1100, 1500, 1920, 2880' }}
+    {%- endif -%}
+    <video-background-component class="video-player__ambient">
+      <video playsinline muted autoplay loop preload="none" ref="videoElement" aria-hidden="true">
+        {%- for source in video.sources -%}
+          <source data-video-source="{{ source.url }}" type="{{ source.mime_type }}" ref="videoSources[]">
+        {%- endfor -%}
+      </video>
+    </video-background-component>
+  {%- elsif autoplay and video_url != blank -%}
+    {% render 'video',
+      video: video_url.id,
+      video_type: video_url.type,
+      video_from_url: true,
+      video_autoplay: true,
+      video_loop: true,
+      disable_controls: true,
+      video_class: 'video-player__media'
+    %}
+  {%- elsif video_url != blank -%}
     {% render 'video',
       video: video_url.id,
       video_type: video_url.type,
@@ -97,5 +119,48 @@
   .video-player__placeholder {
     background: var(--color-foreground);
     opacity: var(--opacity-brand-subtle);
+  }
+
+  .video-player--autoplay .video-player__poster {
+    position: absolute;
+    inset: 0;
+  }
+
+  .video-player__ambient {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  .video-player__ambient video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* An embed has no object-fit, so it is scaled from the centre to cover the frame like the poster did */
+  .video-player--autoplay {
+    container-type: size;
+  }
+
+  .video-player--autoplay .video-player__media iframe {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    translate: -50% -50%;
+    width: max(100cqw, calc(100cqh * 16 / 9));
+    height: max(100cqh, calc(100cqw * 9 / 16));
+    pointer-events: none;
+  }
+
+  .video-player--autoplay .deferred-media__poster-icon,
+  .video-player--autoplay .video-interaction-hint {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .video-player__ambient {
+      display: none;
+    }
   }
 {% endstylesheet %}

@@ -1,4 +1,8 @@
 {%- liquid
+  assign autoplay_on = false
+  if section.settings.video_playback == 'autoplay'
+    assign autoplay_on = true
+  endif
   assign s = section.settings
   assign heading_tag = s.heading_tag | default: 'h2'
 
@@ -87,7 +91,8 @@
               video: tile_video,
               video_url: tile_video_url,
               poster: tile_poster,
-              play_size: 'large'
+              play_size: 'large',
+              autoplay: autoplay_on
             %}
           {%- elsif tile_image != blank -%}
             {{
@@ -379,6 +384,23 @@
       ],
       "info": "t:info.video_external",
       "visible_if": "{{ section.settings.show_second_tile and section.settings.second_media_type == 'video' }}"
+    },
+    {
+      "type": "select",
+      "id": "video_playback",
+      "label": "t:settings.video_playback",
+      "info": "t:info.video_playback",
+      "options": [
+        {
+          "value": "click",
+          "label": "t:options.play_on_click"
+        },
+        {
+          "value": "autoplay",
+          "label": "t:options.autoplay_muted"
+        }
+      ],
+      "default": "autoplay"
     },
     {
       "type": "image_picker",
