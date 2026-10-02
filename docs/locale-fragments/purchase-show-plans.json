@@ -1,0 +1,8 @@
+{
+  "settings": {
+    "show_plans": "Show plans"
+  },
+  "info": {
+    "show_plans": "Off: no plan cards; the add to cart button shows the one-time price."
+  }
+}

@@ -63,6 +63,12 @@
     else
       assign contrast_var = 'var(--palette-lightest)'
       assign contrast_rgb_var = 'var(--palette-lightest-rgb)'
+      # Barrier: light text on dark backgrounds is the page background (Sandstone), not the palette's pure white
+      assign page_background_contrast = background_color | color_contrast: settings.page_background_color
+      if page_background_contrast >= 4.5
+        assign contrast_var = settings.page_background_color
+        assign contrast_rgb_var = settings.page_background_color.rgb
+      endif
     endif
 
     # --- Effective foreground text color ---

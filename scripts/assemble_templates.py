@@ -179,7 +179,7 @@ def home():
         "image_desktop": img("inset_banner", "desktop", "Hero_Banner1.jpg"),
         "image_mobile": img("inset_banner", "mobile", "Mobile_banner.jpg"),
     }, "banner")
-    sections["lifestyle"] = from_preset("image-carousel", 1, {"padding-block-start": 0, "padding-block-end": 0, "same_padding_mobile": True}, "lifestyle")
+    sections["lifestyle"] = from_preset("image-carousel", 1, {"padding-block-start": 0, "padding-block-end": 0, "same_padding_mobile": True, "start_slide": 2}, "lifestyle")
     set_block_images(sections["lifestyle"], "image", ["lifestyle_1", "lifestyle_2", "lifestyle_3"])
     mid = sections["lifestyle"]["block_order"][1] if len(sections["lifestyle"].get("block_order", [])) > 1 else None
     if mid:
@@ -209,7 +209,7 @@ def product_details_blocks(include_buy_box_extras):
                                               "avatar_1": img("clinician_avatar_1"), "avatar_2": img("clinician_avatar_2"), "avatar_3": img("clinician_avatar_3")})
         add("purchase", "purchase-options", {"preview_plans": True})
     else:
-        add("price", "price", {"type_preset": "paragraph"})
+        add("purchase", "purchase-options", {"show_plans": False})
     add("buy_buttons", "buy-buttons", {}, blocks={
         "quantity": {"type": "quantity", "static": True, "disabled": True, "settings": {}},
         "add-to-cart": {"type": "add-to-cart", "static": True, "settings": {"style_class": "button"}},

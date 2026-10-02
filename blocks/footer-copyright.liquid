@@ -12,8 +12,13 @@
   {{ block.shopify_attributes }}
 >
   <span class="footer-utilities__text">
-    &copy; {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url -}}
+    {%- if block_settings.text != blank -%}
+      {%- assign copyright_year = 'now' | date: '%Y' -%}
+      {{- block_settings.text | replace: '[year]', copyright_year | escape -}}
+    {%- else -%}
+      &copy; {{ 'now' | date: '%Y' }}
+      {{ shop.name | link_to: routes.root_url -}}
+    {%- endif -%}
     {%- if block_settings.show_powered_by -%}
       , {{ powered_by_link }}
     {%- endif -%}
@@ -31,6 +36,12 @@
   "name": "t:names.copyright",
   "tag": null,
   "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:settings.copyright_text",
+      "info": "t:info.copyright_text"
+    },
     {
       "type": "checkbox",
       "id": "show_powered_by",

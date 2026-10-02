@@ -375,6 +375,10 @@
                 assign media_sizes = sizes
               endif
           -%}
+          {%- comment -%} Barrier: badge from custom.media_badge on the main image (Figma "Flagship", T-30) {%- endcomment -%}
+          {%- if forloop.first and selected_product.metafields.custom.media_badge != blank -%}
+            <span class="product-media__badge type-micro">{{ selected_product.metafields.custom.media_badge.value | escape }}</span>
+          {%- endif -%}
           {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
             <div
               class="product-media-constraint-wrapper">
@@ -491,6 +495,10 @@
                 assign media_sizes = sizes
               endif
             -%}
+            {%- comment -%} Barrier: badge from custom.media_badge on the main image (Figma "Flagship", T-30) {%- endcomment -%}
+            {%- if forloop.first and selected_product.metafields.custom.media_badge != blank -%}
+              <span class="product-media__badge type-micro">{{ selected_product.metafields.custom.media_badge.value | escape }}</span>
+            {%- endif -%}
             {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
               <div class="product-media-constraint-wrapper">
                 {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}

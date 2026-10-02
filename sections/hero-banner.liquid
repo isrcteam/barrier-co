@@ -216,6 +216,11 @@
     --hero-banner-header-offset: calc(var(--header-height, 0rem) * var(--transparent-header-offset-boolean, 0));
   }
 
+  /* Figma 965:1254: the photo starts under the solid 34 announcement bar (brand-overrides sets its height), not behind it */
+  main > .shopify-section:first-child .hero-banner__media {
+    inset-block-start: calc((var(--space-30) + var(--space-4)) * var(--transparent-header-offset-boolean, 0));
+  }
+
   .hero-banner--inset {
     --hero-banner-min-height: calc(var(--space-80) * 8);
   }
@@ -428,12 +433,23 @@
     padding: var(--space-10);
   }
 
+  /* Figma hero card: image 122 x 96 mobile, 200 x 158 desktop; title 1.1; title and price 2 apart, button at the foot */
   .hero-banner__spotlight .product-spotlight__media {
-    aspect-ratio: 5 / 4;
+    aspect-ratio: 61 / 48;
+  }
+
+  .hero-banner__spotlight .product-spotlight__title {
+    line-height: 1.1;
   }
 
   .hero-banner__spotlight .product-spotlight__body {
-    align-content: space-between;
+    grid-template-rows: auto auto 1fr;
+    align-content: stretch;
+    gap: var(--space-2);
+  }
+
+  .hero-banner__spotlight .product-spotlight__button {
+    align-self: end;
   }
 
   @media screen and (min-width: 990px) {
@@ -501,6 +517,16 @@
       width: calc(var(--space-112) * 2 - var(--space-4));
       grid-template-columns: 1fr;
       gap: var(--space-12);
+    }
+
+    .hero-banner__spotlight .product-spotlight__media {
+      aspect-ratio: 100 / 79;
+    }
+
+    .hero-banner__spotlight .product-spotlight__body {
+      grid-template-rows: none;
+      align-content: space-between;
+      gap: var(--space-4);
     }
 
     .hero-banner .hero-banner__dialog {

@@ -1,0 +1,8 @@
+{
+  "settings": {
+    "start_slide": "Starting slide"
+  },
+  "info": {
+    "start_slide": "The card shown first on mobile, when the cards scroll."
+  }
+}

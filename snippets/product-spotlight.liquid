@@ -78,11 +78,34 @@
     --spotlight-media: calc(var(--space-80) + var(--space-12));
 
     grid-template-columns: var(--spotlight-media) minmax(0, 1fr);
+    align-items: start;
     gap: var(--space-8);
     padding: var(--space-6);
-    background: color-mix(in srgb, var(--color-glass) calc(var(--opacity-brand-glass) * 100%), transparent);
+    /* Figma lifestyle card: white at 30%, Sandstone text (the stats glass colour is a different token) */
+    background: color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-overlay) * 100%), transparent);
     backdrop-filter: blur(var(--layout-blur-card));
-    color: var(--color-white);
+    color: var(--color-on-media);
+  }
+
+  /* The thumbnail sits in a Sandstone box, inset, multiplied onto it */
+  .product-spotlight--glass .product-spotlight__media {
+    padding: var(--space-4);
+    background: var(--color-on-media);
+  }
+
+  .product-spotlight--glass .product-spotlight__image {
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+
+  @media screen and (min-width: 990px) {
+    .product-spotlight--glass {
+      align-items: center;
+    }
+
+    .product-spotlight--glass .product-spotlight__media {
+      padding: var(--space-6) calc(var(--space-6) / 2);
+    }
   }
 
   .product-spotlight__media {

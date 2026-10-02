@@ -98,6 +98,28 @@
     --header-mobile-bookend: auto;
   }
 
+  /* Mobile: equal side columns so the logo sits on the true centre (Figma 977:685 logo at x 110-280) */
+  #header-component[data-menu-style='drawer'] .header__row--top .header__columns {
+    --header-template-columns: minmax(0, 1fr) 0 auto 0 minmax(0, 1fr);
+  }
+
+  /* Announcement chevrons: none on mobile; on desktop the glyphs sit on the 30 page edge */
+  @media screen and (max-width: 749px) {
+    .announcement-bar .announcement-bar__slider slideshow-arrows {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .announcement-bar .announcement-bar__slider .slideshow-control--previous {
+      margin-inline-start: calc(var(--space-10) + var(--space-2) / 2);
+    }
+
+    .announcement-bar .announcement-bar__slider .slideshow-control--next {
+      margin-inline-end: calc(var(--space-10) + var(--space-2) / 2);
+    }
+  }
+
   .header .menu-list .menu-list__link {
     color: var(--menu-top-level-font-color);
   }
@@ -199,6 +221,28 @@
     gap: var(--marquee-gap);
   }
 
+  @media screen and (min-width: 990px) {
+    /* Figma: 30 between every header action, Search included (Search sits outside header-actions) */
+    .header .search-action--text {
+      margin-inline-end: var(--space-10);
+    }
+
+    /* Bracket bars are 16 high: the label's line box */
+    .header :is(.search-action--text .header-actions__action > span:first-child, .header-actions__cart-icon--text > span:first-child, .account-button__text) {
+      line-height: var(--space-16);
+    }
+  }
+
+  /* Press marquee (stars + quotes, Figma 965:1254 strip): Sandstone 16/1.3 quotes, 30 from stars to quote, 50 from quote to the next stars */
+  marquee-component:has(.marquee__repeated-items > :not(.text-block)) .text-block {
+    margin-inline-end: var(--space-20);
+    color: var(--color-on-media);
+  }
+
+  marquee-component:has(.marquee__repeated-items > :not(.text-block)) .text-block :is(p, span) {
+    line-height: 1.3;
+  }
+
   marquee-component:not(:has(.marquee__repeated-items > :not(.text-block))) .text-block::before {
     content: '|';
     content: '|' / '';
@@ -211,6 +255,23 @@
 
   .product-information .slideshow-controls__thumbnails .slideshow-control {
     inline-size: calc(var(--space-60) + var(--space-14));
+  }
+
+  /* Media badge on the main gallery image (Figma: Sandstone chip at 12, 12, GT America 10 caps, Sepia) */
+  .product-media__badge {
+    position: absolute;
+    inset-block-start: var(--space-12);
+    inset-inline-start: var(--space-12);
+    z-index: 1;
+    padding: var(--space-2) var(--space-10);
+    background: var(--color-background);
+    color: var(--color-palette-sepia);
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  :is(.product-information, featured-product-information) slideshow-slide:has(> .product-media__badge) {
+    position: relative;
   }
 
   /* Figma draws every thumbnail plain (no selected outline) and no arrows on the main image; the rail is the navigation */
@@ -603,6 +664,73 @@
     }
   }
 
+  /* Footer type (Figma 966:754): "Join the community" 18/1, consent 12/normal, tagline Akzidenz Medium, placeholder 14 Sandstone */
+  footer .footer-content > .group-block .text-block:first-child :is(p, h2, h3) {
+    line-height: 1;
+  }
+
+  footer .email-signup-block + .text-block :is(p) {
+    line-height: normal;
+  }
+
+  footer .footer-content > .group-block .text-block:last-child :is(p) {
+    font-weight: var(--font-weight-medium);
+    line-height: normal;
+  }
+
+  footer .email-signup__input::placeholder {
+    opacity: 1;
+    color: currentColor;
+    font-size: var(--type-body-small-size);
+  }
+
+  /* Bottom row: four items in Sandstone at full strength, spread across the row (2 x 2 on mobile) */
+  footer .utilities {
+    --color-utilities: var(--color-foreground);
+  }
+
+  footer .utilities .text-block a,
+  footer .utilities .footer-utilities__text a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  footer .utilities--blocks-4 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-12) var(--space-16);
+  }
+
+  footer .utilities--blocks-4 > :nth-child(even) {
+    text-align: end;
+  }
+
+  @media screen and (min-width: 990px) {
+    footer .utilities--blocks-4 {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    footer .utilities--blocks-4 > :nth-child(even) {
+      text-align: start;
+    }
+
+    /* Newsletter 380 at the left, three 260 link columns ending on the right edge (x 598 / 874 / 1150 at 1440) */
+    footer .footer-content.footer-content {
+      grid-template-columns: minmax(0, 380fr) minmax(0, 156fr) repeat(3, minmax(0, 260fr));
+      column-gap: var(--space-16);
+    }
+
+    footer .footer-content > .group-block {
+      grid-column: 1;
+    }
+
+    footer .footer-content > .group-block + * {
+      grid-column: 3;
+    }
+  }
+
   footer .email-signup__input--underline + .email-signup__button.email-signup__button--text {
     min-block-size: var(--space-30);
     padding-block: 0;
@@ -822,7 +950,8 @@
     line-height: 1.3;
   }
 
-  :is(slideshow-arrows, slideshow-controls) .slideshow-control :is(svg, .icon) {
+  /* K6: the 24 x 14 Figma arrow, drawn edge to edge (its wrapper is 20 square in Horizon) */
+  :is(slideshow-arrows, slideshow-controls) .slideshow-control :is(svg, .icon, .svg-wrapper) {
     inline-size: var(--icon-md);
     block-size: auto;
   }
@@ -833,6 +962,30 @@
 
   featured-product-information .product-details {
     align-self: center;
+  }
+
+  /* Home featured product (Figma 965:1385 / mobile frame): title to description 15; mobile image 845:633, 20 from thumbnails to title */
+  featured-product-information .product-details .text-block:has(> h1) + .text-block {
+    margin-block-start: calc(var(--space-14) + 0.0625rem - var(--buybox-gap, var(--gap)));
+  }
+
+  @media screen and (max-width: 989px) {
+    /* The block writes --gallery-aspect-ratio inline on media-gallery; only !important overrides an inline custom property */
+    featured-product-information media-gallery {
+      --gallery-aspect-ratio: 845 / 633 !important;
+    }
+
+    featured-product-information .product-details {
+      padding-block-start: calc(var(--space-20) - var(--space-10));
+    }
+  }
+
+  /* Desktop split from the home frame: 80 rail + 10 + 700 image, 34 gap, 556 buy box (scales with the content width) */
+  @media screen and (min-width: 990px) {
+    featured-product-information .product-information__grid.product-information__grid:not(.product-information__grid--half, .product-information--media-none).product-information--media-left {
+      grid-template-columns: minmax(0, 790fr) minmax(0, 556fr);
+      column-gap: calc(var(--space-30) + var(--space-4));
+    }
   }
 
   #MainContent > .shopify-section:not(:has(> *)) {

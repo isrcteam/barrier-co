@@ -110,6 +110,12 @@
         {%- if section.settings.show_side_bars -%}
           <span class="image-carousel__bar" aria-hidden="true"></span>
         {%- endif -%}
+        {%- liquid
+          assign start_slide_index = section.settings.start_slide | default: 1 | minus: 1
+          if start_slide_index >= slide_count
+            assign start_slide_index = 0
+          endif
+        -%}
         {% render 'slideshow',
           ref: 'imageCarousel',
           class: 'image-carousel__slideshow',
@@ -118,7 +124,7 @@
           controls: controls,
           slide_position: 'top',
           infinite: false,
-          initial_slide: 0
+          initial_slide: start_slide_index
         %}
         {%- if section.settings.show_side_bars -%}
           <span class="image-carousel__bar" aria-hidden="true"></span>
@@ -249,8 +255,8 @@
   .image-carousel__label::after {
     content: '';
     display: block;
-    width: var(--space-4);
-    height: var(--space-16);
+    width: calc(var(--space-4) + 0.0625rem);
+    height: calc(var(--space-14) + 0.0625rem);
     background: currentColor;
   }
 
@@ -266,8 +272,10 @@
     text-align: center;
   }
 
+  /* Mobile: 40 from the 6px dot to the section edge; the 24 tap row adds 9 below it */
   .image-carousel__controls {
     justify-content: center;
+    margin-block-end: calc((var(--space-24) - var(--space-6)) / -2);
     mix-blend-mode: normal;
   }
 
@@ -379,7 +387,7 @@
     }
 
     .image-carousel__spotlight {
-      inset-inline: var(--space-10);
+      inset-inline: var(--space-12);
       inset-block-end: var(--space-10);
     }
 
@@ -395,6 +403,16 @@
 
     .image-carousel__controls {
       justify-content: space-between;
+      margin-block-end: 0;
+    }
+
+    .image-carousel__label::before,
+    .image-carousel__label::after {
+      height: calc(var(--space-16) + 0.0625rem);
+    }
+
+    .image-carousel__caption {
+      margin-block-start: var(--space-4);
     }
 
     .image-carousel .image-carousel__controls .slideshow-controls__arrows {
@@ -405,8 +423,11 @@
       margin-inline: calc(var(--bar-width) * -1);
     }
 
+    /* Figma's arrow row is 34: the 14 glyph with 10 above and below */
     .image-carousel .image-carousel__controls .slideshow-control {
-      padding-inline: 0;
+      block-size: auto;
+      min-block-size: 0;
+      padding: var(--space-10) 0;
     }
 
     .image-carousel .image-carousel__controls .slideshow-controls__dots {
@@ -423,6 +444,13 @@
   @media screen and (min-width: 750px) and (max-width: 989px) {
     .image-carousel .image-carousel__slide {
       width: calc((100% - var(--card-gap)) / 2);
+    }
+  }
+
+  /* Figma mobile lifestyle subheading is 18/1.3 (body-large is 16 on mobile elsewhere) */
+  @media screen and (max-width: 989px) {
+    .image-carousel__subheading {
+      font-size: calc(var(--space-16) + var(--space-2));
     }
   }
 {% endstylesheet %}
@@ -547,6 +575,16 @@
       "id": "show_side_bars",
       "label": "t:settings.show_side_bars",
       "default": true
+    },
+    {
+      "type": "range",
+      "id": "start_slide",
+      "label": "t:settings.start_slide",
+      "info": "t:info.start_slide",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 1
     },
     {
       "type": "select",

@@ -1,0 +1,8 @@
+{
+  "settings": {
+    "copyright_text": "Copyright text"
+  },
+  "info": {
+    "copyright_text": "[year] is replaced with the current year. Leave empty for the shop name."
+  }
+}

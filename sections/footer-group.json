@@ -261,20 +261,40 @@
           "settings": {
             "show_powered_by": false,
             "font_size": "0.875rem",
-            "case": "none"
+            "case": "none",
+            "text": "[year]© All rights reserved"
           }
         },
-        "policy_list": {
-          "type": "footer-policy-list",
+        "privacy": {
+          "type": "text",
           "settings": {
-            "font_size": "0.875rem",
-            "case": "none"
+            "text": "<p><a href=\"/policies/privacy-policy\">Privacy Policy</a></p>",
+            "type_preset": "custom",
+            "font_size": "0.875rem"
+          }
+        },
+        "terms": {
+          "type": "text",
+          "settings": {
+            "text": "<p><a href=\"/policies/terms-of-service\">Terms & Conditions</a></p>",
+            "type_preset": "custom",
+            "font_size": "0.875rem"
+          }
+        },
+        "accessibility": {
+          "type": "text",
+          "settings": {
+            "text": "<p><a href=\"/pages/accessibility\">Accessibility Statement</a></p>",
+            "type_preset": "custom",
+            "font_size": "0.875rem"
           }
         }
       },
       "block_order": [
         "copyright",
-        "policy_list"
+        "privacy",
+        "terms",
+        "accessibility"
       ],
       "settings": {
         "section_width": "page-width",

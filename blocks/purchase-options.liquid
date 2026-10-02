@@ -50,6 +50,11 @@
   if allocations.size > 0 or preview_mode
     assign show_cards = true
   endif
+  # Show plans off: no cards (and no hidden plan choice); the block only puts the one-time price on the button
+  if block_settings.show_plans == false
+    assign show_cards = false
+    assign preview_mode = false
+  endif
   assign radio_name = 'selling_plan'
   if preview_mode
     assign radio_name = 'selling_plan_preview-' | append: block.id
@@ -557,6 +562,13 @@
   "name": "t:names.purchase_options",
   "tag": null,
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_plans",
+      "label": "t:settings.show_plans",
+      "info": "t:info.show_plans",
+      "default": true
+    },
     {
       "type": "text",
       "id": "heading",
