@@ -72,3 +72,34 @@ Node IDs refer to file oZ00gYRP11BAdFQYwo4fxj. "T-" numbers link to the alignmen
 | X1 | Typos: "reformated", "1Month", "12,00 Reviews", "WHATS" | Corrected in defaults |
 | X2 | £ and $ mixed | Prices come from Shopify (USD) |
 | X3 | Placeholder (Lorem ipsum) copy | Kept visibly as placeholder until the client supplies copy (D-7). Invented copy was removed from presets |
+
+
+## Section-by-section Figma diff (2026-10-02)
+Every home and PDP section was measured against its Figma node at 1440 and 390, and differences over 2px were fixed (about 70 in total). The full tables are in docs/qa/figma-diff-home.md and docs/qa/figma-diff-product.md. Where the Figma disagreed with itself:
+
+| # | In Figma | In code |
+| --- | --- | --- |
+| G1 | Carousel cards: equal spacing between bar, card and card (Routine 372 cards with ~51 gaps, Lifestyle 296/397 with 84 gaps). The build had cards anchored to the left | Card sizes are ratios of the space between the bars (Routine 0.2816; Lifestyle 0.224 / 0.3005), spread with equal gaps, so they stay centred at any width. Bars match the side-card height |
+| H1 | Carousel arrows sit at the content edges on Routine, Real use and Before/after, but under the side cards on Lifestyle | Every carousel's arrows are flush with the content edges, with the glyph on the edge, 30 below the cards |
+| H2 | Header-to-cards gap is 28 on Routine and 64 on Lifestyle | 30 on both |
+| H3 | Stat caption boxes are 310, 270, 208 and 252 wide, so identical copy would wrap differently | One cap of 310 |
+| H4 | Product card titles: ExtraBold on the hero card, Medium on the lifestyle and before/after cards; image 124 on desktop and 92 or 124 on mobile | Card style uses ExtraBold 14; row and glass styles use Medium 14 (H5 style) with a 124 image (92 on mobile glass) and a 132 text column |
+| H5 | Benefit captions wrap at 168, 101, 141 and 95 | One cap of 168 |
+| H6 | Logos are hand-sized (28, 32 and 46 tall) in a 94 strip | Each logo fits a 168×32 box, and the strip keeps the Figma height of 94 through padding (30 top, 32 bottom) |
+| H7 | Review stars are 16 with an 8 gap (Real use) and 15 with a 6 gap (Before/after) | 16 with an 8 gap everywhere |
+| H8 | Stats panel pads 60 at the top and 24 at the bottom on mobile | 60 both |
+| P1 | Buy-box gaps: 16 / 20 / 20 under the rating on desktop, 16 / 10 / 10 on mobile, 24 between every other block | Same values, as margins against the block gap |
+| P2 | Header nav sits 337 after the logo, so it is off-centre | Nav centred on the page; item gap 48 as drawn |
+| P3 | Sticky bar inset 24 from the page edge | On the 30 grid like everything else (L1) |
+| P4 | Hotspot labels 26 high, the positions use the dot centre | Labels centred on the marker line |
+| P5 | Footer wordmark bars are 47 wide on desktop but the hero bars are 30 | Footer bars keep the Figma ratio (bar = 0.27 × letter height, 46 desktop, 12 mobile) and extend past the letters by their width |
+| P6 | PDP stars 15 with 6 gap; review-card stars 16 with 8 gap (see home H7) | Two sizes kept: buy-box rating at 6 spacing, cards at 8 |
+| P7 | Small button label is GT America Medium 12 in one instance ("Take the test") and Akzidenz in the button set | Every button size uses the Akzidenz ExtraBold button style; Small is 12. One treatment for all buttons |
+| P8 | Sticky CTA is 45 high, the main CTA 55 | Sticky uses Medium 44, main stays Large 55 |
+| P9 | PDP description is 16 on both widths; body copy elsewhere is 14 on mobile | Description 16 on both widths |
+| P10 | FAQ panel icons are 14, Horizon's are 16 | 14 in both accordions |
+
+### Height differences left on purpose (content, not layout)
+- **Lifestyle:** about 49 shorter, because the Figma's middle-card caption is placeholder copy and is left empty until the client sends copy.
+- **Before/after:** about 33 shorter, because the arrows row only shows with two or more comparisons, and the store has one.
+- **Real use:** cards come from content, and the UGC videos aren't uploaded yet.

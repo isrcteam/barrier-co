@@ -33,7 +33,7 @@
       "type": "marquee",
       "settings": {
         "background_color": "{{ settings.color_palette.color2 }}",
-        "padding-block-start": 18,
+        "padding-block-start": 17,
         "padding-block-end": 18,
         "gap_between_elements": 30
       },
@@ -49,9 +49,9 @@
         "stars_1": {
           "type": "icon",
           "settings": {
-            "icon": "star",
-            "width": 16,
-            "icon_color": "#F9F7ED"
+            "icon": "none",
+            "image_upload": "shopify://shop_images/press-stars.svg",
+            "width": 76
           }
         },
         "quote_2": {
@@ -65,9 +65,9 @@
         "stars_2": {
           "type": "icon",
           "settings": {
-            "icon": "star",
-            "width": 16,
-            "icon_color": "#F9F7ED"
+            "icon": "none",
+            "image_upload": "shopify://shop_images/press-stars.svg",
+            "width": 76
           }
         },
         "quote_3": {
@@ -81,19 +81,19 @@
         "stars_3": {
           "type": "icon",
           "settings": {
-            "icon": "star",
-            "width": 16,
-            "icon_color": "#F9F7ED"
+            "icon": "none",
+            "image_upload": "shopify://shop_images/press-stars.svg",
+            "width": 76
           }
         }
       },
       "block_order": [
-        "quote_1",
         "stars_1",
-        "quote_2",
+        "quote_1",
         "stars_2",
-        "quote_3",
-        "stars_3"
+        "quote_2",
+        "stars_3",
+        "quote_3"
       ]
     },
     "intro": {
@@ -156,8 +156,8 @@
       "type": "marquee",
       "settings": {
         "background_color": "{{ settings.color_palette.foreground }}",
-        "padding-block-start": 11,
-        "padding-block-end": 11,
+        "padding-block-start": 18,
+        "padding-block-end": 18,
         "gap_between_elements": 20
       },
       "blocks": {
@@ -289,7 +289,8 @@
                 "type_preset": "custom",
                 "font_size": "0.625rem",
                 "case": "uppercase",
-                "alignment": "center"
+                "alignment": "center",
+                "width": "100%"
               }
             },
             "details": {
@@ -519,7 +520,10 @@
         "middle_card": "tall",
         "show_side_bars": true,
         "caption_alignment": "left",
-        "caption_size": "type-body"
+        "caption_size": "type-body",
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "same_padding_mobile": true
       },
       "blocks": {
         "card_shell": {

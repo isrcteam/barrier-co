@@ -148,11 +148,11 @@ def home():
     press_blocks, press_order = {}, []
     for i in range(1, 4):
         press_blocks[f"quote_{i}"] = {"type": "text", "settings": {"text": "<p>“Lorem ipsum dolor sid ed” - FORBES</p>", "type_preset": "custom", "font_size": "1rem"}}
-        press_blocks[f"stars_{i}"] = {"type": "icon", "settings": {"icon": "star", "width": 16, "icon_color": TOKENS["sandstone"]}}
-        press_order += [f"quote_{i}", f"stars_{i}"]
+        press_blocks[f"stars_{i}"] = {"type": "icon", "settings": {"icon": "none", "image_upload": "shopify://shop_images/press-stars.svg", "width": 76}}
+        press_order += [f"stars_{i}", f"quote_{i}"]
     sections["press"] = {
         "type": "marquee",
-        "settings": {"background_color": PALETTE("color2"), "padding-block-start": 18, "padding-block-end": 18, "gap_between_elements": 30},
+        "settings": {"background_color": PALETTE("color2"), "padding-block-start": 17, "padding-block-end": 18, "gap_between_elements": 30},
         "blocks": press_blocks,
         "block_order": press_order,
     }
@@ -162,7 +162,7 @@ def home():
     words = ["Cleanse", "Moisturise", "Protect", "Regenerate"]
     sections["ticker"] = {
         "type": "marquee",
-        "settings": {"background_color": PALETTE("foreground"), "padding-block-start": 11, "padding-block-end": 11, "gap_between_elements": 20},
+        "settings": {"background_color": PALETTE("foreground"), "padding-block-start": 18, "padding-block-end": 18, "gap_between_elements": 20},
         "blocks": {f"word_{i}": {"type": "text", "settings": {"text": f"<p>{w}</p>"}} for i, w in enumerate(words, 1)},
         "block_order": [f"word_{i}" for i in range(1, 5)],
     }
@@ -179,7 +179,7 @@ def home():
         "image_desktop": img("inset_banner", "desktop", "Hero_Banner1.jpg"),
         "image_mobile": img("inset_banner", "mobile", "Mobile_banner.jpg"),
     }, "banner")
-    sections["lifestyle"] = from_preset("image-carousel", 1, {}, "lifestyle")
+    sections["lifestyle"] = from_preset("image-carousel", 1, {"padding-block-start": 0, "padding-block-end": 0, "same_padding_mobile": True}, "lifestyle")
     set_block_images(sections["lifestyle"], "image", ["lifestyle_1", "lifestyle_2", "lifestyle_3"])
     mid = sections["lifestyle"]["block_order"][1] if len(sections["lifestyle"].get("block_order", [])) > 1 else None
     if mid:
@@ -214,7 +214,7 @@ def product_details_blocks(include_buy_box_extras):
         "add-to-cart": {"type": "add-to-cart", "static": True, "settings": {"style_class": "button"}},
         "accelerated-checkout": {"type": "accelerated-checkout", "static": True, "disabled": True, "settings": {}},
     }, block_order=[])
-    add("guarantee", "text", {"text": "<p>90-day money-back guarantee | Free 2–3 day shipping</p>", "type_preset": "custom", "font_size": "0.625rem", "case": "uppercase", "alignment": "center"})
+    add("guarantee", "text", {"text": "<p>90-day money-back guarantee | Free 2–3 day shipping</p>", "type_preset": "custom", "font_size": "0.625rem", "case": "uppercase", "alignment": "center", "width": "100%"})
     if include_buy_box_extras:
         add("recognition", "recognition-slider")
         add("promo", "promo-card", {"background_color": TOKENS["white"], "image": img("promo_card_image")})
@@ -263,7 +263,7 @@ def product():
     for k in [k for k, b in main["blocks"].items() if not b.get("static")]:
         del main["blocks"][k]
 
-    sections = {"breadcrumb_bar": {"type": "section", "settings": {"padding-block-start": 8, "padding-block-end": 8},
+    sections = {"breadcrumb_bar": {"type": "section", "settings": {"padding-block-start": 0, "padding-block-end": 20},
                                    "blocks": {"breadcrumbs": {"type": "breadcrumbs", "settings": {"show_collection": False}}}, "block_order": ["breadcrumbs"]},
                 "main": main}
     sections["hotspots"] = from_preset("benefit-hotspots", 0, {"panel_color": TOKENS["linen"], "panel_text_color": TOKENS["sepia"],
@@ -314,7 +314,7 @@ def footer_group():
     sections = {}
     sections["social"] = from_preset("social-gallery", 0, {"background_color": TOKENS["linen"], "profile_link": "https://www.instagram.com/"})
     set_block_images(sections["social"], "image", [f"insta_{i}" for i in range(1, 7)])
-    sections["logos"] = from_preset("logo-list", 0)
+    sections["logos"] = from_preset("logo-list", 0, {"padding-block-start": 30, "padding-block-end": 32, "same_padding_mobile": False, "padding-block-start-mobile": 36, "padding-block-end-mobile": 38})
     set_block_images(sections["logos"], "image", ["logo_equinox", "logo_delta_one", "logo_credo"] * 2)
     names = ["Equinox", "Delta One", "Credo"] * 2
     for key, name in zip(sections["logos"].get("block_order", []), names):
@@ -323,7 +323,7 @@ def footer_group():
     footer["settings"].update({"background_color": PALETTE("foreground"), "section_width": "page-width", "gap": 56,
                                "padding-block-start": 56, "padding-block-end": 0})
     community = {"type": "group", "settings": {"content_direction": "column", "gap": 30}, "blocks": {
-        "join": {"type": "text", "settings": {"text": "<p>Join the community</p>", "type_preset": "custom", "font": "var(--font-heading--family)", "font_size": "1.125rem", "case": "uppercase"}},
+        "join": {"type": "text", "settings": {"text": "<p>Join the community</p>", "type_preset": "custom", "font": "var(--font-heading--family)", "font_size": "1.125rem", "line_height": "tight", "case": "uppercase"}},
         "signup": {"type": "email-signup", "settings": {"heading": "", "border_style": "underline", "input_style": "custom", "border_width": 1,
                                                         "input_text_color": PALETTE("background"), "input_border_color": PALETTE("background"),
                                                         "style_class": "button-custom", "custom_button_background": PALETTE("background"),

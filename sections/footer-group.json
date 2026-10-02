@@ -70,7 +70,12 @@
       "type": "logo-list",
       "settings": {
         "logo_height": 32,
-        "scroll_mobile": true
+        "scroll_mobile": true,
+        "padding-block-start": 30,
+        "padding-block-end": 32,
+        "same_padding_mobile": false,
+        "padding-block-start-mobile": 36,
+        "padding-block-end-mobile": 38
       },
       "blocks": {
         "logo_1": {
@@ -142,6 +147,7 @@
                 "type_preset": "custom",
                 "font": "var(--font-heading--family)",
                 "font_size": "1.125rem",
+                "line_height": "tight",
                 "case": "uppercase"
               }
             },
