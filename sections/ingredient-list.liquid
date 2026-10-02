@@ -230,7 +230,8 @@
     }
 
     .ingredient-list__inner {
-      grid-template-columns: calc(var(--space-112) * 4 - var(--space-16)) minmax(0, 1fr);
+      /* Figma's 431 column at the 60 heading; it grows with the fluid heading size so "INGREDIENTS" never splits */
+      grid-template-columns: max(calc(var(--space-112) * 4 - var(--space-16)), calc(var(--type-h1-size) * 7.2)) minmax(0, 1fr);
       column-gap: calc(var(--space-80) * 2);
       align-items: start;
     }
