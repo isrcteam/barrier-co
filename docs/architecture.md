@@ -35,7 +35,8 @@ Horizon 4.2 has no colour schemes. Every custom section gets a `background_color
 | index | hero-banner · marquee (stock, press quotes) · intro-media · image-carousel ("Routine" preset) · marquee (stock, ticker) · featured-product (stock + custom blocks) · video-testimonials · clinical-results · feature-icons · hero-banner ("Inset banner" preset) · image-carousel ("Lifestyle" preset) · before-after |
 | product | product-information (stock + custom blocks, sticky add to cart on) · benefit-hotspots · video-testimonials · clinical-results · ingredient-list · video-banner · before-after · reviews (stock `section` + Judge.me app block) · faq-panel |
 | Footer group | social-gallery · logo-list · footer (stock: email signup, menus, text, jumbo-text "BARRIER", copyright, policies) |
-| collection, cart, search, page, blog, article, 404, password | Stock Horizon, styled by tokens |
+| collection | product-showcase (two-product panels and a comparison table, products from the collection) |
+| cart, search, page, blog, article, 404, password | Stock Horizon, styled by tokens |
 
 ## Theme Blocks
 Index:

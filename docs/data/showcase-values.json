@@ -1,0 +1,4 @@
+{
+  "the-30-the-everyday": {"descriptors.subtitle": ["single_line_text_field", "The everyday."], "custom.cloth_count": ["number_integer", "30"], "custom.best_for": ["single_line_text_field", "Everyday body care"]},
+  "the-8-made-to-go-where-you-go": {"descriptors.subtitle": ["single_line_text_field", "Made to go where you go."], "custom.cloth_count": ["number_integer", "8"], "custom.best_for": ["single_line_text_field", "Post-workout, in-flight, on the go"]}
+}

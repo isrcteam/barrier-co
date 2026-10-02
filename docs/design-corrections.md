@@ -103,3 +103,9 @@ Every home and PDP section was measured against its Figma node at 1440 and 390, 
 - **Lifestyle:** about 49 shorter, because the Figma's middle-card caption is placeholder copy and is left empty until the client sends copy.
 - **Before/after:** about 33 shorter, because the arrows row only shows with two or more comparisons, and the store has one.
 - **Real use:** cards come from content, and the UGC videos aren't uploaded yet.
+
+## Additions beyond the Figma (2026-10-02)
+| # | Gap in Figma | In code |
+| --- | --- | --- |
+| A1 | No collection page design. With two products, a grid shows two small cards | `product-showcase`: side-by-side product panels and a comparison table (Jeet chose this option) |
+| A2 | The PDP split is only defined at 1440 (870 gallery / 482 buy box); at 1920 the image grew to about 1180 | Fluid split: the Figma at 1440, about 55/45 at 1920. The image never shrinks as the screen widens |

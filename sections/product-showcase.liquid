@@ -1,0 +1,820 @@
+{%- liquid
+  assign s = section.settings
+  assign product_blocks = section.blocks | where: 'type', 'product'
+  assign row_blocks = section.blocks | where: 'type', 'row'
+
+  assign items = product_blocks
+  assign from_collection = false
+  if s.use_collection and collection != blank and collection.products_count > 0
+    assign items = collection.products
+    if s.order == 'price_desc'
+      assign items = collection.products | sort: 'price' | reverse
+    endif
+    assign from_collection = true
+  endif
+
+  assign item_count = 0
+  for counted_item in items limit: 4
+    assign item_count = item_count | plus: 1
+  endfor
+
+  assign pt_mobile = s['padding-block-start']
+  assign pb_mobile = s['padding-block-end']
+  if s.same_padding_mobile == false
+    assign pt_mobile = s['padding-block-start-mobile']
+    assign pb_mobile = s['padding-block-end-mobile']
+  endif
+-%}
+{% render 'contrast-override', background_color: s.background_color, section_id: section.id %}
+
+<div
+  class="product-showcase color-custom-{{ section.id }}"
+  style="--section-pt: {{ s['padding-block-start'] | divided_by: 16.0 }}rem; --section-pb: {{ s['padding-block-end'] | divided_by: 16.0 }}rem; --section-pt-mobile: {{ pt_mobile | divided_by: 16.0 }}rem; --section-pb-mobile: {{ pb_mobile | divided_by: 16.0 }}rem; --showcase-columns: {{ item_count | at_least: 1 }};{% if s.panel_color != blank %} --showcase-panel: {{ s.panel_color }};{% endif %}"
+>
+  <div class="product-showcase__inner">
+    {%- if s.eyebrow != blank or s.heading != blank or s.text != blank -%}
+      <div class="product-showcase__header">
+        {%- if s.eyebrow != blank -%}
+          <p class="product-showcase__eyebrow type-eyebrow">{{ s.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if s.heading != blank -%}
+          <{{ s.heading_tag }} class="product-showcase__heading type-h1">{{ s.heading | escape }}</{{ s.heading_tag }}>
+        {%- endif -%}
+        {%- if s.text != blank -%}
+          <div class="product-showcase__text type-body">{{ s.text }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if item_count > 0 -%}
+      <ul class="product-showcase__panels" role="list">
+        {%- for item in items limit: 4 -%}
+          {%- liquid
+            if from_collection
+              assign p = item
+              assign panel_image = p.featured_media.preview_image
+              assign button_label = s.button_label
+              assign attrs = ''
+            else
+              assign p = item.settings.product
+              assign panel_image = item.settings.image | default: p.featured_media.preview_image
+              assign button_label = item.settings.button_label | default: s.button_label
+              assign attrs = item.shopify_attributes
+            endif
+            if p == blank
+              continue
+            endif
+
+            assign lowest = p.price_min
+            for allocation in p.selected_or_first_available_variant.selling_plan_allocations
+              if allocation.price < lowest
+                assign lowest = allocation.price
+              endif
+            endfor
+            assign price_text = lowest | money
+            assign cloths = p.metafields.custom.cloth_count.value | default: 0
+            assign image_loading = 'lazy'
+            if section.index == 1 and forloop.index <= 2
+              assign image_loading = 'eager'
+            endif
+          -%}
+          <li class="product-showcase__panel" {{ attrs }}>
+            <a class="product-showcase__media" href="{{ p.url }}" tabindex="-1" aria-hidden="true">
+              {%- if panel_image != blank -%}
+                {{
+                  panel_image
+                  | image_url: width: 1800
+                  | image_tag:
+                    widths: '390, 600, 750, 900, 1200, 1500, 1800',
+                    sizes: '(min-width: 990px) 50vw, 100vw',
+                    loading: image_loading,
+                    class: 'product-showcase__image',
+                    alt: ''
+                }}
+              {%- else -%}
+                {{ 'product-apparel-1' | placeholder_svg_tag: 'product-showcase__image product-showcase__placeholder' }}
+              {%- endif -%}
+              {%- if p.metafields.custom.media_badge != blank -%}
+                <span class="product-showcase__badge type-label">{{ p.metafields.custom.media_badge.value | escape }}</span>
+              {%- endif -%}
+            </a>
+            <div class="product-showcase__body">
+              <div class="product-showcase__titles">
+                <h3 class="product-showcase__title type-h2">
+                  <a href="{{ p.url }}" class="product-showcase__title-link">{{ p.title | escape }}</a>
+                </h3>
+                {%- if p.metafields.descriptors.subtitle != blank -%}
+                  <p class="product-showcase__subtitle type-body-large">{{ p.metafields.descriptors.subtitle.value | escape }}</p>
+                {%- endif -%}
+              </div>
+              {%- if p.metafields.custom.highlights != blank -%}
+                <ul class="product-showcase__highlights type-body-small" role="list">
+                  {%- for highlight in p.metafields.custom.highlights.value limit: 4 -%}
+                    <li class="product-showcase__highlight">
+                      <span class="product-showcase__tick svg-wrapper" aria-hidden="true">{{- 'icon-checkmark.svg' | inline_asset_content -}}</span>
+                      {{ highlight | escape }}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+              <div class="product-showcase__buy">
+                <p class="product-showcase__price type-body">
+                  {{- s.price_label | replace: '[price]', price_text | escape -}}
+                  {%- if cloths > 0 -%}
+                    {%- assign per_cloth = lowest | divided_by: cloths | money -%}
+                    <span class="product-showcase__per type-caption">{{ s.per_cloth_label | replace: '[price]', per_cloth | escape }}</span>
+                  {%- endif -%}
+                </p>
+                <a href="{{ p.url }}" class="product-showcase__button button">
+                  {{- button_label | replace: '[title]', p.title | escape -}}
+                  <span class="visually-hidden">: {{ p.title | escape }}</span>
+                </a>
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if s.show_compare and item_count > 1 -%}
+        <div class="product-showcase__compare">
+          <table class="product-showcase__table type-body-small">
+            <caption class="visually-hidden">{{ s.compare_caption | escape }}</caption>
+            <thead>
+              <tr>
+                <td></td>
+                {%- for item in items limit: 4 -%}
+                  {%- liquid
+                    if from_collection
+                      assign p = item
+                    else
+                      assign p = item.settings.product
+                    endif
+                  -%}
+                  {%- if p != blank -%}
+                    <th scope="col" class="product-showcase__col type-h5">{{ p.title | escape }}</th>
+                  {%- endif -%}
+                {%- endfor -%}
+              </tr>
+            </thead>
+            <tbody>
+              {%- if s.row_cloths != blank -%}
+                <tr>
+                  <th scope="row" class="type-h6">{{ s.row_cloths | escape }}</th>
+                  {%- for item in items limit: 4 -%}
+                    {%- liquid
+                      if from_collection
+                        assign p = item
+                      else
+                        assign p = item.settings.product
+                      endif
+                    -%}
+                    {%- if p != blank -%}<td>{{ p.metafields.custom.cloth_count.value | default: '–' }}</td>{%- endif -%}
+                  {%- endfor -%}
+                </tr>
+              {%- endif -%}
+              {%- if s.row_best_for != blank -%}
+                <tr>
+                  <th scope="row" class="type-h6">{{ s.row_best_for | escape }}</th>
+                  {%- for item in items limit: 4 -%}
+                    {%- liquid
+                      if from_collection
+                        assign p = item
+                      else
+                        assign p = item.settings.product
+                      endif
+                    -%}
+                    {%- if p != blank -%}<td>{{ p.metafields.custom.best_for.value | default: '–' | escape }}</td>{%- endif -%}
+                  {%- endfor -%}
+                </tr>
+              {%- endif -%}
+              {%- if s.row_per_cloth != blank -%}
+                <tr>
+                  <th scope="row" class="type-h6">{{ s.row_per_cloth | escape }}</th>
+                  {%- for item in items limit: 4 -%}
+                    {%- liquid
+                      if from_collection
+                        assign p = item
+                      else
+                        assign p = item.settings.product
+                      endif
+                    -%}
+                    {%- if p != blank -%}
+                      {%- liquid
+                        assign lowest = p.price_min
+                        for allocation in p.selected_or_first_available_variant.selling_plan_allocations
+                          if allocation.price < lowest
+                            assign lowest = allocation.price
+                          endif
+                        endfor
+                        assign cloths = p.metafields.custom.cloth_count.value | default: 0
+                      -%}
+                      <td>{%- if cloths > 0 -%}{{ lowest | divided_by: cloths | money }}{%- else -%}–{%- endif -%}</td>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </tr>
+              {%- endif -%}
+              {%- if s.row_subscribe != blank -%}
+                <tr>
+                  <th scope="row" class="type-h6">{{ s.row_subscribe | escape }}</th>
+                  {%- for item in items limit: 4 -%}
+                    {%- liquid
+                      if from_collection
+                        assign p = item
+                      else
+                        assign p = item.settings.product
+                      endif
+                    -%}
+                    {%- if p != blank -%}
+                      <td>
+                        {%- if p.selling_plan_groups.size > 0 -%}
+                          <span class="product-showcase__tick svg-wrapper">{{- 'icon-checkmark.svg' | inline_asset_content -}}</span>
+                          <span class="visually-hidden">{{ s.yes_label | escape }}</span>
+                        {%- else -%}
+                          –
+                        {%- endif -%}
+                      </td>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </tr>
+              {%- endif -%}
+              {%- for row in row_blocks -%}
+                <tr {{ row.shopify_attributes }}>
+                  <th scope="row" class="type-h6">{{ row.settings.label | escape }}</th>
+                  {%- for item in items limit: 4 -%}
+                    {%- liquid
+                      if from_collection
+                        assign p = item
+                      else
+                        assign p = item.settings.product
+                      endif
+                      assign value_key = 'value_' | append: forloop.index
+                    -%}
+                    {%- if p != blank -%}<td>{{ row.settings[value_key] | default: '–' | escape }}</td>{%- endif -%}
+                  {%- endfor -%}
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .product-showcase {
+    padding-block: var(--section-pt-mobile) var(--section-pb-mobile);
+    padding-inline: var(--layout-gutter);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .product-showcase__inner {
+    display: grid;
+    gap: var(--space-30);
+    max-width: var(--layout-content-width);
+    margin-inline: auto;
+  }
+
+  .product-showcase__header {
+    display: grid;
+    gap: var(--space-16);
+    justify-items: center;
+    text-align: center;
+  }
+
+  .product-showcase__eyebrow,
+  .product-showcase__heading {
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .product-showcase__text {
+    max-width: calc(var(--layout-text-width) + var(--space-80));
+  }
+
+  .product-showcase__text > * {
+    margin: 0;
+  }
+
+  .product-showcase__panels {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-10);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .product-showcase__panel {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background: var(--showcase-panel, var(--color-background));
+  }
+
+  .product-showcase__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+  }
+
+  .product-showcase__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--easing-standard);
+  }
+
+  .product-showcase__panel:hover .product-showcase__image {
+    transform: scale(1.03);
+  }
+
+  .product-showcase__badge {
+    position: absolute;
+    inset-block-start: var(--space-12);
+    inset-inline-start: var(--space-12);
+    padding: var(--space-2) var(--space-10);
+    background: var(--color-background);
+    color: var(--color-foreground);
+    text-transform: uppercase;
+  }
+
+  .product-showcase__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-20);
+    padding: var(--space-20) var(--layout-gutter) var(--space-30);
+  }
+
+  .product-showcase__titles {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .product-showcase__title,
+  .product-showcase__subtitle {
+    margin: 0;
+  }
+
+  .product-showcase__title {
+    text-transform: uppercase;
+  }
+
+  .product-showcase__title-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .product-showcase__title-link:hover {
+    opacity: var(--opacity-brand-hover);
+  }
+
+  .product-showcase__highlights {
+    display: grid;
+    gap: var(--space-8);
+    margin: 0;
+    padding: 0;
+  }
+
+  .product-showcase__highlight {
+    display: grid;
+    grid-template-columns: var(--icon-xs) minmax(0, 1fr);
+    gap: var(--space-10);
+    align-items: start;
+  }
+
+  .product-showcase__tick {
+    display: inline-flex;
+    width: var(--icon-xs);
+    height: var(--icon-xs);
+    margin-block-start: var(--space-2);
+    color: var(--color-accent-bar);
+  }
+
+  .product-showcase__tick svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .product-showcase__buy {
+    display: grid;
+    gap: var(--space-16);
+    margin-block-start: auto;
+  }
+
+  .product-showcase__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-4) var(--space-10);
+    margin: 0;
+  }
+
+  .product-showcase__per {
+    opacity: var(--opacity-brand-muted);
+  }
+
+  .product-showcase__button {
+    justify-self: stretch;
+  }
+
+  .product-showcase__compare {
+    overflow-x: auto;
+  }
+
+  .product-showcase__table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: start;
+  }
+
+  .product-showcase__table :is(th, td) {
+    padding: var(--space-12) var(--space-10);
+    border-block-end: var(--border-hairline) solid var(--color-divider);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .product-showcase__table thead :is(th, td) {
+    border-block-end-color: var(--color-foreground);
+    text-transform: uppercase;
+  }
+
+  .product-showcase__table tbody th {
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .product-showcase__table .product-showcase__tick {
+    color: var(--color-foreground);
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-showcase__panels {
+      grid-template-columns: repeat(var(--showcase-columns), minmax(0, 1fr));
+      gap: var(--space-20);
+    }
+
+    .product-showcase__body {
+      padding: var(--space-30);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .product-showcase {
+      padding-block: var(--section-pt) var(--section-pb);
+    }
+
+    .product-showcase__inner {
+      gap: var(--space-40);
+    }
+
+    .product-showcase__media {
+      aspect-ratio: 1;
+    }
+
+    .product-showcase__body {
+      padding: var(--space-30) var(--space-40) var(--space-40);
+    }
+
+    .product-showcase__buy {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+
+    .product-showcase__button {
+      min-width: calc(var(--space-112) * 2 + var(--space-30));
+    }
+
+    .product-showcase__table :is(th, td) {
+      padding: var(--space-16) var(--space-20);
+    }
+
+    .product-showcase__table {
+      table-layout: fixed;
+    }
+
+    .product-showcase__table tbody th,
+    .product-showcase__table thead td {
+      width: 22%;
+    }
+  }
+
+  @media screen and (min-width: 1600px) {
+    .product-showcase__body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-rows: auto 1fr;
+      grid-template-areas: 'titles buy' 'list buy';
+      column-gap: var(--space-40);
+    }
+
+    .product-showcase__titles {
+      grid-area: titles;
+    }
+
+    .product-showcase__highlights {
+      grid-area: list;
+    }
+
+    .product-showcase__buy {
+      grid-area: buy;
+      grid-template-columns: minmax(0, 1fr);
+      align-self: end;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .product-showcase__image {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.product_showcase",
+  "tag": "section",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "blocks": [
+    {
+      "type": "product",
+      "name": "t:names.product",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:settings.product"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:settings.image",
+          "info": "t:info.showcase_image"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:settings.button_label"
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "name": "t:names.compare_row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:settings.label",
+          "default": "Hydration"
+        },
+        {
+          "type": "text",
+          "id": "value_1",
+          "label": "t:settings.value_1",
+          "default": "72 hours"
+        },
+        {
+          "type": "text",
+          "id": "value_2",
+          "label": "t:settings.value_2",
+          "default": "72 hours"
+        },
+        {
+          "type": "text",
+          "id": "value_3",
+          "label": "t:settings.value_3"
+        },
+        {
+          "type": "text",
+          "id": "value_4",
+          "label": "t:settings.value_4"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_collection",
+      "label": "t:settings.use_collection_products",
+      "info": "t:info.use_collection_products",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "order",
+      "label": "t:settings.product_order",
+      "options": [
+        {
+          "value": "price_desc",
+          "label": "t:options.price_high_low"
+        },
+        {
+          "value": "collection",
+          "label": "t:options.collection_order"
+        }
+      ],
+      "default": "price_desc",
+      "visible_if": "{{ section.settings.use_collection }}"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:settings.eyebrow",
+      "default": "Shop the cloth"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Two formats. One routine."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:settings.heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:settings.text"
+    },
+    {
+      "type": "text",
+      "id": "price_label",
+      "label": "t:settings.price_label",
+      "info": "t:info.price_placeholder",
+      "default": "Starts from [price]"
+    },
+    {
+      "type": "text",
+      "id": "per_cloth_label",
+      "label": "t:settings.per_cloth_label",
+      "default": "[price] per cloth"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings.button_label",
+      "default": "Shop now"
+    },
+    {
+      "type": "header",
+      "content": "t:content.comparison"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compare",
+      "label": "t:settings.show_comparison",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "compare_caption",
+      "label": "t:settings.compare_caption",
+      "default": "Compare the cloths"
+    },
+    {
+      "type": "text",
+      "id": "row_cloths",
+      "label": "t:settings.row_cloths",
+      "default": "Cloths per pack"
+    },
+    {
+      "type": "text",
+      "id": "row_best_for",
+      "label": "t:settings.row_best_for",
+      "default": "Best for"
+    },
+    {
+      "type": "text",
+      "id": "row_per_cloth",
+      "label": "t:settings.row_per_cloth",
+      "default": "Price per cloth"
+    },
+    {
+      "type": "text",
+      "id": "row_subscribe",
+      "label": "t:settings.row_subscribe",
+      "default": "Subscribe and save"
+    },
+    {
+      "type": "text",
+      "id": "yes_label",
+      "label": "t:settings.yes_label",
+      "default": "Yes"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": false
+    },
+    {
+      "type": "color",
+      "id": "panel_color",
+      "label": "t:settings.panel_color",
+      "alpha": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "same_padding_mobile",
+      "label": "t:settings.same_at_mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_showcase",
+      "category": "t:categories.products",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "label": "Hydration",
+            "value_1": "72 hours",
+            "value_2": "72 hours"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

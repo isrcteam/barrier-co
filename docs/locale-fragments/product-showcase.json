@@ -1,0 +1,33 @@
+{
+  "content": {
+    "comparison": "Comparison"
+  },
+  "info": {
+    "showcase_image": "Optional lifestyle image. Defaults to the product image.",
+    "use_collection_products": "On a collection page, show its products instead of the blocks below"
+  },
+  "names": {
+    "compare_row": "Comparison row",
+    "product_showcase": "Product showcase"
+  },
+  "settings": {
+    "compare_caption": "Table caption (screen readers)",
+    "per_cloth_label": "Per cloth label",
+    "row_best_for": "Best for row",
+    "row_cloths": "Cloths row",
+    "row_per_cloth": "Price per cloth row",
+    "row_subscribe": "Subscription row",
+    "show_comparison": "Show comparison",
+    "use_collection_products": "Use collection products",
+    "value_1": "Value for product 1",
+    "value_2": "Value for product 2",
+    "value_3": "Value for product 3",
+    "value_4": "Value for product 4",
+    "yes_label": "Yes label (screen readers)",
+    "product_order": "Order"
+  },
+  "options": {
+    "price_high_low": "Price, high to low",
+    "collection_order": "Collection order"
+  }
+}

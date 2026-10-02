@@ -21,6 +21,9 @@ Content rule: content that belongs to one product sits in a product metafield. C
 | Product | custom.ugc_videos | none | list.metaobject_reference → ugc_video | UGC videos | Customer videos. | PDP "Real use. Real routines." | Client | New |
 | Product | custom.before_afters | none | list.metaobject_reference → before_after | Before and afters | Result comparisons. | PDP before/after | Client | New |
 | Product | custom.subscription_plans | none, Recharge has no card copy | list.metaobject_reference → subscription_plan | Subscription plans | Copy for each Recharge plan card, matched by plan name or order. | PDP purchase options | Client | New (2026-10-01) |
+| Product | descriptors.subtitle | Standard (descriptors.subtitle) | single_line_text_field | Subtitle | One-line purpose under the title | Collection showcase | Client | Enabled 2026-10-02 |
+| Product | custom.cloth_count | none | number_integer | Cloth count | Cloths per pack; also used for the price per cloth | Collection comparison | Client | New 2026-10-02 |
+| Product | custom.best_for | none | single_line_text_field | Best for | Who or when it suits | Collection comparison | Client | New 2026-10-02 |
 | Product | reviews.rating, reviews.rating_count | Standard (reviews) | rating, number_integer | Product rating, Rating count | Written by Judge.me when "Sync to Shopify" is on. | PDP stars, product cards, JSON-LD | Judge.me | Enabled by the app, not created by us |
 
 Subscriptions run on **Recharge** (Jeet, 2026-10-01), which creates native Shopify selling plans for prices, savings and checkout. The card copy does not come from Recharge: it comes from `custom.subscription_plans`. Each entry is matched to a Recharge plan by its "Selling plan name", or by order when that field is empty. If a product has no entries, the block falls back to the plan's description.

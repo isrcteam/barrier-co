@@ -354,9 +354,15 @@ def footer_group():
     return g
 
 
+def collection():
+    showcase = from_preset("product-showcase", 0, {"use_collection": True, "order": "price_desc", "panel_color": TOKENS["linen"], "heading_tag": "h1", "padding-block-start": 40, "padding-block-end": 0, "same_padding_mobile": False, "padding-block-start-mobile": 30, "padding-block-end-mobile": 0}, "showcase")
+    return {"sections": {"showcase": showcase}, "order": ["showcase"]}
+
+
 def main():
     write_jsonc(P("templates", "index.json"), home())
     write_jsonc(P("templates", "product.json"), product())
+    write_jsonc(P("templates", "collection.json"), collection())
     write_jsonc(P("sections", "header-group.json"), header_group())
     write_jsonc(P("sections", "footer-group.json"), footer_group())
     missing = sorted(s for s in ["home_hero", "routine_cleanse", "stats_background", "feature_icon_1", "lifestyle_1", "insta_1", "logo_equinox",

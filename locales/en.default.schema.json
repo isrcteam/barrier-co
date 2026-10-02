@@ -33,6 +33,7 @@
     "text": "Text"
   },
   "content": {
+    "comparison": "Comparison",
     "videos": "Videos",
     "video": "Video",
     "recognition_slider_source": "Shows the product's Recognitions metafield (custom.recognitions). Hidden when it's empty.",
@@ -240,6 +241,8 @@
     "work_quickly_to_ship": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>"
   },
   "info": {
+    "use_collection_products": "On a collection page, show its products instead of the blocks below",
+    "showcase_image": "Optional lifestyle image. Defaults to the product image.",
     "testimonial_overrides_text": "When a testimonial is chosen, its quote, name and rating are used instead of the fields below.",
     "use_product_ugc_videos": "On product pages, shows the product's UGC videos metafield. Falls back to the list below when the product has none.",
     "height_ratio": "Height as a percentage of the width",
@@ -296,6 +299,8 @@
     "media_type_info": "Features are populated from your menu links"
   },
   "names": {
+    "product_showcase": "Product showcase",
+    "compare_row": "Comparison row",
     "quote_card": "Quote card",
     "video_testimonials": "Video testimonials",
     "video_banner": "Video banner",
@@ -495,6 +500,8 @@
     "comparison_slider": "Comparison slider"
   },
   "options": {
+    "collection_order": "Collection order",
+    "price_high_low": "Price, high to low",
     "tall": "Tall",
     "offset": "Offset",
     "even": "Even",
@@ -826,6 +833,20 @@
     "below_media": "Below media"
   },
   "settings": {
+    "product_order": "Order",
+    "yes_label": "Yes label (screen readers)",
+    "value_4": "Value for product 4",
+    "value_3": "Value for product 3",
+    "value_2": "Value for product 2",
+    "value_1": "Value for product 1",
+    "use_collection_products": "Use collection products",
+    "show_comparison": "Show comparison",
+    "row_subscribe": "Subscription row",
+    "row_per_cloth": "Price per cloth row",
+    "row_cloths": "Cloths row",
+    "row_best_for": "Best for row",
+    "per_cloth_label": "Per cloth label",
+    "compare_caption": "Table caption (screen readers)",
     "rating": "Rating",
     "name": "Name",
     "quote": "Quote",

@@ -380,6 +380,22 @@
       "type": "list.metaobject_reference",
       "metaobject": "subscription_plan",
       "description": "Copy for each Recharge plan card in the PDP buy box (summary, delivery timeline, perks, recommended, days for the per-day price). Matched to the Recharge plan by Selling plan name, else by order. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "cloth_count",
+      "name": "Cloth count",
+      "type": "number_integer",
+      "description": "Cloths per pack. Shown in the collection comparison and used for the price per cloth. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "best_for",
+      "name": "Best for",
+      "type": "single_line_text_field",
+      "description": "Who or when the product suits, e.g. Everyday body care. Shown in the collection comparison. Entered by client."
     }
   ]
 }
