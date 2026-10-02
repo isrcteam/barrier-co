@@ -51,3 +51,21 @@ This file has no settings. The look comes from theme settings and section settin
 3. Marquee ticker: add only Text blocks (one word each); the bars appear automatically. Adding an image or icon block turns the bars off (the press strip style).
 4. Product page: in the media gallery keep "Carousel" with thumbnails on the left; add FAQ rows with an Accordion block (icon Plus, dividers off).
 5. Footer: keep the jumbo text block last so it spans the full width.
+
+### Reasoning, 2026-10-02: product gallery / buy box split on wide screens
+- **What:** the PDP and featured product grid is `minmax(0, 1fr)` for the gallery and `max(sidebar, sidebar + (100% − (content − 480)) × 0.75)` for the buy box. The buy box content is capped at 640.
+- **Why:** Jeet: the image looks too big on large screens. With the old fixed 2:1 split, the image grew to about 1180 at 1920.
+- **Result (image size / split):**
+
+  | Width | Image | Split |
+  | --- | --- | --- |
+  | 1280 | 620 | 59/41 |
+  | 1440 | 780 | 64/36 (the Figma) |
+  | 1600 | 820 | 60/40 |
+  | 1920 | 900 | 54/46 |
+
+  The image never shrinks as the screen widens.
+- **Alternatives rejected:**
+  - A breakpoint switch to 55/45 at 1441: the image shrank from 780 to 743 at 1600.
+  - Horizon's "constrain to viewport": it limits by height, not by the split.
+- **Approver:** Jeet.
