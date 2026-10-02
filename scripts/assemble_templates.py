@@ -304,7 +304,7 @@ def header_group():
                             "enable_transparent_header_home": True, "home_inverse_logo": True, "text_color_transparent_home": PALETTE("color5"),
                             "enable_transparent_header_product": False, "enable_transparent_header_collection": False,
                             "divider_width": 0, "border_width": 0, "enable_sticky_header": "always"})
-    hdr["blocks"]["header-menu"]["settings"].update({"menu": "primary-menu", "menu_style": "text", "type_font_primary_link": "subheading",
+    hdr["blocks"]["header-menu"]["settings"].update({"menu": "primary-menu", "menu_style": "featured_products", "featured_products_aspect_ratio": "1 / 1", "image_border_radius": 0, "type_font_primary_link": "subheading",
                                                      "type_font_primary_size": "0.875rem", "type_case_primary_link": "uppercase"})
     return g
 

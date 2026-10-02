@@ -136,30 +136,16 @@
       </ul>
 
       {%- if s.show_compare and item_count > 1 -%}
-        <div class="product-showcase__compare">
-          <table class="product-showcase__table type-body-small">
-            <caption class="visually-hidden">{{ s.compare_caption | escape }}</caption>
-            <thead>
-              <tr>
-                <td></td>
-                {%- for item in items limit: 4 -%}
-                  {%- liquid
-                    if from_collection
-                      assign p = item
-                    else
-                      assign p = item.settings.product
-                    endif
-                  -%}
-                  {%- if p != blank -%}
-                    <th scope="col" class="product-showcase__col type-h5">{{ p.title | escape }}</th>
-                  {%- endif -%}
-                {%- endfor -%}
-              </tr>
-            </thead>
-            <tbody>
-              {%- if s.row_cloths != blank -%}
+        <div class="product-showcase__compare" id="compare">
+          {%- if s.compare_heading != blank -%}
+            <h2 class="product-showcase__compare-heading type-h2">{{ s.compare_heading | escape }}</h2>
+          {%- endif -%}
+          <div class="product-showcase__table-wrap">
+            <table class="product-showcase__table">
+              <caption class="visually-hidden">{{ s.compare_caption | escape }}</caption>
+              <thead>
                 <tr>
-                  <th scope="row" class="type-h6">{{ s.row_cloths | escape }}</th>
+                  <td class="product-showcase__corner"></td>
                   {%- for item in items limit: 4 -%}
                     {%- liquid
                       if from_collection
@@ -167,55 +153,123 @@
                       else
                         assign p = item.settings.product
                       endif
-                    -%}
-                    {%- if p != blank -%}<td>{{ p.metafields.custom.cloth_count.value | default: '–' }}</td>{%- endif -%}
-                  {%- endfor -%}
-                </tr>
-              {%- endif -%}
-              {%- if s.row_best_for != blank -%}
-                <tr>
-                  <th scope="row" class="type-h6">{{ s.row_best_for | escape }}</th>
-                  {%- for item in items limit: 4 -%}
-                    {%- liquid
-                      if from_collection
-                        assign p = item
-                      else
-                        assign p = item.settings.product
+                      assign featured = false
+                      if forloop.first and s.highlight_first
+                        assign featured = true
                       endif
-                    -%}
-                    {%- if p != blank -%}<td>{{ p.metafields.custom.best_for.value | default: '–' | escape }}</td>{%- endif -%}
-                  {%- endfor -%}
-                </tr>
-              {%- endif -%}
-              {%- if s.row_per_cloth != blank -%}
-                <tr>
-                  <th scope="row" class="type-h6">{{ s.row_per_cloth | escape }}</th>
-                  {%- for item in items limit: 4 -%}
-                    {%- liquid
-                      if from_collection
-                        assign p = item
-                      else
-                        assign p = item.settings.product
-                      endif
+                      assign lowest = p.price_min
+                      for allocation in p.selected_or_first_available_variant.selling_plan_allocations
+                        if allocation.price < lowest
+                          assign lowest = allocation.price
+                        endif
+                      endfor
                     -%}
                     {%- if p != blank -%}
-                      {%- liquid
-                        assign lowest = p.price_min
-                        for allocation in p.selected_or_first_available_variant.selling_plan_allocations
-                          if allocation.price < lowest
-                            assign lowest = allocation.price
-                          endif
-                        endfor
-                        assign cloths = p.metafields.custom.cloth_count.value | default: 0
-                      -%}
-                      <td>{%- if cloths > 0 -%}{{ lowest | divided_by: cloths | money }}{%- else -%}–{%- endif -%}</td>
+                      <th scope="col" class="product-showcase__col{% if featured %} is-featured{% endif %}">
+                        {%- if featured and s.featured_label != blank -%}
+                          <span class="product-showcase__flag type-label">{{ s.featured_label | escape }}</span>
+                        {%- endif -%}
+                        {%- if p.featured_media != blank -%}
+                          {{
+                            p.featured_media.preview_image
+                            | image_url: width: 240
+                            | image_tag: widths: '96, 160, 240', sizes: '(min-width: 990px) 96px, 64px', loading: 'lazy', class: 'product-showcase__thumb', alt: ''
+                          }}
+                        {%- endif -%}
+                        <span class="product-showcase__col-title type-h5">{{ p.title | escape }}</span>
+                        {%- assign col_price = lowest | money -%}
+                        <span class="product-showcase__col-price type-caption">{{ s.price_label | replace: '[price]', col_price | escape }}</span>
+                      </th>
                     {%- endif -%}
                   {%- endfor -%}
                 </tr>
-              {%- endif -%}
-              {%- if s.row_subscribe != blank -%}
+              </thead>
+              <tbody>
+                {%- liquid
+                  assign row_keys = 'cloths,best_for,per_cloth,subscribe' | split: ','
+                -%}
+                {%- for key in row_keys -%}
+                  {%- liquid
+                    case key
+                      when 'cloths'
+                        assign label = s.row_cloths
+                      when 'best_for'
+                        assign label = s.row_best_for
+                      when 'per_cloth'
+                        assign label = s.row_per_cloth
+                      else
+                        assign label = s.row_subscribe
+                    endcase
+                  -%}
+                  {%- if label != blank -%}
+                    <tr>
+                      <th scope="row" class="product-showcase__row-label type-h6">{{ label | escape }}</th>
+                      {%- for item in items limit: 4 -%}
+                        {%- liquid
+                          if from_collection
+                            assign p = item
+                          else
+                            assign p = item.settings.product
+                          endif
+                          assign featured = false
+                          if forloop.first and s.highlight_first
+                            assign featured = true
+                          endif
+                          assign lowest = p.price_min
+                          for allocation in p.selected_or_first_available_variant.selling_plan_allocations
+                            if allocation.price < lowest
+                              assign lowest = allocation.price
+                            endif
+                          endfor
+                          assign cloths = p.metafields.custom.cloth_count.value | default: 0
+                        -%}
+                        {%- if p != blank -%}
+                          <td class="product-showcase__cell{% if featured %} is-featured{% endif %}">
+                            {%- case key -%}
+                              {%- when 'cloths' -%}
+                                <span class="product-showcase__value type-h2">{{ cloths | default: '–' }}</span>
+                              {%- when 'best_for' -%}
+                                {{ p.metafields.custom.best_for.value | default: '–' | escape }}
+                              {%- when 'per_cloth' -%}
+                                {%- if cloths > 0 -%}{{ lowest | divided_by: cloths | money }}{%- else -%}–{%- endif -%}
+                              {%- else -%}
+                                {%- if p.selling_plan_groups.size > 0 -%}
+                                  <span class="product-showcase__check" aria-hidden="true">{{- 'icon-checkmark.svg' | inline_asset_content -}}</span>
+                                  <span class="visually-hidden">{{ s.yes_label | escape }}</span>
+                                {%- else -%}
+                                  <span class="product-showcase__soon type-caption">{{ s.soon_label | escape }}</span>
+                                {%- endif -%}
+                            {%- endcase -%}
+                          </td>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </tr>
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- for row in row_blocks -%}
+                  <tr {{ row.shopify_attributes }}>
+                    <th scope="row" class="product-showcase__row-label type-h6">{{ row.settings.label | escape }}</th>
+                    {%- for item in items limit: 4 -%}
+                      {%- liquid
+                        if from_collection
+                          assign p = item
+                        else
+                          assign p = item.settings.product
+                        endif
+                        assign value_key = 'value_' | append: forloop.index
+                        assign featured = false
+                        if forloop.first and s.highlight_first
+                          assign featured = true
+                        endif
+                      -%}
+                      {%- if p != blank -%}<td class="product-showcase__cell{% if featured %} is-featured{% endif %}">{{ row.settings[value_key] | default: '–' | escape }}</td>{%- endif -%}
+                    {%- endfor -%}
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+              <tfoot>
                 <tr>
-                  <th scope="row" class="type-h6">{{ s.row_subscribe | escape }}</th>
+                  <td class="product-showcase__corner"></td>
                   {%- for item in items limit: 4 -%}
                     {%- liquid
                       if from_collection
@@ -223,38 +277,23 @@
                       else
                         assign p = item.settings.product
                       endif
+                      assign featured = false
+                      if forloop.first and s.highlight_first
+                        assign featured = true
+                      endif
                     -%}
                     {%- if p != blank -%}
-                      <td>
-                        {%- if p.selling_plan_groups.size > 0 -%}
-                          <span class="product-showcase__tick svg-wrapper">{{- 'icon-checkmark.svg' | inline_asset_content -}}</span>
-                          <span class="visually-hidden">{{ s.yes_label | escape }}</span>
-                        {%- else -%}
-                          –
-                        {%- endif -%}
+                      <td class="product-showcase__cell product-showcase__cell--action{% if featured %} is-featured{% endif %}">
+                        <a href="{{ p.url }}" class="{% if featured %}button{% else %}button-secondary{% endif %} button--small product-showcase__table-button">
+                          {{- s.button_label | escape -}}<span class="visually-hidden">: {{ p.title | escape }}</span>
+                        </a>
                       </td>
                     {%- endif -%}
                   {%- endfor -%}
                 </tr>
-              {%- endif -%}
-              {%- for row in row_blocks -%}
-                <tr {{ row.shopify_attributes }}>
-                  <th scope="row" class="type-h6">{{ row.settings.label | escape }}</th>
-                  {%- for item in items limit: 4 -%}
-                    {%- liquid
-                      if from_collection
-                        assign p = item
-                      else
-                        assign p = item.settings.product
-                      endif
-                      assign value_key = 'value_' | append: forloop.index
-                    -%}
-                    {%- if p != blank -%}<td>{{ row.settings[value_key] | default: '–' | escape }}</td>{%- endif -%}
-                  {%- endfor -%}
-                </tr>
-              {%- endfor -%}
-            </tbody>
-          </table>
+              </tfoot>
+            </table>
+          </div>
         </div>
       {%- endif -%}
     {%- endif -%}
@@ -421,35 +460,135 @@
   }
 
   .product-showcase__compare {
+    display: grid;
+    gap: var(--space-24);
+    margin-block-start: var(--space-30);
+  }
+
+  .product-showcase__compare-heading {
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .product-showcase__table-wrap {
     overflow-x: auto;
   }
 
   .product-showcase__table {
     width: 100%;
+    min-width: calc(var(--space-112) * 3 + var(--space-14));
     border-collapse: collapse;
-    text-align: start;
+    table-layout: fixed;
   }
 
   .product-showcase__table :is(th, td) {
-    padding: var(--space-12) var(--space-10);
+    padding: var(--space-14) var(--space-10);
+    text-align: center;
+    vertical-align: middle;
+    font-family: var(--font-family-body);
+    font-size: var(--type-body-small-size);
+    line-height: var(--type-body-small-line);
+  }
+
+  .product-showcase__corner {
+    width: 30%;
+  }
+
+  .product-showcase__table tbody tr {
+    border-block-start: var(--border-hairline) solid var(--color-divider);
+  }
+
+  .product-showcase__table tbody tr:last-child {
     border-block-end: var(--border-hairline) solid var(--color-divider);
+  }
+
+  .product-showcase__row-label {
+    text-transform: uppercase;
+  }
+
+  .product-showcase__table .product-showcase__row-label {
     text-align: start;
-    vertical-align: top;
-  }
-
-  .product-showcase__table thead :is(th, td) {
-    border-block-end-color: var(--color-foreground);
-    text-transform: uppercase;
-  }
-
-  .product-showcase__table tbody th {
+    font-family: var(--font-family-heading);
     font-weight: var(--font-weight-medium);
-    text-transform: uppercase;
-    white-space: nowrap;
+    font-size: var(--type-h6-size);
+    letter-spacing: var(--type-eyebrow-small-tracking);
   }
 
-  .product-showcase__table .product-showcase__tick {
-    color: var(--color-foreground);
+  .product-showcase__col {
+    position: relative;
+    padding-block: var(--space-20);
+  }
+
+  .product-showcase__col > * {
+    display: block;
+    margin-inline: auto;
+  }
+
+  .product-showcase__thumb {
+    width: var(--space-60);
+    height: var(--space-60);
+    object-fit: cover;
+    margin-block-end: var(--space-12);
+  }
+
+  .product-showcase__col-title {
+    text-transform: uppercase;
+  }
+
+  .product-showcase__col-price {
+    margin-block-start: var(--space-4);
+    opacity: var(--opacity-brand-muted);
+  }
+
+  .product-showcase__flag {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    padding: var(--space-4) var(--space-8);
+    background: var(--color-accent-bar);
+    color: var(--color-on-media);
+    text-transform: uppercase;
+  }
+
+  .product-showcase__table .is-featured {
+    background: var(--showcase-panel, var(--color-background));
+  }
+
+  .product-showcase__table thead .is-featured {
+    padding-block-start: var(--space-40);
+  }
+
+  .product-showcase__value {
+    display: block;
+    text-transform: uppercase;
+  }
+
+  .product-showcase__check {
+    display: inline-grid;
+    place-items: center;
+    width: var(--icon-md);
+    height: var(--icon-md);
+    border-radius: var(--radius-full);
+    background: var(--color-accent-bar);
+    color: var(--color-on-media);
+  }
+
+  .product-showcase__check svg {
+    width: 60%;
+    height: 60%;
+  }
+
+  .product-showcase__soon {
+    opacity: var(--opacity-brand-muted);
+  }
+
+  .product-showcase__cell--action {
+    padding-block: var(--space-20);
+  }
+
+  .product-showcase__table-button {
+    width: 100%;
   }
 
   @media screen and (min-width: 750px) {
@@ -489,17 +628,29 @@
       min-width: calc(var(--space-112) * 2 + var(--space-30));
     }
 
+    .product-showcase__compare {
+      gap: var(--space-40);
+      margin-block-start: var(--space-60);
+    }
+
     .product-showcase__table :is(th, td) {
-      padding: var(--space-16) var(--space-20);
+      padding: var(--space-20) var(--space-30);
+      font-size: var(--type-body-size);
+      line-height: var(--type-body-line);
     }
 
-    .product-showcase__table {
-      table-layout: fixed;
+    .product-showcase__corner {
+      width: 26%;
     }
 
-    .product-showcase__table tbody th,
-    .product-showcase__table thead td {
-      width: 22%;
+    .product-showcase__thumb {
+      width: calc(var(--space-80) + var(--space-16));
+      height: calc(var(--space-80) + var(--space-16));
+    }
+
+    .product-showcase__table-button {
+      width: auto;
+      min-width: calc(var(--space-112) * 2);
     }
   }
 
@@ -694,6 +845,31 @@
       "id": "show_compare",
       "label": "t:settings.show_comparison",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "compare_heading",
+      "label": "t:settings.compare_heading",
+      "default": "Compare the cloths"
+    },
+    {
+      "type": "checkbox",
+      "id": "highlight_first",
+      "label": "t:settings.highlight_first",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "featured_label",
+      "label": "t:settings.featured_label",
+      "default": "Most popular",
+      "visible_if": "{{ section.settings.highlight_first }}"
+    },
+    {
+      "type": "text",
+      "id": "soon_label",
+      "label": "t:settings.soon_label",
+      "default": "One-time only"
     },
     {
       "type": "text",

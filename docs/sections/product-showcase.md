@@ -39,3 +39,15 @@ A two-product store needs a collection page that presents both products properly
 - **Content:** each product's purpose line is its Subtitle; cloths per pack and "Best for" are product fields under Custom data. Highlights are the same ticked points as on the product page.
 - **Section settings:** heading, labels and comparison rows. "Order" puts the highest price first by default.
 - **Extra comparison rows:** add a "Comparison row" block and type one value per product, in the order the products appear.
+
+### Reasoning, 2026-10-02: comparison redesign, panel content, Shop mega menu
+- **Comparison:**
+  - A visible "Compare the cloths" heading; product column headers with a thumbnail, name and "starts from" price.
+  - The first (flagship) column is tinted Linen with a Tan "Most popular" flag.
+  - Cloth counts are set large; ticks sit in Tan circles; when a product has no plans it says "One-time only" rather than a bare dash.
+  - Shop buttons in the footer row: primary for the flagship, outline for the rest.
+  - Jeet's feedback: the plain table looked dull.
+- **Panels:** The 8 had no highlights, so its panel looked empty beside the flagship. Four placeholder highlights were added to The 8 (D-17, client to replace).
+- **Shop mega menu:** the primary menu's Shop item is now the catalog link, with both products and "Compare the cloths" (anchor `#compare`) as children. The header menu uses Horizon's `featured_products` style with 1:1 images, so the dropdown shows both product cards.
+- **Known limit:** the mega menu's product cards follow the catalog's default order, so The 8 shows first. A manual "Shop" collection with the flagship first would fix that, but it has to be published to the Online Store (Jeet's call).
+- **Approver:** Jeet.

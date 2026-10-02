@@ -24,7 +24,11 @@
     "value_3": "Value for product 3",
     "value_4": "Value for product 4",
     "yes_label": "Yes label (screen readers)",
-    "product_order": "Order"
+    "product_order": "Order",
+    "compare_heading": "Comparison heading",
+    "highlight_first": "Highlight the first product",
+    "featured_label": "Highlight label",
+    "soon_label": "Label when there is no subscription"
   },
   "options": {
     "price_high_low": "Price, high to low",

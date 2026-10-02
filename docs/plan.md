@@ -153,6 +153,7 @@ Link to seo.md. Redirect count, canonical and noindex rules, JSON-LD types. New 
 | D-13 | Recharge selling plan names | Jeet / client | Once the plans exist in Recharge, put each plan's exact name in its subscription_plan entry's "Selling plan name"; until then cards match by order (3 month first, then 1 month) | Open |
 | D-14 | Klaviyo list for the footer signup | Client | The footer uses Shopify customer signup, which Klaviyo syncs; confirm the list | Open |
 | D-15 | Mobile search | Jeet | The design hides search on mobile, so it's hidden there for now | Open |
+| D-17 | The 8 highlights are placeholder copy written to match The 30 ("Eight cloths in a travel-size pack." and so on) | Client | Replace with approved copy | Open |
 | 1 | Figma design file, library file and prototype links | Client / designer | Design file received; no separate library | Answered |
 | 2 | Brand font files and licences | Client | Files taken from the live theme; licence confirmation is T-2 | Partly answered |
 | 3 | Launch date | Client | | Open |

@@ -833,6 +833,10 @@
     "below_media": "Below media"
   },
   "settings": {
+    "soon_label": "Label when there is no subscription",
+    "featured_label": "Highlight label",
+    "highlight_first": "Highlight the first product",
+    "compare_heading": "Comparison heading",
     "product_order": "Order",
     "yes_label": "Yes label (screen readers)",
     "value_4": "Value for product 4",
