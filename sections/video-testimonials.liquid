@@ -56,6 +56,18 @@
         assign next_is_video = true
         assign slide_index = 0
       -%}
+      {%- capture video_cards -%}
+        {%- for entry in videos -%}
+          <figure class="video-testimonials__video">
+            {% render 'video-player', video: entry.video.value, poster: entry.poster.value, play_size: 'small' %}
+            {%- if entry.title != blank -%}
+              <figcaption class="visually-hidden">{{ entry.title.value | escape }}</figcaption>
+            {%- endif -%}
+          </figure>
+          {%- unless forloop.last -%}[[video-card-break]]{%- endunless -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- assign video_card_list = video_cards | split: '[[video-card-break]]' -%}
       {%- capture slides -%}
         {%- for position in (1..slide_count) -%}
           {%- liquid
@@ -73,13 +85,7 @@
                   {% render 'video-player', play_size: 'small' %}
                 </div>
               {%- else -%}
-                {%- assign entry = videos[video_index] -%}
-                <figure class="video-testimonials__video">
-                  {% render 'video-player', video: entry.video.value, poster: entry.poster.value, play_size: 'small' %}
-                  {%- if entry.title != blank -%}
-                    <figcaption class="visually-hidden">{{ entry.title.value | escape }}</figcaption>
-                  {%- endif -%}
-                </figure>
+                {{ video_card_list[video_index] }}
               {%- endif -%}
               {%- assign video_index = video_index | plus: 1 -%}
               {%- assign next_is_video = false -%}

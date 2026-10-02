@@ -42,3 +42,10 @@ From docs/architecture.md (video-testimonials). Figma: home 965:1433 / 965:3223,
 
 ## Figma diff 2026-10-02
 Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.
+
+### Reasoning, 2026-10-02: UGC cards with posters, ready for video files
+- **What:** the five creator frames from Figma (965:2238) are uploaded as `ugc-creator-1…5.jpg` and attached to five `ugc_video` entries (`customer-video-1…5`). Home shows 1, 3 and 4 interleaved with the quote cards; the PDP shows all five through `custom.ugc_videos`, with no quote cards, as in the Figma desktop PDP.
+- **Video field now optional:** `ugc_video.video` is no longer required, so an entry can exist with a poster only. A card without a video shows its poster and no play button; once a video file is added to the entry, the play button appears and it plays on click. Template changes aren't needed for that.
+- **Bug fixed:** cards were picked with `videos[video_index]`, which doesn't resolve on metaobject lists. Cards are now pre-rendered in a `for` loop into a plain array, then interleaved with the quotes.
+- **Open:** the actual video files (D-6). Upload each to Files and set it on its entry under Content › Metaobjects › UGC video.
+- **Approver:** Jeet.

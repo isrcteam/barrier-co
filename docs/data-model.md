@@ -77,7 +77,7 @@ Display name field: title
 | Field key | Field type | Required | Renders in | Entered by |
 | --- | --- | --- | --- | --- |
 | title | single_line_text_field | yes | Accessible name for the video | Client |
-| video | file_reference (video) | yes | Video card | Client |
+| video | file_reference (video) | no (since 2026-10-02; the card shows the poster only until a video is set) | Video card | Client |
 | poster | file_reference (image) | no | Video poster, before playing | Client |
 
 ### subscription_plan (Subscription plan)

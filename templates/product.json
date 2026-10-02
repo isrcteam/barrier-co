@@ -348,29 +348,7 @@
         "columns_desktop": 5,
         "use_product_data": true,
         "quote_background_color": "#322C27"
-      },
-      "blocks": {
-        "video_testimonials_quote_1": {
-          "type": "quote",
-          "settings": {
-            "quote": "After just one use, my skin felt fresh, calm, and hydrated. It's simple, gentle, and genuinely feels different from anything I've used before.",
-            "author": "Jordan Miles",
-            "rating": 5
-          }
-        },
-        "video_testimonials_quote_2": {
-          "type": "quote",
-          "settings": {
-            "quote": "After just one use, my skin felt fresh, calm, and hydrated. It's simple, gentle, and genuinely feels different from anything I've used before.",
-            "author": "Jordan Miles",
-            "rating": 5
-          }
-        }
-      },
-      "block_order": [
-        "video_testimonials_quote_1",
-        "video_testimonials_quote_2"
-      ]
+      }
     },
     "results": {
       "type": "clinical-results",

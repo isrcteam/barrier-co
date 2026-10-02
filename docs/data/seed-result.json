@@ -119,6 +119,26 @@
       "id": "gid://shopify/Metaobject/607223709951",
       "status": "ACTIVE",
       "source": "figma 965:2350"
+    },
+    "ugc_video/customer-video-1": {
+      "status": "ACTIVE",
+      "source": "figma 965:2238 poster only, video pending (D-6)"
+    },
+    "ugc_video/customer-video-2": {
+      "status": "ACTIVE",
+      "source": "figma 965:2238 poster only, video pending (D-6)"
+    },
+    "ugc_video/customer-video-3": {
+      "status": "ACTIVE",
+      "source": "figma 965:2238 poster only, video pending (D-6)"
+    },
+    "ugc_video/customer-video-4": {
+      "status": "ACTIVE",
+      "source": "figma 965:2238 poster only, video pending (D-6)"
+    },
+    "ugc_video/customer-video-5": {
+      "status": "ACTIVE",
+      "source": "figma 965:2238 poster only, video pending (D-6)"
     }
   },
   "products": {

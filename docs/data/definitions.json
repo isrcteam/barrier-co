@@ -157,7 +157,7 @@
           "file_types": [
             "Video"
           ],
-          "required": true
+          "required": false
         },
         {
           "key": "poster",

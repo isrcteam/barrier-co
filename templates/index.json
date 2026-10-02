@@ -405,7 +405,12 @@
         "heading": "Real use. Real routines.",
         "heading_tag": "h2",
         "columns_desktop": 5,
-        "quote_background_color": "#322C27"
+        "quote_background_color": "#322C27",
+        "ugc_videos": [
+          "customer-video-1",
+          "customer-video-3",
+          "customer-video-4"
+        ]
       },
       "blocks": {
         "video_testimonials_quote_1": {

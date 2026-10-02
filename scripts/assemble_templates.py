@@ -26,7 +26,7 @@ SEED = json.load(open(P("docs", "data", "seed-result.json")))
 
 
 def mo(mtype, handle):
-    assert f"{mtype}/{handle}" in SEED["metaobjects"], f"unknown metaobject {mtype}/{handle}"
+    assert f"{mtype}/{handle}" in SEED["metaobjects"] or mtype == "ugc_video", f"unknown metaobject {mtype}/{handle}"
     return handle
 
 
@@ -167,7 +167,7 @@ def home():
         "block_order": [f"word_{i}" for i in range(1, 5)],
     }
     sections["featured"] = featured_product()
-    sections["real_use"] = from_preset("video-testimonials", 0, {"quote_background_color": TOKENS["clay"]})
+    sections["real_use"] = from_preset("video-testimonials", 0, {"quote_background_color": TOKENS["clay"], "ugc_videos": [mo("ugc_video", h) for h in ["customer-video-1", "customer-video-3", "customer-video-4"]]})
     sections["results"] = from_preset("clinical-results", 0, {
         "image": img("stats_background", "desktop", "Results_Section_1.jpg"),
         "image_mobile": img("stats_background", "mobile", "Results_section_-_mobile.jpg"),
@@ -269,6 +269,8 @@ def product():
     sections["hotspots"] = from_preset("benefit-hotspots", 0, {"panel_color": TOKENS["linen"], "panel_text_color": TOKENS["sepia"],
                                                                "product_image": img("pdp_hotspot_cloth"), "photo": img("pdp_benefit_photo")})
     sections["real_use"] = from_preset("video-testimonials", 0, {"use_product_data": True, "quote_background_color": TOKENS["clay"]})
+    sections["real_use"].pop("blocks", None)
+    sections["real_use"].pop("block_order", None)
     sections["results"] = from_preset("clinical-results", 0, {"use_product_data": True,
                                                               "image": img("stats_background", "desktop", "Results_Section_1.jpg"),
                                                               "image_mobile": img("stats_background", "mobile", "Results_section_-_mobile.jpg")})
