@@ -166,3 +166,17 @@ Grouped by issue. Node-level detail is kept in the audit CSVs (homepage, PDP, co
 | 2026-10-01 | Glass 0.30 | 0.28 | Two opacities for one surface | |
 | 2026-10-01 | 24.192, 8.132, 9.072, 2.184, 30.333, 26.211 | 24, 8, 8, 2, 30, 26 | Scaled-layer artefacts | |
 | 2026-10-01 | Gaps 5, 7, 9, 15, 17, 19, 27, 28, 50, 56, 84, 85 | 4, 8, 8, 16, 16, 20, 30, 30, 60, 60, 86, 86 | Off the scale | |
+
+## Fluid type above 1440 (2026-10-02, Jeet)
+Type matches the Figma exactly up to 1440. Between 1440 and 1920 the roles below grow linearly, using `clamp()` generated from `type.<role>.wide` in tokens.json. From 1920 up they stay at the wide size. Mobile and laptop are unchanged.
+
+| Role | ≤1440 | 1920+ |
+| --- | --- | --- |
+| display, h1 | 60 | 72 |
+| h2 | 36 | 42 |
+| body_large | 18 | 20 |
+| body | 16 | 18 |
+| body_small | 14 | 16 |
+| eyebrow | 20 | 22 |
+
+Captions, labels, buttons and stats keep their sizes. Why: on a 1920 wrapper, 1440-sized type read small, with long line lengths. Text boxes sized for a heading scale with it; for example, the inset banner's text width is 8 × the h1 size, so it keeps its four-line break.

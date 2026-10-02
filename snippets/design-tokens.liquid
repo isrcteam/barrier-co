@@ -33,6 +33,8 @@
     --layout-button-medium: 2.75rem;
     --layout-button-small: 2.5rem;
     --layout-select-height: var(--layout-button-medium);
+    --layout-type-scale-start: 90rem;
+    --layout-type-scale-end: 120rem;
     --radius-none: 0;
     --radius-full: 62.4375rem;
     --border-hairline: 0.0625rem;
@@ -159,18 +161,19 @@
 
   @media screen and (min-width: 990px) {
     :root {
-      --type-display-size: 3.75rem;
-      --type-h1-size: 3.75rem;
+      --type-display-size: clamp(3.75rem, calc(3.75rem + (100vw - 90rem) * 0.025), 4.5rem);
+      --type-h1-size: clamp(3.75rem, calc(3.75rem + (100vw - 90rem) * 0.025), 4.5rem);
       --type-h1-line: 0.9;
-      --type-h2-size: 2.25rem;
+      --type-h2-size: clamp(2.25rem, calc(2.25rem + (100vw - 90rem) * 0.0125), 2.625rem);
       --type-h2-line: 0.9;
       --type-h3-size: 1.25rem;
       --type-card-label-size: 1.5rem;
       --type-stat-size: 6rem;
       --type-stat-line: 0.73;
-      --type-eyebrow-size: 1.25rem;
-      --type-body-large-size: 1.125rem;
-      --type-body-size: 1rem;
+      --type-eyebrow-size: clamp(1.25rem, calc(1.25rem + (100vw - 90rem) * 0.004167), 1.375rem);
+      --type-body-large-size: clamp(1.125rem, calc(1.125rem + (100vw - 90rem) * 0.004167), 1.25rem);
+      --type-body-size: clamp(1rem, calc(1rem + (100vw - 90rem) * 0.004167), 1.125rem);
+      --type-body-small-size: clamp(0.875rem, calc(0.875rem + (100vw - 90rem) * 0.004167), 1rem);
       --layout-gutter: var(--layout-gutter-desktop);
       --layout-grid-gap: var(--layout-grid-gap-desktop);
       --layout-section-gap: var(--layout-section-gap-desktop);

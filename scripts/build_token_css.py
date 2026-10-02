@@ -69,6 +69,12 @@ def main():
         root += [f"--type-{r}-size: {rem(m['size'])};", f"--type-{r}-line: {m['line']};",
                  f"--type-{r}-tracking: {m['tracking']}em;" if m['tracking'] else f"--type-{r}-tracking: 0;"]
         for k, unit in (("size", "rem"), ("line", ""), ("tracking", "em")):
+            if k == "size" and spec.get("wide"):
+                start, end = t["layout"]["type-scale-start"], t["layout"]["type-scale-end"]
+                w = spec["wide"]["size"]
+                ratio = round((w - d["size"]) / (end - start), 6)
+                wide.append(f"--type-{r}-size: clamp({rem(d['size'])}, calc({rem(d['size'])} + (100vw - {rem(start)}) * {ratio}), {rem(w)});")
+                continue
             if d[k] != m[k]:
                 out = rem(d[k]) if k == "size" else f"{d[k]}{unit}"
                 wide.append(f"--type-{r}-{k}: {out};")
