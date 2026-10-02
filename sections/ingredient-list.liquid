@@ -36,7 +36,7 @@
 
   assign heading_tag = settings_ref.heading_tag | default: 'h2'
   assign name_tag = settings_ref.name_tag | default: 'h3'
-  assign image_sizes = '(min-width: 990px) 272px, 112px'
+  assign image_sizes = '(min-width: 990px) 22vw, 112px'
 -%}
 
 {%- if items_count > 0 or show_placeholders -%}
@@ -88,9 +88,9 @@
                 {%- if item_image != blank -%}
                   {{
                     item_image
-                    | image_url: width: 560
+                    | image_url: width: 1100
                     | image_tag:
-                      widths: '112, 224, 272, 336, 560',
+                      widths: '112, 224, 336, 560, 840, 1100',
                       sizes: image_sizes,
                       loading: 'lazy',
                       class: 'ingredient-list__image',
