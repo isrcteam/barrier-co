@@ -22,9 +22,6 @@
         "spotlight_button_label": "Shop now",
         "width": "full",
         "content_position": "bottom_left",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "same_padding_mobile": true,
         "image_desktop": "shopify://shop_images/home-hero-desktop.jpg",
         "image_mobile": "shopify://shop_images/home-hero-mobile.jpg",
         "spotlight_product": "the-30-the-everyday",
@@ -108,11 +105,6 @@
         "text": "<p>Most skincare sits on the surface. The Barrier Cloth works beneath it delivering hyaluronic acid, glycerin, and barrier-strengthening actives directly into the skin. One cloth cleanses, hydrates, and protects in a single step. No bottles. No layering. No 10-step routine. Just full-body skincare.</p>",
         "media_type": "video",
         "show_second_tile": false,
-        "padding_top": 80,
-        "padding_bottom": 0,
-        "same_padding_mobile": false,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 0,
         "poster": "shopify://shop_images/intro-video-poster-desktop.jpg",
         "image": "shopify://shop_images/intro-video-poster-desktop.jpg"
       }
@@ -126,9 +118,6 @@
         "show_side_bars": true,
         "caption_alignment": "center",
         "caption_size": "type-body-small",
-        "padding-block-start": 40,
-        "padding-block-end": 40,
-        "same_mobile_padding": true,
         "background_color": "#F0ECE1"
       },
       "blocks": {
@@ -415,11 +404,6 @@
         "heading": "Real use. Real routines.",
         "heading_tag": "h2",
         "columns_desktop": 5,
-        "padding-block-start": 40,
-        "padding-block-end": 40,
-        "same_mobile_padding": false,
-        "padding-block-start-mobile": 30,
-        "padding-block-end-mobile": 30,
         "quote_background_color": "#322C27"
       },
       "blocks": {
@@ -454,11 +438,6 @@
         "button_label": "Our science",
         "button_link": "/collections/all",
         "inset": true,
-        "padding-block-start": 40,
-        "padding-block-end": 40,
-        "same_mobile_padding": false,
-        "padding-block-start-mobile": 0,
-        "padding-block-end-mobile": 0,
         "image": "shopify://shop_images/stats-background-desktop.jpg",
         "image_mobile": "shopify://shop_images/stats-background-mobile.jpg",
         "results": [
@@ -526,11 +505,6 @@
         "show_overlay": false,
         "width": "inset",
         "content_position": "center_left",
-        "padding_top": 80,
-        "padding_bottom": 0,
-        "same_padding_mobile": false,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
         "image_desktop": "shopify://shop_images/inset-banner-desktop.jpg",
         "image_mobile": "shopify://shop_images/inset-banner-mobile.jpg",
         "same_image_mobile": false
@@ -545,12 +519,7 @@
         "middle_card": "tall",
         "show_side_bars": true,
         "caption_alignment": "left",
-        "caption_size": "type-body",
-        "padding-block-start": 40,
-        "padding-block-end": 40,
-        "same_mobile_padding": false,
-        "padding-block-start-mobile": 30,
-        "padding-block-end-mobile": 30
+        "caption_size": "type-body"
       },
       "blocks": {
         "card_shell": {
@@ -587,11 +556,6 @@
         "text": "<p>Real results from real people. The Barrier Cloth delivers active hydration deeply where it counts, reducing redness and smoothing skin texture in 14 days.</p>",
         "product_price_label": "Starts from [price]",
         "product_button_label": "Shop now",
-        "padding-block-start": 40,
-        "padding-block-end": 40,
-        "same_mobile_padding": false,
-        "padding-block-start-mobile": 30,
-        "padding-block-end-mobile": 30,
         "product": "the-8-made-to-go-where-you-go",
         "comparisons": [
           "the-30-day-14"

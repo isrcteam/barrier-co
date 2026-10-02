@@ -4,7 +4,7 @@
 
   assign pt = section.settings['padding-block-start'] | divided_by: 16.0
   assign pb = section.settings['padding-block-end'] | divided_by: 16.0
-  if section.settings.same_mobile_padding
+  if section.settings.same_padding_mobile
     assign pt_mobile = pt
     assign pb_mobile = pb
   else
@@ -231,7 +231,9 @@
   "name": "t:names.logo_list",
   "class": "section-wrapper",
   "disabled_on": {
-    "groups": ["header"]
+    "groups": [
+      "header"
+    ]
   },
   "blocks": [
     {
@@ -289,7 +291,7 @@
       "id": "padding-block-start",
       "label": "t:settings.top",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
       "default": 24
@@ -299,38 +301,38 @@
       "id": "padding-block-end",
       "label": "t:settings.bottom",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
       "default": 24
     },
     {
       "type": "checkbox",
-      "id": "same_mobile_padding",
+      "id": "same_padding_mobile",
       "label": "t:settings.same_at_mobile",
-      "default": false
+      "default": true
     },
     {
       "type": "range",
       "id": "padding-block-start-mobile",
       "label": "t:settings.top_mobile",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 30,
-      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+      "default": 24,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     },
     {
       "type": "range",
       "id": "padding-block-end-mobile",
       "label": "t:settings.bottom_mobile",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 30,
-      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+      "default": 24,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     }
   ],
   "presets": [
@@ -342,14 +344,51 @@
         "scroll_mobile": true
       },
       "blocks": {
-        "logo_1": { "type": "logo", "settings": { "alt": "Equinox" } },
-        "logo_2": { "type": "logo", "settings": { "alt": "Delta One" } },
-        "logo_3": { "type": "logo", "settings": { "alt": "Credo" } },
-        "logo_4": { "type": "logo", "settings": { "alt": "Equinox" } },
-        "logo_5": { "type": "logo", "settings": { "alt": "Delta One" } },
-        "logo_6": { "type": "logo", "settings": { "alt": "Credo" } }
+        "logo_1": {
+          "type": "logo",
+          "settings": {
+            "alt": "Equinox"
+          }
+        },
+        "logo_2": {
+          "type": "logo",
+          "settings": {
+            "alt": "Delta One"
+          }
+        },
+        "logo_3": {
+          "type": "logo",
+          "settings": {
+            "alt": "Credo"
+          }
+        },
+        "logo_4": {
+          "type": "logo",
+          "settings": {
+            "alt": "Equinox"
+          }
+        },
+        "logo_5": {
+          "type": "logo",
+          "settings": {
+            "alt": "Delta One"
+          }
+        },
+        "logo_6": {
+          "type": "logo",
+          "settings": {
+            "alt": "Credo"
+          }
+        }
       },
-      "block_order": ["logo_1", "logo_2", "logo_3", "logo_4", "logo_5", "logo_6"]
+      "block_order": [
+        "logo_1",
+        "logo_2",
+        "logo_3",
+        "logo_4",
+        "logo_5",
+        "logo_6"
+      ]
     }
   ]
 }

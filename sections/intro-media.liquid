@@ -2,11 +2,11 @@
   assign s = section.settings
   assign heading_tag = s.heading_tag | default: 'h2'
 
-  assign padding_top_mobile = s.padding_top
-  assign padding_bottom_mobile = s.padding_bottom
+  assign padding_top_mobile = s['padding-block-start']
+  assign padding_bottom_mobile = s['padding-block-end']
   if s.same_padding_mobile == false
-    assign padding_top_mobile = s.padding_top_mobile
-    assign padding_bottom_mobile = s.padding_bottom_mobile
+    assign padding_top_mobile = s['padding-block-start-mobile']
+    assign padding_bottom_mobile = s['padding-block-end-mobile']
   endif
 
   if s.show_second_tile
@@ -22,7 +22,7 @@
 
 <div
   class="intro-media {{ layout_class }} color-custom-{{ section.id }}"
-  style="--intro-media-pt: {{ s.padding_top | divided_by: 16.0 }}rem; --intro-media-pb: {{ s.padding_bottom | divided_by: 16.0 }}rem; --intro-media-pt-mobile: {{ padding_top_mobile | divided_by: 16.0 }}rem; --intro-media-pb-mobile: {{ padding_bottom_mobile | divided_by: 16.0 }}rem;"
+  style="--intro-media-pt: {{ s['padding-block-start'] | divided_by: 16.0 }}rem; --intro-media-pb: {{ s['padding-block-end'] | divided_by: 16.0 }}rem; --intro-media-pt-mobile: {{ padding_top_mobile | divided_by: 16.0 }}rem; --intro-media-pb-mobile: {{ padding_bottom_mobile | divided_by: 16.0 }}rem;"
 >
   <div class="intro-media__container">
     {%- if s.eyebrow != blank or s.heading != blank or s.text != blank -%}
@@ -215,6 +215,13 @@
       aspect-ratio: 399 / 287;
     }
   }
+
+  @media screen and (min-width: 990px) {
+    .intro-media__text {
+      justify-self: end;
+      max-width: calc(var(--layout-text-width) + var(--space-80));
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -223,7 +230,10 @@
   "class": "section-wrapper",
   "tag": "section",
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": [
+      "header",
+      "footer"
+    ]
   },
   "settings": [
     {
@@ -247,10 +257,22 @@
       "id": "heading_tag",
       "label": "t:settings.heading_tag",
       "options": [
-        { "value": "h1", "label": "t:options.h1" },
-        { "value": "h2", "label": "t:options.h2" },
-        { "value": "h3", "label": "t:options.h3" },
-        { "value": "p", "label": "t:options.paragraph" }
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
       ],
       "default": "h2"
     },
@@ -268,8 +290,14 @@
       "id": "media_type",
       "label": "t:settings.media_type",
       "options": [
-        { "value": "image", "label": "t:options.image" },
-        { "value": "video", "label": "t:options.video" }
+        {
+          "value": "image",
+          "label": "t:options.image"
+        },
+        {
+          "value": "video",
+          "label": "t:options.video"
+        }
       ],
       "default": "video"
     },
@@ -289,7 +317,10 @@
       "type": "video_url",
       "id": "video_url",
       "label": "t:settings.video_external_url",
-      "accept": ["youtube", "vimeo"],
+      "accept": [
+        "youtube",
+        "vimeo"
+      ],
       "info": "t:info.video_external",
       "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
@@ -314,8 +345,14 @@
       "id": "second_media_type",
       "label": "t:settings.media_type_2",
       "options": [
-        { "value": "image", "label": "t:options.image" },
-        { "value": "video", "label": "t:options.video" }
+        {
+          "value": "image",
+          "label": "t:options.image"
+        },
+        {
+          "value": "video",
+          "label": "t:options.video"
+        }
       ],
       "default": "video",
       "visible_if": "{{ section.settings.show_second_tile }}"
@@ -336,7 +373,10 @@
       "type": "video_url",
       "id": "second_video_url",
       "label": "t:settings.video_external_url",
-      "accept": ["youtube", "vimeo"],
+      "accept": [
+        "youtube",
+        "vimeo"
+      ],
       "info": "t:info.video_external",
       "visible_if": "{{ section.settings.show_second_tile and section.settings.second_media_type == 'video' }}"
     },
@@ -362,17 +402,17 @@
     },
     {
       "type": "range",
-      "id": "padding_top",
+      "id": "padding-block-start",
       "label": "t:settings.top",
       "min": 0,
       "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 80
+      "default": 0
     },
     {
       "type": "range",
-      "id": "padding_bottom",
+      "id": "padding-block-end",
       "label": "t:settings.bottom",
       "min": 0,
       "max": 160,
@@ -388,18 +428,18 @@
     },
     {
       "type": "range",
-      "id": "padding_top_mobile",
+      "id": "padding-block-start-mobile",
       "label": "t:settings.top_mobile",
       "min": 0,
       "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 30,
+      "default": 0,
       "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     },
     {
       "type": "range",
-      "id": "padding_bottom_mobile",
+      "id": "padding-block-end-mobile",
       "label": "t:settings.bottom_mobile",
       "min": 0,
       "max": 160,
@@ -419,12 +459,7 @@
         "heading_tag": "h2",
         "text": "<p>Most skincare sits on the surface. The Barrier Cloth works beneath it delivering hyaluronic acid, glycerin, and barrier-strengthening actives directly into the skin. One cloth cleanses, hydrates, and protects in a single step. No bottles. No layering. No 10-step routine. Just full-body skincare.</p>",
         "media_type": "video",
-        "show_second_tile": false,
-        "padding_top": 80,
-        "padding_bottom": 0,
-        "same_padding_mobile": false,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 0
+        "show_second_tile": false
       }
     },
     {
@@ -437,12 +472,7 @@
         "text": "<p>Most skincare sits on the surface. The Barrier Cloth works beneath it delivering hyaluronic acid, glycerin, and barrier-strengthening actives directly into the skin. One cloth cleanses, hydrates, and protects in a single step. No bottles. No layering. No 10-step routine. Just full-body skincare.</p>",
         "media_type": "image",
         "show_second_tile": true,
-        "second_media_type": "video",
-        "padding_top": 80,
-        "padding_bottom": 0,
-        "same_padding_mobile": false,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 0
+        "second_media_type": "video"
       }
     }
   ]

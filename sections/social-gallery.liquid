@@ -4,7 +4,7 @@
 
   assign pt = section.settings['padding-block-start'] | divided_by: 16.0
   assign pb = section.settings['padding-block-end'] | divided_by: 16.0
-  if section.settings.same_mobile_padding
+  if section.settings.same_padding_mobile
     assign pt_mobile = pt
     assign pb_mobile = pb
   else
@@ -222,7 +222,9 @@
   "name": "t:names.social_gallery",
   "class": "section-wrapper",
   "disabled_on": {
-    "groups": ["header"]
+    "groups": [
+      "header"
+    ]
   },
   "blocks": [
     {
@@ -261,9 +263,18 @@
       "id": "heading_tag",
       "label": "t:settings.heading_tag",
       "options": [
-        { "value": "h2", "label": "t:options.h2" },
-        { "value": "h3", "label": "t:options.h3" },
-        { "value": "p", "label": "t:options.paragraph" }
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
       ],
       "default": "h2"
     },
@@ -287,7 +298,7 @@
       "id": "padding-block-start",
       "label": "t:settings.top",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
       "default": 40
@@ -297,38 +308,38 @@
       "id": "padding-block-end",
       "label": "t:settings.bottom",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
       "default": 40
     },
     {
       "type": "checkbox",
-      "id": "same_mobile_padding",
+      "id": "same_padding_mobile",
       "label": "t:settings.same_at_mobile",
-      "default": true
+      "default": false
     },
     {
       "type": "range",
       "id": "padding-block-start-mobile",
       "label": "t:settings.top_mobile",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 40,
-      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+      "default": 30,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     },
     {
       "type": "range",
       "id": "padding-block-end-mobile",
       "label": "t:settings.bottom_mobile",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 40,
-      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+      "default": 30,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     }
   ],
   "presets": [
@@ -340,14 +351,41 @@
         "profile_link": "https://www.instagram.com/"
       },
       "blocks": {
-        "tile_1": { "type": "tile", "settings": {} },
-        "tile_2": { "type": "tile", "settings": { "show_icon": true } },
-        "tile_3": { "type": "tile", "settings": {} },
-        "tile_4": { "type": "tile", "settings": {} },
-        "tile_5": { "type": "tile", "settings": {} },
-        "tile_6": { "type": "tile", "settings": {} }
+        "tile_1": {
+          "type": "tile",
+          "settings": {}
+        },
+        "tile_2": {
+          "type": "tile",
+          "settings": {
+            "show_icon": true
+          }
+        },
+        "tile_3": {
+          "type": "tile",
+          "settings": {}
+        },
+        "tile_4": {
+          "type": "tile",
+          "settings": {}
+        },
+        "tile_5": {
+          "type": "tile",
+          "settings": {}
+        },
+        "tile_6": {
+          "type": "tile",
+          "settings": {}
+        }
       },
-      "block_order": ["tile_1", "tile_2", "tile_3", "tile_4", "tile_5", "tile_6"]
+      "block_order": [
+        "tile_1",
+        "tile_2",
+        "tile_3",
+        "tile_4",
+        "tile_5",
+        "tile_6"
+      ]
     }
   ]
 }

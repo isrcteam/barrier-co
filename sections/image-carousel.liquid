@@ -5,7 +5,7 @@
 
   assign pt = section.settings['padding-block-start'] | divided_by: 16.0
   assign pb = section.settings['padding-block-end'] | divided_by: 16.0
-  if section.settings.same_mobile_padding
+  if section.settings.same_padding_mobile
     assign pt_mobile = pt
     assign pb_mobile = pb
   else
@@ -580,7 +580,7 @@
       "id": "padding-block-start",
       "label": "t:settings.top",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
       "default": 40
@@ -590,38 +590,38 @@
       "id": "padding-block-end",
       "label": "t:settings.bottom",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
       "default": 40
     },
     {
       "type": "checkbox",
-      "id": "same_mobile_padding",
+      "id": "same_padding_mobile",
       "label": "t:settings.same_at_mobile",
-      "default": true
+      "default": false
     },
     {
       "type": "range",
       "id": "padding-block-start-mobile",
       "label": "t:settings.top_mobile",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 40,
-      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+      "default": 30,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     },
     {
       "type": "range",
       "id": "padding-block-end-mobile",
       "label": "t:settings.bottom_mobile",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 40,
-      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+      "default": 30,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     }
   ],
   "presets": [
@@ -634,10 +634,7 @@
         "middle_card": "offset",
         "show_side_bars": true,
         "caption_alignment": "center",
-        "caption_size": "type-body-small",
-        "padding-block-start": 40,
-        "padding-block-end": 40,
-        "same_mobile_padding": true
+        "caption_size": "type-body-small"
       },
       "blocks": {
         "card_cleanse": {
@@ -678,12 +675,7 @@
         "middle_card": "tall",
         "show_side_bars": true,
         "caption_alignment": "left",
-        "caption_size": "type-body",
-        "padding-block-start": 40,
-        "padding-block-end": 40,
-        "same_mobile_padding": false,
-        "padding-block-start-mobile": 30,
-        "padding-block-end-mobile": 30
+        "caption_size": "type-body"
       },
       "blocks": {
         "card_shell": {

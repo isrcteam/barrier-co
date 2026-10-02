@@ -1,11 +1,11 @@
 {%- liquid
   assign s = section.settings
 
-  assign padding_top_mobile = s.padding_top
-  assign padding_bottom_mobile = s.padding_bottom
+  assign padding_top_mobile = s['padding-block-start']
+  assign padding_bottom_mobile = s['padding-block-end']
   if s.same_padding_mobile == false
-    assign padding_top_mobile = s.padding_top_mobile
-    assign padding_bottom_mobile = s.padding_bottom_mobile
+    assign padding_top_mobile = s['padding-block-start-mobile']
+    assign padding_bottom_mobile = s['padding-block-end-mobile']
   endif
 
   assign ratio_mobile = s.ratio_desktop
@@ -33,7 +33,7 @@
 
 <div
   class="video-banner video-banner--{{ s.width }} color-custom-{{ section.id }}"
-  style="--video-banner-ratio: {{ s.ratio_desktop }}; --video-banner-ratio-mobile: {{ ratio_mobile }}; --video-banner-pt: {{ s.padding_top | divided_by: 16.0 }}rem; --video-banner-pb: {{ s.padding_bottom | divided_by: 16.0 }}rem; --video-banner-pt-mobile: {{ padding_top_mobile | divided_by: 16.0 }}rem; --video-banner-pb-mobile: {{ padding_bottom_mobile | divided_by: 16.0 }}rem;"
+  style="--video-banner-ratio: {{ s.ratio_desktop }}; --video-banner-ratio-mobile: {{ ratio_mobile }}; --video-banner-pt: {{ s['padding-block-start'] | divided_by: 16.0 }}rem; --video-banner-pb: {{ s['padding-block-end'] | divided_by: 16.0 }}rem; --video-banner-pt-mobile: {{ padding_top_mobile | divided_by: 16.0 }}rem; --video-banner-pb-mobile: {{ padding_bottom_mobile | divided_by: 16.0 }}rem;"
 >
   <div class="video-banner__frame">
     {%- if can_play -%}
@@ -146,7 +146,10 @@
   "class": "section-wrapper",
   "tag": "section",
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": [
+      "header",
+      "footer"
+    ]
   },
   "settings": [
     {
@@ -162,7 +165,10 @@
       "type": "video_url",
       "id": "video_url",
       "label": "t:settings.video_external_url",
-      "accept": ["youtube", "vimeo"],
+      "accept": [
+        "youtube",
+        "vimeo"
+      ],
       "info": "t:info.video_external"
     },
     {
@@ -197,8 +203,14 @@
       "id": "width",
       "label": "t:settings.width",
       "options": [
-        { "value": "full", "label": "t:options.full" },
-        { "value": "inset", "label": "t:options.inset" }
+        {
+          "value": "full",
+          "label": "t:options.full"
+        },
+        {
+          "value": "inset",
+          "label": "t:options.inset"
+        }
       ],
       "default": "full"
     },
@@ -242,17 +254,17 @@
     },
     {
       "type": "range",
-      "id": "padding_top",
+      "id": "padding-block-start",
       "label": "t:settings.top",
       "min": 0,
       "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 80
+      "default": 0
     },
     {
       "type": "range",
-      "id": "padding_bottom",
+      "id": "padding-block-end",
       "label": "t:settings.bottom",
       "min": 0,
       "max": 160,
@@ -268,7 +280,7 @@
     },
     {
       "type": "range",
-      "id": "padding_top_mobile",
+      "id": "padding-block-start-mobile",
       "label": "t:settings.top_mobile",
       "min": 0,
       "max": 160,
@@ -279,7 +291,7 @@
     },
     {
       "type": "range",
-      "id": "padding_bottom_mobile",
+      "id": "padding-block-end-mobile",
       "label": "t:settings.bottom_mobile",
       "min": 0,
       "max": 160,
@@ -297,12 +309,7 @@
         "width": "full",
         "ratio_desktop": 54,
         "same_ratio_mobile": false,
-        "ratio_mobile": 100,
-        "padding_top": 80,
-        "padding_bottom": 0,
-        "same_padding_mobile": false,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
+        "ratio_mobile": 100
       }
     }
   ]

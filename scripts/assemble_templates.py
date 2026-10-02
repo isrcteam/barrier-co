@@ -275,7 +275,7 @@ def product():
     sections["ingredients"] = from_preset("ingredient-list", 0, {"use_product_data": True, "divider_color": TOKENS["fossil"]})
     sections["film"] = from_preset("video-banner", 0, {"poster_desktop": img("video_banner_poster"), "poster_mobile": img("video_banner_poster", "mobile")})
     sections["before_after"] = from_preset("before-after", 0, {"use_product_data": True, "card_background_color": TOKENS["linen"]})
-    sections["reviews"] = {"type": "section", "settings": {"padding-block-start": 80, "padding-block-end": 80},
+    sections["reviews"] = {"type": "section", "settings": {"padding-block-start": 0, "padding-block-end": 0},
                            "blocks": {"reviews_heading": {"type": "text", "settings": {"text": "<h2>Reviews</h2>", "type_preset": "h1"}},
                                       "judgeme_reviews": {"type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8", "settings": {}}},
                            "block_order": ["reviews_heading", "judgeme_reviews"]}

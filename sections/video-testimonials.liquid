@@ -23,7 +23,7 @@
   assign padding_bottom = section.settings['padding-block-end']
   assign padding_top_mobile = section.settings['padding-block-start-mobile']
   assign padding_bottom_mobile = section.settings['padding-block-end-mobile']
-  if section.settings.same_mobile_padding
+  if section.settings.same_padding_mobile
     assign padding_top_mobile = padding_top
     assign padding_bottom_mobile = padding_bottom
   endif
@@ -322,6 +322,12 @@
       scroll-behavior: auto;
     }
   }
+
+  @media screen and (min-width: 990px) {
+    .video-testimonials__slideshow slideshow-slides {
+      justify-content: safe center;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -330,7 +336,10 @@
   "tag": "section",
   "class": "section-wrapper",
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": [
+      "header",
+      "footer"
+    ]
   },
   "settings": [
     {
@@ -344,11 +353,26 @@
       "id": "heading_tag",
       "label": "t:settings.heading_tag",
       "options": [
-        { "value": "h1", "label": "t:options.h1" },
-        { "value": "h2", "label": "t:options.h2" },
-        { "value": "h3", "label": "t:options.h3" },
-        { "value": "h4", "label": "t:options.h4" },
-        { "value": "p", "label": "t:options.paragraph" }
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
       ],
       "default": "h2"
     },
@@ -406,7 +430,7 @@
       "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
@@ -416,11 +440,11 @@
       "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "checkbox",
-      "id": "same_mobile_padding",
+      "id": "same_padding_mobile",
       "label": "t:settings.same_at_mobile",
       "default": true
     },
@@ -432,8 +456,8 @@
       "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 30,
-      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+      "default": 0,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     },
     {
       "type": "range",
@@ -443,8 +467,8 @@
       "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 30,
-      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+      "default": 0,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     }
   ],
   "blocks": [
@@ -493,12 +517,7 @@
       "settings": {
         "heading": "Real use. Real routines.",
         "heading_tag": "h2",
-        "columns_desktop": 5,
-        "padding-block-start": 40,
-        "padding-block-end": 40,
-        "same_mobile_padding": false,
-        "padding-block-start-mobile": 30,
-        "padding-block-end-mobile": 30
+        "columns_desktop": 5
       },
       "blocks": [
         {

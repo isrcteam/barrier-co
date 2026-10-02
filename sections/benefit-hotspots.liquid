@@ -4,7 +4,7 @@
 
   assign pad_top = settings_ref['padding-block-start'] | divided_by: 16.0
   assign pad_bottom = settings_ref['padding-block-end'] | divided_by: 16.0
-  if settings_ref.padding_same_mobile
+  if settings_ref.same_padding_mobile
     assign pad_top_mobile = pad_top
     assign pad_bottom_mobile = pad_bottom
   else
@@ -667,11 +667,11 @@
       "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 80
+      "default": 0
     },
     {
       "type": "checkbox",
-      "id": "padding_same_mobile",
+      "id": "same_padding_mobile",
       "label": "t:settings.same_at_mobile",
       "default": true
     },
@@ -684,7 +684,7 @@
       "step": 2,
       "unit": "px",
       "default": 0,
-      "visible_if": "{{ section.settings.padding_same_mobile == false }}"
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     },
     {
       "type": "range",
@@ -695,7 +695,7 @@
       "step": 2,
       "unit": "px",
       "default": 0,
-      "visible_if": "{{ section.settings.padding_same_mobile == false }}"
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     }
   ],
   "presets": [
@@ -703,8 +703,7 @@
       "name": "t:names.benefit_hotspots",
       "category": "t:categories.product",
       "settings": {
-        "heading": "t:text_defaults.benefit_hotspots_heading",
-        "padding_same_mobile": false
+        "heading": "t:text_defaults.benefit_hotspots_heading"
       },
       "blocks": [
         {

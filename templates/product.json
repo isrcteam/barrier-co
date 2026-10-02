@@ -288,7 +288,6 @@
       "type": "benefit-hotspots",
       "settings": {
         "heading": "Your whole routine. One cloth",
-        "padding_same_mobile": false,
         "panel_color": "#F0ECE1",
         "panel_text_color": "#695A43",
         "product_image": "shopify://shop_images/pdp-hotspot-cloth.jpg",
@@ -346,11 +345,6 @@
         "heading": "Real use. Real routines.",
         "heading_tag": "h2",
         "columns_desktop": 5,
-        "padding-block-start": 40,
-        "padding-block-end": 40,
-        "same_mobile_padding": false,
-        "padding-block-start-mobile": 30,
-        "padding-block-end-mobile": 30,
         "use_product_data": true,
         "quote_background_color": "#322C27"
       },
@@ -386,11 +380,6 @@
         "button_label": "Our science",
         "button_link": "/collections/all",
         "inset": true,
-        "padding-block-start": 40,
-        "padding-block-end": 40,
-        "same_mobile_padding": false,
-        "padding-block-start-mobile": 0,
-        "padding-block-end-mobile": 0,
         "use_product_data": true,
         "image": "shopify://shop_images/stats-background-desktop.jpg",
         "image_mobile": "shopify://shop_images/stats-background-mobile.jpg",
@@ -402,7 +391,6 @@
       "settings": {
         "heading": "Key ingredients",
         "use_product_data": true,
-        "padding_same_mobile": false,
         "divider_color": "#BBAE9A"
       }
     },
@@ -413,11 +401,6 @@
         "ratio_desktop": 54,
         "same_ratio_mobile": false,
         "ratio_mobile": 100,
-        "padding_top": 80,
-        "padding_bottom": 0,
-        "same_padding_mobile": false,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
         "poster_desktop": "shopify://shop_images/video-banner-poster-desktop.jpg",
         "poster_mobile": "shopify://shop_images/video-banner-poster-mobile.jpg",
         "same_poster_mobile": false
@@ -431,11 +414,6 @@
         "text": "<p>Real results from real people. The Barrier Cloth delivers active hydration deeply where it counts, reducing redness and smoothing skin texture in 14 days.</p>",
         "product_price_label": "Starts from [price]",
         "product_button_label": "Shop now",
-        "padding-block-start": 40,
-        "padding-block-end": 40,
-        "same_mobile_padding": false,
-        "padding-block-start-mobile": 30,
-        "padding-block-end-mobile": 30,
         "use_product_data": true,
         "card_background_color": "#F0ECE1"
       }
@@ -443,8 +421,8 @@
     "reviews": {
       "type": "section",
       "settings": {
-        "padding-block-start": 80,
-        "padding-block-end": 80
+        "padding-block-start": 0,
+        "padding-block-end": 0
       },
       "blocks": {
         "reviews_heading": {

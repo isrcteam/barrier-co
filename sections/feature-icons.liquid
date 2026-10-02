@@ -1,7 +1,7 @@
 {%- liquid
   assign pt = section.settings['padding-block-start'] | divided_by: 16.0
   assign pb = section.settings['padding-block-end'] | divided_by: 16.0
-  if section.settings.same_mobile_padding
+  if section.settings.same_padding_mobile
     assign pt_mobile = pt
     assign pb_mobile = pb
   else
@@ -117,7 +117,9 @@
   "name": "t:names.feature_icons",
   "class": "section-wrapper",
   "disabled_on": {
-    "groups": ["header"]
+    "groups": [
+      "header"
+    ]
   },
   "max_blocks": 6,
   "blocks": [
@@ -164,48 +166,48 @@
       "id": "padding-block-start",
       "label": "t:settings.top",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
       "id": "padding-block-end",
       "label": "t:settings.bottom",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "checkbox",
-      "id": "same_mobile_padding",
+      "id": "same_padding_mobile",
       "label": "t:settings.same_at_mobile",
-      "default": false
+      "default": true
     },
     {
       "type": "range",
       "id": "padding-block-start-mobile",
       "label": "t:settings.top_mobile",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 30,
-      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+      "default": 0,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     },
     {
       "type": "range",
       "id": "padding-block-end-mobile",
       "label": "t:settings.bottom_mobile",
       "min": 0,
-      "max": 120,
+      "max": 160,
       "step": 2,
       "unit": "px",
-      "default": 30,
-      "visible_if": "{{ section.settings.same_mobile_padding == false }}"
+      "default": 0,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
     }
   ],
   "presets": [
@@ -241,7 +243,12 @@
           }
         }
       },
-      "block_order": ["item_hydration", "item_dryness", "item_smoother", "item_texture"]
+      "block_order": [
+        "item_hydration",
+        "item_dryness",
+        "item_smoother",
+        "item_texture"
+      ]
     }
   ]
 }

@@ -17,11 +17,11 @@
 
   assign widths = '390,750,1100,1500,1920,2560,2880' | split: ','
 
-  assign padding_top_mobile = s.padding_top
-  assign padding_bottom_mobile = s.padding_bottom
+  assign padding_top_mobile = s['padding-block-start']
+  assign padding_bottom_mobile = s['padding-block-end']
   if s.same_padding_mobile == false
-    assign padding_top_mobile = s.padding_top_mobile
-    assign padding_bottom_mobile = s.padding_bottom_mobile
+    assign padding_top_mobile = s['padding-block-start-mobile']
+    assign padding_bottom_mobile = s['padding-block-end-mobile']
   endif
 
   assign heading_tag = s.heading_tag | default: 'h2'
@@ -43,7 +43,7 @@
 
 <div
   class="hero-banner hero-banner--{{ s.width }} hero-banner--{{ s.content_position }} color-custom-{{ section.id }}"
-  style="--hero-banner-pt: {{ s.padding_top | divided_by: 16.0 }}rem; --hero-banner-pb: {{ s.padding_bottom | divided_by: 16.0 }}rem; --hero-banner-pt-mobile: {{ padding_top_mobile | divided_by: 16.0 }}rem; --hero-banner-pb-mobile: {{ padding_bottom_mobile | divided_by: 16.0 }}rem;"
+  style="--hero-banner-pt: {{ s['padding-block-start'] | divided_by: 16.0 }}rem; --hero-banner-pb: {{ s['padding-block-end'] | divided_by: 16.0 }}rem; --hero-banner-pt-mobile: {{ padding_top_mobile | divided_by: 16.0 }}rem; --hero-banner-pb-mobile: {{ padding_bottom_mobile | divided_by: 16.0 }}rem;"
 >
   <div class="hero-banner__frame">
     <div class="hero-banner__media">
@@ -456,6 +456,10 @@
       padding: calc(var(--layout-gutter) + var(--hero-banner-header-offset)) var(--layout-gutter) var(--layout-gutter);
     }
 
+    .hero-banner--full .hero-banner__inner {
+      padding-inline: max(var(--layout-gutter), calc((100% - var(--layout-content-width)) / 2));
+    }
+
     .hero-banner--inset .hero-banner__inner {
       padding-inline: var(--space-40);
     }
@@ -519,7 +523,10 @@
   "class": "section-wrapper",
   "tag": "section",
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": [
+      "header",
+      "footer"
+    ]
   },
   "settings": [
     {
@@ -575,10 +582,22 @@
       "id": "heading_tag",
       "label": "t:settings.heading_tag",
       "options": [
-        { "value": "h1", "label": "t:options.h1" },
-        { "value": "h2", "label": "t:options.h2" },
-        { "value": "h3", "label": "t:options.h3" },
-        { "value": "p", "label": "t:options.paragraph" }
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
       ],
       "default": "h2"
     },
@@ -587,8 +606,14 @@
       "id": "heading_size",
       "label": "t:settings.heading_size",
       "options": [
-        { "value": "display", "label": "t:options.display" },
-        { "value": "h1", "label": "t:options.h1" }
+        {
+          "value": "display",
+          "label": "t:options.display"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        }
       ],
       "default": "display"
     },
@@ -626,7 +651,10 @@
       "type": "video_url",
       "id": "play_video_url",
       "label": "t:settings.video_external_url",
-      "accept": ["youtube", "vimeo"],
+      "accept": [
+        "youtube",
+        "vimeo"
+      ],
       "info": "t:info.video_external"
     },
     {
@@ -665,8 +693,14 @@
       "id": "width",
       "label": "t:settings.width",
       "options": [
-        { "value": "full", "label": "t:options.full" },
-        { "value": "inset", "label": "t:options.inset" }
+        {
+          "value": "full",
+          "label": "t:options.full"
+        },
+        {
+          "value": "inset",
+          "label": "t:options.inset"
+        }
       ],
       "default": "full"
     },
@@ -675,8 +709,14 @@
       "id": "content_position",
       "label": "t:settings.content_position",
       "options": [
-        { "value": "bottom_left", "label": "t:options.bottom_left" },
-        { "value": "center_left", "label": "t:options.center_left" }
+        {
+          "value": "bottom_left",
+          "label": "t:options.bottom_left"
+        },
+        {
+          "value": "center_left",
+          "label": "t:options.center_left"
+        }
       ],
       "default": "bottom_left"
     },
@@ -692,7 +732,7 @@
     },
     {
       "type": "range",
-      "id": "padding_top",
+      "id": "padding-block-start",
       "label": "t:settings.top",
       "min": 0,
       "max": 160,
@@ -702,7 +742,7 @@
     },
     {
       "type": "range",
-      "id": "padding_bottom",
+      "id": "padding-block-end",
       "label": "t:settings.bottom",
       "min": 0,
       "max": 160,
@@ -718,7 +758,7 @@
     },
     {
       "type": "range",
-      "id": "padding_top_mobile",
+      "id": "padding-block-start-mobile",
       "label": "t:settings.top_mobile",
       "min": 0,
       "max": 160,
@@ -729,7 +769,7 @@
     },
     {
       "type": "range",
-      "id": "padding_bottom_mobile",
+      "id": "padding-block-end-mobile",
       "label": "t:settings.bottom_mobile",
       "min": 0,
       "max": 160,
@@ -753,10 +793,7 @@
         "spotlight_price_label": "Starts from [price]/mo",
         "spotlight_button_label": "Shop now",
         "width": "full",
-        "content_position": "bottom_left",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "same_padding_mobile": true
+        "content_position": "bottom_left"
       }
     },
     {
@@ -773,12 +810,7 @@
         "button_link": "shopify://collections/all",
         "show_overlay": false,
         "width": "inset",
-        "content_position": "center_left",
-        "padding_top": 80,
-        "padding_bottom": 0,
-        "same_padding_mobile": false,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
+        "content_position": "center_left"
       }
     }
   ]

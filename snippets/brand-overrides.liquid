@@ -396,17 +396,12 @@
     inline-size: var(--icon-md);
   }
 
-  featured-product-information {
-    display: block;
-    padding-block-start: var(--layout-section-gap);
-  }
-
   @media screen and (min-width: 750px) and (max-width: 989px) {
-    .product-information .product-information__grid:not(.product-information--media-none).product-information--media-left {
+    :is(.product-information, featured-product-information) .product-information__grid:not(.product-information--media-none).product-information--media-left {
       grid-template-columns: 100%;
     }
 
-    .product-information .product-information__grid:not(.product-information--media-none) :is(.product-information__media, .product-details) {
+    :is(.product-information, featured-product-information) .product-information__grid:not(.product-information--media-none) :is(.product-information__media, .product-details) {
       grid-column: 1;
       padding-inline: 0;
     }
@@ -414,5 +409,45 @@
 
   footer .section {
     background-color: var(--color-background);
+  }
+
+  body:is(.page-width-wide, .page-width-normal, .page-width-narrow, .page-width-content) {
+    --page-margin: var(--layout-gutter);
+    --page-content-width: var(--layout-content-width);
+  }
+
+  #MainContent > .shopify-section + .shopify-section,
+  footer > .shopify-section:first-child {
+    margin-block-start: var(--layout-section-gap);
+  }
+
+  #MainContent > .shopify-section + .shopify-section:has(marquee-component),
+  #MainContent > .shopify-section:has(.breadcrumbs) + .shopify-section.shopify-section {
+    margin-block-start: 0;
+  }
+
+  :is(h1, h2, h3, h4, .type-display, .type-h1, .type-h2, .type-h3, .type-card-label, .type-title-bold) {
+    text-wrap: balance;
+  }
+
+  :is(p, li, .rte) {
+    text-wrap: pretty;
+  }
+
+  :is(slideshow-arrows, slideshow-controls) .slideshow-control :is(svg, .icon) {
+    inline-size: var(--icon-md);
+    block-size: auto;
+  }
+
+  :is(slideshow-arrows, slideshow-controls) .slideshow-control:disabled {
+    opacity: var(--opacity-brand-disabled);
+  }
+
+  featured-product-information .product-details {
+    align-self: center;
+  }
+
+  #MainContent > .shopify-section:not(:has(> *)) {
+    display: none;
   }
 {% endstylesheet %}
