@@ -287,7 +287,9 @@
         "panel_color": "#F0ECE1",
         "panel_text_color": "#695A43",
         "product_image": "shopify://shop_images/pdp-hotspot-cloth.jpg",
-        "photo": "shopify://shop_images/pdp-benefit-photo.jpg"
+        "photo": "shopify://shop_images/pdp-benefit-photo.jpg",
+        "product_image_mobile_same": false,
+        "product_image_mobile": "shopify://shop_images/pdp-hotspot-cloth-mobile.jpg"
       },
       "blocks": {
         "benefit_hotspots_callout_1": {

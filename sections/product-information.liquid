@@ -96,7 +96,7 @@
         -%}
         {%- if sticky_rating_count > 0 -%}
           <p class="sticky-add-to-cart__rating type-caption">
-            {% render 'star-rating', rating: sticky_rating %}
+            {% render 'star-rating', rating: sticky_rating, size: 'medium' %}
             <span>{{ sticky_rating | round: 1 }}</span>
             <span aria-hidden="true">|</span>
             <span>{{ 'content.sticky_review_count' | t: count: sticky_rating_count }}</span>

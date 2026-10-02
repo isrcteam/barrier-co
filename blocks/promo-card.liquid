@@ -84,9 +84,11 @@
     text-transform: uppercase;
   }
 
-  .promo-card__button {
+  .promo-card .promo-card__button {
     grid-area: button;
     justify-self: start;
+    inline-size: calc(var(--space-112) + var(--space-16));
+    padding-inline: 0;
     min-block-size: var(--layout-button-small);
     padding-inline: var(--space-20);
     text-transform: uppercase;

@@ -56,7 +56,7 @@ Node IDs refer to file oZ00gYRP11BAdFQYwo4fxj. "T-" numbers link to the alignmen
 | K4 | Play icon in four sizes: 57, 40, 30.3 and 20.3 (T-22), plus 79 on the video banner | Three sizes: 79 on the video banner (Sandstone glyph, 12 blur), 57 large, 40 small |
 | K5 | FAQ dividers differ on every item: top+bottom, bottom only, or none (T-26) | Every item has one bottom hairline |
 | K6 | Carousel arrows drawn as 24×14 Clay arrows; Horizon renders a small thin chevron | Every carousel uses the same 24px arrow, and the disabled arrow uses the disabled opacity token |
-| K7 | Carousel dots are 6px (12px tap area) | The dot stays 6px with a 24px tap area (accessibility) |
+| K7 | Carousel dots are 6px (12px tap area) | Superseded by P12: 6px dots 6 apart on 12 × 24 targets |
 | K8 | Avatar radius is 0 in one quote card and round in another | Round everywhere |
 | K9 | Badge padding is px10 py2 on one, px4 on another, px6 on a third | **Open:** to unify once the Recharge plans render (the savings and Recommended badges only appear with live plans) |
 | K10 | The quote mark sits on the first line's baseline and pushes the line down | Hung outside the line box |
@@ -102,6 +102,14 @@ Every home and PDP section was measured against its Figma node at 1440 and 390, 
 | P12 | Slider dots are 6 squares 6 apart, tan with inactive at 34%; Horizon blended them with `difference` (they showed blue-grey) and each section had its own spacing (6 to 18 apart) | One global rule: 6 square, 6 apart, tan / 34%, no blend, every slider. Targets are 12 × 24, below the 24 × 24 guideline, at Jeet's request to match Figma exactly; swiping still works |
 | P13 | UGC row: the mobile PDP frame puts a written review card fourth, the desktop PDP frame shows five creators only | PDP shows creators only on both widths; home interleaves review cards as drawn |
 | P15 | Clinical-trial author photo is grayscale in Figma; the uploaded photo is colour | `filter: grayscale(1)` on quote-slider avatars |
+| P16 | Light text on Clay: Figma uses Sandstone; Horizon's contrast helper picked the palette's pure white (announcement, header brackets, ticker, footer, review cards) | `contrast-override` prefers the page background (Sandstone) for light text when it passes 4.5:1 |
+| P17 | Ingredient rows: row 1 centred, rows 2 and 3 top-aligned | All rows top-aligned |
+| P18 | Before/after quote: Figma shows stars and name only, the data has a role line | Role not shown in the before/after card (still shown in the clinical-trial card) |
+| P19 | Lifestyle glass card is white at 30%; the stats glass is #E7DACE at 28% | Two glass treatments: lifestyle white/30% with a Sandstone multiply thumbnail box, stats unchanged |
+| P20 | Home featured product: Figma's button reads "ADD TO CART - $24.99/MO" with no plan choice on the page | The home button carries the one-time price; a subscription is only added where the plan cards are visible (product page) |
+| P21 | Featured gallery and PDP: Figma draws no arrows on the main image and no selected-thumbnail outline | Arrows hidden, outline only on keyboard focus |
+| P22 | Hero photo: Figma starts it under the solid announcement bar; Horizon put it behind | Photo starts at 34 on the first-section hero |
+| P23 | Thumbnail rail end bars: Tan on the desktop frames, Fossil on mobile | Tan at 990 and up, Fossil below |
 | P14 | Ingredient images: the PNGs in the file have uneven canvases (the witch hazel is tall portrait), so rows came out 270 to 470 high | Every image sits in the 112 × 94 box from the mobile frame (273 × 229 on desktop), object-fit contain |
 
 ### Height differences left on purpose (content, not layout)

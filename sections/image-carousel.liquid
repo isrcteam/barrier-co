@@ -129,6 +129,26 @@
         {%- if section.settings.show_side_bars -%}
           <span class="image-carousel__bar" aria-hidden="true"></span>
         {%- endif -%}
+
+        {%- if start_slide_index > 0 -%}
+          {%- comment -%} Horizon marks the starting slide current but leaves the mobile track at 0; centre it once loaded {%- endcomment -%}
+          <script type="module">
+            const start = {{ start_slide_index }};
+            const run = () => {
+              const slideshow = document.querySelector('#shopify-section-{{ section.id }} slideshow-component');
+              const scroller = slideshow?.querySelector('slideshow-slides');
+              if (!slideshow || !scroller || scroller.scrollWidth <= scroller.clientWidth + 1) return;
+              const slide = scroller.querySelectorAll('slideshow-slide')[start];
+              if (!slide || scroller.scrollLeft > 0) return;
+              // Horizon already counts this slide as current, so select() is a no-op; centre it directly
+              const track = scroller.getBoundingClientRect();
+              const card = slide.getBoundingClientRect();
+              scroller.scrollTo({ left: card.left + card.width / 2 - (track.left + track.width / 2), behavior: 'instant' });
+            };
+            if (document.readyState === 'complete') requestAnimationFrame(run);
+            else window.addEventListener('load', () => requestAnimationFrame(run), { once: true });
+          </script>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>
@@ -403,6 +423,7 @@
 
     .image-carousel__controls {
       justify-content: space-between;
+      min-block-size: 0;
       margin-block-end: 0;
     }
 
@@ -417,6 +438,7 @@
 
     .image-carousel .image-carousel__controls .slideshow-controls__arrows {
       display: flex;
+      height: auto;
     }
 
     .image-carousel--bars .image-carousel__controls {
@@ -425,7 +447,7 @@
 
     /* Figma's arrow row is 34: the 14 glyph with 10 above and below */
     .image-carousel .image-carousel__controls .slideshow-control {
-      block-size: auto;
+      height: auto;
       min-block-size: 0;
       padding: var(--space-10) 0;
     }

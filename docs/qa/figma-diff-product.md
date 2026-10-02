@@ -135,3 +135,20 @@ The first pass measured spacing with one entry per list, so it missed every caro
 Not fixable in code: Akzidenz **Medium** (plan names, accordion rows, quote names, recognition titles, promo heading) renders as Regular because no Medium file exists in the client's files or the live theme (T-3).
 
 Checked with no Liquid errors on `/`, both PDPs and `/collections/all` at 390, 1440 and 1920.
+
+## Property-level audit, 2026-10-02 (home, PDP, footer)
+
+Five auditors compared computed styles on the preview with Figma's exact values at 1440 and 390 (157 findings). Two fix rounds, each re-measured by the same auditors. Tables: scratchpad `qa/audit/*.md` and `*-verify.md`; decisions in design-corrections P12–P23.
+
+Confirmed fixed in round 2 (re-measured): header brackets Sandstone, mobile logo centred (110–280), Search–Account 30, press quotes Sandstone 16/1.3 with 50 between items, routine band 803 (Figma 800), featured split 790/34/556 with a 700 image, breadcrumb "Home | Products | …", radio dot, timeline on one line, accordion item 145 (144), before/after photos 397.5 × 450 and a 38 arrow row, Judge.me stars 15 Accent, heading-to-rating 16, review button without border, reviewer name Medium, sticky select 270, lifestyle mobile opens on the product card.
+
+Left on purpose or waiting on inputs:
+- Akzidenz Medium renders Regular (T-3, font file).
+- Play buttons on hero, intro and video banner appear once videos exist (D-6).
+- Reviews sidebar, histogram, search, Q&A tabs, summary stars and the date beside the stars are Judge.me layout settings (D-19).
+- FAQ page (D-18). Stats desktop background is 736 px wide in Figma (D-12).
+- The " - " in the add to cart label is one string, so it can't take Medium weight while the label is ExtraBold.
+- Announcement "1/5" counter: Figma shows a counter for five messages; the store has two and the counter isn't built.
+- Header logo: the supplied logo file is 193 × 17 at the set height; Figma's is 197 × 16.2 (different file aspect).
+- Sticky bar shadow: Figma's drop shadow points down off-screen from a bottom bar; the upward shadow stays.
+- Media badge: Sepia text as on the home frame (the PDP frame uses Clay); hidden on mobile as in both mobile frames.

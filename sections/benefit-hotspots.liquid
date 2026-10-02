@@ -57,7 +57,7 @@
               <source
                 media="(min-width: 990px)"
                 srcset="{{ product_image | image_url: width: 800 }} 800w, {{ product_image | image_url: width: 1100 }} 1100w, {{ product_image | image_url: width: 1640 }} 1640w"
-                sizes="60vw"
+                sizes="80vw"
               >
             {%- endif -%}
             {{
@@ -65,7 +65,7 @@
               | image_url: width: 1640
               | image_tag:
                 widths: '390, 750, 1100, 1640',
-                sizes: '(min-width: 990px) 60vw, 100vw',
+                sizes: '(min-width: 990px) 80vw, 100vw',
                 loading: 'lazy',
                 class: 'benefit-hotspots__image'
             }}
@@ -195,7 +195,7 @@
     z-index: 1;
     margin: 0;
     padding: calc(var(--space-30) + var(--space-4)) calc(var(--space-30) + var(--space-2)) var(--space-16);
-    text-align: start;
+    text-align: center;
     text-transform: uppercase;
   }
 

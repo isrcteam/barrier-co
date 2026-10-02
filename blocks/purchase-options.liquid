@@ -397,6 +397,11 @@
     appearance: none;
   }
 
+  /* Horizon's base radio draws its own ::after dot; the Figma dot is the background below */
+  .purchase-options .purchase-options__radio::after {
+    content: none;
+  }
+
   .purchase-options__radio:checked {
     background: radial-gradient(circle, var(--color-palette-sepia) 0 calc(var(--space-4) + 0.03125rem), transparent calc(var(--space-4) + 0.0625rem));
   }
@@ -463,6 +468,10 @@
     padding-block-end: 0;
     padding-inline: 0;
     list-style: none;
+  }
+
+  .purchase-options .purchase-options__timeline .purchase-options__step {
+    white-space: nowrap;
   }
 
   .purchase-options__step {

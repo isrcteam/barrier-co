@@ -9,6 +9,10 @@
   assign trail_collection = collection
   if current_product != blank and trail_collection == blank and block.settings.show_collection
     assign trail_collection = current_product.collections.first
+    # The home page collection reads as a second "Home"; fall back to all products (Figma "Product")
+    if trail_collection == blank or trail_collection.handle == 'frontpage'
+      assign trail_collection = collections.all
+    endif
   endif
 
   assign current_title = ''

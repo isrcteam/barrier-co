@@ -99,8 +99,10 @@
   }
 
   /* Mobile: equal side columns so the logo sits on the true centre (Figma 977:685 logo at x 110-280) */
-  #header-component[data-menu-style='drawer'] .header__row--top .header__columns {
-    --header-template-columns: minmax(0, 1fr) 0 auto 0 minmax(0, 1fr);
+  @media screen and (max-width: 749px) {
+    #header-component .header__row--top .header__columns {
+      --header-template-columns: minmax(0, 1fr) 0 auto 0 minmax(0, 1fr);
+    }
   }
 
   /* Announcement chevrons: none on mobile; on desktop the glyphs sit on the 30 page edge */
@@ -168,6 +170,12 @@
     content: attr(aria-label);
   }
 
+  /* Over the hero the bracket bars are Sandstone (Figma vector 965:1265), the labels stay white */
+  #header-component[transparent]:not([data-sticky-state='active']) :is(.search-action--text .header-actions__action > span:first-child, .header-actions__cart-icon--text > span:first-child, .account-button__text),
+  #header-component[transparent]:not([data-sticky-state='active']) details:not(.menu-open) > .header__icon--menu::after {
+    border-inline-color: var(--color-on-media);
+  }
+
   .header .header__icon--menu .header-drawer-icon--open,
   .header .header-actions__cart-icon--text > .svg-wrapper {
     display: none;
@@ -223,8 +231,8 @@
 
   @media screen and (min-width: 990px) {
     /* Figma: 30 between every header action, Search included (Search sits outside header-actions) */
-    .header .search-action--text {
-      margin-inline-end: var(--space-10);
+    .header .header__column--right {
+      column-gap: var(--space-30);
     }
 
     /* Bracket bars are 16 high: the label's line box */
@@ -235,11 +243,12 @@
 
   /* Press marquee (stars + quotes, Figma 965:1254 strip): Sandstone 16/1.3 quotes, 30 from stars to quote, 50 from quote to the next stars */
   marquee-component:has(.marquee__repeated-items > :not(.text-block)) .text-block {
-    margin-inline-end: var(--space-20);
+    margin-inline-end: calc(var(--space-40) + var(--space-10) - var(--marquee-gap, var(--space-30)));
     color: var(--color-on-media);
   }
 
   marquee-component:has(.marquee__repeated-items > :not(.text-block)) .text-block :is(p, span) {
+    color: var(--color-on-media);
     line-height: 1.3;
   }
 
@@ -268,6 +277,12 @@
     color: var(--color-palette-sepia);
     text-transform: uppercase;
     pointer-events: none;
+  }
+
+  @media screen and (max-width: 989px) {
+    .product-media__badge {
+      display: none;
+    }
   }
 
   :is(.product-information, featured-product-information) slideshow-slide:has(> .product-media__badge) {
@@ -304,7 +319,7 @@
       --sidebar-width: calc(var(--layout-buy-box-width) + var(--gap) / 2);
     }
 
-    .product-information slideshow-controls[thumbnails]:not([controls-on-media])[pagination-position] .slideshow-controls__thumbnails {
+    :is(.product-information, featured-product-information) slideshow-controls[thumbnails]:not([controls-on-media])[pagination-position] .slideshow-controls__thumbnails {
       padding-block: 0;
       padding-inline: 0 var(--space-10);
     }
@@ -414,7 +429,7 @@
     block-size: 100%;
   }
 
-  .product-details .accordion .details-content :is(.text-block, rte-formatter) > :last-child {
+  .product-details .accordion .details-content :is(p, ul, ol):last-child {
     margin-block-end: 0;
   }
 
@@ -512,10 +527,16 @@
     text-transform: uppercase;
   }
 
+  /* Mobile (Figma 965:4237): 12 from the product row to the select, 20 from the select to the button */
   .sticky-add-to-cart .sticky-add-to-cart__plan {
     position: relative;
     grid-area: plan;
     display: block;
+    margin-block-start: calc(var(--space-12) - var(--space-8));
+  }
+
+  .sticky-add-to-cart[data-has-plans] .sticky-add-to-cart__button {
+    margin-block-start: calc(var(--space-20) - var(--space-8));
   }
 
   .sticky-add-to-cart .sticky-add-to-cart__plan[hidden] {
@@ -538,7 +559,7 @@
 
   .sticky-add-to-cart .sticky-add-to-cart__plan-select {
     inline-size: 100%;
-    min-inline-size: calc(var(--space-112) * 2 + var(--space-6));
+    min-inline-size: calc(var(--space-112) * 2 + var(--space-40) + var(--space-6));
     padding: var(--space-12) calc(var(--space-14) * 2 + var(--space-8)) var(--space-12) var(--space-10);
     border: var(--border-hairline) solid var(--color-divider);
     border-radius: var(--radius-none);
@@ -583,7 +604,12 @@
 
     .sticky-add-to-cart .sticky-add-to-cart__plan {
       align-self: center;
+      margin-block-start: 0;
       margin-inline: var(--space-80) var(--space-8);
+    }
+
+    .sticky-add-to-cart[data-has-plans] .sticky-add-to-cart__button {
+      margin-block-start: 0;
     }
 
     .sticky-add-to-cart .sticky-add-to-cart__button {
@@ -702,7 +728,13 @@
   }
 
   footer .utilities--blocks-4 > :nth-child(even) {
+    justify-self: end;
     text-align: end;
+  }
+
+  /* Newsletter stack: 30 between join, field, consent and tagline at every width */
+  footer .footer-content > .group-block > .group-block-content {
+    gap: var(--space-30);
   }
 
   @media screen and (min-width: 990px) {
@@ -869,13 +901,28 @@
     --jm-center-max: none;
     --jm-center-gutters: 0;
 
-    padding-block-start: var(--space-16);
+    /* Figma: 16 from the section heading to the rating (the section's 12 block gap + 4) */
+    margin-block-start: var(--space-4);
+    padding-block-start: 0;
     color: var(--color-foreground);
     font-family: var(--font-family-body);
   }
 
+  #judgeme_product_reviews .jm-review-widget .jm-stack--space-300 {
+    padding-block-start: 0;
+  }
+
   #judgeme_product_reviews .jm-review-widget-minimal-header__title {
     display: none;
+  }
+
+  /* The rating sat centred against the 55 write-review button; Figma puts it at the top of the column */
+  #judgeme_product_reviews .jm-review-widget__header > .jm-cluster {
+    align-items: flex-start;
+  }
+
+  #judgeme_product_reviews .jm-review-widget__header .jm-stack--space-200 > .jm-cluster {
+    margin-block-start: 0;
   }
 
   #judgeme_product_reviews .jm-average-rating-display .jm-text {
@@ -886,6 +933,7 @@
   }
 
   #judgeme_product_reviews .jm-button--primary {
+    border: 0;
     min-block-size: var(--layout-button-large);
     min-inline-size: min(100%, calc(var(--space-112) * 4 - var(--space-8)));
     padding-inline: var(--space-40);
@@ -903,17 +951,15 @@
   #judgeme_product_reviews .jm-sort-filter :is(select, button) {
     border: var(--border-hairline) solid var(--color-divider);
     border-radius: var(--radius-none);
-    background: var(--color-white);
-    color: var(--color-foreground);
+    background-color: var(--color-white);
   }
 
-  #judgeme_product_reviews .jm-star-rating {
-    gap: var(--space-6);
-  }
-
-  #judgeme_product_reviews .jm-star-rating svg {
-    inline-size: var(--space-16);
-    block-size: var(--space-16);
+  /* Card stars are font glyphs: 15px Accent, 6 apart. Judge.me writes size and colour inline, so only !important overrides them */
+  #judgeme_product_reviews .jm-star-rating__font-icon {
+    margin-inline-end: var(--space-6);
+    color: var(--color-rating) !important;
+    font-size: calc(var(--space-14) + 0.0625rem) !important;
+    line-height: 1;
   }
 
   #judgeme_product_reviews .jm-review-item {
@@ -929,31 +975,43 @@
     background: var(--color-palette-linen);
   }
 
-  #judgeme_product_reviews .jm-reviewer-info__details > :first-child {
+  #judgeme_product_reviews .jm-reviewer-info__name {
     font-family: var(--font-family-heading);
     font-weight: var(--font-weight-medium);
     font-size: calc(var(--space-16) + var(--space-2));
     color: var(--color-foreground);
   }
 
-  #judgeme_product_reviews .jm-reviewer-info__details :is(.jm-tag, [class*='verified']) {
+  #judgeme_product_reviews .jm-verified-buyer-badge {
     padding: var(--space-2) var(--space-6);
     border: 0;
     border-radius: var(--radius-none);
     background: var(--color-foreground);
     color: var(--color-background);
+  }
+
+  #judgeme_product_reviews .jm-verified-buyer-badge__text {
+    font-family: var(--font-family-body);
+    font-weight: var(--font-weight-regular);
     font-size: var(--type-caption-size);
   }
 
-  #judgeme_product_reviews .jm-review-content {
+  /* Date: GT 12 Sepia (Figma puts it beside the stars; Judge.me's markup keeps it under the name, D-19) */
+  #judgeme_product_reviews .jm-reviewer-info__details > .jm-cluster:last-child .jm-text {
+    color: var(--color-palette-sepia);
+    font-size: var(--type-caption-size);
+  }
+
+  #judgeme_product_reviews :is(.jm-review-content, .jm-review-content__body, .jm-review-content__body p) {
     color: var(--color-foreground);
     line-height: 1.3;
   }
 
   /* K6: the 24 x 14 Figma arrow, drawn edge to edge (its wrapper is 20 square in Horizon) */
   :is(slideshow-arrows, slideshow-controls) .slideshow-control :is(svg, .icon, .svg-wrapper) {
+    display: block;
     inline-size: var(--icon-md);
-    block-size: auto;
+    height: auto;
   }
 
   :is(slideshow-arrows, slideshow-controls) .slideshow-control:disabled {
@@ -976,7 +1034,7 @@
     }
 
     featured-product-information .product-details {
-      padding-block-start: calc(var(--space-20) - var(--space-10));
+      padding-block-start: calc(var(--space-20) - var(--space-12));
     }
   }
 
@@ -985,6 +1043,11 @@
     featured-product-information .product-information__grid.product-information__grid:not(.product-information__grid--half, .product-information--media-none).product-information--media-left {
       grid-template-columns: minmax(0, 790fr) minmax(0, 556fr);
       column-gap: calc(var(--space-30) + var(--space-4));
+    }
+
+    /* Horizon pads each column by gap / 2; the home frame's 34 gap is the column gap alone */
+    featured-product-information .product-information__grid.product-information__grid:not(.product-information__grid--half, .product-information--media-none).product-information--media-left > * {
+      padding-inline: 0;
     }
   }
 

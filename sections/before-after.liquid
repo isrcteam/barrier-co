@@ -340,7 +340,7 @@
 
   /* 12 from the quote card to the 6px dot; the 24 tap row adds 9 above it */
   .before-after__controls {
-    margin-block-start: calc(var(--space-12) - (var(--space-24) - var(--space-6)) / 2);
+    margin-block-start: calc(var(--space-6) + 0.0625rem);
     min-height: auto;
     mix-blend-mode: normal;
   }
@@ -375,7 +375,7 @@
 
   /* Figma's arrow row is the 14px glyph plus 12 above and below (38), not Horizon's 44px button */
   .before-after__controls .slideshow-control {
-    block-size: var(--space-14);
+    height: var(--space-14);
     min-block-size: 0;
     padding: 0;
   }
@@ -438,9 +438,16 @@
       font-size: var(--type-body-size);
     }
 
+    /* Figma arrow row: 24 below the quote card, then the 14 glyph */
     .before-after__controls {
+      min-block-size: 0;
       margin-block-start: 0;
-      padding-block: var(--space-12);
+      padding-block: var(--space-24) 0;
+    }
+
+    /* Large card layout (PDP): photos keep Figma's 397.5 x 450 in the narrower slider column */
+    .before-after--card-large .before-after__photo {
+      aspect-ratio: 53 / 60;
     }
 
     .before-after slideshow-controls.before-after__controls {
@@ -449,6 +456,7 @@
 
     .before-after__controls .slideshow-controls__arrows {
       display: flex;
+      height: auto;
     }
 
     .before-after__controls .slideshow-controls__dots {
