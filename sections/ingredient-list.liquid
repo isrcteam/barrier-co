@@ -171,10 +171,13 @@
     inline-size: var(--space-112);
   }
 
+  /* The ingredient PNGs have uneven canvases; Figma frames each one in the same 112 x 94 box, so rows stay one height */
   .ingredient-list__image {
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: 112 / 94;
+    object-fit: contain;
   }
 
   .ingredient-list__placeholder {

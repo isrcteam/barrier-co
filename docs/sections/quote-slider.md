@@ -19,6 +19,13 @@ From docs/architecture.md (quote-slider). Figma: Clinical trial component 978:39
 - **Impact:** avatar 41 snapped to 40 (`--space-40`); card gap 19 snapped to 20.
 - **Approver:** Jeet (delegated).
 
+### 2026-10-02: Card-only background and left dots
+- **What:** Wrapper background cleared (beats the inline colour rule), dots left-aligned with 24px targets (P12).
+- **Why:** Figma paints linen on the quote card only, with the dots on the page below it, left-aligned.
+- **Alternatives rejected:** Smaller targets (fails WCAG 2.5.8).
+- **Impact:** None.
+- **Approver:** Jeet (delegated)
+
 ## QA checklist
 - [ ] Linen card with 12 padding; Tan quote mark; quote text; 40 round avatar; name and role.
 - [ ] Two or more quotes: dots below, start aligned, Tan squares.

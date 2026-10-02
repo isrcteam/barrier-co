@@ -1,0 +1,12 @@
+{
+  "settings": {
+    "card_size": "Card size"
+  },
+  "info": {
+    "before_after_card_size": "Large uses a bigger bold title and a full-width button on desktop."
+  },
+  "options": {
+    "compact": "Compact",
+    "large": "Large"
+  }
+}

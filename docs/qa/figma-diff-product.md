@@ -112,3 +112,26 @@ The section collapses on this product (no published ingredient entries, K14), so
 | P8 | Sticky CTA is 45 high, the main CTA 55 | Sticky uses Medium 44, main stays Large 55 |
 | P9 | PDP description is 16 on both widths; body copy elsewhere is 14 on mobile | Description 16 on both widths |
 | P10 | FAQ panel icons are 14, Horizon's are 16 | 14 in both accordions |
+
+## Re-QA 2026-10-02: buy box (965:2045) and every multi-entry component
+
+The first pass measured spacing with one entry per list, so it missed every carousel and the subscription cards. This pass counted entries against Figma on home and PDP at 390, 1440 and 1920.
+
+| Component | Figma | Build (before) | Cause | Fix |
+| --- | --- | --- | --- | --- |
+| Subscription cards | 2 plan cards, recommended tag, savings tag, per day, timeline, perks, "Try once" | Not rendered | No selling plans on the store (Recharge not set up) | **Preview plans** setting draws the cards from `custom.subscription_plans` with a new `discount_percentage` field until Recharge creates the plans; ignored once plans exist. Card markup moved to `purchase-option-card` so real and preview cards are one component. Block measures 376, Figma 376 |
+| Add to cart label / price | "ADD TO CART - price", no separate price | Separate $70.00 line, plain button | Price block in the template; label only set when plans existed | Price block removed; the purchase block always sets the button label (The 8: "Add to cart - $16.99") |
+| Recognition slider | 2 entries, dots left under the card | 1 entry, no dots | Only one recognition linked | National Psoriasis Foundation entry (seal from the client's files), linked to both products; dots left-aligned |
+| Clinical-trial quotes | 3 entries, dots below the card | 1 entry; linen painted behind the dots | One testimonial linked; block background on the wrapper | 2 placeholder clinician quotes (D-7); colour on the card only; dots left-aligned |
+| Benefit message panel | 3 slides with dots | 1 message | One message block in the template | 2 more messages from the Cleanse/Hydrate callout copy |
+| Key ingredients | 3 rows | Section missing (height 0) | The 3 ingredient entries were Draft | Activated (still placeholder copy, D-7); image box fixed (P14) |
+| PDP FAQ | 4 questions | 1 | 3 FAQ entries were Draft | Activated |
+| Before/after | 3 slides, arrows (desktop), dots (mobile) | 1 slide, no controls | One comparison | 2 placeholder comparisons (D-12) on both products and on home |
+| Accordion Claims / Size & pack | Content | Empty rows on both products | Metafields empty | Filled from claims already in the Figma copy (D-7) |
+| The 8 | Same buy box as The 30 | No description, no recognitions, quotes, FAQ, ingredients, results, UGC, before/after | Lists only filled on The 30 | Shared entries linked; description and how-to-use filled (D-7) |
+| Before/after card | See P11 | One size | | Card size setting |
+| Highlight ticks | Tan | Tan | | Unchanged (checked against the asset) |
+
+Not fixable in code: Akzidenz **Medium** (plan names, accordion rows, quote names, recognition titles, promo heading) renders as Regular because no Medium file exists in the client's files or the live theme (T-3).
+
+Checked with no Liquid errors on `/`, both PDPs and `/collections/all` at 390, 1440 and 1920.

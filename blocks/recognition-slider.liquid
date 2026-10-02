@@ -108,22 +108,18 @@
     text-transform: uppercase;
   }
 
-  .recognition-slider slideshow-controls {
+  /* Horizon centres the dots (pagination-position and :only-child rules); Figma puts them under the card's left edge */
+  .recognition-slider slideshow-controls[pagination-position] {
     justify-content: flex-start;
     min-block-size: 0;
   }
 
-  .recognition-slider .slideshow-controls__dots {
-    gap: var(--space-6);
-    margin-inline: 0;
+  /* 24px targets stay (accessibility), pulled left so the first 6px dot starts at the card edge */
+  .recognition-slider slideshow-controls .slideshow-controls__dots {
+    gap: 0;
+    margin-inline: calc(var(--space-6) - var(--space-12)) 0;
     padding: 0;
     border-radius: var(--radius-none);
-  }
-
-  .recognition-slider .slideshow-controls__dots button {
-    inline-size: var(--space-12);
-    block-size: var(--space-24);
-    margin: 0 calc(-1 * var(--space-6) / 2);
   }
 
   .recognition-slider .slideshow-controls__dots button:focus-visible {

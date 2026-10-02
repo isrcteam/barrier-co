@@ -20,6 +20,13 @@ From docs/architecture.md (ingredient-list, 965:2290 / mobile 965:3712):
 - **Impact:** no JS. The section renders nothing on the storefront when no source has entries.
 - **Approver:** Jeet (delegated).
 
+### 2026-10-02: Fixed image box
+- **What:** Images sit in a 112 × 94 box (273 × 229 desktop) with object-fit contain (P14).
+- **Why:** The ingredient PNGs have uneven canvases, so rows were 270 to 470 high.
+- **Alternatives rejected:** Re-exporting the PNGs (needs the designer; the box keeps any future upload in line).
+- **Impact:** None.
+- **Approver:** Jeet (delegated)
+
 ## QA checklist
 - [ ] PDP with ingredients in the metafield shows them in order; with the checkbox off it shows the section list.
 - [ ] Off the PDP the section list is used.

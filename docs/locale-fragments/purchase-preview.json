@@ -1,0 +1,8 @@
+{
+  "settings": {
+    "preview_plans": "Preview plans before Recharge is set up"
+  },
+  "info": {
+    "preview_plans": "Shows the plan cards from the product's subscription plans so the layout can be reviewed. They don't create subscriptions. Ignored once the product has selling plans."
+  }
+}

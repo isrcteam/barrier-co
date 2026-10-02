@@ -22,6 +22,13 @@ From docs/architecture.md (before-after). Figma: home 965:1614 / 965:3328, PDP 9
 - **Impact:** product-spotlight is adjusted only inside this section (124 image tile, 12 padding, 60 end padding on desktop, multiply blend on the packshot). Label chip text uses the section foreground.
 - **Approver:** Jeet (delegated).
 
+### 2026-10-02: Card size setting
+- **What:** `card_size` select: Compact (default) and Large; the PDP template uses Large. Desktop only; mobile is compact in both frames.
+- **Why:** The home frame draws a compact product card and the PDP frame a large one (design-corrections P11).
+- **Alternatives rejected:** Two separate sections (duplicate code); one size everywhere (contradicts one of the frames).
+- **Impact:** None.
+- **Approver:** Jeet (delegated)
+
 ## QA checklist
 - [ ] Desktop 1440: heading 60 uppercase, muted body text, product card on Linen, comparison on the right; arrows at the edges below; first-slide previous arrow hidden.
 - [ ] Mobile 390: stacked; product card full width; image pair 3:4; dots centred below.

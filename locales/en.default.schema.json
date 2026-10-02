@@ -241,6 +241,8 @@
     "work_quickly_to_ship": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>"
   },
   "info": {
+    "before_after_card_size": "Large uses a bigger bold title and a full-width button on desktop.",
+    "preview_plans": "Shows the plan cards from the product's subscription plans so the layout can be reviewed. They don't create subscriptions. Ignored once the product has selling plans.",
     "video_playback": "Autoplay plays muted and looped, with no play button. Play on click plays with sound.",
     "use_collection_products": "On a collection page, show its products instead of the blocks below",
     "showcase_image": "Optional lifestyle image. Defaults to the product image.",
@@ -836,6 +838,7 @@
     "below_media": "Below media"
   },
   "settings": {
+    "preview_plans": "Preview plans before Recharge is set up",
     "video_playback": "Video playback",
     "soon_label": "Label when there is no subscription",
     "featured_label": "Highlight label",

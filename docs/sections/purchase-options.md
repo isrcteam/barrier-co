@@ -24,6 +24,13 @@ From docs/architecture.md (purchase-options). Figma: Subscription component 978:
 - **Impact:** queued adds (clicked while a variant fetch is in flight) go through Horizon's JSON batch path and drop `selling_plan`; rare with single-variant products. The sticky add-to-cart bar shows the product price, not the plan price. Fossil borders and timeline ticks read `var(--color-input-border)` (Horizon fills it from `palette_input_border`, Fossil); Linen dividers = Clay at `--opacity-brand-shadow`.
 - **Approver:** Jeet (delegated).
 
+### 2026-10-02: Preview plans (setting) and a shared card snippet
+- **What:** With **Preview plans** on and no selling plans, the cards are drawn from `custom.subscription_plans`; prices use the new `discount_percentage` field. Preview radios have their own name and no `form`, so a preview card never submits a selling plan (the cart gets a one-time purchase). The block now always sets the add to cart price label, so the separate price block is gone. Real and preview cards render through `snippets/purchase-option-card.liquid`.
+- **Why:** Recharge creates the selling plans and the store has none yet, so the block rendered nothing and the Figma subscription cards couldn't be reviewed.
+- **Alternatives rejected:** Creating native selling plans through the API (Recharge owns them and would conflict); a static mock-up section (would drift from the real block).
+- **Impact:** **Before launch:** turn Preview plans off, or confirm the Recharge plans exist (the preview is ignored once they do). Preview prices are only as right as `discount_percentage`.
+- **Approver:** Jeet (delegated)
+
 ## QA checklist
 - [ ] Product with two plans: both cards; recommended tag on the chosen position; it's selected by default with a white fill and Clay border.
 - [ ] Selecting a card moves the border and fill, shows its timeline and perks, and the add-to-cart label reads "ADD TO CART - <plan price>".

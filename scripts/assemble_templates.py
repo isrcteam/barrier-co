@@ -186,7 +186,7 @@ def home():
         sections["lifestyle"]["blocks"][mid]["settings"]["product"] = TRAVEL
     sections["before_after"] = from_preset("before-after", 0, {
         "product": TRAVEL,
-        "comparisons": [mo("before_after", "the-30-day-14")],
+        "comparisons": [mo("before_after", h) for h in ("the-30-day-14", "placeholder-result-2", "placeholder-result-3")],
         "card_background_color": TOKENS["linen"],
     })
     return {"sections": sections, "order": list(sections)}
@@ -207,8 +207,9 @@ def product_details_blocks(include_buy_box_extras):
         add("highlights", "product-highlights")
         add("clinicians", "clinician-proof", {"background_color": TOKENS["linen"], "mark_image": img("clinician_mark"),
                                               "avatar_1": img("clinician_avatar_1"), "avatar_2": img("clinician_avatar_2"), "avatar_3": img("clinician_avatar_3")})
-        add("purchase", "purchase-options")
-    add("price", "price", {"type_preset": "paragraph"})
+        add("purchase", "purchase-options", {"preview_plans": True})
+    else:
+        add("price", "price", {"type_preset": "paragraph"})
     add("buy_buttons", "buy-buttons", {}, blocks={
         "quantity": {"type": "quantity", "static": True, "disabled": True, "settings": {}},
         "add-to-cart": {"type": "add-to-cart", "static": True, "settings": {"style_class": "button"}},
@@ -268,6 +269,12 @@ def product():
                 "main": main}
     sections["hotspots"] = from_preset("benefit-hotspots", 0, {"panel_color": TOKENS["linen"], "panel_text_color": TOKENS["sepia"],
                                                                "product_image": img("pdp_hotspot_cloth"), "photo": img("pdp_benefit_photo")})
+    # Figma's message panel is a 3-slide carousel; the extra slides reuse the Cleanse and Hydrate callout copy
+    hot = sections["hotspots"]
+    for key, heading, text in (("benefit_hotspots_message_5", "Cleanse without stripping.", "Lifts away impurities, sweat, and buildup without stripping, as effective as soap and water."),
+                               ("benefit_hotspots_message_6", "Hydration that lasts.", "3½ teaspoons of clinical-grade cream deliver deep moisture that lasts up to 72 hours.")):
+        hot["blocks"][key] = {"type": "message", "settings": {"heading": heading, "text": text}}
+        hot["block_order"].append(key)
     sections["real_use"] = from_preset("video-testimonials", 0, {"use_product_data": True, "quote_background_color": TOKENS["clay"]})
     sections["real_use"].pop("blocks", None)
     sections["real_use"].pop("block_order", None)

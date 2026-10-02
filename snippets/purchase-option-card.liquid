@@ -1,0 +1,69 @@
+{% doc %}
+  One subscription plan card for the purchase-options block. The block works out the copy and prices, this draws them.
+
+  @param {string} input_id - Unique id for the radio
+  @param {string} input_name - Radio name: 'selling_plan' for a real plan, a block-scoped name for a preview card
+  @param {string} [value] - Selling plan id, blank for a preview card
+  @param {string} [form_id] - Product form the radio submits with, blank for a preview card
+  @param {string} button_label - Add to cart label suffix while this plan is selected
+  @param {boolean} [checked] - Plan is selected
+  @param {boolean} [disabled] - Variant is sold out
+  @param {string} label - Plan name
+  @param {string} [tag] - Recommended tag text, blank for none
+  @param {string} [summary] - One line under the name, escaped
+  @param {string} price - Plan price, formatted
+  @param {string} [savings] - Savings tag text, blank for none
+  @param {string} [per_day] - Price per day text, blank for none
+  @param {string} [timeline] - Delivery steps as <li> items, escaped
+  @param {string} [perks] - Perks line, escaped
+
+  @example
+  {% render 'purchase-option-card', input_id: input_id, input_name: 'selling_plan', value: plan.id, form_id: form_id, button_label: button_label, label: plan.name, price: plan_price %}
+{% enddoc %}
+<div class="purchase-options__card">
+  <div class="purchase-options__head">
+    <input
+      type="radio"
+      id="{{ input_id }}"
+      class="purchase-options__radio"
+      name="{{ input_name }}"
+      value="{{ value }}"
+      {% if form_id != blank %}
+        form="{{ form_id }}"
+      {% endif %}
+      data-button-label="{{ button_label | escape }}"
+      aria-describedby="{{ input_id }}-details"
+      on:change="/select"
+      {% if checked %}
+        checked
+      {% endif %}
+      {% if disabled %}
+        disabled
+      {% endif %}
+    >
+    <label for="{{ input_id }}" class="purchase-options__name type-h5">{{ label | escape }}</label>
+  </div>
+  {%- if tag != blank -%}
+    <span class="purchase-options__tag type-micro">{{ tag | escape }}</span>
+  {%- endif -%}
+  <div id="{{ input_id }}-details" class="purchase-options__details">
+    {%- if summary != blank -%}
+      <p class="purchase-options__summary type-caption">{{ summary }}</p>
+    {%- endif -%}
+    <div class="purchase-options__pricing">
+      <span class="purchase-options__price type-h5">{{ price }}</span>
+      {%- if savings != blank -%}
+        <span class="purchase-options__savings type-micro">{{ savings | escape }}</span>
+      {%- endif -%}
+      {%- if per_day != blank -%}
+        <span class="purchase-options__per-day type-caption">{{ per_day | escape }}</span>
+      {%- endif -%}
+    </div>
+    {%- if timeline != blank -%}
+      <ul class="purchase-options__timeline type-caption">{{ timeline }}</ul>
+    {%- endif -%}
+    {%- if perks != blank -%}
+      <p class="purchase-options__perks type-micro">{{ perks }}</p>
+    {%- endif -%}
+  </div>
+</div>

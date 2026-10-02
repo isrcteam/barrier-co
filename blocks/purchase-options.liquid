@@ -1,6 +1,6 @@
 {% doc %}
   Subscription and one-time purchase choice for the product form, built on the product's native selling plans (Recharge creates them). Card copy comes from the product's custom.subscription_plans metaobjects, matched by plan name or position.
-  Renders nothing when the product has no selling plans.
+  With no selling plans it only sets the add to cart price label, or, with Preview plans on, draws the cards from the metaobjects (they don't subscribe) until Recharge creates the plans.
 
   @example
   {% content_for 'block', type: 'purchase-options', id: 'purchase-options' %}
@@ -38,25 +38,42 @@
     endfor
   endif
 
+  assign has_plans = false
+  if product.selling_plan_groups.size > 0
+    assign has_plans = true
+  endif
+  assign preview_mode = false
+  if has_plans == false and block_settings.preview_plans and plan_entries != blank
+    assign preview_mode = true
+  endif
+  assign show_cards = false
+  if allocations.size > 0 or preview_mode
+    assign show_cards = true
+  endif
+  assign radio_name = 'selling_plan'
+  if preview_mode
+    assign radio_name = 'selling_plan_preview-' | append: block.id
+    assign show_one_time = true
+  endif
+
   assign one_time_price = variant.price | money | strip_html
   assign one_time_button_label = block_settings.button_price_label | replace: '[price]', one_time_price | strip
   assign initial_button_label = one_time_button_label
 -%}
 {%- capture newline %}
 {% endcapture -%}
-{%- if product.selling_plan_groups.size > 0 -%}
   <script src="{{ 'purchase-options.js' | asset_url }}" type="module" fetchpriority="low"></script>
   <purchase-options-component
     class="purchase-options"
     data-block-id="{{ block.id }}"
     data-form-id="{{ form_id }}"
     data-one-time-label="{{ one_time_button_label | escape }}"
-    {% if allocations.size == 0 %}
+    {% if show_cards == false %}
       hidden
     {% endif %}
     {{ block.shopify_attributes }}
   >
-    {%- if allocations.size > 0 -%}
+    {%- if show_cards -%}
       <fieldset class="purchase-options__fieldset">
         {%- if block_settings.heading != blank -%}
           <legend class="purchase-options__legend type-micro">{{ block_settings.heading | escape }}</legend>
@@ -160,58 +177,103 @@
               assign summary = summary | strip
               assign perks = perks | strip
             -%}
-            <div class="purchase-options__card">
-              <div class="purchase-options__head">
-                <input
-                  type="radio"
-                  id="{{ input_id }}"
-                  class="purchase-options__radio"
-                  name="selling_plan"
-                  value="{{ plan.id }}"
-                  form="{{ form_id }}"
-                  data-button-label="{{ button_label | escape }}"
-                  aria-describedby="{{ input_id }}-details"
-                  on:change="/select"
-                  {% if is_checked %}
-                    checked
-                  {% endif %}
-                  {% if is_disabled %}
-                    disabled
-                  {% endif %}
-                >
-                <label for="{{ input_id }}" class="purchase-options__name type-h5">{{ plan_label | escape }}</label>
-              </div>
-              {%- if is_recommended -%}
-                <span class="purchase-options__tag type-micro">{{ block_settings.recommended_label | escape }}</span>
-              {%- endif -%}
-              <div id="{{ input_id }}-details" class="purchase-options__details">
-                {%- if summary != blank -%}
-                  <p class="purchase-options__summary type-caption">{{ summary }}</p>
-                {%- endif -%}
-                <div class="purchase-options__pricing">
-                  <span class="purchase-options__price type-h5">{{ plan_price }}</span>
-                  {%- if savings > 0 and block_settings.savings_label != blank -%}
-                    {%- assign savings_amount = savings | money | strip_html -%}
-                    <span class="purchase-options__savings type-micro">
-                      {{- block_settings.savings_label | replace: '[amount]', savings_amount | escape -}}
-                    </span>
-                  {%- endif -%}
-                  {%- if block_settings.show_per_day and plan_days > 0 -%}
-                    {%- assign per_day_price = allocation.price | divided_by: plan_days | money | strip_html -%}
-                    <span class="purchase-options__per-day type-caption">
-                      {{- block_settings.per_day_label | replace: '[price]', per_day_price | escape -}}
-                    </span>
-                  {%- endif -%}
-                </div>
-                {%- if timeline != blank -%}
-                  <ul class="purchase-options__timeline type-caption">{{ timeline }}</ul>
-                {%- endif -%}
-                {%- if perks != blank -%}
-                  <p class="purchase-options__perks type-micro">{{ perks }}</p>
-                {%- endif -%}
-              </div>
-            </div>
+            {%- liquid
+              assign card_tag = ''
+              if is_recommended
+                assign card_tag = block_settings.recommended_label
+              endif
+              assign savings_text = ''
+              if savings > 0 and block_settings.savings_label != blank
+                assign savings_amount = savings | money | strip_html
+                assign savings_text = block_settings.savings_label | replace: '[amount]', savings_amount
+              endif
+              assign per_day_text = ''
+              if block_settings.show_per_day and plan_days > 0
+                assign per_day_price = allocation.price | divided_by: plan_days | money | strip_html
+                assign per_day_text = block_settings.per_day_label | replace: '[price]', per_day_price
+              endif
+            -%}
+            {% render 'purchase-option-card',
+              input_id: input_id,
+              input_name: 'selling_plan',
+              value: plan.id,
+              form_id: form_id,
+              button_label: button_label,
+              checked: is_checked,
+              disabled: is_disabled,
+              label: plan_label,
+              tag: card_tag,
+              summary: summary,
+              price: plan_price,
+              savings: savings_text,
+              per_day: per_day_text,
+              timeline: timeline,
+              perks: perks
+            %}
           {%- endfor -%}
+          {%- if preview_mode -%}
+            {%- for entry in plan_entries -%}
+              {%- liquid
+                assign input_id = 'PurchaseOption-' | append: block.id | append: '-preview-' | append: forloop.index
+                assign discount = entry.discount_percentage.value | default: 0
+                assign keep = 100 | minus: discount
+                assign preview_price = variant.price | times: keep | divided_by: 100
+                assign plan_price = preview_price | money | strip_html
+                assign button_label = block_settings.button_price_label | replace: '[price]', plan_price | strip
+
+                assign is_checked = false
+                if entry.is_recommended.value == true
+                  assign is_checked = true
+                elsif plan_entries_have_recommended == false and forloop.first
+                  assign is_checked = true
+                endif
+                if is_checked
+                  assign initial_button_label = button_label
+                endif
+
+                assign card_tag = ''
+                if entry.is_recommended.value == true
+                  assign card_tag = block_settings.recommended_label
+                endif
+
+                assign savings_text = ''
+                assign savings = variant.price | minus: preview_price
+                if savings > 0 and block_settings.savings_label != blank
+                  assign savings_amount = savings | money | strip_html
+                  assign savings_text = block_settings.savings_label | replace: '[amount]', savings_amount
+                endif
+
+                assign per_day_text = ''
+                assign plan_days = entry.days_per_delivery.value | default: 0
+                if block_settings.show_per_day and plan_days > 0
+                  assign per_day_price = preview_price | divided_by: plan_days | money | strip_html
+                  assign per_day_text = block_settings.per_day_label | replace: '[price]', per_day_price
+                endif
+
+                assign timeline = ''
+                for step in entry.timeline.value
+                  assign safe_step = step | escape
+                  assign timeline = timeline | append: '<li class="purchase-options__step">' | append: safe_step | append: '</li>'
+                endfor
+                assign perks = entry.perks.value | join: ' | ' | escape
+              -%}
+              {% render 'purchase-option-card',
+                input_id: input_id,
+                input_name: radio_name,
+                button_label: button_label,
+                checked: is_checked,
+                disabled: is_disabled,
+                label: entry.title.value,
+                tag: card_tag,
+                summary: entry.summary.value,
+                price: plan_price,
+                savings: savings_text,
+                per_day: per_day_text,
+                timeline: timeline,
+                perks: perks
+              %}
+            {%- endfor -%}
+          {%- endif -%}
         </div>
         {%- if show_one_time -%}
           {%- assign once_id = 'PurchaseOption-' | append: block.id | append: '-once' -%}
@@ -220,12 +282,14 @@
               type="radio"
               id="{{ once_id }}"
               class="purchase-options__once-radio"
-              name="selling_plan"
+              name="{{ radio_name }}"
               value=""
-              form="{{ form_id }}"
+              {% if preview_mode == false %}
+                form="{{ form_id }}"
+              {% endif %}
               data-button-label="{{ one_time_button_label | escape }}"
               on:change="/select"
-              {% if selected_plan_id == blank %}
+              {% if selected_plan_id == blank and preview_mode == false %}
                 checked
               {% endif %}
               {% if is_disabled %}
@@ -237,6 +301,9 @@
             </label>
           </div>
         {%- endif -%}
+        {%- if preview_mode and request.design_mode -%}
+          <p class="purchase-options__preview-note type-micro">{{ 'content.purchase_options_preview_note' | t }}</p>
+        {%- endif -%}
       </fieldset>
     {%- endif -%}
   </purchase-options-component>
@@ -246,7 +313,7 @@
       --purchase-options-button-label: "{{ css_label }}";
     }
   {% endstyle %}
-{%- endif -%}
+
 
 {% stylesheet %}
   .purchase-options {
@@ -409,6 +476,11 @@
     display: none;
   }
 
+  .purchase-options__preview-note {
+    margin: 0;
+    opacity: var(--opacity-brand-overlay);
+  }
+
   .purchase-options__once {
     position: relative;
     justify-self: center;
@@ -464,6 +536,13 @@
       "id": "heading",
       "label": "t:settings.heading",
       "default": "Choose your subscription:"
+    },
+    {
+      "type": "checkbox",
+      "id": "preview_plans",
+      "label": "t:settings.preview_plans",
+      "info": "t:info.preview_plans",
+      "default": false
     },
     {
       "type": "header",

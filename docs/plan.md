@@ -144,12 +144,12 @@ Link to seo.md. Redirect count, canonical and noindex rules, JSON-LD types. New 
 | D-4 | Instagram feed source | Client | Manual image tiles with links | Assumed |
 | D-5 | "The 8" price and "Starts from" figures ($27.99/mo, $24.99/mo, $68.99) disagree across frames | Client | Prices come from Shopify and the selling plans; design figures treated as placeholders | Open |
 | D-6 | UGC video files | Client | Not in Figma; sections render posters only until videos are uploaded | Open |
-| D-7 | Copy marked Lorem ipsum (press quotes, Stats intro, Lifestyle caption) and repeated ingredient benefits | Client | Draft placeholders; final copy needed | Open |
+| D-7 | Copy marked Lorem ipsum (press quotes, Stats intro, Lifestyle caption) and repeated ingredient benefits | Client | Draft placeholders; final copy needed. Also placeholder: clinician quotes 2 and 3 (Dr. Amelia Hart, Dr. Samuel Reyes, invented names, must be replaced or removed before launch), the Claims and Size & pack details accordion copy on both products, The 8 description and how-to-use, and the National Psoriasis Foundation recognition copy (seal file is from the client store; confirm the product holds it) | Open |
 | D-8 | "The 8" has no description in Figma | Client | Empty description | Open |
 | D-9 | The before/after quote card shows "Marco Bellini" beside a woman's photo, and the quote reads like the How to use copy | Designer | Treated as placeholder | Open |
 | D-10 | The 4th gallery item is a video in the design; the close-up image is only 480px (cropped from a composite) | Client | Stills used; full-resolution photography needed | Open |
 | D-11 | The Claims, Size and pack details, and Full ingredient list accordions have headings but no copy | Client | Rows hide when empty | Open |
-| D-12 | Full-resolution photography | Client / designer | Figma only holds the photos at 1402–1672px wide (the stats background at 736px), so they soften at a 1920 wrapper on retina. Originals at 3840 wide are needed to replace them in place | Open |
+| D-12 | Full-resolution photography | Client / designer Also: before/after entries 2 and 3 (placeholder-result-2/3) reuse the day-0/day-14 photos to fill the 3-slide carousel; real result photos needed, or delete those entries before launch. | Figma only holds the photos at 1402–1672px wide (the stats background at 736px), so they soften at a 1920 wrapper on retina. Originals at 3840 wide are needed to replace them in place | Open |
 | D-13 | Recharge selling plan names | Jeet / client | Once the plans exist in Recharge, put each plan's exact name in its subscription_plan entry's "Selling plan name"; until then cards match by order (3 month first, then 1 month) | Open |
 | D-14 | Klaviyo list for the footer signup | Client | The footer uses Shopify customer signup, which Klaviyo syncs; confirm the list | Open |
 | D-15 | Mobile search | Jeet | The design hides search on mobile, so it's hidden there for now | Open |

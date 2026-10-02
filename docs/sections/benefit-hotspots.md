@@ -22,6 +22,13 @@ From docs/architecture.md (benefit-hotspots, PDP 965:2198 / mobile 965:3615):
 - **Impact:** no new JS, CSS only in this file. Panel colour needs `panel_color` (Linen) and `panel_text_color` (Sepia) set in the template.
 - **Approver:** Jeet (delegated).
 
+### 2026-10-02: Three message slides
+- **What:** Two message blocks added to the PDP template (and the assembler), using the Cleanse and Hydrate callout copy.
+- **Why:** The Figma message panel is a 3-slide carousel; the template had one message.
+- **Alternatives rejected:** None needed, the section already supported several messages.
+- **Impact:** Copy is placeholder (D-7).
+- **Approver:** Jeet (delegated)
+
 ## QA checklist
 - [ ] Desktop 1440: panel 3fr, photo 2fr, both about 620 high; heading top-left in Sepia over the image.
 - [ ] Each callout's dot sits at its x/y; the dotted line runs right to a white label chip; text sits under the chip.

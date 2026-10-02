@@ -37,7 +37,7 @@
 {% render 'contrast-override', background_color: section.settings.card_background_color, section_id: card_scope %}
 
 <div
-  class="before-after color-custom-{{ section.id }}"
+  class="before-after before-after--card-{{ section.settings.card_size | default: 'compact' }} color-custom-{{ section.id }}"
   style="
     --section-padding-top: {{ padding_top | divided_by: 16.0 }}rem;
     --section-padding-bottom: {{ padding_bottom | divided_by: 16.0 }}rem;
@@ -407,6 +407,23 @@
       padding-inline-end: calc(var(--space-40) + var(--space-10));
     }
 
+    /* Large card (PDP Figma 965:2355): 287 text column, ExtraBold 24 title, full-width 43 button.
+       Home Figma draws the compact card (Medium 14 title), so the size is a setting. */
+    .before-after--card-large .before-after__product .product-spotlight {
+      grid-template-columns: var(--spotlight-media) minmax(0, calc(var(--space-112) * 2 + var(--space-60) + var(--space-4)));
+    }
+
+    .before-after--card-large .before-after__product .product-spotlight__title {
+      font-weight: var(--font-weight-extrabold);
+      font-size: var(--space-24);
+      line-height: normal;
+    }
+
+    .before-after--card-large .before-after__product .product-spotlight__button.button--small {
+      min-block-size: calc(var(--layout-button-small) + var(--space-2) + 0.0625rem);
+      font-size: var(--type-button-size);
+    }
+
     .before-after__photo {
       aspect-ratio: 43 / 45;
     }
@@ -556,6 +573,23 @@
       "id": "card_background_color",
       "label": "t:settings.card_background_color",
       "alpha": false
+    },
+    {
+      "type": "select",
+      "id": "card_size",
+      "label": "t:settings.card_size",
+      "info": "t:info.before_after_card_size",
+      "options": [
+        {
+          "value": "compact",
+          "label": "t:options.compact"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "compact"
     },
     {
       "type": "header",

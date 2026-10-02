@@ -19,6 +19,13 @@ From docs/architecture.md (recognition-slider). Figma: 965:2147 (overlay 965:290
 - **Impact:** The Fossil border reads `var(--color-input-border)`, which Horizon fills from `palette_input_border` (Fossil), as brand-overrides does. Dot colours come from brand-overrides; this block only aligns them to the start with a 6 gap. Logo 33x45 snapped to 30 wide.
 - **Approver:** Jeet (delegated).
 
+### 2026-10-02: Left-aligned dots
+- **What:** Stronger selectors over Horizon's pagination rules; 24px targets (P12).
+- **Why:** Horizon centres the dots; Figma puts them under the card's left edge.
+- **Alternatives rejected:** Smaller targets (fails WCAG 2.5.8).
+- **Impact:** None.
+- **Approver:** Jeet (delegated)
+
 ## QA checklist
 - [ ] One recognition: card shows, no dots.
 - [ ] Two or more: swipe/scroll pages one card at a time; dots track the slide and can be clicked.

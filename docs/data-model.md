@@ -91,6 +91,7 @@ Display name field: title
 | perks | list.single_line_text_field | no | Perks line, joined with " \| " | Client |
 | is_recommended | boolean | no | "Recommended" tag and default selection | Client |
 | days_per_delivery | number_integer | no | Divisor for the per-day price | Client |
+| discount_percentage | number_integer (0–100) | no | Preview discount, used only while the product has no selling plans (block setting Preview plans) | Jeet, then client to match Recharge |
 
 ### before_after (Before and after)
 Display name field: title

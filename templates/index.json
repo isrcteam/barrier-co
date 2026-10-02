@@ -567,7 +567,9 @@
         "product_button_label": "Shop now",
         "product": "the-8-made-to-go-where-you-go",
         "comparisons": [
-          "the-30-day-14"
+          "the-30-day-14",
+          "placeholder-result-2",
+          "placeholder-result-3"
         ],
         "card_background_color": "#F0ECE1"
       }

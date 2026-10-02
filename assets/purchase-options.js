@@ -29,7 +29,7 @@ class PurchaseOptionsComponent extends Component {
     const form = document.getElementById(this.dataset.formId ?? '');
     if (!form) return;
 
-    const checked = this.querySelector('input[name="selling_plan"]:checked');
+    const checked = this.querySelector('input[data-button-label]:checked');
     const label =
       checked instanceof HTMLInputElement ? checked.dataset.buttonLabel ?? '' : this.dataset.oneTimeLabel ?? '';
     form.style.setProperty(LABEL_PROPERTY, JSON.stringify(label));
@@ -46,7 +46,7 @@ class PurchaseOptionsComponent extends Component {
         );
         if (!fresh) return;
 
-        const previous = this.querySelector('input[name="selling_plan"]:checked');
+        const previous = this.querySelector('input[data-button-label]:checked');
         const previousValue = previous instanceof HTMLInputElement ? previous.value : null;
 
         this.replaceChildren(...fresh.childNodes);
@@ -54,7 +54,7 @@ class PurchaseOptionsComponent extends Component {
         this.dataset.oneTimeLabel = fresh.dataset.oneTimeLabel ?? '';
 
         if (previousValue !== null) {
-          const match = Array.from(this.querySelectorAll('input[name="selling_plan"]')).find(
+          const match = Array.from(this.querySelectorAll('input[data-button-label]')).find(
             (input) => input instanceof HTMLInputElement && input.value === previousValue && !input.disabled
           );
           if (match instanceof HTMLInputElement) match.checked = true;
