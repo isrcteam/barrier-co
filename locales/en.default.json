@@ -164,6 +164,8 @@
     }
   },
   "content": {
+    "drawer_promise": "90-day money-back guarantee | Free 2–3 day shipping",
+    "drawer_account": "Account",
     "sticky_plan_label": "Purchase option",
     "sticky_review_count": "{{ count }} Reviews",
     "purchase_options_preview_note": "Preview: these cards show the plan copy but do not subscribe until Recharge creates the selling plans.",

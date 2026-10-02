@@ -136,7 +136,7 @@
                       >
                         <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
                         <span class="svg-wrapper icon-plus">
-                          {{- 'icon-plus.svg' | inline_asset_content -}}
+                          {{- 'icon-accordion.svg' | inline_asset_content -}}
                         </span>
                       </summary>
                       {% liquid
@@ -398,7 +398,7 @@
                                           {{- childlink.title | escape -}}
                                         </span>
                                         <span class="svg-wrapper icon-plus">
-                                          {{- 'icon-plus.svg' | inline_asset_content -}}
+                                          {{- 'icon-accordion.svg' | inline_asset_content -}}
                                         </span>
                                       </summary>
                                       {% liquid
@@ -776,6 +776,34 @@
           </ul>
         </div>
       {% endif %}
+      {%- comment -%}
+        Barrier: support links, account, socials and the promise line at the foot of the mobile drawer.
+        Links come from the footer menus so they stay editable in Navigation.
+      {%- endcomment -%}
+      {%- if data_header_drawer_type == 'mobile-drawer' -%}
+        {%- liquid
+          assign drawer_support_menu = linklists['footer-support']
+          assign drawer_social_menu = linklists['footer-community']
+        -%}
+        <div class="menu-drawer__brand-footer menu-drawer__animated-element" style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 2 }};">
+          <ul class="menu-drawer__brand-links list-unstyled">
+            {%- if shop.customer_accounts_enabled -%}
+              <li><a href="{{ routes.account_url }}">{{ 'content.drawer_account' | t }}</a></li>
+            {%- endif -%}
+            {%- for link in drawer_support_menu.links -%}
+              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+          {%- if drawer_social_menu.links.size > 0 -%}
+            <ul class="menu-drawer__brand-social list-unstyled">
+              {%- for link in drawer_social_menu.links -%}
+                <li><a href="{{ link.url }}"{% if link.type == 'http_link' %} target="_blank" rel="noopener"{% endif %}>{{ link.title | escape }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+          <p class="menu-drawer__brand-promise type-micro">{{ 'content.drawer_promise' | t }}</p>
+        </div>
+      {%- endif -%}
     </div>
     <div
       class="menu-drawer__backdrop"
