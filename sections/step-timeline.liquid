@@ -20,7 +20,11 @@
 
 {% render 'contrast-override', background_color: s.background_color, section_id: section.id %}
 
-<div
+{%- if s.animate_steps and steps.size > 0 -%}
+  <script src="{{ 'step-timeline.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{%- endif -%}
+
+<step-timeline
   {% if s.anchor_id != blank %}
     id="{{ s.anchor_id | handle }}"
   {% endif %}
@@ -88,13 +92,14 @@
       </ol>
     {%- endif -%}
   </div>
-</div>
+</step-timeline>
 
 {% stylesheet %}
   .step-timeline {
     --step-dot: var(--space-14);
     --step-rail-gap: var(--space-24);
 
+    display: block;
     padding-block: var(--section-pt-mobile) var(--section-pb-mobile);
     padding-inline: var(--layout-gutter);
     background: var(--color-background);
@@ -204,6 +209,48 @@
     margin: 0;
     line-height: 1.1;
     text-transform: uppercase;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .step-timeline__steps[data-animate] .step-timeline__step > *,
+    .step-timeline__steps[data-animate] .step-timeline__step::before,
+    .step-timeline__steps[data-animate] .step-timeline__step::after {
+      transition:
+        opacity var(--duration-slow) var(--easing-standard),
+        translate var(--duration-slow) var(--easing-standard),
+        scale var(--duration-slow) var(--easing-standard);
+    }
+
+    .step-timeline__steps[data-animate] .step-timeline__step > :nth-child(2) {
+      transition-delay: calc(var(--duration-fast) / 2);
+    }
+
+    .step-timeline__steps[data-animate] .step-timeline__step > :nth-child(3) {
+      transition-delay: var(--duration-fast);
+    }
+
+    .step-timeline__steps[data-animate] .step-timeline__step > :nth-child(n + 4) {
+      transition-delay: calc(var(--duration-fast) * 1.5);
+    }
+
+    .step-timeline__steps[data-animate] .step-timeline__step::after {
+      transform-origin: top;
+      transition-delay: var(--duration-base);
+    }
+
+    .step-timeline__steps[data-animate] .step-timeline__step:not(.is-revealed) > * {
+      opacity: 0;
+      translate: 0 var(--space-12);
+    }
+
+    .step-timeline__steps[data-animate] .step-timeline__step:not(.is-revealed)::before {
+      opacity: 0;
+      scale: 0.4;
+    }
+
+    .step-timeline__steps[data-animate] .step-timeline__step:not(.is-revealed)::after {
+      scale: 1 0;
+    }
   }
 
   .step-timeline .step-timeline__title {
@@ -396,6 +443,13 @@
       "max": 6,
       "step": 1,
       "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "animate_steps",
+      "label": "t:settings.animate_steps",
+      "info": "t:info.animate_steps",
+      "default": true
     },
     {
       "type": "text",

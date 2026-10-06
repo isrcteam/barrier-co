@@ -1,6 +1,6 @@
 const REDUCED_MOTION = matchMedia('(prefers-reduced-motion: reduce)');
-const COUNT_DURATION = 1600;
-const COUNT_STAGGER = 120;
+const COUNT_DURATION = 2200;
+const COUNT_STAGGER = 150;
 
 class ClinicalStats extends HTMLElement {
   /** @type {IntersectionObserver | undefined} */
@@ -10,6 +10,8 @@ class ClinicalStats extends HTMLElement {
   #resizeObserver;
 
   #width = 0;
+
+  #nextStart = 0;
 
   connectedCallback() {
     const list = this.firstElementChild;
@@ -22,7 +24,7 @@ class ClinicalStats extends HTMLElement {
     });
     this.#resizeObserver.observe(list);
 
-    if (REDUCED_MOTION.matches) return;
+    if (REDUCED_MOTION.matches || window.Shopify?.designMode) return;
 
     const numbers = Array.from(this.querySelectorAll('[data-count]')).filter((node) => node instanceof HTMLElement);
     for (const number of numbers) {
@@ -32,13 +34,15 @@ class ClinicalStats extends HTMLElement {
 
     this.#observer = new IntersectionObserver(
       (entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        this.#observer?.disconnect();
-        this.#count(numbers);
+        for (const entry of entries) {
+          if (!entry.isIntersecting || !(entry.target instanceof HTMLElement)) continue;
+          this.#observer?.unobserve(entry.target);
+          this.#count(entry.target);
+        }
       },
-      { threshold: 0.35 }
+      { rootMargin: '0px 0px -25% 0px' }
     );
-    this.#observer.observe(list);
+    for (const number of numbers) this.#observer.observe(number);
   }
 
   disconnectedCallback() {
@@ -46,27 +50,27 @@ class ClinicalStats extends HTMLElement {
     this.#resizeObserver?.disconnect();
   }
 
-  /** @param {HTMLElement[]} numbers */
-  #count(numbers) {
-    numbers.forEach((number, index) => {
-      const target = Number(number.dataset.count) || 0;
-      const delay = index * COUNT_STAGGER;
-      /** @type {number | undefined} */
-      let start;
+  /** @param {HTMLElement} number */
+  #count(number) {
+    const target = Number(number.dataset.count) || 0;
+    const now = performance.now();
+    const delay = Math.max(0, this.#nextStart - now);
+    this.#nextStart = now + delay + COUNT_STAGGER;
+    /** @type {number | undefined} */
+    let start;
 
-      /** @param {number} now */
-      const tick = (now) => {
-        start ??= now;
-        const progress = Math.min(Math.max((now - start - delay) / COUNT_DURATION, 0), 1);
-        number.textContent = String(Math.round(target * (1 - Math.pow(1 - progress, 3))));
-        if (progress < 1) {
-          requestAnimationFrame(tick);
-        } else {
-          number.style.inlineSize = '';
-        }
-      };
-      requestAnimationFrame(tick);
-    });
+    /** @param {number} time */
+    const tick = (time) => {
+      start ??= time;
+      const progress = Math.min(Math.max((time - start - delay) / COUNT_DURATION, 0), 1);
+      number.textContent = String(Math.round(target * (1 - Math.pow(1 - progress, 3))));
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        number.style.inlineSize = '';
+      }
+    };
+    requestAnimationFrame(tick);
   }
 
   #balanceCaptions() {

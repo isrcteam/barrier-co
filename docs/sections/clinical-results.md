@@ -45,3 +45,4 @@ Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figm
 ## Changes 2026-10-06 (internal QA and Dev Ready)
 - **Count up the numbers** (QA 15). The real numbers are in the HTML; the script only counts when it can animate, and never for reduced motion.
 - Captions balance to two lines (QA 18); dividers use the faded opacity (QA 17).
+- Each number counts up when it reaches three quarters of the way up the screen (2.2s, 0.15s stagger), instead of all four when the row first peeks in; numbers stay static in the theme editor.

@@ -294,8 +294,45 @@
   }
 
   #cart-drawer .theme-drawer__close-button:focus-visible {
-    outline: var(--border-hairline) solid var(--color-foreground);
-    outline-offset: var(--space-4);
+    outline: none;
+  }
+
+  #cart-drawer .theme-drawer__close-button:focus-visible::after {
+    text-decoration: underline;
+    text-decoration-thickness: var(--border-strong);
+    text-underline-offset: var(--space-4);
+  }
+
+  #cart-drawer .theme-drawer__dialog {
+    --theme-drawer-padding: var(--space-16);
+  }
+
+  #cart-drawer .cart-drawer__items {
+    padding-block-start: var(--space-24);
+  }
+
+  #cart-drawer .cart-drawer__summary {
+    --cart-drawer-summary-padding: var(--theme-drawer-padding);
+  }
+
+  #cart-drawer .cart-items__unit-price-wrapper--repeats-total {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    #cart-drawer .theme-drawer__dialog {
+      --theme-drawer-width: 100vw;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #cart-drawer .theme-drawer__dialog {
+      --theme-drawer-padding: var(--space-30);
+    }
+
+    #cart-drawer .cart-drawer__items {
+      padding-block-start: var(--space-30);
+    }
   }
 
   @media screen and (max-width: 749px) {

@@ -300,7 +300,7 @@
                     {%- endif -%}
                   </div>
 
-                  <div class="cart-items__unit-price-wrapper">
+                  <div class="cart-items__unit-price-wrapper{% if item.quantity == 1 and item.original_price == item.final_price %}{% unless item.variant.compare_at_price > item.original_price %} cart-items__unit-price-wrapper--repeats-total{% endunless %}{% endif %}">
                     <div>
                       {% if item.original_price != item.final_price %}
                         <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>

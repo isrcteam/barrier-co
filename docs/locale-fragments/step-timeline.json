@@ -6,10 +6,12 @@
   "settings": {
     "title_link": "Title link",
     "link_label": "Link label",
-    "active_steps": "Steps done"
+    "active_steps": "Steps done",
+    "animate_steps": "Reveal steps on scroll"
   },
   "info": {
-    "active_steps": "Steps after this number are faded and joined by a dashed line. 0 shows every step the same"
+    "active_steps": "Steps after this number are faded and joined by a dashed line. 0 shows every step the same",
+    "animate_steps": "Each step fades in, then its line draws to the next, as the section scrolls into view. Off for shoppers who prefer reduced motion"
   },
   "text_defaults": {
     "step_timeline_heading": "How it works"

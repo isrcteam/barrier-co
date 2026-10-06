@@ -129,3 +129,11 @@ Open before it can go live:
 - Schema validation: no new errors compared with HEAD. The new warnings are the validator flagging the "Same at mobile" toggles themselves, plus split-banner's mobile tile height, which is a separate stacked-tile measure rather than a mobile copy of the desktop height.
 - Theme check: the same findings as HEAD (translations in other locales, header settings count, header-drawer complexity, the Judge.me app block).
 - CSS check: unchanged count (365, all in stock Horizon files). Names: every new file is free in Horizon upstream.
+
+## Follow-ups from Jeet's review (2026-10-06)
+| Item | Change |
+| --- | --- |
+| How it works: animate steps 1–3 on scroll | Each step fades up as it reaches the lower part of the screen, its dot grows in, then its line draws down to the next step; steps that arrive together play 0.22s apart. Section setting **Reveal steps on scroll** (on). Skipped for reduced motion and in the theme editor; without JavaScript the steps simply show |
+| Clinically proven numbers don't animate | The count-up worked but began as the row first peeked in, so it had mostly finished before it was in view. Each number now starts when it reaches three quarters of the way up the screen (so the second row counts when it is reached on mobile), runs 2.2s and staggers 0.15s. Still skipped when the device asks for reduced motion |
+| Cart drawer padding | One inset for header, items and summary: 16 on mobile, 30 from 750. 24/30 gap under the header. Full width below 750 (Horizon kept it 480 wide down to 480, leaving a strip). The per-item price is hidden when it repeats the line total (quantity 1, no sale). The close button's keyboard focus is an underline instead of a box, since the drawer focuses it on open |
+| Accelerated checkout in the cart | Theme setting **Cart › Accelerated checkout buttons** off (the PDP and home buy buttons already had theirs disabled) |

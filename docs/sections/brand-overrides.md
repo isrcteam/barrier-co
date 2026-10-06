@@ -74,3 +74,10 @@ This file has no settings. The look comes from theme settings and section settin
 - **What:** on desktop, when the mega menu holds featured products, the full-page 12-column grid is replaced by one centred row: the links column (with a hairline divider), then the product cards at a fixed 224 each. The group is about 790 wide, centred under the nav, at every desktop width.
 - **Why:** Jeet: "too off, too wide, too scattered". Horizon pinned the links to the left page edge and the products to the right edge, leaving about 1000px of empty space between them at 1920.
 - **Approver:** Jeet.
+
+## Cart drawer cleanup 2026-10-06
+- One inset (`--theme-drawer-padding`) for header, items and summary: 16 below 750, 30 above; items start 24/30 under the header line.
+- Full-width drawer below 750.
+- Per-item price hidden when it repeats the line total (`cart-items__unit-price-wrapper--repeats-total`, set in cart-products for quantity 1 at full price).
+- Close button focus shown as an underline under "CLOSE".
+- Accelerated checkout buttons off in theme settings.

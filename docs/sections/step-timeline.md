@@ -28,3 +28,6 @@ From docs/architecture.md (step-timeline). Figma: 787:9003 / 787:9428 (how it wo
 1. Add a Step block per step: label (for example "Step 01"), title, optional title link, text, and an optional link under it.
 2. Set **Steps done** to how many steps should look complete.
 3. Upload the image; leave it empty for a single column.
+
+## Changes 2026-10-06
+- **Reveal steps on scroll** (default on): steps fade up one after another, dots grow in and each line draws to the next step. `assets/step-timeline.js` adds the classes; it does nothing for reduced motion or in the theme editor, and without it every step is visible.
