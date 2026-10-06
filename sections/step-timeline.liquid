@@ -158,6 +158,7 @@
   }
 
   .step-timeline__steps {
+    position: relative;
     display: grid;
     gap: calc(var(--space-30) + var(--space-2));
     margin: 0;
@@ -211,46 +212,40 @@
     text-transform: uppercase;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .step-timeline__steps[data-animate] .step-timeline__step > *,
-    .step-timeline__steps[data-animate] .step-timeline__step::before,
-    .step-timeline__steps[data-animate] .step-timeline__step::after {
-      transition:
-        opacity var(--duration-slow) var(--easing-standard),
-        translate var(--duration-slow) var(--easing-standard),
-        scale var(--duration-slow) var(--easing-standard);
-    }
+  .step-timeline__steps[data-animate] .step-timeline__step,
+  .step-timeline__steps[data-animate] .step-timeline__step::before {
+    transition:
+      opacity var(--duration-slow) var(--easing-standard),
+      scale var(--duration-slow) var(--easing-standard);
+  }
 
-    .step-timeline__steps[data-animate] .step-timeline__step > :nth-child(2) {
-      transition-delay: calc(var(--duration-fast) / 2);
-    }
+  .step-timeline__steps[data-animate] .step-timeline__step:not(:last-child)::after {
+    border-inline-start-style: dashed;
+    opacity: var(--opacity-brand-subtle);
+  }
 
-    .step-timeline__steps[data-animate] .step-timeline__step > :nth-child(3) {
-      transition-delay: var(--duration-fast);
-    }
+  .step-timeline__steps[data-animate] .step-timeline__step:not(.is-reached) {
+    opacity: var(--opacity-brand-faded);
+  }
 
-    .step-timeline__steps[data-animate] .step-timeline__step > :nth-child(n + 4) {
-      transition-delay: calc(var(--duration-fast) * 1.5);
-    }
+  .step-timeline__steps[data-animate] .step-timeline__step:not(.is-reached)::before {
+    opacity: calc(var(--opacity-brand-subtle) / var(--opacity-brand-faded));
+    scale: 0.8;
+  }
 
-    .step-timeline__steps[data-animate] .step-timeline__step::after {
-      transform-origin: top;
-      transition-delay: var(--duration-base);
-    }
+  .step-timeline__steps[data-animate] .step-timeline__step.is-reached,
+  .step-timeline__steps[data-animate] .step-timeline__step.is-reached::before {
+    opacity: 1;
+  }
 
-    .step-timeline__steps[data-animate] .step-timeline__step:not(.is-revealed) > * {
-      opacity: 0;
-      translate: 0 var(--space-12);
-    }
-
-    .step-timeline__steps[data-animate] .step-timeline__step:not(.is-revealed)::before {
-      opacity: 0;
-      scale: 0.4;
-    }
-
-    .step-timeline__steps[data-animate] .step-timeline__step:not(.is-revealed)::after {
-      scale: 1 0;
-    }
+  .step-timeline__steps[data-animate]::before {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(var(--step-dot) / 2);
+    inset-inline-start: calc((var(--step-dot) - var(--border-strong) - 0.0625rem) / 2);
+    inline-size: calc(var(--border-strong) + 0.0625rem);
+    block-size: calc(var(--step-rail-length, 0rem) * var(--step-progress, 0));
+    background: currentColor;
   }
 
   .step-timeline .step-timeline__title {

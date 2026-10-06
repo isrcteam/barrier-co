@@ -30,4 +30,4 @@ From docs/architecture.md (step-timeline). Figma: 787:9003 / 787:9428 (how it wo
 3. Upload the image; leave it empty for a single column.
 
 ## Changes 2026-10-06
-- **Reveal steps on scroll** (default on): steps fade up one after another, dots grow in and each line draws to the next step. `assets/step-timeline.js` adds the classes; it does nothing for reduced motion or in the theme editor, and without it every step is visible.
+- **Animate the steps** (default on): as soon as the section's top edge reaches the screen, a line grows from the first dot to the last in 1.5s, whether or not the shopper keeps scrolling (`--step-progress` × `--step-rail-length`, measured by `assets/step-timeline.js` and kept right on resize) and each step lights up as the line reaches it. Plays once. Reduced motion, the theme editor and no-JavaScript show the static **Steps done** look.

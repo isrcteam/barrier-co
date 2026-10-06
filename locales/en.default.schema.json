@@ -243,7 +243,7 @@
     "work_quickly_to_ship": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>"
   },
   "info": {
-    "animate_steps": "Each step fades in, then its line draws to the next, as the section scrolls into view. Off for shoppers who prefer reduced motion",
+    "animate_steps": "As soon as the section reaches the screen, a line runs from the first step to the last in 1.5 seconds and each step lights up as the line reaches it. Off for shoppers who prefer reduced motion; Steps done sets the look when it's off",
     "spotlight_image": "Leave empty to use the product's main image.",
     "icon_height_own": "Balances wide and tall logos. 0 uses the section's icon height. On mobile, wide icons shrink to fit a square of the section's icon height",
     "active_steps": "Steps after this number are faded and joined by a dashed line. 0 shows every step the same",
@@ -883,7 +883,7 @@
     "below_media": "Below media"
   },
   "settings": {
-    "animate_steps": "Reveal steps on scroll",
+    "animate_steps": "Animate the steps",
     "spotlight_image": "Card image",
     "icon_height_own": "Icon height",
     "active_steps": "Steps done",
