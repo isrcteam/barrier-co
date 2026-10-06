@@ -19,12 +19,18 @@
     "caption_size": "Caption size",
     "same_at_mobile": "Same at mobile",
     "top_mobile": "Mobile top",
-    "bottom_mobile": "Mobile bottom"
+    "bottom_mobile": "Mobile bottom",
+    "show_arrows": "Show arrows",
+    "focus_on_arrows": "Arrows bring the next card to the centre",
+    "reveal_product_on_hover": "Show product on hover",
+    "background_mobile_only": "Background on mobile only"
   },
   "info": {
     "price_label": "[price] is replaced by the lowest price, including subscription prices",
     "middle_card": "Applies on desktop to every second card in each group of three",
-    "caption_alignment": "Desktop only. Captions are centered on mobile"
+    "caption_alignment": "Desktop only. Captions are centered on mobile",
+    "focus_on_arrows": "On desktop the centre card is the large one; each arrow click moves the next card into the centre",
+    "reveal_product_on_hover": "On desktop the product card appears when the shopper hovers over its image. It always shows on touch screens"
   },
   "options": {
     "even": "Even",

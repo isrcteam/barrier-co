@@ -35,7 +35,7 @@ def main():
     for name, where in sorted(refs.items()):
         stem = name.rsplit(".", 1)[0].replace('"', "")
         try:
-            nodes = store.gql(Q, {"q": f'filename:"{stem}"'})["files"]["nodes"]
+            nodes = store.gql(Q, {"q": f"filename:{stem}"})["files"]["nodes"]
         except ShopifyError as e:
             die(f"Could not query files on {store.shop}: {e}")
         hit = [n for n in nodes if urllib.parse.unquote(os.path.basename(((n.get("image") or {}).get("url") or n.get("url") or "").split("?")[0])) == name]

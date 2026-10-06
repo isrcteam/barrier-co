@@ -110,7 +110,7 @@ Link to seo.md. Redirect count, canonical and noindex rules, JSON-LD types. New 
 | --- | --- | --- | --- | --- |
 | T-1 | Templates (All): No collection, cart, search, account, 404, blog, article, page or FAQ page frames. Value Only home and PDP designed | Designer | Style Horizon's stock templates with the tokens; ask for frames where a custom layout is wanted | Assumed |
 | T-2 | Fonts (All): Web licences not confirmed. Value Akzidenz-Grotesk Next, GT America (commercial) | Client | Use the files from the live theme | Open |
-| T-3 | H3–H5, Heading Small, stats (Headings): File not supplied. Value Akzidenz Medium 500 | Client | Regular until Medium is sent | Assumed |
+| T-3 | H3–H5, Heading Small, stats (Headings): File not supplied. Value Akzidenz Medium 500 | Client | Regular with a 0.04em stroke to match Medium until the file is sent (design-corrections D1); the internal QA asked for these to look bolder | Assumed |
 | T-4 | Palette names (All): A role name used as a colour name; a duplicate style. Value "BG", "neutral/BG" (duplicate), "Ingenious Black" | Designer | Rename in code to linen and ink; one entry | Assumed |
 | T-5 | Glass card fill (Stats, PDP benefits): Raw colour with two opacities. Value #E7DACE at 28% and 30% | Designer | New palette colour `oat` with one opacity, 0.28 | Assumed |
 | T-6 | Glass card border (Stats): The style's name says 40 but its value is 60. Value White at 60% via `Alpha/Light/40` | Designer | Use 60% | Assumed |
@@ -120,7 +120,7 @@ Link to seo.md. Redirect count, canonical and noindex rules, JSON-LD types. New 
 | T-10 | Last review divider; sticky title (PDP): Every other instance uses Fossil or Clay. Value Black #000000 | Designer | Fossil and Clay | Assumed |
 | T-11 | Spacing (All): Nothing bound; 12 is the most used gap but isn't on the scale. Value ~30 gap and ~25 padding values, including fractional ones (8.132, 9.072, 24.192, 2.184) | Designer | Scale = Figma's plus 2, 6, 12, 80; snap 5→4, 7/9→8, 15/17→16, 19→20, 27/28→30, 50/56→60, 84/85→86; fractional values rounded | Assumed |
 | T-12 | Breakpoint (All): No tablet frames. Value Frames at 390 and 1440 only | Jeet | Switch to desktop at 990, the same as Horizon | Assumed |
-| T-13 | Gutter (Mobile): Inconsistent. Value 10, with 16 and 17 in places; top bar 37 | Designer | 10 everywhere; header 16 to match the nav component | Assumed |
+| T-13 | Gutter (Mobile): Inconsistent. Value 10, with 16 and 17 in places; top bar 37 | Designer | 10 everywhere; header 16 to match the nav component; pages on the `landing` layout (sustainability) use 16 as their frame does | Assumed |
 | T-14 | Benefits row, Stats, banner (Desktop): Off the page grid. Value Fixed 1150 at x145; insets of x30 + 30 | Designer | Benefits row max-width 1150 centred; Stats keeps its own padding | Assumed |
 | T-15 | Text without a style (Several): 98 text segments have no style. Value Top bar Akzidenz Regular 12; nav GT Medium 14; stats 96/70 and 64/53; % at 44; mini card 24 | Designer | New type roles: announcement, nav, stat, stat_unit | Assumed |
 | T-16 | Mobile vs desktop nav (Header): Different families. Value Mobile Akzidenz ExtraBold 14; desktop GT Medium 14 | Designer | Keep both as designed | Open |
@@ -156,6 +156,13 @@ Link to seo.md. Redirect count, canonical and noindex rules, JSON-LD types. New 
 | D-17 | The 8 highlights are placeholder copy written to match The 30 ("Eight cloths in a travel-size pack." and so on) | Client | Replace with approved copy | Open |
 | D-18 | FAQ page: the footer "FAQs" link and the PDP "Read more FAQ" button point to /pages/faq, which does not exist yet (404) | Client / Jeet | Create the page (a template with the faq-panel section reading all faq_item entries) before launch | Open |
 | D-19 | Reviews layout: Figma draws a sidebar (rating, search, write review, ask a question, histogram, sort) and a feed with Reviews / Questions tabs. Judge.me controls that layout from its own admin settings | Jeet | Theme restyles Judge.me (colours, fonts, stars, buttons); switch on the summary, search and Q&A widgets in Judge.me settings | Open |
+| D-20 | Store writes waiting on admin access: the `custom.comparison_points` definition and values (docs/data/definitions.json, showcase-values.json). `tools/shopify/.env` only holds the storefront password | Jeet | Done 2026-10-06 after Jeet added the app credentials (one-time browser approval, permanent token): definition created, both products' points set by `scripts/set_showcase_values.py`, backup in docs/data/backups | Answered |
+| D-21 | Sustainability page Pact links (locations, mail-back program, cleaning guide, drop-off finder) | Client | All point to https://www.pactcollective.org as placeholders | Open |
+| D-22 | Sustainability page set-up: upload the 12 files in docs/assets/dist (manifest entries `sustainability_*`, `about_pact_banner`, `cert_*`) and create the page "Sustainability" with the template `page.sustainability` | Jeet | Done 2026-10-06: the 12 files are in Files (check_refs: 53 of 53 references resolve) and the page exists, hidden. Publishing it is Jeet's call | Partly answered |
+| D-23 | Sustainability copy: the mobile frame uses Pact's generic text ("empty beauty packaging", "bottles and applicators", "dump any unused goop") where desktop is written for the cloth | Client | Desktop copy used on both | Assumed |
+| D-24 | Production diagram labels are Sandstone on Tan, about 2.9:1 | Designer | Kept as drawn (text colour is a setting); below WCAG 4.5:1 | Open |
+| D-25 | Internal QA row 20: inset banner paragraph "width is not right", but it measures as Figma (483 at the 60 heading) | QA | Unchanged; which width is expected? | Open |
+| D-26 | Hero annotation: the small product card "follows throughout the site" | Jeet | Docks to the bottom on mobile while scrolling the homepage; not added to other templates | Assumed |
 | 1 | Figma design file, library file and prototype links | Client / designer | Design file received; no separate library | Answered |
 | 2 | Brand font files and licences | Client | Files taken from the live theme; licence confirmation is T-2 | Partly answered |
 | 3 | Launch date | Client | | Open |

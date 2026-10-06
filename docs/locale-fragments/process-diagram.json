@@ -1,0 +1,36 @@
+{
+  "names": {
+    "process_diagram": "Process diagram"
+  },
+  "content": {
+    "diagram": "Diagram",
+    "info_note": "Info note"
+  },
+  "settings": {
+    "step_1": "First step",
+    "step_2": "Second step",
+    "cycle_top": "Cycle, top",
+    "cycle_centre": "Cycle, centre",
+    "cycle_bottom": "Cycle, bottom",
+    "step_result": "Result",
+    "result_logo": "Result logo",
+    "note_value": "Figure",
+    "note_text": "Figure text",
+    "info_label": "Info button label"
+  },
+  "info": {
+    "result_logo": "Leave blank to show the Veocel logo",
+    "info_label": "Read by screen readers for the (i) button beside the cycle’s bottom label"
+  },
+  "text_defaults": {
+    "process_heading": "VEOCEL™ lyocell production process",
+    "process_wood": "Wood",
+    "process_pulp": "Pulp",
+    "process_water": "Water",
+    "process_production": "Fibre production",
+    "process_solvent": "Solvent",
+    "process_result": "Lyocell fibres",
+    "process_note": "Of solvent recovered",
+    "process_info_label": "About the solvent"
+  }
+}

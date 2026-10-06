@@ -52,6 +52,8 @@ def main():
         root.append(f"--duration-{kebab(name)}: {v};")
     for name, v in t.get("motion", {}).get("easing", {}).items():
         root.append(f"--easing-{kebab(name)}: {v};")
+    for name, v in t.get("motion", {}).get("speed", {}).items():
+        root.append(f"--speed-{kebab(name)}: {v};")
 
     for name, f in t["font"]["family"].items():
         stack = f["stack"] if isinstance(f, dict) else f
@@ -78,10 +80,12 @@ def main():
             if d[k] != m[k]:
                 out = rem(d[k]) if k == "size" else f"{d[k]}{unit}"
                 wide.append(f"--type-{r}-{k}: {out};")
+        stroke = " -webkit-text-stroke: var(--effect-medium-stroke) currentColor;" \
+            if spec["family"] == "heading" and spec["weight"] == "medium" and "medium-stroke" in t.get("effect", {}) else ""
         classes.append(
             f".type-{r} {{ font-family: var(--font-family-{kebab(spec['family'])}); "
             f"font-weight: var(--font-weight-{kebab(spec['weight'])}); font-size: var(--type-{r}-size); "
-            f"line-height: var(--type-{r}-line); letter-spacing: var(--type-{r}-tracking); }}")
+            f"line-height: var(--type-{r}-line); letter-spacing: var(--type-{r}-tracking);{stroke} }}")
 
     for name, v in t.get("layout", {}).items():
         if name.endswith("-desktop"):

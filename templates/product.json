@@ -12,7 +12,7 @@
     "breadcrumb_bar": {
       "type": "section",
       "settings": {
-        "padding-block-start": 0,
+        "padding-block-start": 14,
         "padding-block-end": 20
       },
       "blocks": {
@@ -55,7 +55,9 @@
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0,
-            "thumbnail_radius": 0
+            "thumbnail_radius": 0,
+            "badge_text": "Save 25% with subscription",
+            "show_recognition": true
           },
           "blocks": {}
         },
@@ -115,7 +117,8 @@
                 "mark_image": "shopify://shop_images/clinician-mark.svg",
                 "avatar_1": "shopify://shop_images/clinician-avatar-1.jpg",
                 "avatar_2": "shopify://shop_images/clinician-avatar-2.jpg",
-                "avatar_3": "shopify://shop_images/clinician-avatar-3.jpg"
+                "avatar_3": "shopify://shop_images/clinician-avatar-3.jpg",
+                "link_url": "#clinical-trial"
               }
             },
             "purchase": {
@@ -300,7 +303,14 @@
             "x_position": 47,
             "y_position": 19.84,
             "line_length": 15.42,
-            "text_width": 199
+            "text_width": 199,
+            "x_mobile": 50,
+            "y_mobile": 24.86,
+            "line_from_mobile": "left",
+            "line_x_mobile": -14.1,
+            "line_y_mobile": 0.38,
+            "text_width_mobile": 180,
+            "position_mobile": true
           }
         },
         "benefit_hotspots_callout_2": {
@@ -311,7 +321,14 @@
             "x_position": 39.17,
             "y_position": 39.68,
             "line_length": 35.5,
-            "text_width": 183
+            "text_width": 183,
+            "x_mobile": 60.77,
+            "y_mobile": 57.82,
+            "line_from_mobile": "top",
+            "line_x_mobile": -30.13,
+            "line_y_mobile": -8.1,
+            "text_width_mobile": 142,
+            "position_mobile": true
           }
         },
         "benefit_hotspots_callout_3": {
@@ -322,7 +339,14 @@
             "x_position": 39.54,
             "y_position": 80.32,
             "line_length": 32.44,
-            "text_width": 193
+            "text_width": 193,
+            "x_mobile": 8.46,
+            "y_mobile": 75.89,
+            "line_from_mobile": "top",
+            "line_x_mobile": -0.26,
+            "line_y_mobile": -22.22,
+            "text_width_mobile": 194,
+            "position_mobile": true
           }
         },
         "benefit_hotspots_message_4": {
@@ -444,12 +468,11 @@
         "heading": "Most asked questions",
         "button_label": "Read more FAQ",
         "button_link": "/pages/faq",
-        "background_color": "#FFFFFF",
         "open_first": true,
         "use_product_data": true,
         "divider_color": "#BBAE9A",
         "image": "shopify://shop_images/faq-background.jpg",
-        "image_mobile_same": false
+        "image_mobile_same": true
       }
     }
   },

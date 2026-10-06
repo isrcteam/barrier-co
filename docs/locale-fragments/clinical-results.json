@@ -14,11 +14,13 @@
     "use_product_data": "Use product data",
     "clinical_results": "Clinical results",
     "top_mobile": "Mobile top",
-    "bottom_mobile": "Mobile bottom"
+    "bottom_mobile": "Mobile bottom",
+    "animate_numbers": "Count up the numbers"
   },
   "info": {
     "inset_width": "On desktop, keeps the image inside the page margins. Mobile is always full width.",
     "use_product_clinical_results": "On product pages, shows the product's clinical results metafield. Falls back to the list below when the product has none.",
-    "clinical_results_limit": "The first four results are shown."
+    "clinical_results_limit": "The first four results are shown.",
+    "animate_numbers": "Numbers count up from 0 when the section scrolls into view. Off for shoppers who prefer reduced motion"
   }
 }

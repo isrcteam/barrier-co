@@ -15,10 +15,19 @@
     "panel_text_color": "Panel text color",
     "line_length": "Line length",
     "top_mobile": "Mobile top",
-    "bottom_mobile": "Mobile bottom"
+    "bottom_mobile": "Mobile bottom",
+    "label_x_mobile": "Label left (%)",
+    "label_y_mobile": "Label top (%)",
+    "line_from_mobile": "Line starts from the label’s",
+    "line_x_mobile": "Line across (%)",
+    "line_y_mobile": "Line down (%)",
+    "callout_text_width_mobile": "Text width on mobile",
+    "position_mobile": "Place on the image on mobile"
   },
   "info": {
-    "callout_line_length": "Length of the dotted line on desktop, as a share of the panel width. On mobile, callouts show as a list under the image."
+    "callout_line_length": "Length of the dotted line on desktop, as a share of the panel width. On mobile, callouts show as a list under the image.",
+    "callout_line_mobile": "Where the dot sits, measured from the label: negative values go left and up",
+    "position_mobile": "Off lists the callout under the image. On places the label over the image: positions are percentages of the image"
   },
   "text_defaults": {
     "benefit_hotspots_heading": "Your whole routine. One cloth",
@@ -32,5 +41,12 @@
     "callout_protect_text": "Mineral oil and dimethicone form an occlusive shield, locking in hydration and defending against environmental stress.",
     "benefit_message_heading": "One cloth. Three key benefits.",
     "benefit_message_text": "Cleanses, hydrates, and protects skin with minimal friction for softer, calmer, healthier skin."
+  },
+  "content": {
+    "mobile_layout": "Mobile layout"
+  },
+  "options": {
+    "left_side": "Left side",
+    "top_side": "Top edge"
   }
 }

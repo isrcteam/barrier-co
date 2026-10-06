@@ -1,0 +1,186 @@
+{% doc %}
+  One product column of a comparison table: thumbnail, title, ticked points and a button. Render inside a `ul.comparison-table` whose style sets `--comparison-columns` and `--comparison-rows` (the most points in any column); columns with fewer points keep empty rows so the lines run straight across.
+
+  @param {object} product - The product the column links to
+  @param {string} [title] - Column title, defaults to the product title
+  @param {object} [image] - Thumbnail, defaults to the product's featured image
+  @param {string} points - Points separated by `|`, e.g. "Designed for the post-shower routine|Made to go where you go"
+  @param {number} rows - The most points in any column of the table
+  @param {string} [button_label] - Button text, defaults to the product title
+  @param {boolean} [featured] - Dark column with a light button
+  @param {string} [heading_tag] - Tag for the title, defaults to h3
+
+  @example
+  {% render 'comparison-column', product: block.settings.product, points: points, rows: 4, button_label: 'Shop the 30.', featured: true %}
+{% enddoc %}
+{%- liquid
+  assign column_title = title | default: product.title
+  assign column_image = image | default: product.featured_image
+  assign point_list = points | split: '|'
+  assign point_count = point_list.size
+  assign tag = heading_tag | default: 'h3'
+-%}
+<li class="comparison-table__column{% if featured %} comparison-table__column--featured{% endif %}">
+  <div class="comparison-table__head">
+    {%- if column_image != blank -%}
+      {{
+        column_image
+        | image_url: width: 360
+        | image_tag: widths: '160, 240, 360', sizes: '(min-width: 990px) 7.5rem, 5rem', loading: 'lazy', class: 'comparison-table__thumb', alt: ''
+      }}
+    {%- endif -%}
+    <{{ tag }} class="comparison-table__title type-title-bold">{{ column_title | escape }}</{{ tag }}>
+  </div>
+  <ul class="comparison-table__points" role="list">
+    {%- for point in point_list -%}
+      {%- assign point_text = point | strip -%}
+      <li class="comparison-table__point">
+        {%- if point_text != blank -%}
+          <span class="comparison-table__tick" aria-hidden="true">{{- 'icon-tick.svg' | inline_asset_content -}}</span>
+          <span>{{ point_text | escape }}</span>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+    {%- if point_count < rows -%}
+      {%- for i in (point_count..rows) offset: 1 -%}
+        <li class="comparison-table__point comparison-table__point--empty" aria-hidden="true"></li>
+      {%- endfor -%}
+    {%- endif -%}
+  </ul>
+  {%- if product != blank -%}
+    <div class="comparison-table__action">
+      <a href="{{ product.url }}" class="button button--medium comparison-table__button">
+        {{- button_label | default: product.title | escape -}}
+      </a>
+    </div>
+  {%- endif -%}
+</li>
+
+{% stylesheet %}
+  .comparison-table {
+    --comparison-thumb: var(--space-80);
+    --comparison-ink: var(--color-foreground);
+    --comparison-paper: var(--color-background);
+
+    display: grid;
+    grid-template-columns: repeat(var(--comparison-columns, 2), minmax(0, 1fr));
+    grid-template-rows: auto repeat(var(--comparison-rows, 4), auto) auto;
+    margin: 0;
+    padding: calc(var(--comparison-thumb) * 0.6) 0 0;
+    list-style: none;
+  }
+
+  .comparison-table__column {
+    display: grid;
+    grid-row: 1 / -1;
+    grid-template-rows: subgrid;
+    border: var(--border-hairline) solid var(--comparison-ink);
+    background: color-mix(in srgb, var(--color-glass) calc(var(--opacity-brand-glass) * 100%), transparent);
+    color: var(--comparison-ink);
+  }
+
+  .comparison-table__column + .comparison-table__column {
+    border-inline-start: 0;
+  }
+
+  .comparison-table__column--featured {
+    --comparison-rule: var(--comparison-paper);
+
+    background: var(--comparison-ink);
+    color: var(--comparison-paper);
+  }
+
+  .comparison-table__head,
+  .comparison-table__point,
+  .comparison-table__action {
+    border-block-end: var(--border-hairline) solid var(--comparison-rule, var(--comparison-ink));
+  }
+
+  .comparison-table__head {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--space-12);
+    padding: var(--space-16) var(--space-8);
+    text-align: center;
+  }
+
+  .comparison-table__thumb {
+    display: block;
+    inline-size: var(--comparison-thumb);
+    block-size: var(--comparison-thumb);
+    margin-block-start: calc(var(--comparison-thumb) * -0.6 - var(--space-16) - var(--border-hairline));
+    object-fit: cover;
+  }
+
+  .comparison-table__title {
+    margin: 0;
+    font-size: var(--type-h5-size);
+    line-height: normal;
+    text-transform: uppercase;
+  }
+
+  .comparison-table__points {
+    display: grid;
+    grid-row: span var(--comparison-rows, 4);
+    grid-template-rows: subgrid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .comparison-table__point {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    min-block-size: var(--space-80);
+    padding: var(--space-16) var(--space-8);
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-line);
+  }
+
+  .comparison-table__tick {
+    display: inline-flex;
+    flex: none;
+    inline-size: var(--icon-tick);
+  }
+
+  .comparison-table__tick svg {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  .comparison-table__action {
+    display: flex;
+    align-items: center;
+    padding: var(--space-16) var(--space-12);
+  }
+
+  .comparison-table__button {
+    inline-size: 100%;
+  }
+
+  .comparison-table .comparison-table__column .button.comparison-table__button {
+    --button-background-color: var(--comparison-ink);
+    --button-border-color: var(--comparison-ink);
+    --button-color: var(--comparison-paper);
+  }
+
+  .comparison-table .comparison-table__column--featured .button.comparison-table__button {
+    --button-background-color: var(--color-white);
+    --button-border-color: var(--color-white);
+    --button-color: var(--comparison-ink);
+  }
+
+  @media screen and (min-width: 990px) {
+    .comparison-table {
+      --comparison-thumb: calc(var(--space-112) + var(--space-6) + 0.0625rem);
+    }
+
+    .comparison-table__point {
+      padding-inline: var(--space-12);
+    }
+  }
+{% endstylesheet %}

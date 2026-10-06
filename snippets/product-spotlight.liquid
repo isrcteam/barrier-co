@@ -2,8 +2,9 @@
   Small product card used over media and beside content: image, title, a "starts from" price line and a button.
 
   @param {object} product - The product to show
-  @param {string} [style] - 'card' (image above text), 'row' (image beside text) or 'glass' (translucent overlay), defaults to card
+  @param {string} [style] - 'card' (image above text), 'row' (image beside text), 'large' (row with a 24 title and the button under it on mobile) or 'glass' (translucent overlay), defaults to card
   @param {string} [button_label] - Button text, defaults to the product link label
+  @param {string} [button_size] - 'small' (40) or 'medium' (44), defaults to small
   @param {string} [price_label] - Price line with [price] where the price goes, for example "Starts from [price]/mo"
   @param {string} [heading_tag] - Tag for the title, defaults to p
   @param {string} [image_sizes] - sizes attribute for the image
@@ -14,6 +15,10 @@
 {%- liquid
   assign card_style = style | default: 'card'
   assign title_tag = heading_tag | default: 'p'
+  assign button_size_class = button_size | default: 'small'
+  if card_style == 'large'
+    assign button_size_class = 'medium'
+  endif
   assign sizes_attr = image_sizes | default: '(min-width: 990px) 140px, 120px'
 
   assign lowest_price = product.price_min
@@ -41,9 +46,9 @@
       </a>
     {%- endif -%}
     <div class="product-spotlight__body">
-      <{{ title_tag }} class="product-spotlight__title {% if card_style == 'card' %}type-title-bold{% else %}type-h5{% endif %}">{{ product.title | escape }}</{{ title_tag }}>
+      <{{ title_tag }} class="product-spotlight__title {% if card_style == 'card' or card_style == 'large' %}type-title-bold{% else %}type-h5{% endif %}">{{ product.title | escape }}</{{ title_tag }}>
       <p class="product-spotlight__price type-caption">{{ price_text }}</p>
-      <a href="{{ product.url }}" class="product-spotlight__button button button--small">
+      <a href="{{ product.url }}" class="product-spotlight__button button button--{{ button_size_class }}">
         {{- button_label | default: product.title | escape -}}
       </a>
     </div>
@@ -85,6 +90,10 @@
     background: color-mix(in srgb, var(--color-white) calc(var(--opacity-brand-overlay) * 100%), transparent);
     backdrop-filter: blur(var(--layout-blur-card));
     color: var(--color-on-media);
+  }
+
+  .product-spotlight--glass .product-spotlight__title {
+    max-inline-size: calc(var(--space-112) + var(--space-20));
   }
 
   /* The thumbnail sits in a Sandstone box, inset, multiplied onto it */
@@ -162,6 +171,73 @@
   .product-spotlight__button {
     justify-self: stretch;
     width: 100%;
+  }
+
+  .product-spotlight--large {
+    --spotlight-media: calc(var(--space-112) - var(--space-10));
+
+    grid-template-columns: var(--spotlight-media) minmax(0, 1fr);
+    grid-template-rows: 1fr auto auto 1fr auto;
+    grid-template-areas:
+      'media .'
+      'media title'
+      'media price'
+      'media .'
+      'button button';
+    gap: 0 var(--space-20);
+    padding: var(--space-12);
+  }
+
+  .product-spotlight--large .product-spotlight__body {
+    display: contents;
+  }
+
+  .product-spotlight--large .product-spotlight__media {
+    grid-area: media;
+    width: var(--spotlight-media);
+    padding: var(--space-6) calc(var(--space-6) / 2);
+  }
+
+  .product-spotlight--large .product-spotlight__image {
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+
+  .product-spotlight--large .product-spotlight__title {
+    grid-area: title;
+    font-size: var(--space-24);
+    line-height: normal;
+  }
+
+  .product-spotlight--large .product-spotlight__price {
+    grid-area: price;
+    margin: var(--space-8) 0 0;
+    color: var(--color-palette-sepia);
+  }
+
+  .product-spotlight--large .product-spotlight__button {
+    grid-area: button;
+    margin-block-start: var(--space-16);
+  }
+
+  @media screen and (min-width: 990px) {
+    .product-spotlight--large {
+      --spotlight-media: calc(var(--space-112) + var(--space-12));
+
+      grid-template-columns: var(--spotlight-media) minmax(0, calc(var(--space-112) * 2 + var(--space-60) + 0.1875rem));
+      grid-template-rows: 1fr auto auto auto 1fr;
+      grid-template-areas:
+        'media .'
+        'media title'
+        'media price'
+        'media button'
+        'media .';
+      padding-inline-end: calc(var(--space-40) + var(--space-10));
+    }
+
+    .product-spotlight--large .product-spotlight__button {
+      margin-block-start: var(--space-20);
+    }
   }
 
   @media screen and (min-width: 990px) {

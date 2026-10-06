@@ -35,3 +35,6 @@ From docs/architecture.md (social-gallery). Figma: Insta component 978:4341 (WEB
 
 ## Figma diff 2026-10-02
 Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.
+
+## Changes 2026-10-06 (internal QA and Dev Ready)
+- **Hide on product pages** (QA 68). No hover effect on the heading (QA 26).

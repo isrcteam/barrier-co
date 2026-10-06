@@ -45,3 +45,6 @@ From docs/architecture.md (benefit-hotspots, PDP 965:2198 / mobile 965:3615):
 - Each **Callout** block is one label: type the label and text, then drag Horizontal and Vertical position until the dot sits on the product, and set Line length so the label clears the image.
 - Each **Message** block is one slide in the glass card. Add more than one to show dots.
 - Panel color and panel text color set the left panel; Background color sets the gaps around it.
+
+## Changes 2026-10-06 (internal QA and Dev Ready)
+- Mobile callouts can sit on the image (QA 69): per callout, **Place on the image on mobile**, label position, line start and direction, and text width on mobile.

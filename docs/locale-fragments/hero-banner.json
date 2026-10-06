@@ -19,7 +19,10 @@
     "button_label": "Button label",
     "price_label": "Price label",
     "top_mobile": "Mobile top",
-    "bottom_mobile": "Mobile bottom"
+    "bottom_mobile": "Mobile bottom",
+    "sticky_spotlight_mobile": "Keep on screen on mobile",
+    "eyebrow_size": "Eyebrow size",
+    "stack_mobile": "Text above the image on mobile"
   },
   "options": {
     "inset": "Inset",
@@ -28,6 +31,8 @@
   },
   "info": {
     "background_video": "Plays muted on a loop behind the content. The image shows while it loads and for shoppers who prefer reduced motion",
-    "price_label": "[price] is replaced with the lowest subscription price, or the product price"
+    "price_label": "[price] is replaced with the lowest subscription price, or the product price",
+    "sticky_spotlight_mobile": "Once the shopper scrolls past the hero, the product card stays at the bottom of the screen on mobile",
+    "stack_mobile": "On mobile the text sits on the background colour and the image follows it"
   }
 }

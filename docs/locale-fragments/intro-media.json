@@ -8,6 +8,7 @@
     "show_second_tile": "Show second tile",
     "same_at_mobile": "Same at mobile",
     "top_mobile": "Mobile top",
-    "bottom_mobile": "Mobile bottom"
+    "bottom_mobile": "Mobile bottom",
+    "second_tile_only_mobile": "Show only the second tile on mobile"
   }
 }

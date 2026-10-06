@@ -1,0 +1,286 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "landing",
+  "sections": {
+    "hero": {
+      "type": "split-banner",
+      "blocks": {
+        "tile_sustainability": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/sustainability-hero-leaf.jpg",
+            "label": "Sustainability",
+            "link": "#materials"
+          }
+        },
+        "tile_pact": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/sustainability-hero-pact.jpg",
+            "label": "Pact x Barrier",
+            "link": "#mail-back"
+          }
+        }
+      },
+      "block_order": [
+        "tile_sustainability",
+        "tile_pact"
+      ],
+      "settings": {
+        "logo_text": "Barrier",
+        "heading": "Sustainability",
+        "height": 670,
+        "height_mobile": 220
+      }
+    },
+    "materials": {
+      "type": "feature-grid",
+      "blocks": {
+        "item_fibres": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/sustainability-icon-fibres.svg",
+            "title": "Thoughtfully chosen fibres",
+            "text": "<p>The Barrier cloth is made entirely from VEOCEL™ cellulosic fibres, derived from the natural raw material wood*. The wood comes from responsibly managed sources and is transformed into soft, absorbent fibres designed for personal-care applications.</p>"
+          }
+        },
+        "item_nature": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/sustainability-icon-nature.svg",
+            "title": "From nature, designed\nto return to nature",
+            "text": "<p>VEOCEL™ fibres are wood-based* and made from renewable sources. They are biodegradable in soil, freshwater and marine environments, and compostable under home and industrial conditions at the end of their use.</p>"
+          }
+        },
+        "item_wood": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/sustainability-icon-wood.svg",
+            "title": "Responsibly sourced wood",
+            "text": "<p>The raw material used to produce VEOCEL™ fibres comes from wood grown in responsibly managed forests. Lenzing follows its Wood* and Pulp Policy and uses trusted forest-certification systems to support responsible sourcing.</p>"
+          }
+        },
+        "item_production": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/sustainability-icon-production.png",
+            "title": "Lower-impact production",
+            "text": "<p>VEOCEL™ fibres are produced through environmentally responsible processes designed around low water consumption, low carbon emissions, emission recovery and resource efficiency.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_fibres",
+        "item_nature",
+        "item_wood",
+        "item_production"
+      ],
+      "settings": {
+        "heading": "Better materials, chosen from the inside out",
+        "columns": 2,
+        "anchor_id": "materials",
+        "padding-block-start": 30,
+        "padding-block-end": 30,
+        "same_padding_mobile": false,
+        "padding-block-start-mobile": 26,
+        "padding-block-end-mobile": 26
+      }
+    },
+    "process": {
+      "type": "process-diagram",
+      "settings": {
+        "heading": "VEOCEL™ lyocell\nproduction process",
+        "text": "<p>The production process for VEOCEL™ Lyocell fibers received the European Award for the Environment from the European Commission in the category \"The Technology Award for Sustainable Development\" (2000).</p>",
+        "label_wood": "Wood",
+        "label_pulp": "Pulp",
+        "label_water": "Water",
+        "label_production": "Fibre\nproduction",
+        "label_solvent": "Solvent",
+        "label_result": "Lyocell fibres",
+        "note_value": ">99%",
+        "note_text": "Of solvent\nrecovered",
+        "info_label": "About the solvent",
+        "background_color": "#A38D76",
+        "text_color": "#F9F7ED",
+        "padding-block-start": 90,
+        "padding-block-end": 90,
+        "same_padding_mobile": false,
+        "padding-block-start-mobile": 50,
+        "padding-block-end-mobile": 50
+      }
+    },
+    "tested": {
+      "type": "feature-icons",
+      "blocks": {
+        "cert_fsc": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/cert-fsc-pefc.svg",
+            "caption": "FSC® and PEFC\nChain of Custody",
+            "height": 72
+          }
+        },
+        "cert_usda": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/cert-usda-biobased.png",
+            "caption": "USDA Certified\nBiobased Product",
+            "height": 62
+          }
+        },
+        "cert_oeko": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/cert-oeko-tex.svg",
+            "caption": "STANDARD 100 by\nOEKO-TEX®, Product Class I"
+          }
+        },
+        "cert_tuv": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/cert-tuv-austria.png",
+            "caption": "TÜV AUSTRIA biodegradability\nand compostability certifications",
+            "height": 70
+          }
+        },
+        "cert_fkt": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/cert-fkt.png",
+            "caption": "FKT “Medically Tested –\nTested for Toxins”",
+            "height": 86
+          }
+        }
+      },
+      "block_order": [
+        "cert_fsc",
+        "cert_usda",
+        "cert_oeko",
+        "cert_tuv",
+        "cert_fkt"
+      ],
+      "settings": {
+        "heading": "Independently tested",
+        "text": "<p>VEOCEL™ fibres are supported by a range of recognised certifications** and standards, including:</p>",
+        "columns": 5,
+        "icon_height": 100,
+        "padding-block-start": 50,
+        "padding-block-end": 60,
+        "same_padding_mobile": false,
+        "padding-block-start-mobile": 26,
+        "padding-block-end-mobile": 26
+      }
+    },
+    "mail_back": {
+      "type": "split-text",
+      "settings": {
+        "eyebrow": "Thank you for participating in",
+        "heading": "Mail-Back\nCollection\nProgram",
+        "text": "<p>We have partnered with Pact Collective to ensure our empty cloth packaging stays out of landfills. You can learn more about Pact below. <strong>You can drop off empties at Pact's 3,300+ collections locations.</strong></p><p><a href=\"https://www.pactcollective.org\" title=\"Pact Collective\">See locations across the US &amp; Canada</a></p><p><strong>Not near a store?</strong><br>Mail back your <em><a href=\"https://www.pactcollective.org\" title=\"Pact Collective\">empty cloth packets</a></em> directly to Pact through <strong>Barrier x Pact Mail-Back Program</strong>.</p>",
+        "anchor_id": "mail-back",
+        "background_color": "#F0ECE1",
+        "padding-block-start": 90,
+        "padding-block-end": 90,
+        "same_padding_mobile": false,
+        "padding-block-start-mobile": 56,
+        "padding-block-end-mobile": 56,
+        "heading_size": "display"
+      }
+    },
+    "how_it_works": {
+      "type": "step-timeline",
+      "blocks": {
+        "step_label": {
+          "type": "step",
+          "settings": {
+            "label": "Step 01",
+            "title": "Request your shipping label",
+            "title_link": "https://www.pactcollective.org"
+          }
+        },
+        "step_clean": {
+          "type": "step",
+          "settings": {
+            "label": "Step 02",
+            "title": "Clean & empty",
+            "text": "<p>When you’ve finished all the cloths, rinse out and clean the inside of the pack. Make sure they’re truly clean and empty. Check out <a href=\"https://www.pactcollective.org\" title=\"Pact Collective\">Pact's Cleaning Guide</a></p>"
+          }
+        },
+        "step_drop": {
+          "type": "step",
+          "settings": {
+            "label": "Step 03",
+            "title": "Drop off",
+            "text": "<p>Drop your package in the mailbox. You can use a box (non larger than 6x6x3) or envelope (no larger than 8x12'')</p>",
+            "link_label": "Find drop off location",
+            "link": "https://www.pactcollective.org"
+          }
+        }
+      },
+      "block_order": [
+        "step_label",
+        "step_clean",
+        "step_drop"
+      ],
+      "settings": {
+        "eyebrow": "The process",
+        "heading": "How it works",
+        "text": "<p>Follow the link below to complete checkout and you'll receive a shipping label and instructions via email.</p>",
+        "image": "shopify://shop_images/faq-background.jpg",
+        "active_steps": 2,
+        "padding-block-start": 20,
+        "padding-block-end": 20,
+        "same_padding_mobile": false,
+        "padding-block-start-mobile": 26,
+        "padding-block-end-mobile": 26
+      }
+    },
+    "about_pact": {
+      "type": "hero-banner",
+      "settings": {
+        "image_desktop": "shopify://shop_images/about-pact-banner.jpg",
+        "same_image_mobile": true,
+        "show_overlay": false,
+        "eyebrow": "Let’s recycle",
+        "eyebrow_size": "small",
+        "heading": "About Pact",
+        "heading_tag": "h2",
+        "heading_size": "h1",
+        "show_bar": false,
+        "text": "<p>Pact is a nonprofit collective dedicated to reducing beauty packaging waste and driving circular solutions in the industry. By collecting hard-to-recycle beauty empties, like small plastic pumps, caps, and squeezable tubes - Pact helps properly recycle and process materials that would otherwise end up in landfills.</p>",
+        "width": "full",
+        "stack_mobile": true,
+        "content_position": "center_left",
+        "background_color": "#F0ECE1",
+        "height": "medium"
+      }
+    },
+    "footer": {
+      "type": "footer-bar",
+      "settings": {
+        "logo_text": "Barrier",
+        "text": "<p><a href=\"/policies/privacy-policy\" title=\"Privacy Policy\">Privacy Policy</a> | <a href=\"/policies/terms-of-service\" title=\"Terms of Service\">Terms of Service</a> | [year] © The Barrier Co.</p>",
+        "background_color": "#A38D76",
+        "text_color": "#F9F7ED"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "materials",
+    "process",
+    "tested",
+    "mail_back",
+    "how_it_works",
+    "about_pact",
+    "footer"
+  ]
+}

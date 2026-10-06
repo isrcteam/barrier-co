@@ -11,8 +11,14 @@
     assign pt_mobile = section.settings['padding-block-start-mobile'] | divided_by: 16.0
     assign pb_mobile = section.settings['padding-block-end-mobile'] | divided_by: 16.0
   endif
+
+  assign hidden_here = false
+  if section.settings.hide_on_product_pages and template.name == 'product'
+    assign hidden_here = true
+  endif
 -%}
 
+{%- unless hidden_here -%}
 {% render 'contrast-override', background_color: section.settings.background_color, section_id: section.id %}
 
 <div
@@ -93,6 +99,7 @@
     {%- endif -%}
   </div>
 </div>
+{%- endunless -%}
 
 {% stylesheet %}
   .social-gallery {
@@ -118,10 +125,6 @@
   .social-gallery__heading-link {
     color: inherit;
     text-decoration: none;
-  }
-
-  .social-gallery__heading-link:hover {
-    opacity: var(--opacity-brand-hover);
   }
 
   .social-gallery__track {
@@ -282,6 +285,12 @@
       "type": "url",
       "id": "profile_link",
       "label": "t:settings.profile_link"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_product_pages",
+      "label": "t:settings.hide_on_product_pages",
+      "default": false
     },
     {
       "type": "color",

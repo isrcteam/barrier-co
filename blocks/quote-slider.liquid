@@ -51,6 +51,9 @@
   {% render 'contrast-override', background_color: block.settings.background_color, section_id: block.id %}
   <div
     class="quote-slider color-custom-{{ block.id }}"
+    {% if block.settings.anchor_id != blank %}
+      id="{{ block.settings.anchor_id | handle }}"
+    {% endif %}
     {% if block.settings.heading != blank %}
       role="region"
       aria-labelledby="{{ heading_id }}"
@@ -188,6 +191,13 @@
       "id": "heading",
       "label": "t:settings.heading",
       "default": "Read the clinical trial"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "t:settings.anchor_id",
+      "info": "t:info.anchor_id",
+      "default": "clinical-trial"
     },
     {
       "type": "select",

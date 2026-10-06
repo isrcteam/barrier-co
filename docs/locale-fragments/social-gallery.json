@@ -9,7 +9,8 @@
     "show_instagram_icon": "Show Instagram icon",
     "same_at_mobile": "Same at mobile",
     "top_mobile": "Mobile top",
-    "bottom_mobile": "Mobile bottom"
+    "bottom_mobile": "Mobile bottom",
+    "hide_on_product_pages": "Hide on product pages"
   },
   "info": {
     "tile_link": "Leave blank to use the profile link"

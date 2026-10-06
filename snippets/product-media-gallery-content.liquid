@@ -27,6 +27,33 @@
 {%- liquid
   assign selected_product = closest.product
   assign selected_variant_media = selected_product.selected_or_first_available_variant.featured_media
+  assign media_badge_text = block_settings.badge_text | default: selected_product.metafields.custom.media_badge.value
+  assign media_recognition = null
+  if block_settings.show_recognition
+    assign media_recognition = selected_product.metafields.custom.recognitions.value | first
+  endif
+-%}
+{%- capture media_overlays -%}
+  {%- if media_badge_text != blank -%}
+    <span class="product-media__badge type-micro">{{ media_badge_text | escape }}</span>
+  {%- endif -%}
+  {%- if media_recognition != blank -%}
+    <div class="product-media__recognition type-caption">
+      {%- if media_recognition.logo.value != blank -%}
+        {{
+          media_recognition.logo.value
+          | image_url: width: 120
+          | image_tag: widths: '60, 120', sizes: '2.25rem', loading: 'lazy', class: 'product-media__recognition-logo', alt: ''
+        }}
+      {%- endif -%}
+      <p class="product-media__recognition-text">
+        <strong class="product-media__recognition-title">{{ media_recognition.title.value | escape }}</strong>
+        {{ media_recognition.description.value | escape }}
+      </p>
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+{%- liquid
   assign first_3d_model = selected_product.media | where: 'media_type', 'model' | first
 
   if block_settings.hide_variants
@@ -375,10 +402,7 @@
                 assign media_sizes = sizes
               endif
           -%}
-          {%- comment -%} Barrier: badge from custom.media_badge on the main image (Figma "Flagship", T-30) {%- endcomment -%}
-          {%- if forloop.first and selected_product.metafields.custom.media_badge != blank -%}
-            <span class="product-media__badge type-micro">{{ selected_product.metafields.custom.media_badge.value | escape }}</span>
-          {%- endif -%}
+          {%- if forloop.first -%}{{ media_overlays }}{%- endif -%}
           {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
             <div
               class="product-media-constraint-wrapper">
@@ -495,10 +519,7 @@
                 assign media_sizes = sizes
               endif
             -%}
-            {%- comment -%} Barrier: badge from custom.media_badge on the main image (Figma "Flagship", T-30) {%- endcomment -%}
-            {%- if forloop.first and selected_product.metafields.custom.media_badge != blank -%}
-              <span class="product-media__badge type-micro">{{ selected_product.metafields.custom.media_badge.value | escape }}</span>
-            {%- endif -%}
+            {%- if forloop.first -%}{{ media_overlays }}{%- endif -%}
             {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
               <div class="product-media-constraint-wrapper">
                 {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}

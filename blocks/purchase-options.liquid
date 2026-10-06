@@ -152,7 +152,7 @@
                   assign safe_step = step | escape
                   assign timeline = timeline | append: '<li class="purchase-options__step">' | append: safe_step | append: '</li>'
                 endfor
-                assign perks = plan_content.perks.value | join: ' | ' | escape
+                assign perks = plan_content.perks.value | join: ' [[perk-separator]] ' | escape | replace: '[[perk-separator]]', '<span class="purchase-options__perk-separator" aria-hidden="true">|</span>'
                 assign description_lines = '' | split: ','
               else
                 assign description_lines = plan.description | split: newline
@@ -260,7 +260,7 @@
                   assign safe_step = step | escape
                   assign timeline = timeline | append: '<li class="purchase-options__step">' | append: safe_step | append: '</li>'
                 endfor
-                assign perks = entry.perks.value | join: ' | ' | escape
+                assign perks = entry.perks.value | join: ' [[perk-separator]] ' | escape | replace: '[[perk-separator]]', '<span class="purchase-options__perk-separator" aria-hidden="true">|</span>'
               -%}
               {% render 'purchase-option-card',
                 input_id: input_id,
@@ -526,13 +526,26 @@
     opacity: 0;
   }
 
+  .purchase-options__once-radio {
+    cursor: pointer;
+  }
+
   .purchase-options__once-label {
+    text-decoration: underline;
+    text-decoration-thickness: var(--border-hairline);
     text-underline-offset: var(--space-4);
   }
 
-  .purchase-options__once-radio:checked + .purchase-options__once-label,
+  .purchase-options__once-radio:checked + .purchase-options__once-label {
+    font-weight: var(--font-weight-medium);
+  }
+
   .purchase-options__once-radio:hover + .purchase-options__once-label {
-    text-decoration: underline;
+    opacity: var(--opacity-brand-hover);
+  }
+
+  .purchase-options__perk-separator {
+    margin-inline: var(--space-6);
   }
 
   .purchase-options__once:has(.purchase-options__once-radio:focus-visible) {

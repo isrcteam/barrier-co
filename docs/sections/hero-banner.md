@@ -52,3 +52,9 @@ Add **Hero banner** from Banners and pick the **Hero** or **Inset banner** prese
 
 ## Figma diff 2026-10-02
 Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.
+
+## Changes 2026-10-06 (internal QA and Dev Ready)
+- Content aligns to the bottom on desktop, and the spotlight button is the Medium size (QA 3, 4).
+- **Keep on screen on mobile**: once the hero scrolls past, a copy of the product card docks to the bottom of the screen (Dev Ready annotation 9). It's a clone added to the page body, so it isn't trapped under later sections.
+- **Eyebrow size** (Large / Small), **Height** (Tall / Medium, 580 on desktop) and **Text above the image on mobile**, added for the sustainability About Pact banner.
+- A full-width banner with centre-left content sits on the 1312 content column with a 480 text column.

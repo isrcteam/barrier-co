@@ -13,6 +13,11 @@
     assign pb_mobile = section.settings['padding-block-end-mobile'] | divided_by: 16.0
   endif
 
+  assign focus_mode = false
+  if section.settings.focus_on_arrows and section.settings.show_arrows and slide_count > 2
+    assign focus_mode = true
+  endif
+
   if layout == 'tall'
     assign side_sizes = '(min-width: 990px) 30vw, 100vw'
     assign middle_sizes = '(min-width: 990px) 40vw, 100vw'
@@ -25,7 +30,7 @@
 {% render 'contrast-override', background_color: section.settings.background_color, section_id: section.id %}
 
 <div
-  class="image-carousel image-carousel--{{ layout }}{% if section.blocks.size <= 3 %} image-carousel--fits{% endif %} image-carousel--caption-{{ section.settings.caption_alignment }}{% if section.settings.show_side_bars %} image-carousel--bars{% endif %} color-custom-{{ section.id }}"
+  class="image-carousel image-carousel--{{ layout }}{% if section.blocks.size <= 3 or focus_mode %} image-carousel--fits{% endif %}{% if focus_mode %} image-carousel--focus{% endif %}{% unless section.settings.show_arrows %} image-carousel--no-arrows{% endunless %}{% if section.settings.reveal_product_on_hover %} image-carousel--reveal{% endif %}{% if section.settings.background_mobile_only %} image-carousel--bg-mobile-only{% endif %} image-carousel--caption-{{ section.settings.caption_alignment }}{% if section.settings.show_side_bars %} image-carousel--bars{% endif %} color-custom-{{ section.id }}"
   style="--section-pt: {{ pt }}rem; --section-pb: {{ pb }}rem; --section-pt-mobile: {{ pt_mobile }}rem; --section-pb-mobile: {{ pb_mobile }}rem;"
 >
   <div class="image-carousel__inner">
@@ -48,9 +53,14 @@
           {%- liquid
             assign position = forloop.index0 | modulo: 3
             assign slide_class = 'image-carousel__slide'
+            assign slide_attributes = ''
             assign image_sizes = side_sizes
             if position == 1
               assign slide_class = 'image-carousel__slide image-carousel__slide--middle'
+              assign slide_attributes = 'data-middle'
+              assign image_sizes = middle_sizes
+            endif
+            if focus_mode
               assign image_sizes = middle_sizes
             endif
           -%}
@@ -79,6 +89,7 @@
                       product: block.settings.product,
                       style: 'glass',
                       button_label: block.settings.button_label,
+                      button_size: 'medium',
                       price_label: block.settings.price_label
                     %}
                   </div>
@@ -89,7 +100,7 @@
               {%- endif -%}
             </div>
           {%- endcapture -%}
-          {% render 'slideshow-slide', index: forloop.index0, children: card, class: slide_class %}
+          {% render 'slideshow-slide', index: forloop.index0, children: card, class: slide_class, attributes: slide_attributes %}
         {%- endfor -%}
       {%- endcapture -%}
 
@@ -106,16 +117,21 @@
         {%- endif -%}
       {%- endcapture -%}
 
-      <div class="image-carousel__stage">
+      {%- liquid
+        assign start_slide_index = section.settings.start_slide | default: 1 | minus: 1
+        if start_slide_index >= slide_count
+          assign start_slide_index = 0
+        endif
+      -%}
+      {%- if focus_mode -%}
+        <script src="{{ 'carousel-focus.js' | asset_url }}" type="module" fetchpriority="low"></script>
+        <carousel-focus class="image-carousel__stage" data-start="{{ start_slide_index }}">
+      {%- else -%}
+        <div class="image-carousel__stage">
+      {%- endif -%}
         {%- if section.settings.show_side_bars -%}
           <span class="image-carousel__bar" aria-hidden="true"></span>
         {%- endif -%}
-        {%- liquid
-          assign start_slide_index = section.settings.start_slide | default: 1 | minus: 1
-          if start_slide_index >= slide_count
-            assign start_slide_index = 0
-          endif
-        -%}
         {% render 'slideshow',
           ref: 'imageCarousel',
           class: 'image-carousel__slideshow',
@@ -149,7 +165,30 @@
             else window.addEventListener('load', () => requestAnimationFrame(run), { once: true });
           </script>
         {%- endif -%}
-      </div>
+
+        {%- if focus_mode -%}
+          <div class="image-carousel__focus-arrows">
+            <button
+              type="button"
+              class="slideshow-control slideshow-control--previous button button-unstyled button-unstyled--transparent flip-x"
+              aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+              data-focus-step="-1"
+            >
+              <span class="svg-wrapper icon-arrow">{{- 'icon-arrow.svg' | inline_asset_content -}}</span>
+            </button>
+            <button
+              type="button"
+              class="slideshow-control slideshow-control--next button button-unstyled button-unstyled--transparent"
+              aria-label="{{ 'accessibility.slideshow_next' | t }}"
+              data-focus-step="1"
+            >
+              <span class="svg-wrapper icon-arrow">{{- 'icon-arrow.svg' | inline_asset_content -}}</span>
+            </button>
+          </div>
+        </carousel-focus>
+      {%- else -%}
+        </div>
+      {%- endif -%}
     {%- endif -%}
   </div>
 </div>
@@ -457,9 +496,90 @@
     }
   }
 
+  .image-carousel__focus-arrows {
+    display: none;
+  }
+
+  @media screen and (min-width: 990px) {
+    .image-carousel--bg-mobile-only {
+      background: transparent;
+    }
+
+    .image-carousel--focus .image-carousel__controls,
+    .image-carousel--no-arrows .image-carousel__controls {
+      display: none;
+    }
+
+    .image-carousel--focus .image-carousel__stage {
+      position: relative;
+    }
+
+    .image-carousel--focus .image-carousel__slide[data-focus='previous'] {
+      order: -1;
+    }
+
+    .image-carousel--focus .image-carousel__slide[data-focus='next'] {
+      order: 1;
+    }
+
+    .image-carousel--focus .image-carousel__slide[data-focus='hidden'] {
+      display: none;
+    }
+
+    .image-carousel__focus-arrows {
+      position: absolute;
+      inset-inline: calc(var(--bar-width) + (100cqi - 2 * var(--bar-width) - 100cqi * (2 * var(--side-ratio) + var(--middle-ratio))) / 4);
+      inset-block-end: 0;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .image-carousel__focus-arrows .slideshow-control {
+      min-block-size: 0;
+      padding: 0;
+      color: var(--color-foreground);
+      pointer-events: auto;
+    }
+
+    .image-carousel__focus-arrows .svg-wrapper {
+      display: block;
+      inline-size: var(--icon-md);
+      height: auto;
+    }
+
+    .image-carousel__focus-arrows svg {
+      display: block;
+      inline-size: 100%;
+      height: auto;
+    }
+
+    .image-carousel__focus-arrows .slideshow-control:focus-visible {
+      outline: var(--border-strong) solid var(--color-foreground);
+      box-shadow: var(--effect-focus-ring);
+    }
+  }
+
+  @media (hover: hover) and (min-width: 990px) {
+    .image-carousel--reveal .image-carousel__spotlight {
+      opacity: 0;
+      translate: 0 var(--space-8);
+      transition: opacity var(--duration-base) var(--easing-standard), translate var(--duration-base) var(--easing-standard);
+    }
+
+    .image-carousel--reveal .image-carousel__card:is(:hover, :focus-within) .image-carousel__spotlight {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .image-carousel slideshow-slides {
       scroll-behavior: auto;
+    }
+
+    .image-carousel--reveal .image-carousel__spotlight {
+      transition: none;
     }
   }
 
@@ -609,6 +729,27 @@
       "default": 1
     },
     {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "t:settings.show_arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "focus_on_arrows",
+      "label": "t:settings.focus_on_arrows",
+      "info": "t:info.focus_on_arrows",
+      "default": false,
+      "visible_if": "{{ section.settings.show_arrows }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_product_on_hover",
+      "label": "t:settings.reveal_product_on_hover",
+      "info": "t:info.reveal_product_on_hover",
+      "default": false
+    },
+    {
       "type": "select",
       "id": "caption_alignment",
       "label": "t:settings.caption_alignment",
@@ -646,6 +787,12 @@
       "id": "background_color",
       "label": "t:settings.background_color",
       "alpha": false
+    },
+    {
+      "type": "checkbox",
+      "id": "background_mobile_only",
+      "label": "t:settings.background_mobile_only",
+      "default": false
     },
     {
       "type": "header",

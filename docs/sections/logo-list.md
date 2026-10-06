@@ -33,3 +33,6 @@ From docs/architecture.md (logo-list). Figma: logo bar inside 965:1652 (965:1668
 
 ## Figma diff 2026-10-02
 Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.
+
+## Changes 2026-10-06 (internal QA and Dev Ready)
+- Per-logo **Logo height** to balance wide and tall logos (QA 27); 0 uses the section height.

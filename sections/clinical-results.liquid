@@ -97,22 +97,25 @@
       </div>
 
       {%- if results_count > 0 -%}
-        <ul class="clinical-results__grid" role="list">
-          {%- for result in results limit: 4 -%}
-            {%- assign unit = result.unit.value | default: '%' -%}
-            <li class="clinical-results__stat">
-              <p class="clinical-results__figure">
-                <span class="type-stat">{{ result.value.value }}</span>
-                {%- if unit != blank -%}
-                  <span class="clinical-results__unit type-stat-unit">{{ unit | escape }}</span>
+        <script src="{{ 'clinical-stats.js' | asset_url }}" type="module" fetchpriority="low"></script>
+        <clinical-stats class="clinical-results__stats">
+          <ul class="clinical-results__grid" role="list">
+            {%- for result in results limit: 4 -%}
+              {%- assign unit = result.unit.value | default: '%' -%}
+              <li class="clinical-results__stat">
+                <p class="clinical-results__figure">
+                  <span class="clinical-results__number type-stat"{% if section.settings.animate_numbers %} data-count="{{ result.value.value }}"{% endif %}>{{ result.value.value }}</span>
+                  {%- if unit != blank -%}
+                    <span class="clinical-results__unit type-stat-unit">{{ unit | escape }}</span>
+                  {%- endif -%}
+                </p>
+                {%- if result.title != blank -%}
+                  <p class="clinical-results__caption type-body" data-two-lines>{{ result.title.value | escape }}</p>
                 {%- endif -%}
-              </p>
-              {%- if result.title != blank -%}
-                <p class="clinical-results__caption type-body">{{ result.title.value | escape }}</p>
-              {%- endif -%}
-            </li>
-          {%- endfor -%}
-        </ul>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </clinical-stats>
       {%- elsif request.design_mode -%}
         <ul class="clinical-results__grid" role="list">
           {%- for i in (1..4) -%}
@@ -274,8 +277,17 @@
     line-height: 1;
   }
 
+  .clinical-results__number {
+    text-align: end;
+  }
+
   .clinical-results__caption {
     margin: 0;
+    text-wrap: balance;
+  }
+
+  .clinical-results__stats {
+    display: contents;
   }
 
   @media screen and (min-width: 990px) {
@@ -442,6 +454,13 @@
       "label": "t:settings.use_product_data",
       "info": "t:info.use_product_clinical_results",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "animate_numbers",
+      "label": "t:settings.animate_numbers",
+      "info": "t:info.animate_numbers",
+      "default": true
     },
     {
       "type": "metaobject_list",

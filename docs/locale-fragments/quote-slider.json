@@ -3,10 +3,12 @@
     "quote_slider": "Quote slider"
   },
   "settings": {
-    "heading_tag": "Heading tag"
+    "heading_tag": "Heading tag",
+    "anchor_id": "Anchor"
   },
   "info": {
-    "quote_card_background": "Colour of the quote card"
+    "quote_card_background": "Colour of the quote card",
+    "anchor_id": "Lets other links jump here, e.g. the \"View clinicians\" link uses #clinical-trial"
   },
   "content": {
     "quote_slider_source": "Shows the product's Testimonials metafield (custom.testimonials). Hidden when it's empty."

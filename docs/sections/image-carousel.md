@@ -44,3 +44,7 @@ From docs/architecture.md (image-carousel). Figma: Routine 965:1339 / mobile 965
 
 ## Figma diff 2026-10-02
 Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.
+
+## Changes 2026-10-06 (internal QA and Dev Ready)
+- **Show arrows** (off for Routine, QA 8) and **Background on mobile only** (Routine's Linen band, QA 7).
+- **Arrows bring the next card to the centre** and **Show product on hover** for Lifestyle (annotations 5 and 6, QA 22 and 23).

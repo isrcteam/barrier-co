@@ -105,7 +105,7 @@
                     endif
                   -%}
                   {%- capture row -%}
-                    <details class="details faq-panel__item"{% if is_open %} open{% endif %}>
+                    <details class="details faq-panel__item" name="faq-{{ section.id }}"{% if is_open %} open{% endif %}>
                       <summary class="details__header faq-panel__question type-h5">
                         <span class="svg-wrapper icon-plus faq-panel__icon">
                           {{- 'icon-accordion.svg' | inline_asset_content -}}
@@ -132,7 +132,7 @@
                     endif
                   -%}
                   {%- capture row -%}
-                    <details class="details faq-panel__item"{% if is_open %} open{% endif %}>
+                    <details class="details faq-panel__item" name="faq-{{ section.id }}"{% if is_open %} open{% endif %}>
                       <summary class="details__header faq-panel__question type-h5">
                         <span class="svg-wrapper icon-plus faq-panel__icon">
                           {{- 'icon-accordion.svg' | inline_asset_content -}}

@@ -8,9 +8,11 @@
     "scroll_on_mobile": "Scroll on mobile",
     "same_at_mobile": "Same at mobile",
     "top_mobile": "Mobile top",
-    "bottom_mobile": "Mobile bottom"
+    "bottom_mobile": "Mobile bottom",
+    "logo_height_own": "Logo height"
   },
   "info": {
-    "logo_alt_text": "Name of the brand, read by screen readers. Leave blank to use the image alt text"
+    "logo_alt_text": "Name of the brand, read by screen readers. Leave blank to use the image alt text",
+    "logo_height_own": "Balances wide and tall logos. 0 uses the section's logo height"
   }
 }

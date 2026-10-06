@@ -1,0 +1,22 @@
+{
+  "names": {
+    "split_banner": "Split banner"
+  },
+  "settings": {
+    "logo_text": "Logotype",
+    "logo_link": "Logotype link",
+    "hidden_heading": "Page heading",
+    "height_mobile": "Height on mobile"
+  },
+  "info": {
+    "split_banner_link": "Use #materials or #mail-back to jump to a section on the page",
+    "split_banner_logo": "Shown between bars at the top. Leave blank to hide",
+    "hidden_heading": "Read by screen readers and search engines; not shown. Leave blank to use the page title",
+    "split_banner_height_mobile": "Each image is this tall on mobile, one above the other"
+  },
+  "text_defaults": {
+    "split_banner_label_1": "Sustainability",
+    "split_banner_label_2": "Pact x Barrier",
+    "split_banner_logo": "Barrier"
+  }
+}

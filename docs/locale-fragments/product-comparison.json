@@ -1,0 +1,17 @@
+{
+  "names": {
+    "product_comparison": "Product comparison",
+    "comparison_column": "Column"
+  },
+  "settings": {
+    "comparison_points": "Points",
+    "comparison_featured": "Dark column",
+    "use_product_points": "Use product comparison points"
+  },
+  "info": {
+    "comparison_title": "Leave blank to use the product title",
+    "comparison_image": "Shows above the column. Leave blank to use the product's featured image",
+    "comparison_points": "One point per line. Used when the product has no comparison points, or when product points are turned off",
+    "use_product_points": "Columns show each product's Comparison points metafield when it's filled, so the same wording appears on the collection page"
+  }
+}

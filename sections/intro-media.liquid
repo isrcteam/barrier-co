@@ -25,7 +25,7 @@
 {% render 'contrast-override', background_color: s.background_color, section_id: section.id %}
 
 <div
-  class="intro-media {{ layout_class }} color-custom-{{ section.id }}"
+  class="intro-media {{ layout_class }}{% if s.show_second_tile and s.second_tile_only_mobile %} intro-media--second-only-mobile{% endif %} color-custom-{{ section.id }}"
   style="--intro-media-pt: {{ s['padding-block-start'] | divided_by: 16.0 }}rem; --intro-media-pb: {{ s['padding-block-end'] | divided_by: 16.0 }}rem; --intro-media-pt-mobile: {{ padding_top_mobile | divided_by: 16.0 }}rem; --intro-media-pb-mobile: {{ padding_bottom_mobile | divided_by: 16.0 }}rem;"
 >
   <div class="intro-media__container">
@@ -131,7 +131,13 @@
   .intro-media__header {
     display: grid;
     gap: var(--space-16);
-    padding-inline: var(--layout-gutter);
+    padding-inline: calc(var(--space-16) + 0.0625rem);
+  }
+
+  @media screen and (max-width: 989px) {
+    .intro-media--second-only-mobile .intro-media__tile:first-child {
+      display: none;
+    }
   }
 
   .intro-media__titles {
@@ -407,6 +413,13 @@
       "id": "second_poster",
       "label": "t:settings.video_cover_image",
       "visible_if": "{{ section.settings.show_second_tile and section.settings.second_media_type == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "second_tile_only_mobile",
+      "label": "t:settings.second_tile_only_mobile",
+      "default": false,
+      "visible_if": "{{ section.settings.show_second_tile }}"
     },
     {
       "type": "header",

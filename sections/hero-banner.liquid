@@ -42,7 +42,7 @@
 {% if section.index == 1 %}{% render 'measure-header-heights', only_when_first_section: true %}{% endif %}
 
 <div
-  class="hero-banner hero-banner--{{ s.width }} hero-banner--{{ s.content_position }} color-custom-{{ section.id }}"
+  class="hero-banner hero-banner--{{ s.width }} hero-banner--{{ s.content_position }}{% if s.height == 'medium' %} hero-banner--medium{% endif %}{% if s.stack_mobile %} hero-banner--stack-mobile{% endif %} color-custom-{{ section.id }}"
   style="--hero-banner-pt: {{ s['padding-block-start'] | divided_by: 16.0 }}rem; --hero-banner-pb: {{ s['padding-block-end'] | divided_by: 16.0 }}rem; --hero-banner-pt-mobile: {{ padding_top_mobile | divided_by: 16.0 }}rem; --hero-banner-pb-mobile: {{ padding_bottom_mobile | divided_by: 16.0 }}rem;"
 >
   <div class="hero-banner__frame">
@@ -157,7 +157,7 @@
             {%- if s.eyebrow != blank or s.heading != blank -%}
               <div class="hero-banner__titles">
                 {%- if s.eyebrow != blank -%}
-                  <p class="hero-banner__eyebrow type-eyebrow">{{ s.eyebrow | escape }}</p>
+                  <p class="hero-banner__eyebrow {% if s.eyebrow_size == 'small' %}type-eyebrow-small{% else %}type-eyebrow{% endif %}">{{ s.eyebrow | escape }}</p>
                 {%- endif -%}
                 {%- if s.heading != blank -%}
                   <{{ heading_tag }} class="hero-banner__heading type-{{ s.heading_size }}">
@@ -185,15 +185,25 @@
         </div>
 
         {%- if s.spotlight_product != blank -%}
-          <div class="hero-banner__spotlight">
+          {%- if s.sticky_spotlight_mobile -%}
+            <script src="{{ 'sticky-spotlight.js' | asset_url }}" type="module" fetchpriority="low"></script>
+            <sticky-spotlight class="hero-banner__spotlight">
+          {%- else -%}
+            <div class="hero-banner__spotlight">
+          {%- endif -%}
             {% render 'product-spotlight',
               product: s.spotlight_product,
               style: 'card',
               button_label: s.spotlight_button_label,
+              button_size: 'medium',
               price_label: s.spotlight_price_label,
               image_sizes: '(min-width: 990px) 15vw, 33vw'
             %}
-          </div>
+          {%- if s.sticky_spotlight_mobile -%}
+            </sticky-spotlight>
+          {%- else -%}
+            </div>
+          {%- endif -%}
         {%- endif -%}
       </div>
     </div>
@@ -452,6 +462,79 @@
     align-self: end;
   }
 
+  .sticky-spotlight__docked {
+    position: fixed;
+    inset-inline: var(--layout-gutter);
+    inset-block-end: max(var(--space-10), var(--safe-area-inset-bottom, var(--space-10)));
+    z-index: var(--z-sticky-bar);
+    box-shadow: var(--effect-sticky-shadow);
+  }
+
+  .sticky-spotlight__docked[hidden] {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sticky-spotlight__docked {
+      animation: hero-banner-dock var(--duration-base) var(--easing-standard);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .sticky-spotlight__docked {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .hero-banner--stack-mobile .hero-banner__frame {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .hero-banner--stack-mobile .hero-banner__media {
+      position: relative;
+      order: 2;
+      z-index: 0;
+      aspect-ratio: 39 / 20;
+    }
+
+    .hero-banner--stack-mobile .hero-banner__overlay {
+      display: none;
+    }
+
+    .hero-banner--stack-mobile .hero-banner__inner {
+      padding: calc(var(--space-60) - var(--space-4)) var(--layout-gutter);
+      color: var(--color-foreground);
+      text-align: center;
+    }
+
+    .hero-banner--stack-mobile .hero-banner__copy,
+    .hero-banner--stack-mobile .hero-banner__text {
+      justify-content: center;
+      justify-items: center;
+      max-width: none;
+    }
+
+    .hero-banner--stack-mobile .hero-banner__eyebrow {
+      color: var(--color-accent-bar);
+      font-size: var(--type-body-small-size);
+    }
+
+    .hero-banner--stack-mobile .hero-banner__body {
+      padding-inline: calc(var(--space-16) + var(--space-2));
+      font-size: var(--type-body-size);
+    }
+  }
+
+  @keyframes hero-banner-dock {
+    from {
+      translate: 0 100%;
+      opacity: 0;
+    }
+  }
+
   @media screen and (min-width: 990px) {
     .hero-banner {
       --hero-banner-min-height: calc(var(--space-80) * 10 - var(--space-20));
@@ -461,6 +544,18 @@
 
     .hero-banner--inset {
       --hero-banner-min-height: calc(var(--space-80) * 8 + var(--space-40) - var(--space-4));
+    }
+
+    .hero-banner.hero-banner--medium {
+      --hero-banner-min-height: calc(var(--space-80) * 7 + var(--space-20));
+    }
+
+    .hero-banner--full.hero-banner--center_left .hero-banner__inner {
+      padding-inline: max(var(--layout-gutter), calc((100% - var(--space-112) * 11 - var(--space-80)) / 2));
+    }
+
+    .hero-banner--full.hero-banner--center_left .hero-banner__text {
+      max-width: max(calc(var(--space-112) * 4 + var(--space-30)), calc(var(--type-h1-size) * 8));
     }
 
     .hero-banner--inset .hero-banner__frame {
@@ -493,7 +588,7 @@
 
     .hero-banner__content {
       grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
+      align-items: end;
       gap: var(--space-30);
     }
 
@@ -601,6 +696,22 @@
       "type": "text",
       "id": "eyebrow",
       "label": "t:settings.eyebrow"
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_size",
+      "label": "t:settings.eyebrow_size",
+      "options": [
+        {
+          "value": "large",
+          "label": "t:options.large"
+        },
+        {
+          "value": "small",
+          "label": "t:options.small"
+        }
+      ],
+      "default": "large"
     },
     {
       "type": "text",
@@ -716,6 +827,13 @@
       "default": "Shop now"
     },
     {
+      "type": "checkbox",
+      "id": "sticky_spotlight_mobile",
+      "label": "t:settings.sticky_spotlight_mobile",
+      "info": "t:info.sticky_spotlight_mobile",
+      "default": false
+    },
+    {
       "type": "header",
       "content": "t:content.layout"
     },
@@ -734,6 +852,29 @@
         }
       ],
       "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "t:settings.height",
+      "options": [
+        {
+          "value": "tall",
+          "label": "t:options.tall"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        }
+      ],
+      "default": "tall"
+    },
+    {
+      "type": "checkbox",
+      "id": "stack_mobile",
+      "label": "t:settings.stack_mobile",
+      "info": "t:info.stack_mobile",
+      "default": false
     },
     {
       "type": "select",

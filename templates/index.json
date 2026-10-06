@@ -26,7 +26,8 @@
         "image_mobile": "shopify://shop_images/home-hero-mobile.jpg",
         "spotlight_product": "the-30-the-everyday",
         "play_poster": "shopify://shop_images/intro-video-poster-desktop.jpg",
-        "same_image_mobile": false
+        "same_image_mobile": false,
+        "sticky_spotlight_mobile": true
       }
     },
     "press": {
@@ -103,11 +104,28 @@
         "heading": "Beauty that’s more than skin deep.",
         "heading_tag": "h2",
         "text": "<p>Most skincare sits on the surface. The Barrier Cloth works beneath it delivering hyaluronic acid, glycerin, and barrier-strengthening actives directly into the skin. One cloth cleanses, hydrates, and protects in a single step. No bottles. No layering. No 10-step routine. Just full-body skincare.</p>",
+        "media_type": "image",
+        "show_second_tile": true,
+        "poster": "shopify://shop_images/intro-video-poster-desktop.jpg",
+        "image": "shopify://shop_images/lifestyle-1.jpg",
+        "second_media_type": "video",
+        "second_poster": "shopify://shop_images/intro-video-poster-desktop.jpg",
+        "second_tile_only_mobile": true
+      }
+    },
+    "intro_single": {
+      "type": "intro-media",
+      "settings": {
+        "eyebrow": "The Barrier Cloth",
+        "heading": "Beauty that’s more than skin deep.",
+        "heading_tag": "h2",
+        "text": "<p>Most skincare sits on the surface. The Barrier Cloth works beneath it delivering hyaluronic acid, glycerin, and barrier-strengthening actives directly into the skin. One cloth cleanses, hydrates, and protects in a single step. No bottles. No layering. No 10-step routine. Just full-body skincare.</p>",
         "media_type": "video",
         "show_second_tile": false,
         "poster": "shopify://shop_images/intro-video-poster-desktop.jpg",
         "image": "shopify://shop_images/intro-video-poster-desktop.jpg"
-      }
+      },
+      "disabled": true
     },
     "routine": {
       "type": "image-carousel",
@@ -118,7 +136,9 @@
         "show_side_bars": true,
         "caption_alignment": "center",
         "caption_size": "type-body-small",
-        "background_color": "#F0ECE1"
+        "background_color": "#F0ECE1",
+        "show_arrows": false,
+        "background_mobile_only": true
       },
       "blocks": {
         "card_cleanse": {
@@ -410,7 +430,10 @@
           "customer-video-1",
           "customer-video-3",
           "customer-video-4"
-        ]
+        ],
+        "same_padding_mobile": false,
+        "padding-block-start-mobile": 32,
+        "padding-block-end-mobile": 0
       },
       "blocks": {
         "video_testimonials_quote_1": {
@@ -464,28 +487,28 @@
         "item_hydration": {
           "type": "item",
           "settings": {
-            "caption": "Deep Skin Hydration in 30 Minutes",
+            "caption": "Deep Skin Hydration in\n30 Minutes",
             "icon": "shopify://shop_images/feature-icon-1.svg"
           }
         },
         "item_dryness": {
           "type": "item",
           "settings": {
-            "caption": "Helps Reduce Dryness",
+            "caption": "Helps Reduce\nDryness",
             "icon": "shopify://shop_images/feature-icon-2.svg"
           }
         },
         "item_smoother": {
           "type": "item",
           "settings": {
-            "caption": "Supports Smoother Looking Skin",
+            "caption": "Supports Smoother\nLooking Skin",
             "icon": "shopify://shop_images/feature-icon-3.svg"
           }
         },
         "item_texture": {
           "type": "item",
           "settings": {
-            "caption": "Skin Texture Improvement",
+            "caption": "Skin Texture\nImprovement",
             "icon": "shopify://shop_images/feature-icon-4.svg"
           }
         }
@@ -516,20 +539,66 @@
         "same_image_mobile": false
       }
     },
-    "lifestyle": {
-      "type": "image-carousel",
+    "compare": {
+      "type": "product-comparison",
+      "blocks": {
+        "column_everyday": {
+          "type": "column",
+          "settings": {
+            "product": "the-30-the-everyday",
+            "title": "The 30. The everyday.",
+            "image": "shopify://shop_images/cloth-pack-front.jpg",
+            "points": "Designed for the post-shower routine\nUsed when the customer is already clean\nPrimarily associated with at-home body care\nFeels more like part of a daily routine",
+            "button_label": "Shop the 30.",
+            "featured": true
+          }
+        },
+        "column_travel": {
+          "type": "column",
+          "settings": {
+            "product": "the-8-made-to-go-where-you-go",
+            "title": "The 8. Made to go where you go.",
+            "image": "shopify://shop_images/cloth-pack-front.jpg",
+            "points": "Designed for on-the-go body care\nUsed when the customer hasn’t showered yet\nMade for Post-workout, In-flight / travelling, Beach to dinner\nMade to go where you go",
+            "button_label": "Shop the 8.",
+            "featured": false
+          }
+        }
+      },
+      "block_order": [
+        "column_everyday",
+        "column_travel"
+      ],
       "settings": {
         "heading": "Body care.\nWherever life happens.",
         "heading_tag": "h2",
-        "subheading": "Post-workout. In-flight. Beach to dinner. On the go.",
+        "text": "<p>Post-workout. In-flight. Beach to dinner. On the go.</p>",
+        "use_product_points": true,
+        "product": "the-30-the-everyday",
+        "product_price_label": "Starts From [price]",
+        "product_button_label": "Shop now",
+        "card_background_color": "#F0ECE1"
+      }
+    },
+    "lifestyle": {
+      "type": "image-carousel",
+      "settings": {
+        "heading": "",
+        "heading_tag": "h2",
+        "subheading": "",
         "middle_card": "tall",
         "show_side_bars": true,
         "caption_alignment": "left",
         "caption_size": "type-body",
-        "padding-block-start": 0,
-        "padding-block-end": 0,
-        "same_padding_mobile": true,
-        "start_slide": 2
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "same_padding_mobile": false,
+        "start_slide": 2,
+        "show_arrows": true,
+        "focus_on_arrows": true,
+        "reveal_product_on_hover": true,
+        "padding-block-start-mobile": 30,
+        "padding-block-end-mobile": 30
       },
       "blocks": {
         "card_shell": {
@@ -557,29 +626,13 @@
         "card_travel",
         "card_pack"
       ]
-    },
-    "before_after": {
-      "type": "before-after",
-      "settings": {
-        "heading": "Before / after",
-        "heading_tag": "h2",
-        "text": "<p>Real results from real people. The Barrier Cloth delivers active hydration deeply where it counts, reducing redness and smoothing skin texture in 14 days.</p>",
-        "product_price_label": "Starts from [price]",
-        "product_button_label": "Shop now",
-        "product": "the-8-made-to-go-where-you-go",
-        "comparisons": [
-          "the-30-day-14",
-          "placeholder-result-2",
-          "placeholder-result-3"
-        ],
-        "card_background_color": "#F0ECE1"
-      }
     }
   },
   "order": [
     "hero",
     "press",
     "intro",
+    "intro_single",
     "routine",
     "ticker",
     "featured",
@@ -587,7 +640,7 @@
     "results",
     "proof_icons",
     "banner",
-    "lifestyle",
-    "before_after"
+    "compare",
+    "lifestyle"
   ]
 }

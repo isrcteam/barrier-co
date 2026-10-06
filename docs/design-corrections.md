@@ -107,7 +107,7 @@ Every home and PDP section was measured against its Figma node at 1440 and 390, 
 | P18 | Before/after quote: Figma shows stars and name only, the data has a role line | Role not shown in the before/after card (still shown in the clinical-trial card) |
 | P19 | Lifestyle glass card is white at 30%; the stats glass is #E7DACE at 28% | Two glass treatments: lifestyle white/30% with a Sandstone multiply thumbnail box, stats unchanged |
 | P20 | Home featured product: Figma's button reads "ADD TO CART - $24.99/MO" with no plan choice on the page | The home button carries the one-time price; a subscription is only added where the plan cards are visible (product page) |
-| P21 | Featured gallery and PDP: Figma draws no arrows on the main image and no selected-thumbnail outline | Arrows hidden, outline only on keyboard focus |
+| P21 | Featured gallery and PDP: Figma draws no arrows on the main image and no selected-thumbnail outline | Arrows hidden. The selected thumbnail is outlined, as the internal QA asked (row 41, 2026-10-06) |
 | P22 | Hero photo: Figma starts it under the solid announcement bar; Horizon put it behind | Photo starts at 34 on the first-section hero |
 | P23 | Thumbnail rail end bars: Tan on the desktop frames, Fossil on mobile | Tan at 990 and up, Fossil below |
 | P14 | Ingredient images: the PNGs in the file have uneven canvases (the witch hazel is tall portrait), so rows came out 270 to 470 high | Every image sits in the 112 × 94 box from the mobile frame (273 × 229 on desktop), object-fit contain |
@@ -126,3 +126,20 @@ Every home and PDP section was measured against its Figma node at 1440 and 390, 
 | A4 | Type is only defined at 1440 and 390, so on a 1920 wrapper it read small | Fluid type from 1440 to 1920 for headings and body (tokens.md); unchanged at and below 1440 |
 | A6 | The mobile menu isn't designed (Figma has only the closed "| MENU |" bar, 977:670); Horizon's drawer used GT America links, a tiny ×, a large gap and product cards pinned to the bottom | Full-width Sandstone drawer opening under the announcement bar: "| CLOSE |" on the MENU spot (x 16, 64 row); Akzidenz ExtraBold 32 links with Fossil rules; Shop as an accordion (14 cross, open by default) with Medium 14 sub-links; product cards in a Linen band under the links; Account, support links, socials and the promise line at the foot (from the footer menus). Mobile header padding set to Figma's 16 |
 | A5 | The Shop mega menu wasn't designed; Horizon's default spread the links and cards across the full page | A compact, centred panel: links, a divider, and the two product cards |
+
+## Dev Ready file and internal QA (2026-10-06)
+Node IDs in this table refer to the Dev Ready page 776:4700 in file V6s6rko0NxG4CPfctCnH29.
+
+| # | In Figma | In code |
+| --- | --- | --- |
+| D1 | Titles, buttons and nav use Akzidenz-Grotesk Next Medium, but only Regular and ExtraBold are licensed (T-3) | Medium is emulated: Regular plus a 0.04em text stroke (`effect.medium-stroke` token), measured against the Figma glyph widths. When the Medium file is licensed, load it and delete the token |
+| D2 | Routine: the QA sheet asks for the Linen band; the Dev Ready frames draw it only on mobile | Image carousel setting **Background on mobile only**, on for Routine |
+| D3 | Desktop footer: a small "\| BARRIER \|" logo top left, three menus to the right, no tagline | Jumbo text renders as the small logo in column 1, menus in columns 3 to 5, tagline hidden at 990 and up |
+| D4 | Header annotation: "sticky on scroll up" | Header sticky mode set to scroll-up |
+| D5 | Ticker annotation: same speed at every width | Marquee runs at a constant 40 px a second (`motion.speed.marquee`), so wide screens don't speed it up |
+| D6 | Home comparison table (new in Dev Ready) | `product-comparison` section with `comparison-column`; the points come from the column's text or from `custom.comparison_points` on the product (definition and values in docs/data, not yet created in the store) |
+| D7 | Sustainability headings are 55, 50 and 70 on desktop, 32 and 48 on mobile | Section headings use the site H1 (60 and 32). Mail-back keeps its larger size with the split-text **Heading size: Display** option (70 and 48) |
+| D8 | The sustainability mobile frame uses a 16 gutter; the rest of the site uses 10 (L4) | Pages on the `landing` layout use 16 on mobile |
+| D9 | Sustainability eyebrows and step labels are 14 on mobile; the site's small eyebrow is 16 | 14 on mobile in split-text, step-timeline and the stacked hero; 16 on desktop as in Figma |
+| D10 | The production diagram's labels are outlined vectors, and Sandstone on Tan measures about 2.9:1 | Labels are live text (section settings) over SVG artwork. Text colour is a setting, Sandstone by default as drawn; flagged to the designer because it is under 4.5:1 |
+| D11 | About Pact banner is 580 high with the text inset 65 | Hero banner **Height: Medium** (580 on desktop); a full-width banner with centre-left content sits on the 1312 content column |

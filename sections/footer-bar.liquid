@@ -1,0 +1,160 @@
+{% render 'contrast-override', background_color: section.settings.background_color, text_color: section.settings.text_color, section_id: section.id %}
+
+<div class="footer-bar color-custom-{{ section.id }}">
+  <div class="footer-bar__inner">
+    {%- if section.settings.logo_text != blank -%}
+      <a class="footer-bar__logo" href="{{ section.settings.logo_link | default: routes.root_url }}">
+        <span class="footer-bar__logo-text">{{ section.settings.logo_text | escape }}</span>
+      </a>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      {%- assign current_year = 'now' | date: '%Y' -%}
+      <div class="footer-bar__text">
+        {{- section.settings.text | replace: '[year]', current_year -}}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  #MainContent > .shopify-section.shopify-section:has(> .footer-bar) {
+    margin-block-start: 0;
+  }
+
+  .footer-bar {
+    padding: var(--space-16) var(--layout-gutter);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .footer-bar__inner {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-12);
+    max-width: var(--layout-content-width);
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .footer-bar__logo {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .footer-bar__logo:focus-visible,
+  .footer-bar__text a:focus-visible {
+    outline: var(--border-hairline) solid currentColor;
+    outline-offset: var(--space-4);
+  }
+
+  .footer-bar__logo-text {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-extrabold);
+    font-size: var(--type-title-bold-size);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .footer-bar__logo-text::before,
+  .footer-bar__logo-text::after {
+    content: '';
+    flex: none;
+    inline-size: 0.2em;
+    block-size: 1.45em;
+    background: currentColor;
+  }
+
+  .footer-bar__text {
+    font-family: var(--font-family-body);
+    font-weight: var(--font-weight-medium);
+    font-size: calc(var(--type-micro-size) + 0.0625rem);
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .footer-bar__text > * {
+    margin: 0;
+  }
+
+  .footer-bar__text a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .footer-bar__text a:hover {
+    text-decoration: underline;
+  }
+
+  @media screen and (min-width: 990px) {
+    .footer-bar {
+      padding-block: var(--space-14);
+    }
+
+    .footer-bar__inner {
+      grid-template-columns: auto auto;
+      justify-content: space-between;
+      align-items: center;
+      padding-inline: calc(var(--space-30) + var(--space-4));
+      text-align: end;
+    }
+
+    .footer-bar__text {
+      font-size: calc(var(--type-caption-size) + 0.0625rem);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.footer_bar",
+  "class": "section-wrapper",
+  "tag": "footer",
+  "disabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "t:settings.logo_text",
+      "default": "t:text_defaults.split_banner_logo"
+    },
+    {
+      "type": "url",
+      "id": "logo_link",
+      "label": "t:settings.logo_link"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:settings.text",
+      "info": "t:info.footer_bar_text"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": false,
+      "default": "#A38D76"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "alpha": false,
+      "default": "#F9F7ED"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.footer_bar",
+      "category": "t:categories.footer"
+    }
+  ]
+}
+{% endschema %}

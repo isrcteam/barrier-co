@@ -63,7 +63,7 @@
       {%- capture video_cards -%}
         {%- for entry in videos -%}
           <figure class="video-testimonials__video">
-            {% render 'video-player', video: entry.video.value, poster: entry.poster.value, play_size: 'small', autoplay: autoplay_on %}
+            {% render 'video-player', video: entry.video.value, poster: entry.poster.value, play_size: 'small', autoplay: autoplay_on, pause_on_click: true %}
             {%- if entry.title != blank -%}
               <figcaption class="visually-hidden">{{ entry.title.value | escape }}</figcaption>
             {%- endif -%}
@@ -185,6 +185,17 @@
 
   .video-testimonials__slideshow {
     --slideshow-gap: var(--space-10);
+  }
+
+  @media screen and (max-width: 989px) {
+    .video-testimonials .video-testimonials__slideshow {
+      margin-inline: calc(var(--layout-gutter) * -1);
+    }
+
+    .video-testimonials__slideshow slideshow-slides {
+      padding-inline: var(--layout-gutter);
+      scroll-padding-inline: var(--layout-gutter);
+    }
   }
 
   .video-testimonials__slideshow slideshow-slide.video-testimonials__slide {

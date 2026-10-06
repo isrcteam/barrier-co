@@ -1,0 +1,11 @@
+{
+  "names": {
+    "feature_grid": "Feature grid"
+  },
+  "info": {
+    "section_anchor": "Lets links jump to this section, e.g. #materials"
+  },
+  "text_defaults": {
+    "feature_grid_heading": "Better materials, chosen from the inside out"
+  }
+}

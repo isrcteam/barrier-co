@@ -14,14 +14,30 @@
 
 <div
   class="feature-icons color-custom-{{ section.id }}"
-  style="--section-pt: {{ pt }}rem; --section-pb: {{ pb }}rem; --section-pt-mobile: {{ pt_mobile }}rem; --section-pb-mobile: {{ pb_mobile }}rem; --feature-columns: {{ section.settings.columns }};"
+  style="--section-pt: {{ pt }}rem; --section-pb: {{ pb }}rem; --section-pt-mobile: {{ pt_mobile }}rem; --section-pb-mobile: {{ pb_mobile }}rem; --feature-columns: {{ section.settings.columns }}; --feature-icon-height: {{ section.settings.icon_height | default: 110 | divided_by: 16.0 }}rem;"
 >
+  {%- if section.settings.heading != blank or section.settings.text != blank -%}
+    <div class="feature-icons__header">
+      {%- if section.settings.heading != blank -%}
+        <{{ section.settings.heading_tag | default: 'h2' }} class="feature-icons__heading type-h1">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag | default: 'h2' }}>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="feature-icons__text type-body-large">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
   {%- if section.blocks.size > 0 -%}
     <ul class="feature-icons__list" role="list">
       {%- for block in section.blocks -%}
         <li class="feature-icons__item" {{ block.shopify_attributes }}>
           <span class="feature-icons__icon">
             {%- if block.settings.icon != blank -%}
+              {%- liquid
+                assign own_height = ''
+                if block.settings.height > 0
+                  assign own_height = block.settings.height | divided_by: 16.0 | prepend: '--feature-icon-own-height: ' | append: 'rem;'
+                endif
+              -%}
               {{
                 block.settings.icon
                 | image_url: width: 330
@@ -30,6 +46,7 @@
                   sizes: '7rem',
                   loading: 'lazy',
                   class: 'feature-icons__image',
+                  style: own_height,
                   alt: ''
               }}
             {%- else -%}
@@ -37,7 +54,8 @@
             {%- endif -%}
           </span>
           {%- if block.settings.caption != blank -%}
-            <p class="feature-icons__caption type-body">{{ block.settings.caption | escape | newline_to_br }}</p>
+            {%- assign caption_html = block.settings.caption | escape | newline_to_br -%}
+            <p class="feature-icons__caption type-body{% if caption_html contains '<br' %} feature-icons__caption--lines{% endif %}">{{ caption_html }}</p>
           {%- endif -%}
         </li>
       {%- endfor -%}
@@ -71,17 +89,45 @@
     text-align: center;
   }
 
+  .feature-icons__header {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-16);
+    margin-block-end: var(--space-40);
+    text-align: center;
+  }
+
+  .feature-icons__heading {
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .feature-icons .feature-icons__text {
+    font-size: var(--type-body-size);
+  }
+
+  .feature-icons__text > * {
+    margin: 0;
+  }
+
   .feature-icons__icon {
-    display: block;
-    width: calc(var(--space-86) + var(--space-24));
-    height: calc(var(--space-86) + var(--space-24));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    height: var(--feature-icon-height);
   }
 
   .feature-icons__image {
     display: block;
-    width: 100%;
-    height: 100%;
+    width: auto;
+    max-width: min(100%, var(--feature-icon-height));
+    height: var(--feature-icon-own-height, 100%);
     object-fit: contain;
+  }
+
+  .feature-icons__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
   .feature-icons__image--placeholder {
@@ -96,7 +142,16 @@
     text-wrap: balance;
   }
 
+  .feature-icons__caption--lines {
+    max-width: none;
+    white-space: nowrap;
+  }
+
   @media screen and (min-width: 990px) {
+    .feature-icons__image {
+      max-width: 100%;
+    }
+
     .feature-icons {
       padding-block: var(--section-pt) var(--section-pb);
     }
@@ -108,6 +163,19 @@
 
     .feature-icons__caption {
       font-size: var(--type-body-size);
+    }
+
+    .feature-icons__item:last-child:nth-child(odd) {
+      grid-column: auto;
+    }
+
+    .feature-icons__header {
+      margin-block-end: var(--space-60);
+    }
+
+    .feature-icons .feature-icons__text {
+      max-width: calc(var(--space-112) * 4 + var(--space-14));
+      font-size: var(--type-body-large-size);
     }
   }
 {% endstylesheet %}
@@ -137,11 +205,52 @@
           "type": "textarea",
           "id": "caption",
           "label": "t:settings.caption"
+        },
+        {
+          "type": "range",
+          "id": "height",
+          "label": "t:settings.icon_height_own",
+          "info": "t:info.icon_height_own",
+          "min": 0,
+          "max": 160,
+          "step": 2,
+          "unit": "px",
+          "default": 0
         }
       ]
     }
   ],
   "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:settings.heading_tag",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:settings.text"
+    },
     {
       "type": "range",
       "id": "columns",
@@ -150,6 +259,16 @@
       "max": 6,
       "step": 1,
       "default": 4
+    },
+    {
+      "type": "range",
+      "id": "icon_height",
+      "label": "t:settings.icon_height",
+      "min": 40,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 110
     },
     {
       "type": "color",

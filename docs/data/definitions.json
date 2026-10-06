@@ -396,6 +396,14 @@
       "name": "Best for",
       "type": "single_line_text_field",
       "description": "Who or when the product suits, e.g. Everyday body care. Shown in the collection comparison. Entered by client."
+    },
+    {
+      "owner": "PRODUCT",
+      "namespace": "custom",
+      "key": "comparison_points",
+      "name": "Comparison points",
+      "type": "list.single_line_text_field",
+      "description": "Ticked statements for this product in the home and collection comparison tables, e.g. Designed for the post-shower routine. Entered by client."
     }
   ]
 }

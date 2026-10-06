@@ -82,13 +82,16 @@
     gap: var(--space-12);
   }
 
+  .recognition-slider__slideshow slideshow-slides {
+    border: var(--border-hairline) solid var(--color-divider);
+  }
+
   .recognition-slider__card {
     display: flex;
     align-items: center;
     gap: var(--space-12);
     block-size: 100%;
     padding: var(--space-8) var(--space-12);
-    border: var(--border-hairline) solid var(--color-divider);
   }
 
   .recognition-slider__logo {
@@ -105,6 +108,7 @@
   .recognition-slider__title {
     font-family: var(--font-family-heading);
     font-weight: var(--font-weight-medium);
+    -webkit-text-stroke: var(--effect-medium-stroke) currentColor;
     text-transform: uppercase;
   }
 

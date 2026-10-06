@@ -33,3 +33,8 @@ From docs/architecture.md (feature-icons). Figma: 965:1502 / mobile 965:3293.
 
 ## Figma diff 2026-10-02
 Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.
+
+## Changes 2026-10-06 (internal QA and Dev Ready)
+- Optional **Heading** and **Text** above the icons, and **Icon height**, so the section can show the sustainability certification logos.
+- Captions with a typed line break keep those lines exactly (QA 19); a last odd item spans the row on mobile.
+- Per-icon **Icon height** (0 uses the section's): balances wide and tall logos, for the sustainability certifications. On mobile every icon fits a square of the section's icon height, so wide logos shrink as in the mobile frame; square badges are unaffected.

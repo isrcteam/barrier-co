@@ -25,6 +25,12 @@
   endif
 
   assign callouts = section.blocks | where: 'type', 'callout'
+  assign mobile_positions = false
+  for block in callouts
+    if block.settings.position_mobile
+      assign mobile_positions = true
+    endif
+  endfor
   assign messages = section.blocks | where: 'type', 'message'
   assign heading_tag = settings_ref.heading_tag | default: 'h2'
   assign message_tag = settings_ref.message_heading_tag | default: 'h3'
@@ -41,7 +47,7 @@
 %}
 
 <div
-  class="benefit-hotspots color-custom-{{ section.id }}"
+  class="benefit-hotspots{% if mobile_positions %} benefit-hotspots--mobile-positions{% endif %} color-custom-{{ section.id }}"
   style="--section-padding-top: {{ pad_top }}rem; --section-padding-bottom: {{ pad_bottom }}rem; --section-padding-top-mobile: {{ pad_top_mobile }}rem; --section-padding-bottom-mobile: {{ pad_bottom_mobile }}rem;"
 >
   <div class="benefit-hotspots__inner">
@@ -80,7 +86,8 @@
           {%- for block in callouts -%}
             <li
               class="benefit-hotspots__callout"
-              style="--callout-x: {{ block.settings.x_position }}; --callout-y: {{ block.settings.y_position }}; --callout-line: {{ block.settings.line_length }}; --callout-text-width: {{ block.settings.text_width | default: 193 | divided_by: 16.0 }}rem;"
+              style="--callout-x: {{ block.settings.x_position }}; --callout-y: {{ block.settings.y_position }}; --callout-line: {{ block.settings.line_length }}; --callout-text-width: {{ block.settings.text_width | default: 193 | divided_by: 16.0 }}rem; --callout-mx: {{ block.settings.x_mobile | default: 0 }}; --callout-my: {{ block.settings.y_mobile | default: 0 }}; --callout-mdx: {{ block.settings.line_x_mobile | default: 0 }}; --callout-mdy: {{ block.settings.line_y_mobile | default: 0 }}; --callout-text-width-mobile: {{ block.settings.text_width_mobile | default: 180 | divided_by: 16.0 }}rem;"
+              data-line-from="{{ block.settings.line_from_mobile | default: 'left' }}"
               {{ block.shopify_attributes }}
             >
               <span class="benefit-hotspots__marker" aria-hidden="true"></span>
@@ -351,6 +358,67 @@
     }
   }
 
+  @media screen and (max-width: 989px) {
+    .benefit-hotspots--mobile-positions .benefit-hotspots__heading {
+      padding: calc(var(--space-30) + var(--space-4)) calc(var(--space-30) + var(--space-2)) var(--space-16);
+      text-align: start;
+    }
+
+    .benefit-hotspots--mobile-positions .benefit-hotspots__callouts {
+      position: absolute;
+      inset: 0;
+      display: block;
+      padding: 0;
+    }
+
+    .benefit-hotspots--mobile-positions .benefit-hotspots__callout {
+      position: absolute;
+      inset-inline-start: calc(var(--callout-mx) * 1%);
+      inset-block-start: calc(var(--callout-my) * 1%);
+      inline-size: var(--callout-text-width-mobile);
+    }
+
+    .benefit-hotspots--mobile-positions .benefit-hotspots__label {
+      --line-dx: calc(var(--callout-mdx) * 1cqi);
+      --line-dy: calc(var(--callout-mdy) * 1cqi * 531 / 390);
+      --line-x: 0%;
+      --line-y: 50%;
+
+      position: relative;
+    }
+
+    .benefit-hotspots--mobile-positions [data-line-from='top'] .benefit-hotspots__label {
+      --line-x: 50%;
+      --line-y: 0%;
+    }
+
+    .benefit-hotspots--mobile-positions .benefit-hotspots__label::before,
+    .benefit-hotspots--mobile-positions .benefit-hotspots__label::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .benefit-hotspots--mobile-positions .benefit-hotspots__label::before {
+      inset-inline-start: var(--line-x);
+      inset-block-start: var(--line-y);
+      inline-size: hypot(var(--line-dx), var(--line-dy));
+      block-size: var(--border-hairline);
+      background: repeating-linear-gradient(to right, currentColor 0 calc(var(--space-6) / 2), transparent calc(var(--space-6) / 2) var(--space-6));
+      transform-origin: 0 50%;
+      rotate: atan2(var(--line-dy), var(--line-dx));
+    }
+
+    .benefit-hotspots--mobile-positions .benefit-hotspots__label::after {
+      inset-inline-start: calc(var(--line-x) + var(--line-dx) - var(--space-6) / 2);
+      inset-block-start: calc(var(--line-y) + var(--line-dy) - var(--space-6) / 2);
+      inline-size: var(--space-6);
+      block-size: var(--space-6);
+      border-radius: var(--radius-full);
+      background: currentColor;
+    }
+  }
+
   @media screen and (min-width: 990px) {
     .benefit-hotspots {
       padding-block: var(--section-padding-top) var(--section-padding-bottom);
@@ -505,6 +573,70 @@
           "step": 2,
           "unit": "px",
           "default": 193
+        },
+        {
+          "type": "header",
+          "content": "t:content.mobile_layout"
+        },
+        {
+          "type": "checkbox",
+          "id": "position_mobile",
+          "label": "t:settings.position_mobile",
+          "info": "t:info.position_mobile",
+          "default": false
+        },
+        {
+          "type": "number",
+          "id": "x_mobile",
+          "label": "t:settings.label_x_mobile",
+          "visible_if": "{{ block.settings.position_mobile }}"
+        },
+        {
+          "type": "number",
+          "id": "y_mobile",
+          "label": "t:settings.label_y_mobile",
+          "visible_if": "{{ block.settings.position_mobile }}"
+        },
+        {
+          "type": "select",
+          "id": "line_from_mobile",
+          "label": "t:settings.line_from_mobile",
+          "options": [
+            {
+              "value": "left",
+              "label": "t:options.left_side"
+            },
+            {
+              "value": "top",
+              "label": "t:options.top_side"
+            }
+          ],
+          "default": "left",
+          "visible_if": "{{ block.settings.position_mobile }}"
+        },
+        {
+          "type": "number",
+          "id": "line_x_mobile",
+          "label": "t:settings.line_x_mobile",
+          "info": "t:info.callout_line_mobile",
+          "visible_if": "{{ block.settings.position_mobile }}"
+        },
+        {
+          "type": "number",
+          "id": "line_y_mobile",
+          "label": "t:settings.line_y_mobile",
+          "visible_if": "{{ block.settings.position_mobile }}"
+        },
+        {
+          "type": "range",
+          "id": "text_width_mobile",
+          "label": "t:settings.callout_text_width_mobile",
+          "min": 120,
+          "max": 300,
+          "step": 2,
+          "unit": "px",
+          "default": 180,
+          "visible_if": "{{ block.settings.position_mobile }}"
         }
       ]
     },

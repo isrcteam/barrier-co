@@ -9,6 +9,7 @@
   @param {string} [class] - Extra classes on the wrapper
   @param {string} [loading] - 'eager' or 'lazy', defaults to lazy
   @param {boolean} [autoplay] - Play muted, looped and inline as soon as it loads, with no play button
+  @param {boolean} [pause_on_click] - Once playing, no native controls: a tap on the video pauses it and shows the play button again
 
   @example
   {% render 'video-player', video: section.settings.video, poster: section.settings.poster %}
@@ -47,6 +48,7 @@
       video_from_url: true,
       video_preview_image: poster_image,
       video_loop: loop,
+      disable_controls: pause_on_click,
       loading: image_loading,
       video_class: 'video-player__media'
     %}
@@ -55,6 +57,7 @@
       video: video,
       video_preview_image: poster_image,
       video_loop: loop,
+      disable_controls: pause_on_click,
       loading: image_loading,
       video_class: 'video-player__media'
     %}
@@ -164,6 +167,18 @@
   .video-player--autoplay .deferred-media__poster-icon,
   .video-player--autoplay .video-interaction-hint {
     display: none;
+  }
+
+  .video-player .video-interaction-hint {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-player .video-interaction-hint:has(.icon-play:not(.hidden)),
+  .video-player .video-interaction-hint:focus-visible {
+    opacity: 1;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -58,3 +58,7 @@ Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figm
 - **Open:** the actual video files (D-6). Upload each to Files and set it on its entry under Content › Metaobjects › UGC video.
 - **Approver:** Jeet.
 - **Video playback** sets all creator videos to play on click (with sound) or autoplay (muted, looped).
+
+## Changes 2026-10-06 (internal QA and Dev Ready)
+- Play on click now toggles pause and play on tap, with no native controls (annotation 2).
+- Arrows hide when every card fits (QA 14); trackpad scrolling works (QA 12); on mobile the track runs to the screen edge (QA 35).

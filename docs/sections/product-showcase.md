@@ -51,3 +51,7 @@ A two-product store needs a collection page that presents both products properly
 - **Shop mega menu:** the primary menu's Shop item is now the catalog link, with both products and "Compare the cloths" (anchor `#compare`) as children. The header menu uses Horizon's `featured_products` style with 1:1 images, so the dropdown shows both product cards.
 - **Known limit:** the mega menu's product cards follow the catalog's default order, so The 8 shows first. A manual "Shop" collection with the flagship first would fix that, but it has to be published to the Online Store (Jeet's call).
 - **Approver:** Jeet.
+
+## Changes 2026-10-06 (internal QA and Dev Ready)
+- The comparison table now uses the shared `comparison-column` snippet, so it matches the homepage table (QA 75). Points come from `custom.comparison_points`, or are built from the row values until that metafield exists.
+- Recognition seals under each product (QA 73), Medium full-width buttons (QA 74), ticks from the `--icon-tick` token (QA 72).

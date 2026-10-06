@@ -1,0 +1,618 @@
+{%- liquid
+  assign s = section.settings
+  assign pt = s['padding-block-start'] | divided_by: 16.0
+  assign pb = s['padding-block-end'] | divided_by: 16.0
+  if s.same_padding_mobile
+    assign pt_mobile = pt
+    assign pb_mobile = pb
+  else
+    assign pt_mobile = s['padding-block-start-mobile'] | divided_by: 16.0
+    assign pb_mobile = s['padding-block-end-mobile'] | divided_by: 16.0
+  endif
+  assign heading_tag = s.heading_tag | default: 'h2'
+  assign note_id = 'ProcessNote-' | append: section.id
+  assign arrow_svg = 'icon-process-arrow.svg' | inline_asset_content
+-%}
+
+{% render 'contrast-override', background_color: s.background_color, text_color: s.text_color, section_id: section.id %}
+
+<div
+  class="process-diagram color-custom-{{ section.id }}"
+  style="--section-pt: {{ pt }}rem; --section-pb: {{ pb }}rem; --section-pt-mobile: {{ pt_mobile }}rem; --section-pb-mobile: {{ pb_mobile }}rem;"
+>
+  <div class="process-diagram__inner">
+    {%- if s.heading != blank or s.text != blank -%}
+      <div class="process-diagram__header">
+        {%- if s.heading != blank -%}
+          <{{ heading_tag }} class="process-diagram__heading type-h1">{{ s.heading | escape | newline_to_br }}</{{ heading_tag }}>
+        {%- endif -%}
+        {%- if s.text != blank -%}
+          <div class="process-diagram__text type-body-large">{{ s.text }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <figure class="process-diagram__figure">
+      <ol class="process-diagram__steps" role="list">
+        <li class="process-diagram__node process-diagram__node--wood">
+          <span class="process-diagram__icon">{{- 'icon-process-wood.svg' | inline_asset_content -}}</span>
+          <span class="process-diagram__label">{{ s.label_wood | escape }}</span>
+        </li>
+        <li class="process-diagram__arrow process-diagram__arrow--1" aria-hidden="true">{{ arrow_svg }}</li>
+        <li class="process-diagram__node process-diagram__node--pulp">
+          <span class="process-diagram__icon">{{- 'icon-process-pulp.svg' | inline_asset_content -}}</span>
+          <span class="process-diagram__label">{{ s.label_pulp | escape }}</span>
+        </li>
+        <li class="process-diagram__arrow process-diagram__arrow--2" aria-hidden="true">{{ arrow_svg }}</li>
+        <li class="process-diagram__cycle">
+          <span class="process-diagram__label process-diagram__label--water">{{ s.label_water | escape }}</span>
+          <span class="process-diagram__cycle-art">{{- 'icon-process-cycle.svg' | inline_asset_content -}}</span>
+          <span class="process-diagram__label process-diagram__label--production">{{ s.label_production | escape | newline_to_br }}</span>
+          <span class="process-diagram__solvent">
+            <span class="process-diagram__label">{{ s.label_solvent | escape }}</span>
+            {%- if s.note_value != blank or s.note_text != blank -%}
+              <button type="button" class="process-diagram__info" aria-describedby="{{ note_id }}">
+                <span class="visually-hidden">{{ s.info_label | escape }}</span>
+              </button>
+              <span class="process-diagram__note" role="tooltip" id="{{ note_id }}">
+                {%- if s.note_value != blank -%}
+                  <strong class="process-diagram__note-value">{{ s.note_value | escape }}</strong>
+                {%- endif -%}
+                {%- if s.note_text != blank -%}
+                  <span class="process-diagram__note-text">{{ s.note_text | escape | newline_to_br }}</span>
+                {%- endif -%}
+              </span>
+            {%- endif -%}
+          </span>
+        </li>
+        <li class="process-diagram__arrow process-diagram__arrow--3" aria-hidden="true">{{ arrow_svg }}</li>
+        <li class="process-diagram__node process-diagram__node--result">
+          <span class="process-diagram__logo">
+            {%- if s.result_logo != blank -%}
+              {{
+                s.result_logo
+                | image_url: width: 420
+                | image_tag: widths: '210, 420', sizes: '13rem', loading: 'lazy', class: 'process-diagram__logo-image', alt: s.result_logo.alt
+              }}
+            {%- else -%}
+              {{- 'logo-veocel.svg' | inline_asset_content -}}
+            {%- endif -%}
+          </span>
+          <span class="process-diagram__label">{{ s.label_result | escape }}</span>
+        </li>
+      </ol>
+    </figure>
+  </div>
+</div>
+
+{% stylesheet %}
+  .process-diagram {
+    padding-block: var(--section-pt-mobile) var(--section-pb-mobile);
+    padding-inline: var(--layout-gutter);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .process-diagram__inner {
+    display: grid;
+    gap: var(--space-40);
+    max-width: var(--layout-content-width);
+    margin-inline: auto;
+  }
+
+  .process-diagram__header {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-24);
+    text-align: center;
+  }
+
+  .process-diagram__heading {
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .process-diagram__text {
+    max-width: calc(var(--space-112) * 8);
+  }
+
+  .process-diagram .process-diagram__text {
+    padding-inline: calc(var(--space-24) - var(--space-2));
+    font-size: var(--type-body-size);
+  }
+
+  .process-diagram__text > * {
+    margin: 0;
+  }
+
+  .process-diagram__figure {
+    position: relative;
+    inline-size: min(100%, calc(var(--space-112) * 2 + var(--space-60) + var(--space-6)));
+    aspect-ratio: 290 / 328;
+    margin: 0 auto;
+  }
+
+  .process-diagram__steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .process-diagram__steps > li {
+    position: absolute;
+    inset-inline-start: var(--x);
+    inset-block-start: var(--y);
+    inline-size: var(--w);
+  }
+
+  .process-diagram__node {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-12);
+  }
+
+  .process-diagram__icon,
+  .process-diagram__logo,
+  .process-diagram__cycle-art {
+    display: block;
+    inline-size: 100%;
+  }
+
+  .process-diagram svg {
+    display: block;
+    inline-size: 100%;
+    height: auto;
+  }
+
+  .process-diagram__label {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-extrabold);
+    font-size: var(--type-micro-size);
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .process-diagram__arrow {
+    translate: -50% -50%;
+    rotate: var(--r, 0deg);
+  }
+
+  .process-diagram__node--wood {
+    --x: 0%;
+    --y: 0%;
+    --w: 19.66%;
+  }
+
+  .process-diagram__node--wood .process-diagram__icon {
+    inline-size: 98%;
+  }
+
+  .process-diagram__arrow--1 {
+    --x: 9.83%;
+    --y: 30.95%;
+    --w: 14.83%;
+    --r: 90deg;
+  }
+
+  .process-diagram__node--pulp {
+    --x: 0%;
+    --y: 42.07%;
+    --w: 19.66%;
+  }
+
+  .process-diagram__arrow--2 {
+    --x: 35.69%;
+    --y: 49.24%;
+    --w: 25.17%;
+  }
+
+  .process-diagram__cycle {
+    --x: 55.92%;
+    --y: 17.07%;
+    --w: 43.45%;
+
+    aspect-ratio: 239 / 310;
+  }
+
+  .process-diagram__arrow--3 {
+    --x: 77.76%;
+    --y: 74.54%;
+    --w: 14.83%;
+    --r: 90deg;
+  }
+
+  .process-diagram__node--result {
+    --x: 60.69%;
+    --y: 85.67%;
+    --w: 33.79%;
+
+    gap: var(--space-4);
+  }
+
+  .process-diagram__cycle > * {
+    position: absolute;
+  }
+
+  .process-diagram__label--water {
+    inset-block-start: 0;
+    inset-inline: 0;
+  }
+
+  .process-diagram__cycle-art {
+    inset-block-start: 11.94%;
+    inset-inline: 0;
+  }
+
+  .process-diagram__label--production {
+    inset-block-start: 59.35%;
+    inset-inline: 0;
+    white-space: normal;
+  }
+
+  .process-diagram__solvent {
+    inset-block-start: 94.19%;
+    inset-inline: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .process-diagram__info {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--space-14);
+    block-size: var(--space-14);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-full);
+    background: currentColor;
+    cursor: help;
+  }
+
+  .process-diagram__info::before {
+    content: 'i';
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-extrabold);
+    font-size: var(--type-micro-size);
+    line-height: 1;
+    color: var(--color-background);
+  }
+
+  .process-diagram__info:focus-visible {
+    outline: var(--border-hairline) solid currentColor;
+    outline-offset: var(--space-2);
+  }
+
+  .process-diagram__note {
+    position: absolute;
+    inset-block-start: calc(100% + var(--space-12));
+    inset-inline-start: 50%;
+    z-index: 1;
+    display: none;
+    align-items: center;
+    gap: var(--space-8);
+    padding: var(--space-10) var(--space-12);
+    border-radius: var(--space-6);
+    background: var(--color-on-media);
+    color: var(--palette-darkest);
+    white-space: nowrap;
+    translate: -50% 0;
+  }
+
+  .process-diagram__solvent:hover .process-diagram__note,
+  .process-diagram__info:focus-visible ~ .process-diagram__note,
+  .process-diagram__info:focus ~ .process-diagram__note {
+    display: flex;
+  }
+
+  .process-diagram__note-value {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-medium);
+    -webkit-text-stroke: var(--effect-medium-stroke) currentColor;
+    font-size: var(--space-24);
+    line-height: 1;
+  }
+
+  .process-diagram__note-text {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-extrabold);
+    font-size: var(--type-micro-size);
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  @media screen and (min-width: 990px) {
+    .process-diagram {
+      padding-block: var(--section-pt) var(--section-pb);
+    }
+
+    .process-diagram__inner {
+      gap: var(--space-60);
+    }
+
+    .process-diagram .process-diagram__text {
+      padding-inline: 0;
+      font-size: var(--type-body-large-size);
+    }
+
+    .process-diagram__figure {
+      inline-size: min(100%, calc(var(--space-112) * 9 + var(--space-80) + var(--space-4) - 0.0625rem));
+      aspect-ratio: 1091 / 310;
+    }
+
+    .process-diagram__label {
+      font-size: var(--type-h5-size);
+    }
+
+    .process-diagram__node {
+      gap: calc(var(--space-24) + var(--space-2));
+    }
+
+    .process-diagram__node--wood {
+      --x: 0%;
+      --y: 37.42%;
+      --w: 8.71%;
+    }
+
+    .process-diagram__node--wood .process-diagram__icon {
+      inline-size: 100%;
+    }
+
+    .process-diagram__arrow--1 {
+      --x: 15.54%;
+      --y: 50.65%;
+      --w: 9.26%;
+      --r: 0deg;
+    }
+
+    .process-diagram__node--pulp {
+      --x: 22.46%;
+      --y: 42.26%;
+      --w: 8.8%;
+    }
+
+    .process-diagram__arrow--2 {
+      --x: 38.18%;
+      --y: 50.65%;
+      --w: 9.26%;
+    }
+
+    .process-diagram__cycle {
+      --x: 45.1%;
+      --y: 0%;
+      --w: 21.91%;
+    }
+
+    .process-diagram__arrow--3 {
+      --x: 73.92%;
+      --y: 50.65%;
+      --w: 9.26%;
+      --r: 0deg;
+    }
+
+    .process-diagram__node--result {
+      --x: 80.84%;
+      --y: 35.81%;
+      --w: 19.16%;
+
+      gap: var(--space-14);
+    }
+
+    .process-diagram__info {
+      inline-size: var(--space-16);
+      block-size: var(--space-16);
+    }
+
+    .process-diagram__note {
+      inset-block-start: 50%;
+      inset-inline-start: calc(100% + var(--space-12));
+      translate: 0 -50%;
+      padding: var(--space-10) var(--space-14);
+    }
+
+    .process-diagram__note-value {
+      font-size: calc(var(--space-30) + var(--space-2));
+    }
+
+    .process-diagram__solvent {
+      justify-content: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.process_diagram",
+  "class": "section-wrapper",
+  "tag": "section",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "t:text_defaults.process_heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:settings.heading_tag",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "p",
+          "label": "t:options.paragraph"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:settings.text"
+    },
+    {
+      "type": "header",
+      "content": "t:content.diagram"
+    },
+    {
+      "type": "text",
+      "id": "label_wood",
+      "label": "t:settings.step_1",
+      "default": "t:text_defaults.process_wood"
+    },
+    {
+      "type": "text",
+      "id": "label_pulp",
+      "label": "t:settings.step_2",
+      "default": "t:text_defaults.process_pulp"
+    },
+    {
+      "type": "text",
+      "id": "label_water",
+      "label": "t:settings.cycle_top",
+      "default": "t:text_defaults.process_water"
+    },
+    {
+      "type": "textarea",
+      "id": "label_production",
+      "label": "t:settings.cycle_centre",
+      "default": "t:text_defaults.process_production"
+    },
+    {
+      "type": "text",
+      "id": "label_solvent",
+      "label": "t:settings.cycle_bottom",
+      "default": "t:text_defaults.process_solvent"
+    },
+    {
+      "type": "text",
+      "id": "label_result",
+      "label": "t:settings.step_result",
+      "default": "t:text_defaults.process_result"
+    },
+    {
+      "type": "image_picker",
+      "id": "result_logo",
+      "label": "t:settings.result_logo",
+      "info": "t:info.result_logo"
+    },
+    {
+      "type": "header",
+      "content": "t:content.info_note"
+    },
+    {
+      "type": "text",
+      "id": "note_value",
+      "label": "t:settings.note_value",
+      "default": ">99%"
+    },
+    {
+      "type": "textarea",
+      "id": "note_text",
+      "label": "t:settings.note_text",
+      "default": "t:text_defaults.process_note"
+    },
+    {
+      "type": "text",
+      "id": "info_label",
+      "label": "t:settings.info_label",
+      "info": "t:info.info_label",
+      "default": "t:text_defaults.process_info_label"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": false,
+      "default": "#A38D76"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "alpha": false,
+      "default": "#F9F7ED"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "checkbox",
+      "id": "same_padding_mobile",
+      "label": "t:settings.same_at_mobile",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.same_padding_mobile == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.process_diagram",
+      "category": "t:categories.storytelling"
+    }
+  ]
+}
+{% endschema %}

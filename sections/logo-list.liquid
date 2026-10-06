@@ -17,15 +17,25 @@
   {%- for block in section.blocks -%}
     {%- liquid
       assign logo_alt = block.settings.alt | default: block.settings.image.alt
+      assign logo_px = section.settings.logo_height
+      if block.settings.height > 0
+        assign logo_px = block.settings.height
+      endif
     -%}
-    <li class="logo-list__item" {{ block.shopify_attributes }}>
+    <li
+      class="logo-list__item"
+      {% if block.settings.height > 0 %}
+        style="--logo-height: {{ block.settings.height | divided_by: 16.0 }}rem;"
+      {% endif %}
+      {{ block.shopify_attributes }}
+    >
       {%- capture logo_image -%}
         {%- if block.settings.image != blank -%}
           {{
             block.settings.image
             | image_url: height: 180
             | image_tag:
-              height: section.settings.logo_height,
+              height: logo_px,
               widths: '120, 240, 360',
               sizes: '12rem',
               loading: 'lazy',
@@ -97,6 +107,7 @@
   .logo-list__row {
     display: flex;
     align-items: center;
+    min-block-size: calc(var(--space-40) + var(--space-6));
     margin: 0;
     padding: 0;
     list-style: none;
@@ -135,7 +146,7 @@
     display: block;
     width: auto;
     height: var(--logo-height);
-    max-width: calc(var(--logo-height) * 5.25);
+    max-width: none;
     object-fit: contain;
   }
 
@@ -256,6 +267,17 @@
           "type": "url",
           "id": "link",
           "label": "t:settings.link"
+        },
+        {
+          "type": "range",
+          "id": "height",
+          "label": "t:settings.logo_height_own",
+          "info": "t:info.logo_height_own",
+          "min": 0,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "default": 0
         }
       ]
     }

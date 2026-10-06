@@ -178,6 +178,7 @@
     height: auto;
     aspect-ratio: 112 / 94;
     object-fit: contain;
+    object-position: left top;
   }
 
   .ingredient-list__placeholder {
@@ -208,11 +209,10 @@
     gap: var(--space-10);
   }
 
-  /* Figma tick (Vector 64): 10.5 x 7, 1.4 stroke */
   .ingredient-list__tick.svg-wrapper {
     display: inline-flex;
     flex: none;
-    inline-size: calc(var(--space-10) + 0.03125rem);
+    inline-size: var(--icon-tick);
     block-size: auto;
     height: auto;
     color: var(--color-accent-bar);
@@ -249,6 +249,10 @@
 
     .ingredient-list__media {
       inline-size: 100%;
+    }
+
+    .ingredient-list__image {
+      object-position: center top;
     }
 
     .ingredient-list__name {

@@ -43,3 +43,6 @@ Add **Intro with media** from Storytelling, or the **Editorial** preset for two 
 ## Figma diff 2026-10-02
 Measured against HOMEPAGE 965:1253 and 965:3078. Deltas and fixes: `docs/qa/figma-diff-home.md`.
 - **Video playback** applies to both tiles: Autoplay plays muted and looped with no play button; Play on click shows the cover with a play button and plays with sound.
+
+## Changes 2026-10-06 (internal QA and Dev Ready)
+- Two-tile version on the homepage; the single-video version is built and disabled (QA 5, annotation 8). **Show only the second tile on mobile**. Mobile text inset 17 (QA 30).

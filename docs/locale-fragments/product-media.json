@@ -1,0 +1,10 @@
+{
+  "settings": {
+    "badge_text": "Badge on the first image",
+    "show_recognition": "Show recognition on the first image"
+  },
+  "info": {
+    "badge_text": "Leave blank to use the product's Media badge",
+    "show_recognition": "Desktop only. Shows the product's first Recognition (seal and text) at the foot of the first image"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "names": {
+    "step_timeline": "Step timeline",
+    "step": "Step"
+  },
+  "settings": {
+    "title_link": "Title link",
+    "link_label": "Link label",
+    "active_steps": "Steps done"
+  },
+  "info": {
+    "active_steps": "Steps after this number are faded and joined by a dashed line. 0 shows every step the same"
+  },
+  "text_defaults": {
+    "step_timeline_heading": "How it works"
+  }
+}

@@ -146,6 +146,10 @@ class MarqueeComponent extends Component {
    * @param {number} numberOfCopies
    */
   #calculateSpeed(numberOfCopies) {
+    const pixelsPerSecond = Number(getComputedStyle(this).getPropertyValue('--speed-marquee'));
+    const itemsWidth = this.refs.marqueeItems[0]?.getBoundingClientRect().width ?? 0;
+    if (pixelsPerSecond > 0 && itemsWidth > 0) return (itemsWidth * numberOfCopies) / pixelsPerSecond;
+
     const speedFactor = Number(this.getAttribute('data-speed-factor'));
     const speed = Math.sqrt(numberOfCopies) * speedFactor;
 
@@ -154,7 +158,7 @@ class MarqueeComponent extends Component {
 
   #handleResize = debounce(async () => {
     const { marqueeItems } = this.refs;
-    const { newNumberOfCopies, isHorizontalResize } = await this.#queryNumberOfCopies();
+    const { numberOfCopies: newNumberOfCopies, isHorizontalResize } = await this.#queryNumberOfCopies();
 
     // opt out of marquee manipulation on vertical resizes
     if (!isHorizontalResize) return;

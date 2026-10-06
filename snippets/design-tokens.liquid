@@ -47,20 +47,23 @@
     --icon-bar-mobile: var(--space-12);
     --icon-bar-desktop: var(--space-30);
     --icon-play-xlarge: 4.9375rem;
+    --icon-tick: 0.7206rem;
     --opacity-brand-hover: 0.86;
     --opacity-brand-pressed: 0.72;
     --opacity-brand-disabled: 0.35;
     --opacity-brand-muted: 0.8;
     --opacity-brand-inactive: 0.34;
     --opacity-brand-glass: 0.28;
-    --opacity-brand-glass-border: 0.6;
+    --opacity-brand-glass-border: 0.4;
     --opacity-brand-overlay: 0.3;
     --opacity-brand-subtle: 0.2;
     --opacity-brand-focus: 0.35;
     --opacity-brand-shadow: 0.1;
     --opacity-brand-edge: 0.6;
+    --opacity-brand-faded: 0.5;
     --effect-focus-ring: 0 0 var(--space-4) var(--space-2) color-mix(in srgb, var(--color-foreground) calc(var(--opacity-brand-focus) * 100%), transparent);
     --effect-sticky-shadow: 0 calc(-1 * var(--space-4)) var(--space-12) color-mix(in srgb, var(--color-overlay) calc(var(--opacity-brand-shadow) * 100%), transparent);
+    --effect-medium-stroke: 0.04em;
     --z-sticky-bar: 90;
     --z-header: 100;
     --z-drawer: 200;
@@ -71,6 +74,7 @@
     --duration-marquee: 40s;
     --easing-standard: cubic-bezier(0.2, 0, 0, 1);
     --easing-linear: linear;
+    --speed-marquee: 40;
     --font-family-heading: "Akzidenz-Grotesk Next", "Helvetica Neue", Arial, sans-serif;
     --font-family-body: "GT America", "Helvetica Neue", Arial, sans-serif;
     --font-weight-regular: 400;
@@ -119,7 +123,7 @@
     --type-card-label-tracking: 0;
     --type-stat-size: 4rem;
     --type-stat-line: 0.83;
-    --type-stat-tracking: 0;
+    --type-stat-tracking: 0.07em;
     --type-stat-unit-size: 2.75rem;
     --type-stat-unit-line: normal;
     --type-stat-unit-tracking: 0;
@@ -185,13 +189,13 @@
   .type-display { font-family: var(--font-family-heading); font-weight: var(--font-weight-extrabold); font-size: var(--type-display-size); line-height: var(--type-display-line); letter-spacing: var(--type-display-tracking); }
   .type-h1 { font-family: var(--font-family-heading); font-weight: var(--font-weight-extrabold); font-size: var(--type-h1-size); line-height: var(--type-h1-line); letter-spacing: var(--type-h1-tracking); }
   .type-h2 { font-family: var(--font-family-heading); font-weight: var(--font-weight-extrabold); font-size: var(--type-h2-size); line-height: var(--type-h2-line); letter-spacing: var(--type-h2-tracking); }
-  .type-h3 { font-family: var(--font-family-heading); font-weight: var(--font-weight-medium); font-size: var(--type-h3-size); line-height: var(--type-h3-line); letter-spacing: var(--type-h3-tracking); }
-  .type-h4 { font-family: var(--font-family-heading); font-weight: var(--font-weight-medium); font-size: var(--type-h4-size); line-height: var(--type-h4-line); letter-spacing: var(--type-h4-tracking); }
-  .type-h5 { font-family: var(--font-family-heading); font-weight: var(--font-weight-medium); font-size: var(--type-h5-size); line-height: var(--type-h5-line); letter-spacing: var(--type-h5-tracking); }
-  .type-h6 { font-family: var(--font-family-heading); font-weight: var(--font-weight-medium); font-size: var(--type-h6-size); line-height: var(--type-h6-line); letter-spacing: var(--type-h6-tracking); }
+  .type-h3 { font-family: var(--font-family-heading); font-weight: var(--font-weight-medium); font-size: var(--type-h3-size); line-height: var(--type-h3-line); letter-spacing: var(--type-h3-tracking); -webkit-text-stroke: var(--effect-medium-stroke) currentColor; }
+  .type-h4 { font-family: var(--font-family-heading); font-weight: var(--font-weight-medium); font-size: var(--type-h4-size); line-height: var(--type-h4-line); letter-spacing: var(--type-h4-tracking); -webkit-text-stroke: var(--effect-medium-stroke) currentColor; }
+  .type-h5 { font-family: var(--font-family-heading); font-weight: var(--font-weight-medium); font-size: var(--type-h5-size); line-height: var(--type-h5-line); letter-spacing: var(--type-h5-tracking); -webkit-text-stroke: var(--effect-medium-stroke) currentColor; }
+  .type-h6 { font-family: var(--font-family-heading); font-weight: var(--font-weight-medium); font-size: var(--type-h6-size); line-height: var(--type-h6-line); letter-spacing: var(--type-h6-tracking); -webkit-text-stroke: var(--effect-medium-stroke) currentColor; }
   .type-title-bold { font-family: var(--font-family-heading); font-weight: var(--font-weight-extrabold); font-size: var(--type-title-bold-size); line-height: var(--type-title-bold-line); letter-spacing: var(--type-title-bold-tracking); }
   .type-card-label { font-family: var(--font-family-heading); font-weight: var(--font-weight-extrabold); font-size: var(--type-card-label-size); line-height: var(--type-card-label-line); letter-spacing: var(--type-card-label-tracking); }
-  .type-stat { font-family: var(--font-family-heading); font-weight: var(--font-weight-medium); font-size: var(--type-stat-size); line-height: var(--type-stat-line); letter-spacing: var(--type-stat-tracking); }
+  .type-stat { font-family: var(--font-family-heading); font-weight: var(--font-weight-medium); font-size: var(--type-stat-size); line-height: var(--type-stat-line); letter-spacing: var(--type-stat-tracking); -webkit-text-stroke: var(--effect-medium-stroke) currentColor; }
   .type-stat-unit { font-family: var(--font-family-body); font-weight: var(--font-weight-medium); font-size: var(--type-stat-unit-size); line-height: var(--type-stat-unit-line); letter-spacing: var(--type-stat-unit-tracking); }
   .type-button { font-family: var(--font-family-heading); font-weight: var(--font-weight-extrabold); font-size: var(--type-button-size); line-height: var(--type-button-line); letter-spacing: var(--type-button-tracking); }
   .type-label { font-family: var(--font-family-body); font-weight: var(--font-weight-medium); font-size: var(--type-label-size); line-height: var(--type-label-line); letter-spacing: var(--type-label-tracking); }

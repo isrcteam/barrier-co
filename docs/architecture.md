@@ -36,6 +36,7 @@ Horizon 4.2 has no colour schemes. Every custom section gets a `background_color
 | product | product-information (stock + custom blocks, sticky add to cart on) · benefit-hotspots · video-testimonials · clinical-results · ingredient-list · video-banner · before-after · reviews (stock `section` + Judge.me app block) · faq-panel |
 | Footer group | social-gallery · logo-list · footer (stock: email signup, menus, text, jumbo-text "BARRIER", copyright, policies) |
 | collection | product-showcase (two-product panels and a comparison table, products from the collection) |
+| page.sustainability (layout `landing`: no header or footer group) | split-banner · feature-grid · process-diagram · feature-icons (certifications) · split-text (mail-back) · step-timeline · hero-banner (About Pact, stacked on mobile) · footer-bar |
 | cart, search, page, blog, article, 404, password | Stock Horizon, styled by tokens |
 
 ## Theme Blocks
@@ -136,6 +137,13 @@ Index:
 - [faq-panel](#faq-panel)
 - [social-gallery](#social-gallery)
 - [logo-list](#logo-list)
+- [product-comparison](#product-comparison)
+- [split-banner](#split-banner)
+- [feature-grid](#feature-grid)
+- [process-diagram](#process-diagram)
+- [split-text](#split-text)
+- [step-timeline](#step-timeline)
+- [footer-bar](#footer-bar)
 - Stock sections reused and styled: header-announcements, header, marquee, featured-product, product-information, section (reviews wrapper), footer
 
 ### hero-banner
@@ -150,7 +158,7 @@ Index:
 - The play button opens a `dialog` with a lazy video (the `video-player` snippet). Nothing loads before the click.
 - The product spotlight renders the `product-spotlight` snippet: a white card, Small Shop now button, and "Starts from" taken from the lowest selling-plan price, falling back to the product price.
 - Text is white on the image (contrast skipped because there's media); the gradient overlay uses `--color-overlay` at `--opacity-brand-overlay`.
-**Merchant configuration:** image desktop and mobile (Same at mobile), video (optional), overlay toggle, eyebrow, heading, heading tag, heading size (display/h1), text (richtext), button label and link, show bar, play video file or URL, spotlight product, spotlight label, content position (bottom left / centre left), width (full / inset), padding top and bottom (Same at mobile).
+**Merchant configuration:** image desktop and mobile (Same at mobile), video (optional), overlay toggle, eyebrow, heading, heading tag, heading size (display/h1), text (richtext), button label and link, show bar, play video file or URL, spotlight product, spotlight label, keep the spotlight on screen on mobile, eyebrow size, content position (bottom left / centre left), width (full / inset), height (tall / medium), text above the image on mobile, background colour, padding top and bottom (Same at mobile).
 
 ### intro-media
 **Status:** planned · Preset section
@@ -242,6 +250,49 @@ Index:
 **Description & purpose:** a row of partner or stockist logos (Equinox, Delta One, Credo). Spaced out on desktop; Horizon `marquee-component` scrolls them on mobile.
 **Blocks (section-local):** `logo` with image, alt and link.
 **Merchant configuration:** logo height (range), scroll on mobile, background colour, padding.
+
+### product-comparison
+**Status:** built, not yet in review (no PR) · Preset section
+**Figma file:** Dev Ready 776:4700, Homepage Final (compare table)
+**Description & purpose:** a comparison table of up to three columns (the featured one dark, product thumbnails overlapping the top edge, ticked points, a button per column) beside a large product card.
+**Requirements:** columns render the `comparison-column` snippet; points come from the block's text (one per line) or, when the section's **Use product points** is on, from the product's `custom.comparison_points` metafield.
+**Merchant configuration:** heading, heading tag, text, use product points, card product, price label and button label, card background, background colour, padding (Same at mobile). **Blocks:** `column` with product, title, image, points, button label, featured toggle.
+
+### split-banner
+**Status:** built, not yet in review (no PR) · Preset section
+**Figma file:** Sustainablity desktop 787:9003 / mobile 787:9428 (hero)
+**Description & purpose:** two or three image tiles side by side (stacked on mobile), each with an underlined label link, under a centred "| BARRIER |" logotype. Holds the page's visually hidden h1.
+**Merchant configuration:** logo text and link, hidden heading (defaults to the page title), height and mobile tile height, background colour. **Blocks:** `tile` with image, mobile image (Same at mobile), label, link.
+
+### feature-grid
+**Status:** built, not yet in review (no PR) · Preset section
+**Figma file:** 787:9003 / 787:9428 ("Better materials")
+**Description & purpose:** a centred heading over a two-column grid of icon, title and text items, with Tan rules between rows and columns (a single column with rules on mobile).
+**Merchant configuration:** heading, heading tag, desktop columns, anchor, background colour, padding (Same at mobile). **Blocks:** `item` with icon, title, text.
+
+### process-diagram
+**Status:** built, not yet in review (no PR) · Preset section
+**Figma file:** 787:9003 / 787:9428 (VEOCEL production process)
+**Description & purpose:** heading and text over the wood → pulp → fibre production → Veocel diagram, horizontal on desktop and vertical on mobile. Artwork is inline SVG from `assets/icon-process-*.svg` and `logo-veocel.svg`; labels are live text, and the solvent note is a CSS-only tooltip.
+**Merchant configuration:** heading, heading tag, text, the six labels, result logo (Veocel by default), info note figure and text, info button label, background and text colour, padding (Same at mobile).
+
+### split-text
+**Status:** built, not yet in review (no PR) · Preset section
+**Figma file:** 787:9003 / 787:9428 (mail-back collection program)
+**Description & purpose:** eyebrow and large heading on the left, rich text on the right (stacked and centred on mobile). A paragraph holding only a link renders as an uppercase Tan text link.
+**Merchant configuration:** eyebrow, heading, heading tag, heading size (H1 / Display), text, anchor, background colour, padding (Same at mobile).
+
+### step-timeline
+**Status:** built, not yet in review (no PR) · Preset section
+**Figma file:** 787:9003 / 787:9428 (how it works)
+**Description & purpose:** a header, then numbered steps on a vertical rail beside an image. Steps up to **Steps done** are solid; later ones are faded and joined by a dashed rail.
+**Merchant configuration:** eyebrow, heading, heading tag, text, image, steps done, anchor, background colour, padding (Same at mobile). **Blocks:** `step` with label, title, title link, text, link label and link.
+
+### footer-bar
+**Status:** built, not yet in review (no PR) · Preset section
+**Figma file:** 787:9003 / 787:9428 (page foot)
+**Description & purpose:** the slim footer for landing pages: "| BARRIER |" logotype and a policy line (`[year]` becomes the current year). Sits flush under the section above.
+**Merchant configuration:** logo text and link, text, background and text colour.
 
 ## Theme Snippets
 Index:

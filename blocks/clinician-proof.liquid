@@ -106,7 +106,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    align-self: stretch;
+    align-self: center;
     padding-inline-end: var(--space-14);
     border-inline-end: var(--border-hairline) solid var(--color-accent-bar);
   }
@@ -115,6 +115,7 @@
     display: block;
     block-size: var(--space-20);
     inline-size: auto;
+    filter: drop-shadow(calc(var(--border-hairline) / 2) 0 0 var(--color-foreground)) drop-shadow(calc(var(--border-hairline) / -2) 0 0 var(--color-foreground));
   }
 
   .clinician-proof__mark {

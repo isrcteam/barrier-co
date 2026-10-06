@@ -113,6 +113,7 @@ class StickyAddToCartComponent extends Component {
 
     const buyButtonsBlock = productForm.closest('.buy-buttons-block');
     if (!buyButtonsBlock) return;
+    const trigger = buyButtonsBlock.closest('.shopify-section') ?? buyButtonsBlock;
 
     // In themes migrated from 2.0, the footer element doesn't exist
     const footer = document.querySelector('footer') ?? document.querySelector('[class*="footer-group"]');
@@ -127,7 +128,7 @@ class StickyAddToCartComponent extends Component {
       if (!entry.isIntersecting && !this.#isStuck) {
         // Check if the element is above the viewport (scrolled past) or below (not yet reached)
         const rect = entry.target.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top < 0) {
+        if (rect.bottom < 0) {
           if (this.#isChatActive()) return;
           this.#showStickyBar();
         }
@@ -149,9 +150,8 @@ class StickyAddToCartComponent extends Component {
           this.#hideStickyBar();
         } else if (!entry.isIntersecting && this.#hiddenByBottom) {
           // Footer out of view - check if we should show sticky bar again
-          const rect = buyButtonsBlock.getBoundingClientRect();
-          // Only show if buy buttons are above the viewport (scrolled past)
-          if (rect.bottom < 0 || rect.top < 0) {
+          const rect = trigger.getBoundingClientRect();
+          if (rect.bottom < 0) {
             this.#hiddenByBottom = false;
             if (!this.#isChatActive()) {
               this.#showStickyBar();
@@ -164,7 +164,7 @@ class StickyAddToCartComponent extends Component {
       }
     );
 
-    this.#buyButtonsIntersectionObserver.observe(buyButtonsBlock);
+    this.#buyButtonsIntersectionObserver.observe(trigger);
     this.#mainBottomObserver.observe(footer);
     this.#targetAddToCartButton = productForm.querySelector('[ref="addToCartButton"]');
   }

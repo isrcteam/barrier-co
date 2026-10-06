@@ -1,0 +1,11 @@
+{
+  "names": {
+    "split_text": "Split text"
+  },
+  "info": {
+    "split_text_text": "A paragraph holding only a link shows as an uppercase text link"
+  },
+  "text_defaults": {
+    "split_text_heading": "Mail-back collection program"
+  }
+}
