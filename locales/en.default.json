@@ -134,7 +134,7 @@
     },
     "email_signup": {
       "label": "Email",
-      "placeholder": "Email address",
+      "placeholder": "Email",
       "success": "Thanks for subscribing!"
     },
     "filter": "Filter",
@@ -174,7 +174,7 @@
     "before_label": "Before",
     "cancel": "Cancel",
     "discount": "Discount",
-    "account_title": "Account",
+    "account_title": "Profile",
     "terms_and_policies": "Terms and Policies",
     "account_title_personalized": "Hi {{ first_name }}",
     "account_orders": "Orders",

@@ -193,6 +193,7 @@
           {%- endif -%}
             {% render 'product-spotlight',
               product: s.spotlight_product,
+              image: s.spotlight_image,
               style: 'card',
               button_label: s.spotlight_button_label,
               button_size: 'medium',
@@ -812,6 +813,12 @@
       "type": "product",
       "id": "spotlight_product",
       "label": "t:settings.product"
+    },
+    {
+      "type": "image_picker",
+      "id": "spotlight_image",
+      "label": "t:settings.spotlight_image",
+      "info": "t:info.spotlight_image"
     },
     {
       "type": "text",

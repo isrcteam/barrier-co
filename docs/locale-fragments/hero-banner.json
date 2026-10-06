@@ -22,7 +22,8 @@
     "bottom_mobile": "Mobile bottom",
     "sticky_spotlight_mobile": "Keep on screen on mobile",
     "eyebrow_size": "Eyebrow size",
-    "stack_mobile": "Text above the image on mobile"
+    "stack_mobile": "Text above the image on mobile",
+    "spotlight_image": "Card image"
   },
   "options": {
     "inset": "Inset",
@@ -33,6 +34,7 @@
     "background_video": "Plays muted on a loop behind the content. The image shows while it loads and for shoppers who prefer reduced motion",
     "price_label": "[price] is replaced with the lowest subscription price, or the product price",
     "sticky_spotlight_mobile": "Once the shopper scrolls past the hero, the product card stays at the bottom of the screen on mobile",
-    "stack_mobile": "On mobile the text sits on the background colour and the image follows it"
+    "stack_mobile": "On mobile the text sits on the background colour and the image follows it",
+    "spotlight_image": "Leave empty to use the product's main image."
   }
 }

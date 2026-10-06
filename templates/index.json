@@ -27,7 +27,8 @@
         "spotlight_product": "the-30-the-everyday",
         "play_poster": "shopify://shop_images/intro-video-poster-desktop.jpg",
         "same_image_mobile": false,
-        "sticky_spotlight_mobile": true
+        "sticky_spotlight_mobile": true,
+        "spotlight_image": "shopify://shop_images/cloth-pack-rock.jpg"
       }
     },
     "press": {

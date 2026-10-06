@@ -10,6 +10,13 @@
     --height-buy-buttons: var(--layout-button-large);
   }
 
+  /* Figma's mobile MAIN CTA is 47 tall (965:3566, 965:3201); desktop stays 55 */
+  @media screen and (max-width: 989px) {
+    html:root {
+      --height-buy-buttons: calc(var(--space-40) + var(--space-6) + 0.0625rem);
+    }
+  }
+
   :is(.button, .button-secondary, .button-custom):not(.button-unstyled),
   button.shopify-payment-button__button--unbranded {
     --button-padding-block: var(--space-20);

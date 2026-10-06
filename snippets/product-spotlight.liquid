@@ -8,6 +8,7 @@
   @param {string} [price_label] - Price line with [price] where the price goes, for example "Starts from [price]/mo"
   @param {string} [heading_tag] - Tag for the title, defaults to p
   @param {string} [image_sizes] - sizes attribute for the image
+  @param {object} [image] - Image to show instead of the product's featured image
 
   @example
   {% render 'product-spotlight', product: section.settings.product, style: 'card', button_label: 'Shop now', price_label: 'Starts from [price]/mo' %}
@@ -36,12 +37,13 @@
     {%- assign price_text = formatted_price -%}
   {%- endif -%}
   <div class="product-spotlight product-spotlight--{{ card_style }}">
-    {%- if product.featured_image != blank -%}
+    {%- assign card_image = image | default: product.featured_image -%}
+    {%- if card_image != blank -%}
       <a href="{{ product.url }}" class="product-spotlight__media" tabindex="-1" aria-hidden="true">
         {{
-          product.featured_image
+          card_image
           | image_url: width: 600
-          | image_tag: widths: '150, 300, 450, 600', sizes: sizes_attr, loading: 'lazy', class: 'product-spotlight__image', alt: product.featured_image.alt
+          | image_tag: widths: '150, 300, 450, 600', sizes: sizes_attr, loading: 'lazy', class: 'product-spotlight__image', alt: card_image.alt
         }}
       </a>
     {%- endif -%}

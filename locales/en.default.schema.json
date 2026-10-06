@@ -243,6 +243,7 @@
     "work_quickly_to_ship": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>"
   },
   "info": {
+    "spotlight_image": "Leave empty to use the product's main image.",
     "icon_height_own": "Balances wide and tall logos. 0 uses the section's icon height. On mobile, wide icons shrink to fit a square of the section's icon height",
     "active_steps": "Steps after this number are faded and joined by a dashed line. 0 shows every step the same",
     "split_text_text": "A paragraph holding only a link shows as an uppercase text link",
@@ -881,6 +882,7 @@
     "below_media": "Below media"
   },
   "settings": {
+    "spotlight_image": "Card image",
     "icon_height_own": "Icon height",
     "active_steps": "Steps done",
     "link_label": "Link label",

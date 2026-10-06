@@ -216,7 +216,7 @@
     display: grid;
     gap: var(--space-24);
     padding: var(--space-40) var(--layout-gutter);
-    background: var(--color-background);
+    background: var(--color-page-background, var(--color-background));
     color: var(--color-foreground);
   }
 
@@ -290,6 +290,8 @@
     justify-content: center;
     width: 100%;
     min-block-size: var(--layout-button-medium);
+    height: var(--layout-button-medium);
+    padding-block: 0;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -158,7 +158,7 @@ Index:
 - The play button opens a `dialog` with a lazy video (the `video-player` snippet). Nothing loads before the click.
 - The product spotlight renders the `product-spotlight` snippet: a white card, Small Shop now button, and "Starts from" taken from the lowest selling-plan price, falling back to the product price.
 - Text is white on the image (contrast skipped because there's media); the gradient overlay uses `--color-overlay` at `--opacity-brand-overlay`.
-**Merchant configuration:** image desktop and mobile (Same at mobile), video (optional), overlay toggle, eyebrow, heading, heading tag, heading size (display/h1), text (richtext), button label and link, show bar, play video file or URL, spotlight product, spotlight label, keep the spotlight on screen on mobile, eyebrow size, content position (bottom left / centre left), width (full / inset), height (tall / medium), text above the image on mobile, background colour, padding top and bottom (Same at mobile).
+**Merchant configuration:** image desktop and mobile (Same at mobile), video (optional), overlay toggle, eyebrow, heading, heading tag, heading size (display/h1), text (richtext), button label and link, show bar, play video file or URL, spotlight product, spotlight card image (blank uses the product image), spotlight label, keep the spotlight on screen on mobile, eyebrow size, content position (bottom left / centre left), width (full / inset), height (tall / medium), text above the image on mobile, background colour, padding top and bottom (Same at mobile).
 
 ### intro-media
 **Status:** planned · Preset section
